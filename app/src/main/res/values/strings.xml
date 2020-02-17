@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SharesApp</string>
+    <string name="konto">Konto:</string>
+    <string name="wertpapier">Wertpapier:</string>
+    <string name="dir_geh_ren_folgende_wertpapiere">Dir gehören folgende Wertpapiere:</string>
+    <string name="jahr">Jahr</string>
+    <string name="woche">Woche</string>
+    <string name="monat">Monat</string>
 </resources>

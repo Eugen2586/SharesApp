@@ -1,17 +1,17 @@
 package com.example.sharesapp.Model;
 
+import org.json.JSONObject;
+
 import pl.zankowski.iextrading4j.api.stocks.Quote;
 
 public class Aktie{
     //ToDo neue Variablen für die Aktie
-    Quote quote;
     int menge;
 
-    public Aktie( ){
+    public Aktie( JSONObject json){
+        // Die Klasse wird von der eingebenen JSON initialisiert.
 
-    }
-    public Aktie( Quote quote ){
-       this.quote = quote;
+
     }
     //ToDo Handelsstuff
 

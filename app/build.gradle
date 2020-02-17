@@ -18,6 +18,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -25,12 +26,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
     implementation("com.squareup.okhttp3:okhttp:4.3.1")
     implementation 'com.squareup.picasso:picasso:2.5.0'
-    // https://mvnrepository.com/artifact/org.jfree/jfreechart
-    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
-
-
 }

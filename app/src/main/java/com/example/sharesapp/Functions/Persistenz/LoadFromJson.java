@@ -1,23 +1,26 @@
 package com.example.sharesapp.Functions.Persistenz;
 
+import android.net.ParseException;
+
+import com.example.sharesapp.Model.DataJson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class LoadFromJson {
+    DataJson h;
 
-    private VBox workspace;
-    Projektview p;
-
-    public void setFenster(Anzeige_Fenster fenster) {
-        this.fenster = fenster;
-    }
-
-    private Anzeige_Fenster fenster;
-
-    public void setH(HerkulesFenster h) {
+    public void setH(DataJson h) {
         this.h = h;
     }
 
-    HerkulesFenster h;
 
-    public void readJson() throws IOException, ParseException {
+    public void readJson() throws Exception {
         FileReader fr = new FileReader("keep.dat");
         BufferedReader br = new BufferedReader(fr);
         String st = new String();
@@ -30,9 +33,13 @@ public class LoadFromJson {
         }
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray)parser.parse(st);
+        //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t:jsonar) {
-            addProjekt(((JSONObject)t).get("projektname").toString());
-            for (Object ts:(JSONArray)((JSONObject)t).get("Array")){
+            //ToDo Oberste Datenbene
+            addAttribute1(((JSONObject)t).get("projektname").toString());
+            for (Object ts:((JSONArray)((JSONObject)t).get("Array")));
+            //ToDo zweite Datenebene
+                /*
                 Timestamp tsp;
                 tsp = new Timestamp();
                 tsp.setStemp(Long.parseLong(((JSONObject) ts).get("Time").toString()));
@@ -40,27 +47,16 @@ public class LoadFromJson {
                 tsp.setMonth(((JSONObject) ts).get("Year").toString());
                 tsp.setDay(((JSONObject) ts).get("Day").toString());
                 p.addTimestamp(tsp);
-            } ;
+                */
+            }
         }
-    }
 
-    private void addProjekt(String projektname){
-        final FXMLLoader load2 = new FXMLLoader(getClass().getResource("projektview.fxml"));
+    private void addAttribute1(String projektname){
         try {
-            final Parent root = load2.load();
-            Projektview g = load2.getController();
-            g.set(h);
-            p = g;
-            h.addObject(g);
-            g.setRoot(root);
-            g.setProjekatname(projektname);
-            workspace.getChildren().add(root);
-        } catch (IOException e) {
-            // TODO LogFile schreiben ergänzen.
+                //ToDo implementier hier entsprechend das Wegschreiben in die Classe
+        } catch (Exception e) {
+            // TODO LogFile schreiben ergänzen und hier halt bitte alles einzeln schreiben, je nach Exception!
         }
     }
 
-    public void setWorkspace(JsonData workspace) {
-        this.workspace = workspace;
-    }
 }

@@ -1,9 +1,8 @@
 package com.example.sharesapp.Model;
 
 public class DataJson {
-    //ToDo Chris K.
-    //Implemtier hier die generische Persistenz um diese in der Schnittstellenklasse DataJson zu pflegen
-    
+    //Chris K.
+    //TODO Hier werden die Daten gepflegt die persistent aufgehoben werden sollen. Wichtig pass die getter und setter jeweils an.
 
 
 

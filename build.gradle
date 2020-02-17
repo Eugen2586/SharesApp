@@ -18,7 +18,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+       /* 'https://mvnrepository.com/artifact/pl.zankowski/iextrading4j'*/
     }
 }
 

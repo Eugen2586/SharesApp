@@ -29,5 +29,6 @@ dependencies {
     implementation 'pl.zankowski:iextrading4j-all:3.3.2'
     implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
     implementation 'com.squareup.picasso:picasso:2.5.0'
+    
 
 }

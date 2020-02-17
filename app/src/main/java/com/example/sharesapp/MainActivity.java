@@ -3,6 +3,7 @@ package com.example.sharesapp;
 import androidx.annotation.StringDef;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 changeFragment(tab.getPosition());
+                Intent myIntent = new Intent(MainActivity.this, DrawerActivity.class);
+                MainActivity.this.startActivity(myIntent);
             }
 
             @Override

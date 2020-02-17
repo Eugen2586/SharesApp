@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_depot">
+
+    <fragment
+        android:id="@+id/nav_depot"
+        android:name="com.example.sharesapp.ui.depot.DepotFragment"
+        android:label="@string/menu_depot"
+        tools:layout="@layout/fragment_depot" />
+
+    <fragment
+        android:id="@+id/nav_aktien"
+        android:name="com.example.sharesapp.ui.aktien.AktienFragment"
+        android:label="@string/menu_aktien"
+        tools:layout="@layout/fragment_aktien" />
+
+    <fragment
+        android:id="@+id/nav_historie"
+        android:name="com.example.sharesapp.ui.historie.HistorieFragment"
+        android:label="@string/menu_historie"
+        tools:layout="@layout/fragment_historie" />
+
+    <fragment
+        android:id="@+id/nav_newgame"
+        android:name="com.example.sharesapp.ui.newgame.NewgameFragment"
+        android:label="@string/menu_newgame"
+        tools:layout="@layout/fragment_newgame" />
+</navigation>

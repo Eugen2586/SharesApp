@@ -1,3 +1,4 @@
+
 package com.example.sharesapp.FunktionaleKlassen.Diagramm;
 
 import java.util.ArrayList;
@@ -9,7 +10,10 @@ public class BaueDiagramm {
 
 
     }
-    get
+    public void getDiagramm(){
+
+        
+    }
 
 
 

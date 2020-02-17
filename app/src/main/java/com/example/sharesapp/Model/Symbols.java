@@ -3,8 +3,6 @@ package com.example.sharesapp.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import pl.zankowski.iextrading4j.api.refdata.SymbolType;
-import pl.zankowski.iextrading4j.api.refdata.v1.ExchangeSymbol;
 
 
 public class Symbols {
@@ -35,7 +33,7 @@ public class Symbols {
         return symbols;
     }
 
-    public ExchangeSymbol getCompany(String symbol){
+/*    public ExchangeSymbol getCompany(String symbol){
         ExchangeSymbol s = null;
         for (Object t: symbols ) {
             ExchangeSymbol v = (ExchangeSymbol) t;
@@ -56,6 +54,8 @@ public class Symbols {
         }
         return s;
     }
+    */
+
 
     public void setSymbols(ArrayList sybols){
         this.symbols = symbols;

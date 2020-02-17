@@ -29,5 +29,8 @@ dependencies {
     implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
     implementation("com.squareup.okhttp3:okhttp:4.3.1")
     implementation 'com.squareup.picasso:picasso:2.5.0'
+    // https://mvnrepository.com/artifact/org.jfree/jfreechart
+    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
+
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sharesapp.R;
+import com.google.android.material.tabs.TabLayout;
 
 public class DepotFragment extends Fragment {
 
     private DepotViewModel depotViewModel;
+    TabLayout tabs;
+    TabLayout.Tab tab_uebersicht;
+    TabLayout.Tab tab_statistik;
+    LinearLayout fragment_loader;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +36,44 @@ public class DepotFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        fragment_loader = root.findViewById(R.id.fragment_loader);
+        tabs = root.findViewById(R.id.tabs);
+        if (tabs == null) {
+            System.out.println("NULL");
+        }
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                changeFragment(tab.getPosition());
+//                Intent myIntent = new Intent(DrawerActivity.this, DrawerActivity.class);
+//                DrawerActivity.this.startActivity(myIntent);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         return root;
+    }
+
+    private void changeFragment(int position) {
+
+        TextView test = new TextView(this.getContext());
+        fragment_loader.addView(test);
+        if (position == 0) {
+            test.setText("Übersicht");
+
+        }
+        if (position == 1) {
+            test.setText("Statistik");
+        }
     }
 }

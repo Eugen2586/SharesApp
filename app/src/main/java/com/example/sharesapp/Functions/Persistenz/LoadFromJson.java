@@ -4,8 +4,9 @@ import android.net.ParseException;
 
 import com.example.sharesapp.Model.DataJson;
 
-import org.json.JSONArray;
+
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;

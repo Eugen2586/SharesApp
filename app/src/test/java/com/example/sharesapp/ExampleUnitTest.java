@@ -26,4 +26,9 @@ public class ExampleUnitTest {
         System.out.print(quote);
     }
 
+    @Test
+    public void testHistorical() {
+        Requests requests = new Requests();
+        System.out.print(requests.getHistoricalStats());
+    }
 }

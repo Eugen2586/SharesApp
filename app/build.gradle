@@ -31,4 +31,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.0'
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of e550bba... Update build.gradle
 }

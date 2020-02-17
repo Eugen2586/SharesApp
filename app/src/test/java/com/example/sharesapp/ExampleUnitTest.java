@@ -1,8 +1,12 @@
 package com.example.sharesapp;
 
+import com.example.sharesapp.REST.*;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import pl.zankowski.iextrading4j.api.stocks.Quote;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,5 +17,18 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void testQuote() {
+        Requests requests = new Requests();
+        Quote quote = requests.getQuote("AAPL");
+        System.out.print(quote);
+    }
+
+    @Test
+    public void testHistorical() {
+        Requests requests = new Requests();
+        System.out.print(requests.getHistoricalStats());
     }
 }

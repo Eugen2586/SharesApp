@@ -51,7 +51,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/reset_button"
             android:layout_width="151dp"
             android:layout_height="56dp"
             android:background="@color/design_default_color_error"

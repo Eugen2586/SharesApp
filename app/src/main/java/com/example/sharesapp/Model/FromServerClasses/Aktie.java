@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 
 
-public class Aktie{
+public class Aktie {
     //ToDo neue Variablen für die Aktie
 
 

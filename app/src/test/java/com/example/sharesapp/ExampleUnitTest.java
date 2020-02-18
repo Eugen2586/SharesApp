@@ -4,6 +4,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQu
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.*;
 import org.junit.Test;
 
@@ -29,17 +30,20 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         // Loads all Symobols TODO ins Datenmodell
         String s = null;
+        String b = null;
         try {
             s =  req.run(RequestsBuilder.getAllSymbolsURL());
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
+            Model m = new Model();
+            b = m.getDaten().getAktienList().get(0).toString();
             System.out.print("erreicht!");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if ( s != null) {
-            System.out.print(s);
+        if ( b != null) {
+            System.out.print(b);
         }
     }
 
@@ -85,8 +89,8 @@ public class ExampleUnitTest {
         String s = null;
         try {
             s =  req.run(RequestsBuilder.getHistoricalQuotePrices("APPL", Range.oneMonth));
-            RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            ArrayList st = regs.getURLS();
+            //RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
+            //ArrayList st = regs.getURLS();
 
         } catch (Exception e) {
             e.printStackTrace();

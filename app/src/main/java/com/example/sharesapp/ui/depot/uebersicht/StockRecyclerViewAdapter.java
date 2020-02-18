@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Aktie> mData;
+    private ArrayList<Aktie> mData = new ArrayList<>();
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
@@ -26,8 +28,9 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     }
 
     // inflates the row layout from xml when needed
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.row_stock_item, parent, false);
         return new ViewHolder(view);
     }
@@ -43,7 +46,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData == null? 0 : mData.size();
     }
 
 

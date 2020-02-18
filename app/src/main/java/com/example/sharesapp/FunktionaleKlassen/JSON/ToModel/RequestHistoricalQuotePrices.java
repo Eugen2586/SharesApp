@@ -12,7 +12,7 @@ public class RequestHistoricalQuotePrices {
 
     ArrayList URLS = null;
 
-    public RequestHistoricalQuotePrices(String s){
+   /* public RequestHistoricalQuotePrices(String s){
         urls = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);
@@ -29,6 +29,8 @@ public class RequestHistoricalQuotePrices {
             urls.add(url);
         }
     }
+    
+    */
 
 
     public ArrayList getURLS() {

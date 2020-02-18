@@ -18,4 +18,8 @@ public class RequestsBuilder {
         return "data-points/" + symbol;
     }
 
+    public String getQuote(String symbol) {
+        return "stock/" + symbol + "quote/";
+    }
+
 }

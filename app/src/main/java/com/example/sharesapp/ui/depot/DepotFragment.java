@@ -10,11 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sharesapp.R;
 import com.google.android.material.tabs.TabLayout;
+import com.example.sharesapp.ui.depot.statistik.*;
+import com.example.sharesapp.ui.depot.uebersicht.*;
 
 public class DepotFragment extends Fragment {
 
@@ -23,6 +28,10 @@ public class DepotFragment extends Fragment {
     TabLayout.Tab tab_uebersicht;
     TabLayout.Tab tab_statistik;
     LinearLayout fragment_loader;
+    FragmentTransaction fragmentTransaction;
+    FragmentManager fragmentManager;
+    Fragment uebersicht;
+    Fragment statistik;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +46,14 @@ public class DepotFragment extends Fragment {
             }
         });
 
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        uebersicht = new UebersichtFragment();
+        statistik = new StatistikFragment();
+
+        fragmentTransaction.replace(R.id.fragment_loader, uebersicht).commit();
+
         fragment_loader = root.findViewById(R.id.fragment_loader);
         tabs = root.findViewById(R.id.tabs);
         if (tabs == null) {
@@ -46,8 +63,6 @@ public class DepotFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 changeFragment(tab.getPosition());
-//                Intent myIntent = new Intent(DrawerActivity.this, DrawerActivity.class);
-//                DrawerActivity.this.startActivity(myIntent);
             }
 
             @Override
@@ -66,14 +81,20 @@ public class DepotFragment extends Fragment {
 
     private void changeFragment(int position) {
 
-        TextView test = new TextView(this.getContext());
-        fragment_loader.addView(test);
-        if (position == 0) {
-            test.setText("Übersicht");
+        fragmentTransaction = fragmentManager.beginTransaction();
 
+
+        if (position == 0) {
+
+            fragmentTransaction.replace(R.id.fragment_loader, uebersicht);
         }
         if (position == 1) {
-            test.setText("Statistik");
+
+            fragmentTransaction.replace(R.id.fragment_loader, statistik);
+
         }
+
+        //fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

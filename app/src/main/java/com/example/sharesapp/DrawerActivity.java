@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DrawerActivity extends AppCompatActivity {
 
@@ -56,12 +58,15 @@ public class DrawerActivity extends AppCompatActivity {
 
         // Initializes RequestClient
         Requests req = new Requests();
-        // Loads all Symobols TODO ins Datenmodell
+        String s = null;
         try {
-            req.run(RequestsBuilder.getAllSymbolsURL());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+            ArrayList a = regs.getAk();
+
+        } catch (Exception e) {
+
+        } 
     }
 
     @Override

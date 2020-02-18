@@ -11,10 +11,10 @@ import okhttp3.Response;
 
 public class Requests {
 
-    public static final MediaType JSON
+    private static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    static OkHttpClient client;
-    final String baseURL = "https://sandbox.iexapis.com/stable/";
+    static OkHttpClient client = null;
+    private final String baseURL = "https://sandbox.iexapis.com/stable/";
     private String token = "?token=Tpk_f10f1ddb8a1d4baaa44d427f0ddbea19";
 
     public Requests() {
@@ -30,7 +30,7 @@ public class Requests {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return Objects.requireNonNull(response.body().string());
+            return Objects.requireNonNull(response.body()).string();
         }
     }
 
@@ -38,7 +38,7 @@ public class Requests {
     String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder()
-                .url(url)
+                .url(baseURL + url + token)
                 .post(body)
                 .build();
 

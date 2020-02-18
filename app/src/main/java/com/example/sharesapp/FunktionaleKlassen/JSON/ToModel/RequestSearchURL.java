@@ -1,7 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
-import com.example.sharesapp.Model.Aktie;
-import com.example.sharesapp.Model.SearchedURLS;
+import com.example.sharesapp.Model.FromServerClasses.SearchedURLS;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

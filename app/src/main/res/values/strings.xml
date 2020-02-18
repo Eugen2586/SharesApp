@@ -6,4 +6,18 @@
     <string name="jahr">Jahr</string>
     <string name="woche">Woche</string>
     <string name="monat">Monat</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">SharesApp</string>
+    <string name="nav_header_subtitle">shares.app.de</string>
+    <string name="nav_header_desc">App for Shares</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_depot">Depot</string>
+    <string name="menu_aktien">Aktien</string>
+    <string name="menu_historie">Historie</string>
+    <string name="menu_newgame">NewGame</string>
+    <string name="uebersicht">Übersicht</string>
+    <string name="statistik">Statistik</string>
 </resources>

@@ -4,7 +4,8 @@ import com.example.sharesapp.REST.*;
 
 import org.junit.Test;
 
-import pl.zankowski.iextrading4j.api.stocks.Quote;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,13 +23,16 @@ public class ExampleUnitTest {
     @Test
     public void testQuote() {
         Requests requests = new Requests();
-        Quote quote = requests.getQuote("AAPL");
+        String quote = null;
+        try {
+            quote = requests.run("time-series/REPORTED_FINANCIALS/AAPL");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.print(quote);
     }
 
     @Test
     public void testHistorical() {
-        Requests requests = new Requests();
-        System.out.print(requests.getHistoricalStats());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.sharesapp.REST;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -13,7 +14,8 @@ public class Requests {
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     static OkHttpClient client;
-    final String baseURL = "https://sandbox.iexapis.com/";
+    final String baseURL = "https://sandbox.iexapis.com/stable/";
+    private String token = "?token=Tpk_f10f1ddb8a1d4baaa44d427f0ddbea19";
 
     public Requests() {
         if (client == null) {
@@ -22,13 +24,13 @@ public class Requests {
     }
 
 
-    String run(String url) throws IOException {
+    public String run(String url) throws IOException {
         Request request = new Request.Builder()
-                .url(url)
+                .url(baseURL + url + token)
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            return Objects.requireNonNull(response.body()).string();
         }
     }
 
@@ -41,7 +43,7 @@ public class Requests {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            return Objects.requireNonNull(response.body()).string();
         }
     }
 }

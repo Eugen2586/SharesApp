@@ -1,6 +1,5 @@
 package com.example.sharesapp.Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -9,9 +8,9 @@ public class Symbols {
     //Chris
     //Diese Klasse ist gedacht dazu um die vom Server kommenden Mappingdaten von Firmen und Symbolen zu mappen.
     //
-    //private final String symbol;
+     private final String symbol;
     //private final String exchange;
-    //private final String name;
+     private final String name;
     //private final LocalDate date;
     //private final SymbolType type;
     //private final String iexId;
@@ -23,7 +22,9 @@ public class Symbols {
 
     static ArrayList symbols = null;
 
-    Symbols(){
+    Symbols(String symbol, String name){
+        this.symbol = symbol;
+        this.name = name;
         if (symbols == null){
             symbols = new ArrayList<>();
         }

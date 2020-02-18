@@ -1,6 +1,6 @@
 
 package com.example.sharesapp.FunktionaleKlassen.Diagramm;
-
+/*
 import com.anychart.AnyChart;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HighLowDataEntry;
@@ -11,12 +11,14 @@ import com.anychart.data.TableMapping;
 import com.anychart.enums.StockSeriesType;
 import java.util.ArrayList;
 import java.util.List;
-
+*/
 
 public class BaueDiagramm {
-    Stock stock;
+    /*
+    Stock stock = null;
 
     BaueDiagramm(ArrayList werte ){
+
 
         Table table = Table.instantiate("x");
         table.addData(datenaufbereiten( werte ));
@@ -43,12 +45,16 @@ public class BaueDiagramm {
 
         this.stock = stock;
 
+
+
     }
     public Stock getDiagramm( ){
 
         return stock;
 
     }
+
+
 
     public void buidDiagram(){
 
@@ -70,5 +76,5 @@ public class BaueDiagramm {
             setValue("open", open);
             setValue("close", close);
         }
-    }
+    }*/
 }

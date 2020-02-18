@@ -27,13 +27,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-
         // set up the RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());

@@ -26,19 +26,21 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initializes RequestClient
-        Requests req = new Requests();
-        String s = null;
-        try {
-            s =  req.run(RequestsBuilder.getAllSymbolsURL());
-            RequestSymbol regs = new RequestSymbol(s);
+        // Initializes RequestClient and loads all symbols
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Requests req = new Requests();
+                String s = null;
+                try {
+                    s = req.run(RequestsBuilder.getAllSymbolsURL());
+                    RequestSymbol regs = new RequestSymbol(s);
 
-        } catch (Exception e) {
-
-        }
-
-        Model model = new Model();
-        System.out.println(model.getDaten().getAktienList());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);

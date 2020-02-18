@@ -23,13 +23,6 @@ public class AktienFragment extends Fragment {
         aktienViewModel =
                 ViewModelProviders.of(this).get(AktienViewModel.class);
         View root = inflater.inflate(R.layout.fragment_aktien, container, false);
-        final TextView textView = root.findViewById(R.id.text_aktien);
-        aktienViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }

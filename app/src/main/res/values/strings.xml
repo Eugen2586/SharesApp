@@ -21,4 +21,5 @@
     <string name="menu_newgame">NewGame</string>
     <string name="uebersicht">Übersicht</string>
     <string name="statistik">Statistik</string>
+    <string name="portfolio">Portfolio</string>
 </resources>

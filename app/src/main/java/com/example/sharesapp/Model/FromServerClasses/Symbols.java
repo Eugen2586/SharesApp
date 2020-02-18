@@ -1,4 +1,4 @@
-package com.example.sharesapp.Model;
+package com.example.sharesapp.Model.FromServerClasses;
 
 import java.util.ArrayList;
 

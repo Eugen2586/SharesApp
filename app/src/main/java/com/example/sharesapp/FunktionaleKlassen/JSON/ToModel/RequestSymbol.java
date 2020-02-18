@@ -1,13 +1,12 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
-import com.example.sharesapp.Model.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RequestSymbol {

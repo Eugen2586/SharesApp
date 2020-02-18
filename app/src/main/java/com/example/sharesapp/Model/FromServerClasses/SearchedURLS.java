@@ -1,4 +1,4 @@
-package com.example.sharesapp.Model;
+package com.example.sharesapp.Model.FromServerClasses;
 
 public class SearchedURLS {
     private String symbol;

@@ -10,5 +10,9 @@ public class RequestsBuilder {
         return "/ref-data/symbols";
     }
 
+    public String getSearchURL(String fragment) {
+        return "/search/{" + fragment + "}";
+    }
+
     
 }

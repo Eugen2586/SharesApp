@@ -12,9 +12,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class DrawerActivity extends AppCompatActivity {
 
@@ -46,6 +55,18 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Initializes RequestClient
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+            ArrayList a = regs.getAk();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

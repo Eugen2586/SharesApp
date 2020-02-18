@@ -2,11 +2,17 @@ package com.example.sharesapp.REST;
 
 public class RequestsBuilder {
 
-    public String getTimeSeriesURL(String key) {
+    public static String getTimeSeriesURL(String key) {
         return "time-series/REPORTED_FINANCIALS/" + key;
     }
 
-    public String getAllSymbolsURL() {
+    public static String getAllSymbolsURL() {
         return "/ref-data/symbols";
     }
+
+    public String getSearchURL(String fragment) {
+        return "/search/{" + fragment + "}";
+    }
+
+    
 }

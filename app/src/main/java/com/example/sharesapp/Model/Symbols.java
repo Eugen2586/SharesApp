@@ -10,9 +10,9 @@ public class Symbols {
     //
      private final String symbol;
     //private final String exchange;
-     private final String name;
+    private final String name;
     //private final LocalDate date;
-    //private final SymbolType type;
+    private final String type = null;
     //private final String iexId;
     //private final String region;
     //private final String currency;

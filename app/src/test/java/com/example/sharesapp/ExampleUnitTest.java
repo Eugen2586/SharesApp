@@ -1,11 +1,14 @@
 package com.example.sharesapp;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.Model.Aktie;
 import com.example.sharesapp.REST.*;
 
 import org.junit.Test;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,14 +25,21 @@ public class ExampleUnitTest {
 
     @Test
     public void testQuote() {
-        Requests requests = new Requests();
-        String quote = null;
+        Requests req = new Requests();
+        // Loads all Symobols TODO ins Datenmodell
+        String s = null;
         try {
-            quote = requests.run("time-series/REPORTED_FINANCIALS/AAPL");
-        } catch (IOException e) {
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+            ArrayList a = regs.getAk();
+            System.out.print("erreicht!");
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.print(quote);
+        if ( s != null) {
+            System.out.print(s);
+        }
     }
 
     @Test

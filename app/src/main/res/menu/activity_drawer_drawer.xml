@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_clock"
             android:title="@string/menu_historie" />
         <item
+            android:id="@+id/nav_erfolge"
+            android:icon="@drawable/ic_achievements"
+            android:title="@string/menu_erfolge" />
+        <item
             android:id="@+id/nav_newgame"
             android:icon="@drawable/ic_newgame"
             android:title="@string/menu_newgame" />

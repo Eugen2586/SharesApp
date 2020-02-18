@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_historie" />
 
     <fragment
+        android:id="@+id/nav_erfolge"
+        android:name="com.example.sharesapp.ui.erfolge.ErfolgeFragment"
+        android:label="@string/menu_erfolge"
+        tools:layout="@layout/fragment_erfolge" />
+
+    <fragment
         android:id="@+id/nav_newgame"
         android:name="com.example.sharesapp.ui.newgame.NewgameFragment"
         android:label="@string/menu_newgame"

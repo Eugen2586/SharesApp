@@ -94,4 +94,5 @@ public class Aktie{
     //ToDo Handelsstuff
 
 
+
 }

@@ -21,4 +21,13 @@
     <string name="menu_newgame">NewGame</string>
     <string name="uebersicht">Übersicht</string>
     <string name="statistik">Statistik</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="crypto">crypto</string>
+    <string name="oil">oil</string>
+    <string name="us_market">us-market</string>
+    <string name="etfs">etfs</string>
+    <string name="capital_raise">capital-raise</string>
+    <string name="fx">fx</string>
+    <string name="funding">funding</string>
+    <string name="bonds">bonds</string>
 </resources>

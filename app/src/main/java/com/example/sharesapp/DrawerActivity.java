@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +32,20 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initializes RequestClient
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+
+        } catch (Exception e) {
+
+        }
+
+        Model model = new Model();
+        System.out.println(model.getDaten().getAktienList());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -55,18 +70,6 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        // Initializes RequestClient
-        Requests req = new Requests();
-        String s = null;
-        try {
-            s =  req.run(RequestsBuilder.getAllSymbolsURL());
-            RequestSymbol regs = new RequestSymbol(s);
-            ArrayList a = regs.getAk();
-
-        } catch (Exception e) {
-
-        } 
     }
 
     @Override

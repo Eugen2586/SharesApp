@@ -29,6 +29,7 @@ public class BaueDiagramm {
     LineChart stock;
 
     BaueDiagramm(ArrayList werte ){
+        
         //ToDo Aktuell nur zum Anzeigen einer Aktie!
         LineChart stock;
         

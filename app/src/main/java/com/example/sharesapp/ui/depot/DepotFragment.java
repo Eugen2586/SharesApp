@@ -38,13 +38,6 @@ public class DepotFragment extends Fragment {
         depotViewModel =
                 ViewModelProviders.of(this).get(DepotViewModel.class);
         View root = inflater.inflate(R.layout.fragment_depot, container, false);
-        final TextView textView = root.findViewById(R.id.text_depot);
-        depotViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
         fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
         tabs = root.findViewById(R.id.depot_tab_layout);

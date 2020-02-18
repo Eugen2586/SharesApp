@@ -22,7 +22,7 @@ public class Data {
         }
     }
 
-    public void addArrayList(ArrayList<Aktie> ar) {
+    public void addAktienList(ArrayList<Aktie> ar) {
         aktien = ar;
     }
 

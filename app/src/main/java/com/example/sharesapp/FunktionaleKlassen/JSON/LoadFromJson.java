@@ -1,11 +1,14 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 import android.net.ParseException;
+import android.view.Display;
 
 import com.example.sharesapp.Model.DataJson;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
 
 
-import org.json.JSONObject;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
@@ -14,58 +17,51 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoadFromJson {
-        DataJson h;
-    private ArrayList aktien;
+    DataJson h;
+    private ArrayList aktien = new ArrayList();
 
     public void setH(DataJson h) {
-            this.h = h;
-        }
-
-
-        public void readJson() throws Exception {
-            FileReader fr = new FileReader("keep.dat");
-            BufferedReader br = new BufferedReader(fr);
-            String st = new String();
-            String line = new String();
-            while(line != null) {
-                line = br.readLine();
-                if(line != null) {
-                    st = st + line;
-                }
-            }
-            JSONParser parser = new JSONParser();
-            JSONArray jsonar = (JSONArray)parser.parse(st);
-            //TODO pflege hier die Daten, die hier eingelesen werden.
-            for (Object t:jsonar) {
-                //ToDo Oberste Datenbene
-                addAttribute1(((JSONObject)t).get("projektname").toString());
-                for (Object ts:((JSONArray)((JSONObject)t).get("Array")));
-                //ToDo zweite Datenebene
-                /*
-                Timestamp tsp;
-                tsp = new Timestamp();
-                tsp.setStemp(Long.parseLong(((JSONObject) ts).get("Time").toString()));
-                tsp.setMonth(((JSONObject) ts).get("Month").toString());
-                tsp.setMonth(((JSONObject) ts).get("Year").toString());
-                tsp.setDay(((JSONObject) ts).get("Day").toString());
-                p.addTimestamp(tsp);
-                */
-            }
-        }
-
-        private void addAttribute1(String projektname){
-            try {
-                //ToDo implementier hier entsprechend das Wegschreiben in die Classe
-            } catch (Exception e) {
-                // TODO LogFile schreiben ergänzen und hier halt bitte alles einzeln schreiben, je nach Exception!
-            }
-        }
-
-        public ArrayList getAktien() {
-            return aktien;
-        }
-
-        public void setAktien(ArrayList aktien) {
-            this.aktien = aktien;
-        }
+        this.h = h;
     }
+
+
+    public void readJson() throws Exception {
+        FileReader fr = new FileReader("keep.dat");
+        BufferedReader br = new BufferedReader(fr);
+        String st = new String();
+        String line = new String();
+        while (line != null) {
+            line = br.readLine();
+            if (line != null) {
+                st = st + line;
+            }
+        }
+        JSONParser parser = new JSONParser();
+        JSONArray jsonar = (JSONArray) parser.parse(st);
+        //TODO pflege hier die Daten, die hier eingelesen werden.
+        int i = 1;
+        for (Object t : jsonar) {
+            if (i == 1) {
+                //ToDo Oberste Datenbene
+                for (Object ts : ((JSONArray) t)) {
+
+                    JSONObject obj = (JSONObject) ts;
+                    Aktie aktie = new aktie();
+                    //ToDo zweite Datenebene
+                    aktie.setCurrency((String) obj.get("Currency"));
+                    aktie.setDate((String) obj.get("Date"));
+                    aktie.setEnabled((String) obj.get("Enabled"));
+                    aktie.setExchange((String) obj.get("Exchange"));
+                    aktie.setName((String) obj.get("Name"));
+                    aktie.setRegion((String) obj.get("Region"));
+                    aktie.setSymbol((String) obj.get("Symbol"));
+                    aktie.setType((String) obj.get("Type"));
+                    aktien.add(aktie);
+                }
+                i++;
+            }
+        }
+        Model model = new Model();
+        model.getDaten().addAktienList(aktien);
+    }
+}

@@ -65,7 +65,7 @@ public class DrawerActivity extends AppCompatActivity {
             ArrayList a = regs.getAk();
 
         } catch (Exception e) {
-            (req.run(RequestsBuilder.getAllSymbolsURL()));
+
         } 
     }
 

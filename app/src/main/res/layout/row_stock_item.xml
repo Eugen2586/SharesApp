@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/row_stock_item_margin"
+    android:layout_marginTop="@dimen/row_stock_item_margin"
+    android:layout_marginEnd="@dimen/row_stock_item_margin">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/row_stock_item_padding">
+
+        <TextView
+            android:id="@+id/stock_percentage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Prozent" />
+
+        <TextView
+            android:id="@+id/stock_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/stock_percentage_text"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Bezeichnung"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/stock_value_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stock_percentage_text"
+            android:layout_alignParentEnd="true"
+            android:text="Wert" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

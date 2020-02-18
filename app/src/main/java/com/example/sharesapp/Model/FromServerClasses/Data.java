@@ -14,18 +14,19 @@ public class Data {
         addArrayList(j.getAktien());
     }
 
-    ArrayList aktien;
+    private ArrayList<Aktie> aktien;
 
-    public void addAktie(Aktie aktie){
+    public void addAktie(Aktie aktie) {
         if (aktien == null) {
             aktien.add(aktie);
         }
     }
 
-    public void addArrayList(ArrayList ar){
+    public void addArrayList(ArrayList<Aktie> ar) {
         aktien = ar;
     }
-    public ArrayList getAktienList(){
+
+    public ArrayList getAktienList() {
         return aktien;
     }
 

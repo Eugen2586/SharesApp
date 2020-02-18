@@ -18,6 +18,9 @@ public class RequestHistoricalQuotePrices {
 
     public RequestHistoricalQuotePrices(String s) throws ParseException {
         dbs = new ArrayList();
+
+   /* public RequestHistoricalQuotePrices(String s){
+        urls = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);
         //TODO pflege hier die Daten, die hier eingelesen werden.
@@ -40,6 +43,8 @@ public class RequestHistoricalQuotePrices {
             dbs.add(db);
         }
     }
+    
+    */
 
 
     public ArrayList getURLS() {

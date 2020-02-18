@@ -11,11 +11,13 @@ import org.json.simple.parser.JSONParser;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
-    public class LoadFromJson {
+public class LoadFromJson {
         DataJson h;
+    private ArrayList aktien;
 
-        public void setH(DataJson h) {
+    public void setH(DataJson h) {
             this.h = h;
         }
 
@@ -59,4 +61,11 @@ import java.io.IOException;
             }
         }
 
+        public ArrayList getAktien() {
+            return aktien;
+        }
+
+        public void setAktien(ArrayList aktien) {
+            this.aktien = aktien;
+        }
     }

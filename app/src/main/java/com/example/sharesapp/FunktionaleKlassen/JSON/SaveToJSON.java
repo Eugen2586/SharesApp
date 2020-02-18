@@ -10,6 +10,14 @@ import java.util.ArrayList;
     public class SaveToJSON {
         ArrayList objects = new ArrayList();
         JSONArray b = new JSONArray();
+
+        public SaveToJSON(ArrayList aktien) {
+            //ToDo persisatance Stuff.
+
+
+
+        }
+
         public void printGson() throws IOException {
             JSONArray jar = new JSONArray();
             for (Object p:objects) {

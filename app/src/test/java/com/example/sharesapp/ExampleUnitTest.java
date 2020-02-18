@@ -77,9 +77,9 @@ public class ExampleUnitTest {
         if ( s != null) {
             System.out.print(s);
         }
-
-
     }
+
+
 
 
     @Test

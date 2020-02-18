@@ -46,16 +46,18 @@ public class DepotFragment extends Fragment {
             }
         });
 
+        fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
+        tabs = root.findViewById(R.id.depot_tab_layout);
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
         uebersicht = new UebersichtFragment();
         statistik = new StatistikFragment();
 
-        fragmentTransaction.replace(R.id.fragment_loader, uebersicht).commit();
+        fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht).commit();
 
-        fragment_loader = root.findViewById(R.id.fragment_loader);
-        tabs = root.findViewById(R.id.tabs);
+        fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
+        tabs = root.findViewById(R.id.depot_tab_layout);
         if (tabs == null) {
             System.out.println("NULL");
         }
@@ -86,11 +88,11 @@ public class DepotFragment extends Fragment {
 
         if (position == 0) {
 
-            fragmentTransaction.replace(R.id.fragment_loader, uebersicht);
+            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht);
         }
         if (position == 1) {
 
-            fragmentTransaction.replace(R.id.fragment_loader, statistik);
+            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, statistik);
 
         }
 

@@ -16,36 +16,46 @@
             android:layout_height="wrap_content"
             android:text="@string/portfolio" />
 
-        <!--TODO: löschen, wenn aktienkategorien dynamisch eingefügt werden-->
+        <!--TODO: dynamisch mit arraylist, wenn ineffizient-->
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie1" />
+            android:text="@string/crypto" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie2" />
+            android:text="@string/oil" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie3" />
+            android:text="@string/us_market" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie4" />
+            android:text="@string/etfs" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie5" />
+            android:text="@string/bonds" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie6" />
+            android:text="@string/funding" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fx" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/capital_raise" />
     </com.google.android.material.tabs.TabLayout>
 </LinearLayout>

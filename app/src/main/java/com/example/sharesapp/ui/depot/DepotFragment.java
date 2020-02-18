@@ -37,8 +37,8 @@ public class DepotFragment extends Fragment {
             }
         });
 
-        fragment_loader = root.findViewById(R.id.fragment_loader);
-        tabs = root.findViewById(R.id.tabs);
+        fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
+        tabs = root.findViewById(R.id.depot_tab_layout);
         if (tabs == null) {
             System.out.println("NULL");
         }

@@ -1,6 +1,7 @@
 package com.example.sharesapp;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
 import com.example.sharesapp.Model.Aktie;
 import com.example.sharesapp.REST.*;
 
@@ -43,7 +44,41 @@ public class ExampleUnitTest {
     }
 
     @Test
-     public void test       req.
+     public void testTimeSeriesRequest(){
+         Requests req = new Requests();
+        // Loads all Symobols TODO ins Datenmodell
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getTimeSeriesURL("PPL"));
+            RequestTimeSeriesURL regs = new RequestTimeSeriesURL(s);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+    }
+
+    @Test
+    public void RequestSearchURL(){
+
+        Requests req = new Requests();
+        // Loads all Symobols TODO ins Datenmodell
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getSearchURL("APPLE"));
+            RequestTimeSeriesURL regs = new RequestTimeSeriesURL(s);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+
+
+    }
 
 
     @Test

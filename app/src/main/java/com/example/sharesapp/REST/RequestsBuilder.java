@@ -12,9 +12,8 @@ public class RequestsBuilder {
         return "/ref-data/symbols";
     }
 
-    //TODO In der Searchbar wurde das Eingegeben unter dem Fragment.
-    public String getSearchURL(String fragment) {
-        return "/search/{" + fragment + "}";
+    public static String getSearchURL(String fragment) {
+            return "/search/{" + fragment + "}";
     }
 
 }

@@ -16,6 +16,7 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -36,6 +37,13 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         animalNames.add("Goat");
 
         ArrayList<Aktie> aktienList = model.getDaten().getAktienList();
+//        aktienList = new ArrayList<>();
+//        Aktie aktie1 = new Aktie();
+//        aktie1.setName("Name1");
+//        Aktie aktie2 = new Aktie();
+//        aktie2.setName("Name2");
+//        aktienList.add(aktie1);
+//        aktienList.add(aktie2);
         if (aktienList != null) {
             // set up the RecyclerView
             RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -44,9 +52,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
             adapter = new StockRecyclerViewAdapter(this.getContext(), aktienList);
             adapter.setClickListener(this);
             recyclerView.setAdapter(adapter);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                    ((LinearLayoutManager) layoutManager).getOrientation());
-            recyclerView.addItemDecoration(dividerItemDecoration);
+//            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+//                    ((LinearLayoutManager) layoutManager).getOrientation());
+//            recyclerView.addItemDecoration(dividerItemDecoration);
         }
 
 

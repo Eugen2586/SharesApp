@@ -65,6 +65,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/note_item"/>
+        tools:listitem="@layout/row_stock_item"/>
 
 </LinearLayout>

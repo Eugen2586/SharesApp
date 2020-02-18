@@ -29,10 +29,10 @@ public class ExampleUnitTest {
         // Loads all Symobols TODO ins Datenmodell
         String s = null;
         try {
-           s =  req.run(RequestsBuilder.getAllSymbolsURL());
-           RequestSymbol regs = new RequestSymbol(s);
-           ArrayList a = regs.getAk();
-           System.out.print("erreicht!");
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+            ArrayList a = regs.getAk();
+            System.out.print("erreicht!");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -58,7 +58,7 @@ public class DrawerActivity extends AppCompatActivity {
         Requests req = new Requests();
         // Loads all Symobols TODO ins Datenmodell
         try {
-            (req.run(RequestsBuilder.getAllSymbolsURL());
+            (req.run(RequestsBuilder.getAllSymbolsURL()));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -30,4 +30,8 @@
     <string name="fx">fx</string>
     <string name="funding">funding</string>
     <string name="bonds">bonds</string>
+    <string name="zuruecksetzen">Zurücksetzen</string>
+    <string name="willst_du_wirklich_deinen_kontostand_von">Willst du wirklich deinen Kontostand von:</string>
+    <string name="zuruecksetzen_und_von_vorne_anfangen">zurücksetzen und von vorne anfangen?</string>
+    <string name="fifty_euro">50€</string>
 </resources>

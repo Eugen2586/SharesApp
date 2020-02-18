@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.R;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.R;
 
 import java.util.ArrayList;
 
@@ -34,16 +35,20 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         animalNames.add("Sheep");
         animalNames.add("Goat");
 
-        // set up the RecyclerView
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new StockRecyclerViewAdapter(this.getContext(), model.getDaten().getAktienList());
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                ((LinearLayoutManager) layoutManager).getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        ArrayList<Aktie> aktienList = model.getDaten().getAktienList();
+        if (aktienList != null) {
+            // set up the RecyclerView
+            RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new StockRecyclerViewAdapter(this.getContext(), aktienList);
+            adapter.setClickListener(this);
+            recyclerView.setAdapter(adapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                    ((LinearLayoutManager) layoutManager).getOrientation());
+            recyclerView.addItemDecoration(dividerItemDecoration);
+        }
+
 
         return root;
     }

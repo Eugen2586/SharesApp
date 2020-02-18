@@ -5,21 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sharesapp.R;
+import com.example.sharesapp.ui.depot.statistik.StatistikFragment;
+import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.google.android.material.tabs.TabLayout;
-import com.example.sharesapp.ui.depot.statistik.*;
-import com.example.sharesapp.ui.depot.uebersicht.*;
 
 public class DepotFragment extends Fragment {
 

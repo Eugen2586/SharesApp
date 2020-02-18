@@ -30,7 +30,7 @@ public class Requests {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return Objects.requireNonNull(response.body().string());
+            return Objects.requireNonNull(response.body()).string();
         }
     }
 

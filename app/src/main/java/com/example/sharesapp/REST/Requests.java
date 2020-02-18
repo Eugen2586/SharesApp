@@ -11,7 +11,7 @@ import okhttp3.Response;
 
 public class Requests {
 
-    public static final MediaType JSON
+    private static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     static OkHttpClient client = null;
     private final String baseURL = "https://sandbox.iexapis.com/stable/";

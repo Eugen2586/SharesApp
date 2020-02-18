@@ -1,14 +1,14 @@
 package com.example.sharesapp;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
-import com.example.sharesapp.Model.Aktie;
-import com.example.sharesapp.REST.*;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.REST.*;
 import org.junit.Test;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,5 +44,12 @@ public class ExampleUnitTest {
 
     @Test
     public void testHistorical() {
+        Requests req = new Requests();
+        try {
+             String s = req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
+             System.out.println(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

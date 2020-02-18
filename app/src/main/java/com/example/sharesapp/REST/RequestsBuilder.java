@@ -14,12 +14,15 @@ public class RequestsBuilder {
         return "search/{" + fragment + "}";
     }
 
-    public String getQuoteData(String symbol) {
+    public static String getQuoteData(String symbol) {
         return "data-points/" + symbol;
     }
 
-    public String getQuote(String symbol) {
+    public static String getQuote(String symbol) {
         return "stock/" + symbol + "quote/";
     }
 
+    public static String getHistoricalQuotePrices(String symbol, String range) {
+        return "stock/" + symbol + "/chart/" + range.toString();
+    }
 }

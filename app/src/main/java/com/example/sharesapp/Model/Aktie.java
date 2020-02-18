@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 public class Aktie{
     //ToDo neue Variablen für die Aktie
+
+
     int menge;
 
     public Aktie( JSONObject json){

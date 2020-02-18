@@ -1,6 +1,8 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 
 import com.example.sharesapp.Model.DataJson;
+import com.example.sharesapp.Model.FromServerClasses.Data;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.FileWriter;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
         ArrayList objects = new ArrayList();
         JSONArray b = new JSONArray();
 
-        public SaveToJSON(ArrayList aktien) {
+        public SaveToJSON(Data data) {
             //ToDo persisatance Stuff.
 
 

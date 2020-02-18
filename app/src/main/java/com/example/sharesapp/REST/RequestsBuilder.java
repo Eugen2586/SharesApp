@@ -14,5 +14,4 @@ public class RequestsBuilder {
         return "/search/{" + fragment + "}";
     }
 
-    
 }

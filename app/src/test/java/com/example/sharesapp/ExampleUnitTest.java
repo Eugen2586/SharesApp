@@ -79,7 +79,22 @@ public class ExampleUnitTest {
         }
     }
 
+    public void RequestSearchURL(){
+        //ToDO Dieser Request füllt nicht das Model!
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.);
+            RequestSearchURL regs = new RequestSearchURL(s);
+            ArrayList st = regs.getURLS();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+    }
 
 
     @Test

@@ -47,9 +47,12 @@ public class DepotFragment extends Fragment {
         });
 
         fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         uebersicht = new UebersichtFragment();
         statistik = new StatistikFragment();
+
+        fragmentTransaction.replace(R.id.fragment_loader, uebersicht).commit();
 
         fragment_loader = root.findViewById(R.id.fragment_loader);
         tabs = root.findViewById(R.id.tabs);

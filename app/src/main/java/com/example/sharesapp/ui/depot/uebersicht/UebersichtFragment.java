@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Model model = new Model();
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
@@ -36,7 +38,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new StockRecyclerViewAdapter(this.getContext(), animalNames);
+        adapter = new StockRecyclerViewAdapter(this.getContext(), model.getDaten().getAktienList());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),

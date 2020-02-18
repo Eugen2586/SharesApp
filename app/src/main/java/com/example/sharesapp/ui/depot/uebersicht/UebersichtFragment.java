@@ -37,7 +37,7 @@ public class UebersichtFragment extends Fragment {
 //        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
+        return root;
     }
 
 }

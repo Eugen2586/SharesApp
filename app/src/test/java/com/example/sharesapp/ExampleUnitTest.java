@@ -1,5 +1,6 @@
 package com.example.sharesapp;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
 import com.example.sharesapp.Model.Aktie;
@@ -46,7 +47,7 @@ public class ExampleUnitTest {
     @Test
      public void testTimeSeriesRequest(){
          Requests req = new Requests();
-        // Loads all Symobols TODO ins Datenmodell
+        //ToDo Datenmapping ist momentan noch nicht relevant!
         String s = null;
         try {
             s =  req.run(RequestsBuilder.getTimeSeriesURL("PPL"));
@@ -62,13 +63,13 @@ public class ExampleUnitTest {
 
     @Test
     public void RequestSearchURL(){
-
+        //ToDO Dieser Request füllt nicht das Model!
         Requests req = new Requests();
-        // Loads all Symobols TODO ins Datenmodell
         String s = null;
         try {
             s =  req.run(RequestsBuilder.getSearchURL("APPLE"));
-            RequestTimeSeriesURL regs = new RequestTimeSeriesURL(s);
+            RequestSearchURL regs = new RequestSearchURL(s);
+            ArrayList st = regs.getURLS();
 
         } catch (Exception e) {
             e.printStackTrace();

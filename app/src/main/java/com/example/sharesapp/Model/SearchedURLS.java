@@ -3,7 +3,6 @@ package com.example.sharesapp.Model;
 public class SearchedURLS {
     private String symbol;
     private String securityName;
-    private String pAcnlpIe;
     private String securityType;
     private String region;
     private String exchange;
@@ -23,14 +22,6 @@ public class SearchedURLS {
 
     public String getSecurityName() {
         return securityName;
-    }
-
-    public void setpAcnlpIe(String pAcnlpIe) {
-        this.pAcnlpIe = pAcnlpIe;
-    }
-
-    public String getpAcnlpIe() {
-        return pAcnlpIe;
     }
 
     public void setSecurityType(String securityType) {

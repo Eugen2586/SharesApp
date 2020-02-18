@@ -1,14 +1,17 @@
 package com.example.sharesapp;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
 import com.example.sharesapp.Model.Aktie;
 import com.example.sharesapp.REST.*;
-
 import org.junit.Test;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,6 +46,51 @@ public class ExampleUnitTest {
     }
 
     @Test
+     public void testTimeSeriesRequest(){
+         Requests req = new Requests();
+        //ToDo Datenmapping ist momentan noch nicht relevant!
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getTimeSeriesURL("PPL"));
+            RequestTimeSeriesURL regs = new RequestTimeSeriesURL(s);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+    }
+
+    @Test
+    public void RequestSearchURL(){
+        //ToDO Dieser Request füllt nicht das Model!
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getSearchURL("APPLE"));
+            RequestSearchURL regs = new RequestSearchURL(s);
+            ArrayList st = regs.getURLS();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+
+
+    }
+
+
+    @Test
     public void testHistorical() {
+        Requests req = new Requests();
+        try {
+             String s = req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
+             System.out.println(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

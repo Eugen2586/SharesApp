@@ -31,12 +31,12 @@ public class RequestSymbol {
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
         }
-
+       Model m = new Model();
+       m.getDaten().addAktienList(akl);
     }
 
     public ArrayList getAk() {
-        Model m = new Model();
-        m.getDaten().addAktienList(akl);
+
         return akl;
     }
 }

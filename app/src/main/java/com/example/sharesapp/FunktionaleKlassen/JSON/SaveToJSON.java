@@ -1,5 +1,7 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 
+import android.content.Context;
+
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 
 import org.json.simple.JSONArray;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
         ArrayList objects = new ArrayList();
         JSONArray b = new JSONArray();
 
-        public SaveToJSON(ArrayList<Aktie> data) throws IOException {
+        public SaveToJSON(ArrayList<Aktie> data, Context context) throws IOException {
             //Deklarationsbereich
             JSONArray jsonArray = new JSONArray();
             //ToDo Hier muss man alle Vairiablen ergänzen die gestashed werden sollen.
@@ -21,11 +23,14 @@ import java.util.ArrayList;
 
 
             //File Schreiben
-            FileWriter frw = new FileWriter("keep.dat");
+            //context.openFileOutput("config.txt", Context.MODE_PRIVATE)
+            // Wir suchen hier eine Context, der die entsprechenden einzelteile zusammenführt.
+            FileWriter frw = new FileWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE ) + "keep.dat");
             frw.write(String.valueOf(jsonArray));
             frw.flush();
             frw.close();
         }
+
 
         private JSONArray createJSONAktien(ArrayList<Aktie> p){
             JSONArray jsonArray = new JSONArray();

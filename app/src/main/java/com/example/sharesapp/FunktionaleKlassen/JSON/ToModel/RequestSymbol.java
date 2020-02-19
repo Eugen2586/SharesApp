@@ -18,7 +18,7 @@ public class RequestSymbol {
         JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
-            //ToDo zweite Datenebene
+            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
             ak.setSymbol(json.get("symbol").toString());
@@ -31,12 +31,12 @@ public class RequestSymbol {
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
         }
-
+       Model m = new Model();
+       m.getDaten().addAktienList(akl);
     }
 
     public ArrayList getAk() {
-        Model m = new Model();
-        m.getDaten().addAktienList(akl);
+
         return akl;
     }
 }

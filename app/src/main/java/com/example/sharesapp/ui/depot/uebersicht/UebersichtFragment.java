@@ -78,6 +78,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 //        fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.replace(R.id.nav_host_fragment, R.id.detail_layout).commit();
 //        view = getView();
-        Navigation.findNavController(view).navigate(R.id.action_uebersichtFragment_to_aktienDetailsFragment);
+        Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 }

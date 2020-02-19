@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,7 +37,6 @@ public class ExampleUnitTest {
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
             Model model = new Model();
-            a = model.getDaten().getAktienList();
             System.out.print("erreicht!");
 
         } catch (Exception e) {
@@ -110,5 +110,9 @@ public class ExampleUnitTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void todo(){
+        System.out.print(GregorianCalendar.getInstance().getTime());
     }
 }

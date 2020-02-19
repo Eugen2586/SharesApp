@@ -3,6 +3,8 @@ package com.example.sharesapp.FunktionaleKlassen.JSON;
 import android.content.Context;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.Model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
             //Deklarationsbereich
             JSONArray jsonArray = new JSONArray();
             //ToDo Hier muss man alle Vairiablen ergänzen die gestashed werden sollen.
-            jsonArray.add(createJSONAktien(data));
+            //jsonArray.add(createJSONAktien(data));
 
 
 
@@ -32,7 +34,10 @@ import java.util.ArrayList;
         }
 
 
-        private JSONArray createJSONAktien(ArrayList<Aktie> p){
+        private JSONArray createJSONAktien(){
+            Data d = new Model().getDaten();
+            ArrayList p = d.getAktienList().getValue();
+            //Arraylisten für die Aktien/Symbol Verknüpfung
             JSONArray jsonArray = new JSONArray();
             for (Object e: p) {
                 JSONObject a = new JSONObject();
@@ -47,6 +52,12 @@ import java.util.ArrayList;
                 a.put("Type", e1.getType());
                 jsonArray.add(a);
             }
+
+            //Arrayliste für das Depot Anlegen
+            JSONObject depot = new JSONObject();
+            //depot.put
+
+            //ArrayListe für die vergangenen Trades
             return jsonArray;
         }
 

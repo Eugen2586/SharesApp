@@ -1,9 +1,11 @@
 package com.example.sharesapp;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.*;
 import org.junit.Test;
@@ -33,12 +35,13 @@ public class ExampleUnitTest {
         String s = null;
         String b = null;
         try {
+            /*
             s =  req.run(RequestsBuilder.getAllSymbolsURL());
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
             Model model = new Model();
             System.out.print("erreicht!");
-
+            */
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,10 +91,7 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         String s = null;
         try {
-            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
-            RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            ArrayList st = regs.getDbs();
-
+            req.asyncRun(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.sixMonths));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,6 +111,43 @@ public class ExampleUnitTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void RequestGetQuote(){
+        Requests req = new Requests();
+        // Loads all Symobols TODO ins Datenmodell
+        String s = null;
+        String b = null;
+        try {
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+            ArrayList a = regs.getAk();
+            Model model = new Model();
+            System.out.print("erreicht!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( b != null) {
+            System.out.print(b);
+        }
+        ArrayList<Aktie> t = new Model().getDaten().getAktienList().getValue();
+    //ToDO Dieser Request füllt nicht das Model!
+
+        for (Object v : t) {
+            Aktie vs = (Aktie) v;
+            try {
+                s =  req.run(RequestsBuilder.getQuote(vs.getSymbol()));
+                RequestQuotePrices regs = new RequestQuotePrices(s);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if ( s != null) {
+                System.out.print(s);
+            }
+        }
+	}
     @Test
     public void todo(){
         System.out.print(GregorianCalendar.getInstance().getTime());

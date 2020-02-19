@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
@@ -24,11 +26,18 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     StockRecyclerViewAdapter adapter = null;
     RecyclerView recyclerView = null;
 
+    Data d;
+    TextView cash;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Model model = new Model();
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
+
+        d = new Model().getDaten();
+        cash = root.findViewById(R.id.stock_value_text);
+        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
 
         final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
             @Override

@@ -1,11 +1,6 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-import android.content.Context;
-
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
-import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
-import com.example.sharesapp.Model.Depot;
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
 
 import java.util.ArrayList;
 

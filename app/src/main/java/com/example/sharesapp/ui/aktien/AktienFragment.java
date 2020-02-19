@@ -35,14 +35,14 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         root = inflater.inflate(R.layout.fragment_aktien, container, false);
         Model model = new Model();
 
-        final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
+        final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
                 setAdapter(aktienList);
             }
         };
 
-        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), aktienObserver);
+        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), observer);
 
         setAdapter(model.getDaten().getAktienList().getValue());
 

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import com.example.sharesapp.ui.aktien.details.*;
+
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     StockRecyclerViewAdapter adapter;
@@ -28,6 +30,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         ArrayList<String> animalNames = new ArrayList<>();
         animalNames.add("Horse");
@@ -53,6 +58,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     @Override
     public void onItemClick(View view, int position) {
         //Toast.makeText(this.getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Fragment details = new AktienDetailsFragment(); //todo bind to aktien
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, details).commit();
 
     }
 }

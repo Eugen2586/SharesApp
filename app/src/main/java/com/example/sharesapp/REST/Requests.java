@@ -1,8 +1,12 @@
 package com.example.sharesapp.REST;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -45,5 +49,24 @@ public class Requests {
         try (Response response = client.newCall(request).execute()) {
             return Objects.requireNonNull(response.body()).string();
         }
+    }
+
+    public void asyncRun(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(baseURL + url + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 }

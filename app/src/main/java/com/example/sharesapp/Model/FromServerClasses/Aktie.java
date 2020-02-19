@@ -2,6 +2,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 
 
 public class Aktie {
@@ -10,7 +11,6 @@ public class Aktie {
 
     int menge;
     private String exchange;
-
     private String symbol;
     private String name;
     private String date;
@@ -21,6 +21,7 @@ public class Aktie {
     private float  preis;
     private int anzahl;
     private float change;
+    private ArrayList chart;
 
     public Aktie() {
 
@@ -125,5 +126,13 @@ public class Aktie {
 
     public Object getChange() {
         return change;
+    }
+
+    public void setChart(ArrayList chart) {
+        this.chart = chart;
+    }
+
+    public ArrayList getChart() {
+        return chart;
     }
 }

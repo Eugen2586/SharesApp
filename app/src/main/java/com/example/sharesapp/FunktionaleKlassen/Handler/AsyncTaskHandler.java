@@ -3,12 +3,15 @@ package com.example.sharesapp.FunktionaleKlassen.Handler;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
+
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +53,13 @@ public class AsyncTaskHandler {
                     }
                 }
             };
+        } else if(url.contains("chart") ){
+            try {
+                System.out.print(s);
+                new RequestHistoricalQuotePrices(s);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         if (runnable != null) {
             mHandler.post(runnable);

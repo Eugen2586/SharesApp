@@ -91,10 +91,7 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         String s = null;
         try {
-            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
-            RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            ArrayList st = regs.getDbs();
-
+            req.asyncRun(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.sixMonths));
         } catch (Exception e) {
             e.printStackTrace();
         }

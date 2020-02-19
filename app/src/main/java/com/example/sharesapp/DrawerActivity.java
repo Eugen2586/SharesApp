@@ -1,5 +1,6 @@
 package com.example.sharesapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -11,20 +12,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
-import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONArray;
+import okhttp3.internal.http2.Http2Reader;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class DrawerActivity extends AppCompatActivity {
 
@@ -32,32 +28,27 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initializes RequestClient
+        super.onCreate(savedInstanceState);
+        // Initializes RequestClient and loads all symbols
         Requests req = new Requests();
-        String s = null;
         try {
-            s =  req.run(RequestsBuilder.getAllSymbolsURL());
-            RequestSymbol regs = new RequestSymbol(s);
-
+            req.asyncRun(RequestsBuilder.getAllSymbolsURL());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
-        Model model = new Model();
-        System.out.println(model.getDaten().getAktienList());
-
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (view != null) {
+//                    Navigation.findNavController(getCallingActivity(), R.id.fragment_).navigateUp();
+//                }
+//            }
+//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -70,6 +61,18 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Initializes RequestClient
+        //Requests req = new Requests();
+        //String s = null;
+        //try {
+        //    s =  req.run(RequestsBuilder.getAllSymbolsURL());
+        //    RequestSymbol regs = new RequestSymbol(s);
+        //    ArrayList a = regs.getAk();
+//
+  //      } catch (Exception e) {
+//
+  //      } 
     }
 
     @Override

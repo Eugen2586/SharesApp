@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,53 +16,55 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    StockRecyclerViewAdapter adapter;
+    View root;
+    StockRecyclerViewAdapter adapter = null;
+    RecyclerView recyclerView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Model model = new Model();
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
+        root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
+        final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> aktienList) {
+                System.out.println("CHANGED: " + aktienList);
+                System.out.println("RECYLERVIEW: " + recyclerView);
+                if (recyclerView == null) {
+                    initRecyclerview();
+                }
+                if (adapter == null) {
+                    adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), aktienList);
+                    adapter.setClickListener(UebersichtFragment.this);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    adapter.setAktien(aktienList);
+                }
+            }
+        };
 
-        ArrayList<Aktie> aktienList = model.getDaten().getAktienList();
-//        aktienList = new ArrayList<>();
-//        Aktie aktie1 = new Aktie();
-//        aktie1.setName("Name1");
-//        Aktie aktie2 = new Aktie();
-//        aktie2.setName("Name2");
-//        aktienList.add(aktie1);
-//        aktienList.add(aktie2);
-        if (aktienList != null) {
-            // set up the RecyclerView
-            RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-            recyclerView.setLayoutManager(layoutManager);
-            adapter = new StockRecyclerViewAdapter(this.getContext(), aktienList);
-            adapter.setClickListener(this);
-            recyclerView.setAdapter(adapter);
-//            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-//                    ((LinearLayoutManager) layoutManager).getOrientation());
-//            recyclerView.addItemDecoration(dividerItemDecoration);
+        // set up the RecyclerView
+        if (recyclerView == null) {
+            initRecyclerview();
         }
-
 
         return root;
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this.getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        //todo bind to aktien
+        Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
+    public void initRecyclerview() {
+        recyclerView = root.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
     }
 }

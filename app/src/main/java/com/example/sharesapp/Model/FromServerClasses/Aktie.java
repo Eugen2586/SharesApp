@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 
 
-public class Aktie{
+public class Aktie {
     //ToDo neue Variablen für die Aktie
 
 
@@ -20,6 +20,10 @@ public class Aktie{
     private String enabled;
     private float  preis;
     private int anzahl;
+
+    public Aktie() {
+
+    }
 
     public Aktie(int menge, String exchange, String symbol, String name, String date, String type, String region, String currency, String enabled, float preis) {
         this.menge = menge;

@@ -30,6 +30,7 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         // Loads all Symobols TODO ins Datenmodell
         String s = null;
+        String b = null;
         try {
             s =  req.run(RequestsBuilder.getAllSymbolsURL());
             RequestSymbol regs = new RequestSymbol(s);
@@ -41,8 +42,8 @@ public class ExampleUnitTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if ( s != null) {
-            System.out.print(s);
+        if ( b != null) {
+            System.out.print(b);
         }
     }
 

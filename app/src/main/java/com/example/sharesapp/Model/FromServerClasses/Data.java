@@ -19,7 +19,7 @@ public class Data {
         }
     }
 
-    private MutableLiveData<ArrayList<Aktie>> aktien;
+    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
     public void addAktie(Aktie aktie) {
         if (aktien == null) {

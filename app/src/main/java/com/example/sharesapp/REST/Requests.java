@@ -1,5 +1,9 @@
 package com.example.sharesapp.REST;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,12 +66,18 @@ public class Requests {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                RequestSymbol regs = null;
+
                 try {
                     String s = Objects.requireNonNull(response.body()).string();
                     System.out.println(s);
-                    regs = new RequestSymbol(s);
-                    regs.getAk();
+                    final RequestSymbol regs = new RequestSymbol(s);
+                    Handler mhandler = new Handler(Looper.getMainLooper());
+                    mhandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            regs.getAk();
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

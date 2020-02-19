@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Aktie> mData = new ArrayList<>();
+    private ArrayList<Aktie> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
@@ -47,6 +47,10 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     @Override
     public int getItemCount() {
         return mData == null? 0 : mData.size();
+    }
+
+    public void setAktien(ArrayList<Aktie> data) {
+        mData = data;
     }
 
 

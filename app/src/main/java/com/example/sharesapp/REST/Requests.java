@@ -1,8 +1,11 @@
 package com.example.sharesapp.REST;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -19,7 +22,7 @@ public class Requests {
             = MediaType.get("application/json; charset=utf-8");
     private static OkHttpClient client = null;
     private final String baseURL = "https://sandbox.iexapis.com/stable/";
-    private String token = "?token=Tpk_f10f1ddb8a1d4baaa44d427f0ddbea19";
+    private String token = "?token=Tpk_f26c06bf165b426eb0adb59f1f1d9ee4";
 
     public Requests() {
         if (client == null) {
@@ -59,7 +62,15 @@ public class Requests {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                System.out.println(Objects.requireNonNull(response.body()).string());
+                RequestSymbol regs = null;
+                try {
+                    String p = new String();
+                    String s = Objects.requireNonNull(response.body()).string();
+                    regs = new RequestSymbol(p);
+                    regs.getAk();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

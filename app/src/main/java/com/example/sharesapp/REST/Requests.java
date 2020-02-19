@@ -17,7 +17,7 @@ public class Requests {
 
     private static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-    static OkHttpClient client = null;
+    private static OkHttpClient client = null;
     private final String baseURL = "https://sandbox.iexapis.com/stable/";
     private String token = "?token=Tpk_f10f1ddb8a1d4baaa44d427f0ddbea19";
 
@@ -59,7 +59,7 @@ public class Requests {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                
+                System.out.println(Objects.requireNonNull(response.body()).string());
             }
 
             @Override

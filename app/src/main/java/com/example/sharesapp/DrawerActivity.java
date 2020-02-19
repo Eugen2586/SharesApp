@@ -26,23 +26,15 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initializes RequestClient and loads all symbols
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                Requests req = new Requests();
-                String s = null;
-                try {
-                    s = req.run(RequestsBuilder.getAllSymbolsURL());
-                    RequestSymbol regs = new RequestSymbol(s);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
         super.onCreate(savedInstanceState);
+        // Initializes RequestClient and loads all symbols
+        Requests req = new Requests();
+        try {
+            req.asyncRun(RequestsBuilder.getAllSymbolsURL());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

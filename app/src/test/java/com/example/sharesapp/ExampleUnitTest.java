@@ -35,8 +35,8 @@ public class ExampleUnitTest {
             s =  req.run(RequestsBuilder.getAllSymbolsURL());
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
-            Model m = new Model();
-            b = m.getDaten().getAktienList().get(0).toString();
+            Model model = new Model();
+            a = model.getDaten().getAktienList();
             System.out.print("erreicht!");
 
         } catch (Exception e) {
@@ -88,9 +88,9 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         String s = null;
         try {
-            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("APPL", Range.oneMonth));
-            //RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            //ArrayList st = regs.getURLS();
+            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
+            RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
+            ArrayList st = regs.getDbs();
 
         } catch (Exception e) {
             e.printStackTrace();

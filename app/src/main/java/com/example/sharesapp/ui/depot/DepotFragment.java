@@ -19,24 +19,15 @@ import com.google.android.material.tabs.TabLayout;
 
 public class DepotFragment extends Fragment {
 
-    private DepotViewModel depotViewModel;
-    TabLayout tabs;
-    TabLayout.Tab tab_uebersicht;
-    TabLayout.Tab tab_statistik;
-    LinearLayout fragment_loader;
-    FragmentTransaction fragmentTransaction;
-    FragmentManager fragmentManager;
-    Fragment uebersicht;
-    Fragment statistik;
+    private FragmentTransaction fragmentTransaction;
+    private FragmentManager fragmentManager;
+    private Fragment uebersicht;
+    private Fragment statistik;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        depotViewModel =
-                ViewModelProviders.of(this).get(DepotViewModel.class);
         View root = inflater.inflate(R.layout.fragment_depot, container, false);
 
-        fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
-        tabs = root.findViewById(R.id.depot_tab_layout);
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -44,9 +35,8 @@ public class DepotFragment extends Fragment {
         statistik = new StatistikFragment();
 
         fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht).commit();
+        TabLayout tabs = root.findViewById(R.id.depot_tab_layout);
 
-        fragment_loader = root.findViewById(R.id.fragment_loader_linear_layout);
-        tabs = root.findViewById(R.id.depot_tab_layout);
         if (tabs == null) {
             System.out.println("NULL");
         }

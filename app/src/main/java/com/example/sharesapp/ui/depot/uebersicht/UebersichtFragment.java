@@ -73,11 +73,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        //Toast.makeText(this.getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-//        Fragment details = new AktienDetailsFragment(); //todo bind to aktien
-//        fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.nav_host_fragment, R.id.detail_layout).commit();
-//        view = getView();
+        //todo bind to aktien
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 }

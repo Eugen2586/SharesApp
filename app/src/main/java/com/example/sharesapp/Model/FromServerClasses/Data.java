@@ -32,10 +32,6 @@ public class Data {
         this.depot = depot;
     }
 
-
-
-
-
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
     public void addTrade(Trade trade){

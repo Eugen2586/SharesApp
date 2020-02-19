@@ -1,15 +1,10 @@
 package com.example.sharesapp.REST;
 
-import android.os.Handler;
-import android.os.Looper;
-
-import com.example.sharesapp.DrawerActivity;
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.Handler.AsyncTaskHandler;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -20,13 +15,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class Requests {
 
     private static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
     private static OkHttpClient client = null;
     private final String baseURL = "https://sandbox.iexapis.com/stable/";
-    private String token = "?token=Tpk_f26c06bf165b426eb0adb59f1f1d9ee4";
+    private String token = "?token=Tpk_f10f1ddb8a1d4baaa44d427f0ddbea19";
 
     public Requests() {
         if (client == null) {
@@ -66,20 +62,7 @@ public class Requests {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                final String s = Objects.requireNonNull(response.body()).string();
-
-                Handler mhandler = new Handler(Looper.getMainLooper());
-                mhandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            final RequestSymbol regs = new RequestSymbol(s);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                AsyncTaskHandler.handle(response);
             }
 
             @Override

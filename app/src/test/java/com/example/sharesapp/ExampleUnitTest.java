@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertEquals;
 
@@ -127,5 +128,9 @@ public class ExampleUnitTest {
         if ( s != null) {
             System.out.print(s);
         }
+	}
+    @Test
+    public void todo(){
+        System.out.print(GregorianCalendar.getInstance().getTime());
     }
 }

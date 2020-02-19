@@ -48,6 +48,8 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
             }
         };
 
+        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), aktienObserver);
+
         // set up the RecyclerView
         if (recyclerView == null) {
             initRecyclerview();

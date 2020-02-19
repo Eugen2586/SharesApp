@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 
         private JSONArray createJSONAktien(ArrayList<Aktie> p){
+
+            //Arraylisten für die Aktien/Symbol Verknüpfung
             JSONArray jsonArray = new JSONArray();
             for (Object e: p) {
                 JSONObject a = new JSONObject();
@@ -47,6 +49,11 @@ import java.util.ArrayList;
                 a.put("Type", e1.getType());
                 jsonArray.add(a);
             }
+
+            //Arrayliste für das Depot Anlegen
+
+
+            //ArrayListe für die vergangenen Trades
             return jsonArray;
         }
 

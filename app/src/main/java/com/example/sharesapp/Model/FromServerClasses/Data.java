@@ -1,17 +1,15 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
-import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
-import com.example.sharesapp.Model.Depot;
 
 import java.util.ArrayList;
 
 public class Data {
     private ArrayList<Trade> tradelist;
-    private ArrayList<Depot> depot;
+    private Depot depot;
+    private ArrayList<Aktie> favoriten;
 
     public Data(){
         //ToDo initialisation Stuff here!
@@ -21,6 +19,17 @@ public class Data {
         }
         catch(Exception e){
         }
+    }
+    public Depot getDepot() {
+        if (depot == null) {
+            depot = new Depot();
+        }
+        return depot;
+
+    }
+
+    public void setDepot(Depot depot) {
+        this.depot = depot;
     }
 
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();

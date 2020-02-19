@@ -21,7 +21,7 @@ class Trade {
         this.preis = preis;
         this.date = date;
     }
-    
+
     public Aktie getAktie() {
         return aktie;
     }
@@ -42,5 +42,12 @@ class Trade {
     public Date getDate() {
         return date;
     }
+class Trade {
+    private int anzahl;
+    private Aktie aktie;
+    private boolean kaufen;
+    private float wert;
+
+
 
 }

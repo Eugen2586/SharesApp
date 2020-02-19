@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/aktienDetailsFragment"
         android:name="com.example.sharesapp.ui.aktien.details.AktienDetailsFragment"
-        android:label="fragment_aktien_details"
+        android:label="Wertpapier Details"
         tools:layout="@layout/fragment_aktien_details" />
     <fragment
         android:id="@+id/uebersichtFragment"

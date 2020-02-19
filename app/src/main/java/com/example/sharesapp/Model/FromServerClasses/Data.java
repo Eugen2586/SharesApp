@@ -1,16 +1,15 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-import android.content.Context;
+
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.Depot;
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
 
 import java.util.ArrayList;
 
 public class Data {
-    private ArrayList<Aktie> aktien;
     private ArrayList<Trade> tradelist;
     private ArrayList<Depot> depot;
 
@@ -23,6 +22,8 @@ public class Data {
         catch(Exception e){
         }
     }
+
+    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
     public void addTrade(Trade trade){
         tradelist.add(trade);
@@ -50,28 +51,30 @@ public class Data {
     }
 
 
-
     public void addAktie(Aktie aktie) {
         if (aktien == null) {
-            aktien.add(aktie);
+            ArrayList<Aktie> a = null;
+            aktien.postValue(a);
+            a.add(aktie);
+            aktien.setValue(a);
         }
 
     }
 
     public void addAktienList(ArrayList<Aktie> ar) {
-        aktien = ar;
+        aktien.setValue(ar);
     }
 
-    public ArrayList getAktienList() {
+    public MutableLiveData<ArrayList<Aktie>> getAktienList() {
         return aktien;
     }
 
     protected void finalize(){
         //ToDo do Persistenz
         try {
-            // SaveToJSON stj = new SaveToJSON(aktien, );
-        }catch(Exception e){
-
+            //SaveToJSON stj = new SaveToJSON(aktien.getValue(), );
+        } catch(Exception e){
+            e.printStackTrace();
         }
 
     }

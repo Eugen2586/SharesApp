@@ -36,7 +36,6 @@ public class ExampleUnitTest {
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
             Model model = new Model();
-            a = model.getDaten().getAktienList();
             System.out.print("erreicht!");
 
         } catch (Exception e) {

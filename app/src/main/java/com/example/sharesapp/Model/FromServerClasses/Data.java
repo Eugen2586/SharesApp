@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class Data {
     private ArrayList<Aktie> aktien;
     private ArrayList<Trade> tradelist;
-    private ArrayList<Depot> depot;
+    private Depot depot;
+    private ArrayList<Aktie> favoriten;
 
     public Data(){
         //ToDo initialisation Stuff here!
@@ -18,6 +19,21 @@ public class Data {
         catch(Exception e){
         }
     }
+    public Depot getDepot() {
+        if (depot == null) {
+            depot = new Depot();
+        }
+        return depot;
+
+    }
+
+    public void setDepot(Depot depot) {
+        this.depot = depot;
+    }
+
+
+
+
 
     public void addTrade(Trade trade){
         tradelist.add(trade);

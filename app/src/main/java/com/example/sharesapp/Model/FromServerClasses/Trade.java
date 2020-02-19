@@ -2,7 +2,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import java.util.Date;
 
-class Trade {
+public class Trade {
     //ToDo Hier werden die Attribute eines Trades gepflegt
 
     /* Hier sollen die entsprechenden Trades gestored werden */

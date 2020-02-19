@@ -89,7 +89,7 @@ public class ExampleUnitTest {
         try {
             s =  req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
             RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            ArrayList st = regs.getURLS();
+            ArrayList st = regs.getDbs();
 
         } catch (Exception e) {
             e.printStackTrace();

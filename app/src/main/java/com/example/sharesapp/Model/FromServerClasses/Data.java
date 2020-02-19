@@ -11,7 +11,11 @@ public class Data {
     public Data(){
         //ToDo initialisation Stuff here!
         LoadFromJson j = new LoadFromJson();
-        addArrayList(j.getAktien());
+        try {
+        j.readJson();
+        }
+        catch(Exception e){
+        }
     }
 
     private ArrayList<Aktie> aktien;
@@ -32,7 +36,11 @@ public class Data {
 
     protected void finalize(){
         //ToDo do Persistenz
-        SaveToJSON stj = new SaveToJSON( aktien );
+        try {
+            SaveToJSON stj = new SaveToJSON(aktien);
+        }catch(Exception e){
+
+        }
 
     }
 }

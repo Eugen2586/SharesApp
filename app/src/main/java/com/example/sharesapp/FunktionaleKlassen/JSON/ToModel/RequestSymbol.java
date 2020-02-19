@@ -36,7 +36,7 @@ public class RequestSymbol {
 
     public ArrayList getAk() {
         Model m = new Model();
-        m.getDaten().addArrayList(akl);
+        m.getDaten().addAktienList(akl);
         return akl;
     }
 }

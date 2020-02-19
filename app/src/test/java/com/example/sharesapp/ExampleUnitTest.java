@@ -110,4 +110,22 @@ public class ExampleUnitTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void RequestGetQuote(){
+        //ToDO Dieser Request füllt nicht das Model!
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getQuote("AAPL"));
+            RequestQuotePrices regs = new RequestQuotePrices(s);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( s != null) {
+            System.out.print(s);
+        }
+    }
 }

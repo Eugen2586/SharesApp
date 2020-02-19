@@ -2,10 +2,8 @@
 package com.example.sharesapp.FunktionaleKlassen.Diagramm;
 
 
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.LineRadarDataSet;
 
 import org.achartengine.chart.LineChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -40,8 +38,9 @@ public class BaueDiagramm {
      */
 
     LineChart stock;
-    BaueDiagramm(ArrayList werte, String bezeichner ){
-        
+
+    public BaueDiagramm(ArrayList werte, String bezeichner) {
+
         //ToDo Aktuell nur zum Anzeigen einer Aktie!
 
         XYMultipleSeriesDataset xyd = new XYMultipleSeriesDataset();
@@ -55,36 +54,37 @@ public class BaueDiagramm {
             // ToDo gegen Z könnten hier auch Daten ersetzt werden.
             values.add(new Entry(z, (float) val));
         }
-        LineDataSet d = new LineDataSet(values ,"DataSheet " + (z+1)  );
+        LineDataSet d = new LineDataSet(values, "DataSheet " + (z + 1));
 
         d.setLineWidth(2.5f);
-        d.setCircleRadius( 0 );
-        d.setColor( 0 );
-        XYSeries xySeries = new XYSeries(bezeichner,werte.size());
+        d.setCircleRadius(0);
+        d.setColor(0);
+        XYSeries xySeries = new XYSeries(bezeichner, werte.size());
         //Datenstuff soll hier gepflegt werden!
         xyd.addSeries(xySeries);
         //Achsenstuff soll hier gepflegt werden!
         //xyr
-        LineChart stock = new LineChart( xyd , xyr );
+        LineChart stock = new LineChart(xyd, xyr);
         stock.getDataset();
         this.stock = stock;
 
     }
-    public LineChart getDiagramm( ){
+
+    public LineChart getDiagramm() {
 
         return stock;
 
     }
 
 
-
-    public void buidDiagram(){
+    public void buildDiagram() {
 
     }
-    private ArrayList datenaufbereiten( ArrayList werte ){
+
+    private ArrayList datenaufbereiten(ArrayList werte) {
         //ToDo Implementiere hier die Datenaufbereitung.
         //mach die Daten zurecht
-        for (Object o: werte) {
+        for (Object o : werte) {
 
             //ToDo Übertrag noch neu initialisieren.
             werte.add(null);

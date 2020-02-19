@@ -5,8 +5,14 @@
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/statistik_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tag" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -16,11 +22,21 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/monat" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/jahr" />
+
     </com.google.android.material.tabs.TabLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="vertical">
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/line_chart_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>

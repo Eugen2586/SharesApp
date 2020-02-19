@@ -27,7 +27,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Model model = new Model();
-        // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
         final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {

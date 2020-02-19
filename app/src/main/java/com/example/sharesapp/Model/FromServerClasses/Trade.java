@@ -21,7 +21,7 @@ public class Trade {
         this.preis = preis;
         this.date = date;
     }
-    
+
     public Aktie getAktie() {
         return aktie;
     }
@@ -33,7 +33,6 @@ public class Trade {
     public boolean isKauf() {
         return kauf;
     }
-
 
     public float getPreis() {
         return preis;

@@ -67,20 +67,19 @@ public class Requests {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-                try {
-                    String s = Objects.requireNonNull(response.body()).string();
-                    System.out.println(s);
-                    final RequestSymbol regs = new RequestSymbol(s);
-                    Handler mhandler = new Handler(Looper.getMainLooper());
-                    mhandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            regs.getAk();
+                final String s = Objects.requireNonNull(response.body()).string();
+
+                Handler mhandler = new Handler(Looper.getMainLooper());
+                mhandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final RequestSymbol regs = new RequestSymbol(s);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    }
+                });
             }
 
             @Override

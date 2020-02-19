@@ -34,7 +34,6 @@ class Trade {
         return kauf;
     }
 
-
     public float getPreis() {
         return preis;
     }
@@ -42,12 +41,5 @@ class Trade {
     public Date getDate() {
         return date;
     }
-class Trade {
-    private int anzahl;
-    private Aktie aktie;
-    private boolean kaufen;
-    private float wert;
-
-
 
 }

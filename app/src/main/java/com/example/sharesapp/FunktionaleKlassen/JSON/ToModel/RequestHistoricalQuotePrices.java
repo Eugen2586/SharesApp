@@ -45,9 +45,9 @@ public class RequestHistoricalQuotePrices {
     }
     
     */
+    }
 
-
-    public ArrayList getURLS() {
+    public ArrayList getDbs() {
         return dbs;
     }
 

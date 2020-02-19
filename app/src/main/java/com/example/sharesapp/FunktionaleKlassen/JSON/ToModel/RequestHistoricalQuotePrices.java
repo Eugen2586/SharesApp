@@ -44,7 +44,7 @@ public class RequestHistoricalQuotePrices {
         Model m = new Model();
         for (Object f: m.getDaten().getAktienList().getValue()){
             Aktie g = (Aktie) f;
-            if (dbs.size()> 0 && g.getName().equals(((Aktie)dbs.get(0)).getName()){
+            if (dbs.size()> 0 && g.getName().equals(((Aktie)dbs.get(0)).getName())){
                 g.setChart(dbs);
             }
         }

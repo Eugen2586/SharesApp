@@ -32,17 +32,6 @@ public class AsyncTaskHandler {
                 public void run() {
                     try {
                         new RequestSymbol(s);
-                        ArrayList<Aktie> m = new Model().getDaten().getAktienList().getValue();
-                        for (Object v : m) {
-                            Aktie vs = (Aktie) v;
-                            try {
-                                Requests req = new Requests();
-                                req.asyncRun(RequestsBuilder.getQuote(vs.getSymbol()));
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

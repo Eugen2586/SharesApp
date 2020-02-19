@@ -1,5 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 import android.net.ParseException;
+import android.os.Environment;
 import android.view.Display;
 
 import com.example.sharesapp.Model.DataJson;
@@ -26,7 +27,7 @@ public class LoadFromJson {
 
 
     public void readJson() throws Exception {
-        FileReader fr = new FileReader("keep.dat");
+        FileReader fr = new FileReader(Environment.getDownloadCacheDirectory() + "keep.dat");
         BufferedReader br = new BufferedReader(fr);
         String st = new String();
         String line = new String();

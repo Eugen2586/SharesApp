@@ -51,7 +51,7 @@ public class RequestHistoricalQuotePrices {
         return dbs;
     }
 
-    public void setURLS(ArrayList urls) {
-        this.dbs = urls;
+    public void setURLS( ArrayList dbs) {
+        this.dbs = dbs;
     }
 }

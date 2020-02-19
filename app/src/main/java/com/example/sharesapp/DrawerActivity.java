@@ -61,6 +61,18 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Initializes RequestClient
+        //Requests req = new Requests();
+        //String s = null;
+        //try {
+        //    s =  req.run(RequestsBuilder.getAllSymbolsURL());
+        //    RequestSymbol regs = new RequestSymbol(s);
+        //    ArrayList a = regs.getAk();
+//
+  //      } catch (Exception e) {
+//
+  //      } 
     }
 
     @Override

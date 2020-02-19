@@ -1,13 +1,17 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
+import com.example.sharesapp.Model.Depot;
 
 import java.util.ArrayList;
 
 public class Data {
+    private ArrayList<Trade> tradelist;
+    private ArrayList<Depot> depot;
 
     public Data(){
         //ToDo initialisation Stuff here!
@@ -21,6 +25,32 @@ public class Data {
 
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
+    public void addTrade(Trade trade){
+        tradelist.add(trade);
+    }
+
+    public void setTradelist(ArrayList<Trade> trades){
+        tradelist = trades;
+    }
+    public ArrayList<Trade> getTrades(){
+        return tradelist;
+    }
+
+    public float getGewinn(){
+        float sum = 0;
+        for (Object e: tradelist) {
+            Trade t = (Trade) e;
+            if(t.isKauf()) {
+                sum -= t.getPreis();
+            }
+            else{
+                sum += t.getPreis();
+            }
+        }
+        return sum;
+    }
+
+
     public void addAktie(Aktie aktie) {
         if (aktien == null) {
             ArrayList<Aktie> a = null;
@@ -28,6 +58,7 @@ public class Data {
             a.add(aktie);
             aktien.setValue(a);
         }
+
     }
 
     public void addAktienList(ArrayList<Aktie> ar) {
@@ -41,9 +72,9 @@ public class Data {
     protected void finalize(){
         //ToDo do Persistenz
         try {
-            SaveToJSON stj = new SaveToJSON(aktien.getValue());
-        }catch(Exception e){
-
+            //SaveToJSON stj = new SaveToJSON(aktien.getValue(), );
+        } catch(Exception e){
+            e.printStackTrace();
         }
 
     }

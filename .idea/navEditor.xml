@@ -10,7 +10,14 @@
                 <map>
                   <entry key="aktienDetailsFragment">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-197" />
+                            <option name="y" value="337" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="nav_aktien">
@@ -76,14 +83,11 @@
                   <entry key="uebersichtFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_uebersichtFragment_to_aktienDetailsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-407" />
+                            <option name="y" value="152" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,17 +16,25 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 public class NewgameFragment extends Fragment {
 
     private NewgameViewModel newgameViewModel;
+    Data d;
+    TextView cash;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         newgameViewModel =
                 ViewModelProviders.of(this).get(NewgameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_newgame, container, false);
+
+        d = new Model().getDaten();
+        cash = root.findViewById(R.id.betrag_text);
+        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
 
         Button reset_button = root.findViewById(R.id.reset_button);
         reset_button.setOnClickListener(new View.OnClickListener() {

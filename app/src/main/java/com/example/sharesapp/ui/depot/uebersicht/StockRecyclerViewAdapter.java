@@ -10,18 +10,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private ArrayList<Aktie> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    StockRecyclerViewAdapter(Context context, List<String> data) {
+    StockRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -36,8 +37,9 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        Aktie aktie = mData.get(position);
+        String name = aktie.getName();
+        holder.myTextView.setText(name);
     }
 
     // total number of rows
@@ -66,7 +68,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
+    Aktie getItem(int id) {
         return mData.get(id);
     }
 

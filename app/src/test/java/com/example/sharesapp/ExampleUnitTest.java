@@ -4,6 +4,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQu
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.*;
 import org.junit.Test;
 
@@ -33,6 +34,8 @@ public class ExampleUnitTest {
             s =  req.run(RequestsBuilder.getAllSymbolsURL());
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
+            Model model = new Model();
+            a = model.getDaten().getAktienList();
             System.out.print("erreicht!");
 
         } catch (Exception e) {
@@ -84,9 +87,9 @@ public class ExampleUnitTest {
         Requests req = new Requests();
         String s = null;
         try {
-            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("APPL", Range.oneMonth));
+            s =  req.run(RequestsBuilder.getHistoricalQuotePrices("AAPL", Range.oneMonth));
             RequestHistoricalQuotePrices regs = new RequestHistoricalQuotePrices(s);
-            ArrayList st = regs.getURLS();
+            ArrayList st = regs.getDbs();
 
         } catch (Exception e) {
             e.printStackTrace();

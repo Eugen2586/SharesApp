@@ -1,23 +1,46 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 
 import java.util.ArrayList;
 
 public class Data {
 
-    ArrayList aktien;
+    public Data(){
+        //ToDo initialisation Stuff here!
+        LoadFromJson j = new LoadFromJson();
+        try {
+        j.readJson();
+        }
+        catch(Exception e){
+        }
+    }
 
-    public void addAktie(Aktie aktie){
+    private ArrayList<Aktie> aktien;
+
+    public void addAktie(Aktie aktie) {
         if (aktien == null) {
             aktien.add(aktie);
         }
     }
 
-    public void addArrayList(ArrayList ar){
+    public void addAktienList(ArrayList<Aktie> ar) {
         aktien = ar;
     }
-    public ArrayList getAktienList(){
+
+    public ArrayList getAktienList() {
         return aktien;
+    }
+
+    protected void finalize(){
+        //ToDo do Persistenz
+        try {
+            SaveToJSON stj = new SaveToJSON(aktien);
+        }catch(Exception e){
+
+        }
+
     }
 }

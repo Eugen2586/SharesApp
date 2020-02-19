@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,18 +32,33 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initializes RequestClient
+        Requests req = new Requests();
+        String s = null;
+        try {
+            s =  req.run(RequestsBuilder.getAllSymbolsURL());
+            RequestSymbol regs = new RequestSymbol(s);
+
+        } catch (Exception e) {
+
+        }
+
+        Model model = new Model();
+        System.out.println(model.getDaten().getAktienList());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //todo add action or delete
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (view != null) {
+//                    Navigation.findNavController(getCallingActivity(), R.id.fragment_).navigateUp();
+//                }
+//            }
+//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -57,16 +73,16 @@ public class DrawerActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         // Initializes RequestClient
-        Requests req = new Requests();
-        String s = null;
-        try {
-            s =  req.run(RequestsBuilder.getAllSymbolsURL());
-            RequestSymbol regs = new RequestSymbol(s);
-            ArrayList a = regs.getAk();
-
-        } catch (Exception e) {
-
-        } 
+        //Requests req = new Requests();
+        //String s = null;
+        //try {
+        //    s =  req.run(RequestsBuilder.getAllSymbolsURL());
+        //    RequestSymbol regs = new RequestSymbol(s);
+        //    ArrayList a = regs.getAk();
+//
+  //      } catch (Exception e) {
+//
+  //      } 
     }
 
     @Override

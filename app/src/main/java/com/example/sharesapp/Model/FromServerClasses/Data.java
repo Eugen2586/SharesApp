@@ -24,6 +24,7 @@ public class Data {
         if (aktien == null) {
             aktien.add(aktie);
         }
+
     }
 
     public void addAktienList(ArrayList<Aktie> ar) {

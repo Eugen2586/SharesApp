@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
@@ -36,7 +37,8 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
         d = new Model().getDaten();
         cash = root.findViewById(R.id.stock_value_text);
-        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
+        String wert = (new Anzeige()).makeItBeautiful(d.getDepot().getGeldwert());
+        cash.setText((wert + "€"));
 
         final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
             @Override

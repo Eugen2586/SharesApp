@@ -46,7 +46,7 @@ public class LoadFromJson {
                 for (Object ts : ((JSONArray) t)) {
 
                     JSONObject obj = (JSONObject) ts;
-                    Aktie aktie = new aktie();
+                    Aktie aktie = new Aktie();
                     //ToDo zweite Datenebene
                     aktie.setCurrency((String) obj.get("Currency"));
                     aktie.setDate((String) obj.get("Date"));

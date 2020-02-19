@@ -13,42 +13,42 @@ import java.util.ArrayList;
 import java.util.List;
 */
 
+import android.provider.ContactsContract;
+
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.LineRadarDataSet;
+
+import org.achartengine.chart.LineChart;
+
+import java.util.ArrayList;
+
 public class BaueDiagramm {
-    /*
-    Stock stock = null;
+
+    LineChart stock;
 
     BaueDiagramm(ArrayList werte ){
-
-
-        Table table = Table.instantiate("x");
-        table.addData(datenaufbereiten( werte ));
-
-        TableMapping mapping = table.mapAs("{open: 'open', high: 'high', low: 'low', close: 'close'}");
-
-        Stock stock = AnyChart.stock();
-
-        Plot plot = stock.plot(0);
-        plot.yGrid(true)
-                .xGrid(true)
-                .yMinorGrid(true)
-                .xMinorGrid(true);
-
-        plot.ema(table.mapAs("{value: 'close'}"), 20d, StockSeriesType.LINE);
-
-        plot.ohlc(mapping)
-                .name("CSCO")
-                .legendItem("{\n" +
-                        "        iconType: 'rising-falling'\n" +
-                        "      }");
-
-        stock.scroller().ohlc(mapping);
-
+        
+        //ToDo Aktuell nur zum Anzeigen einer Aktie!
+        LineChart stock;
+        
+        ArrayList<Entry> values = new ArrayList<>();
+        int z = 0;
+        for (Object o : werte) {
+            double val = (double) werte.get(z);
+            // ToDo gegen Z könnten hier auch Daten ersetzt werden.
+            values.add(new Entry(z, (float) val));
+        }
+        LineDataSet d = new LineDataSet(values ,"DataSheet " + (z+1)  )
+        d.setLineWidth(2.5f);
+        d.setCircleRadius( 0 );
+        d.setColor( 0 );
+        stock.getDataset();
         this.stock = stock;
 
-
-
     }
-    public Stock getDiagramm( ){
+    public LineChart getDiagramm( ){
 
         return stock;
 
@@ -59,22 +59,15 @@ public class BaueDiagramm {
     public void buidDiagram(){
 
     }
-    private List<DataEntry> datenaufbereiten( ArrayList werte ){
+    private ArrayList datenaufbereiten( ArrayList werte ){
         //ToDo Implementiere hier die Datenaufbereitung.
         //mach die Daten zurecht
         for (Object o: werte) {
-            DataEntry entry = (DataEntry) o;
+
             //ToDo Übertrag noch neu initialisieren.
-            werte.add(new OHCLDataEntry(638380800000L,0.0825,0.0842,0.0816,0.0842));
+            werte.add(null);
         }
         return werte;
     }
 
-    private class OHCLDataEntry extends HighLowDataEntry {
-        OHCLDataEntry(Long x, Double open, Double high, Double low, Double close) {
-            super(x, high, low);
-            setValue("open", open);
-            setValue("close", close);
-        }
-    }*/
 }

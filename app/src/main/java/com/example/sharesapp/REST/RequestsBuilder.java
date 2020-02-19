@@ -15,7 +15,7 @@ public class RequestsBuilder {
 
 
     public static String getSearchURL(String fragment) {
-            return "/search/{" + fragment + "}";
+            return "search/{" + fragment + "}";
     }
 
     public static String getQuoteData(String symbol) {
@@ -23,7 +23,7 @@ public class RequestsBuilder {
     }
 
     public static String getQuote(String symbol) {
-        return "stock/" + symbol + "quote/";
+        return "stock/" + symbol + "/quote";
     }
 
     public static String getHistoricalQuotePrices(String symbol, String range) {

@@ -1,6 +1,7 @@
 package com.example.sharesapp;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearchURL;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestTimeSeriesURL;
@@ -120,7 +121,6 @@ public class ExampleUnitTest {
         try {
             s =  req.run(RequestsBuilder.getQuote("AAPL"));
             RequestQuotePrices regs = new RequestQuotePrices(s);
-
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -20,6 +20,7 @@ public class Aktie {
     private String enabled;
     private float  preis;
     private int anzahl;
+    private float change;
 
     public Aktie() {
 
@@ -116,5 +117,13 @@ public class Aktie {
 
     public void setAnzahl(int anzahl) {
         this.anzahl = anzahl;
+    }
+
+    public void setChange(float change) {
+        this.change = change;
+    }
+
+    public Object getChange() {
+        return change;
     }
 }

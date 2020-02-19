@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,13 +47,13 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         animalNames.add("Goat");
 
         ArrayList<Aktie> aktienList = model.getDaten().getAktienList();
-//        aktienList = new ArrayList<>();
-//        Aktie aktie1 = new Aktie();
-//        aktie1.setName("Name1");
-//        Aktie aktie2 = new Aktie();
-//        aktie2.setName("Name2");
-//        aktienList.add(aktie1);
-//        aktienList.add(aktie2);
+        aktienList = new ArrayList<>();
+        Aktie aktie1 = new Aktie();
+        aktie1.setName("Name1");
+        Aktie aktie2 = new Aktie();
+        aktie2.setName("Name2");
+        aktienList.add(aktie1);
+        aktienList.add(aktie2);
         if (aktienList != null) {
             // set up the RecyclerView
             RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -73,9 +74,10 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     @Override
     public void onItemClick(View view, int position) {
         //Toast.makeText(this.getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-        Fragment details = new AktienDetailsFragment(); //todo bind to aktien
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, details).commit();
-
+//        Fragment details = new AktienDetailsFragment(); //todo bind to aktien
+//        fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.nav_host_fragment, R.id.detail_layout).commit();
+//        view = getView();
+        Navigation.findNavController(view).navigate(R.id.action_uebersichtFragment_to_aktienDetailsFragment);
     }
 }

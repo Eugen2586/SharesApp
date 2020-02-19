@@ -10,6 +10,7 @@ public class Aktie{
 
     int menge;
     private String exchange;
+
     private String symbol;
     private String name;
     private String date;
@@ -17,15 +18,20 @@ public class Aktie{
     private String region;
     private String currency;
     private String enabled;
+    private float  preis;
+    private int anzahl;
 
-    public Aktie( JSONObject json){
-        // Die Klasse wird von der eingebenen JSON initialisiert.
-
-
-    }
-
-    public Aktie() {
-
+    public Aktie(int menge, String exchange, String symbol, String name, String date, String type, String region, String currency, String enabled, float preis) {
+        this.menge = menge;
+        this.exchange = exchange;
+        this.symbol = symbol;
+        this.name = name;
+        this.date = date;
+        this.type = type;
+        this.region = region;
+        this.currency = currency;
+        this.enabled = enabled;
+        this.preis = preis;
     }
 
     public void setSymbol(String symbol) {
@@ -91,8 +97,20 @@ public class Aktie{
     public String getEnabled() {
         return enabled;
     }
-    //ToDo Handelsstuff
 
+    public float getPreis() {
+        return preis;
+    }
 
+    public void setPreis(float preis) {
+        this.preis = preis;
+    }
 
+    public int getAnzahl() {
+        return anzahl;
+    }
+
+    public void setAnzahl(int anzahl) {
+        this.anzahl = anzahl;
+    }
 }

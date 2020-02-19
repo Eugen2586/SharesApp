@@ -8,6 +8,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.LineRadarDataSet;
 
 import org.achartengine.chart.LineChart;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import java.util.ArrayList;
 
@@ -37,11 +40,14 @@ public class BaueDiagramm {
      */
 
     LineChart stock;
-    BaueDiagramm(ArrayList werte ){
+    BaueDiagramm(ArrayList werte, String bezeichner ){
         
         //ToDo Aktuell nur zum Anzeigen einer Aktie!
-        LineChart stock;
-        
+
+        XYMultipleSeriesDataset xyd = new XYMultipleSeriesDataset();
+        XYMultipleSeriesRenderer xyr = new XYMultipleSeriesRenderer();
+
+
         ArrayList<Entry> values = new ArrayList<>();
         int z = 0;
         for (Object o : werte) {
@@ -50,9 +56,16 @@ public class BaueDiagramm {
             values.add(new Entry(z, (float) val));
         }
         LineDataSet d = new LineDataSet(values ,"DataSheet " + (z+1)  );
+
         d.setLineWidth(2.5f);
         d.setCircleRadius( 0 );
         d.setColor( 0 );
+        XYSeries xySeries = new XYSeries(bezeichner,werte.size());
+        //Datenstuff soll hier gepflegt werden!
+        xyd.addSeries(xySeries);
+        //Achsenstuff soll hier gepflegt werden!
+        //xyr
+        LineChart stock = new LineChart( xyd , xyr );
         stock.getDataset();
         this.stock = stock;
 

@@ -1,5 +1,7 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+import android.content.Context;
+
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -38,7 +40,7 @@ public class Data {
     protected void finalize(){
         //ToDo do Persistenz
         try {
-            SaveToJSON stj = new SaveToJSON(aktien);
+            // SaveToJSON stj = new SaveToJSON(aktien, );
         }catch(Exception e){
 
         }

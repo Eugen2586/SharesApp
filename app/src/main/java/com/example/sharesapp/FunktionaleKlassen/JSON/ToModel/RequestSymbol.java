@@ -18,7 +18,7 @@ public class RequestSymbol {
         JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
-            //ToDo zweite Datenebene
+            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
             ak.setSymbol(json.get("symbol").toString());

@@ -8,6 +8,11 @@ class Trade {
     /* Hier sollen die entsprechenden Trades gestored werden */
     //Chris K.
 
+    private Aktie aktie;
+    private int anzahl;
+    private boolean kauf;
+    private float preis;
+    private Date date;
 
     public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, Date date) {
         this.aktie = aktie;
@@ -16,13 +21,7 @@ class Trade {
         this.preis = preis;
         this.date = date;
     }
-
-    private Aktie aktie;
-    private int anzahl;
-    private boolean kauf;
-    private float preis;
-    private Date date;
-
+    
     public Aktie getAktie() {
         return aktie;
     }

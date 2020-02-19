@@ -3,9 +3,15 @@ package com.example.sharesapp.FunktionaleKlassen.Handler;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import okhttp3.Response;
@@ -21,13 +27,35 @@ public class AsyncTaskHandler {
         Runnable runnable = null;
 
         if (url.contains("ref-data")) {
-            System.out.println("Data: " + s);
-
             runnable = new Runnable() {
                 @Override
                 public void run() {
                     try {
                         new RequestSymbol(s);
+                        ArrayList<Aktie> m = new Model().getDaten().getAktienList().getValue();
+                        for (Object v : m) {
+                            Aktie vs = (Aktie) v;
+                            try {
+                                Requests req = new Requests();
+                                req.asyncRun(RequestsBuilder.getQuote(vs.getSymbol()));
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+        }
+        else if (url.contains("stock")){
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new RequestQuotePrices(s);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -32,27 +33,13 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                System.out.println("CHANGED: " + aktienList);
-                System.out.println("RECYLERVIEW: " + recyclerView);
-                if (recyclerView == null) {
-                    initRecyclerview();
-                }
-                if (adapter == null) {
-                    adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), aktienList);
-                    adapter.setClickListener(UebersichtFragment.this);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    adapter.setAktien(aktienList);
-                }
+                setAdapter(aktienList);
             }
         };
 
         model.getDaten().getAktienList().observe(getViewLifecycleOwner(), aktienObserver);
 
-        // set up the RecyclerView
-        if (recyclerView == null) {
-            initRecyclerview();
-        }
+        setAdapter(model.getDaten().getAktienList().getValue());
 
         return root;
     }
@@ -63,9 +50,24 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    public void initRecyclerview() {
+    public void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    public void setAdapter(ArrayList<Aktie> aktienList) {
+        if (recyclerView == null) {
+            initRecyclerView();
+        }
+        if (aktienList != null) {
+            if (adapter == null) {
+                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), aktienList);
+                adapter.setClickListener(UebersichtFragment.this);
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.setAktien(aktienList);
+            }
+        }
     }
 }

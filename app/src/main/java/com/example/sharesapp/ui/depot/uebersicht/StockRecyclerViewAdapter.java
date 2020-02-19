@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -48,7 +46,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData == null? 0 : mData.size();
+        return mData == null ? 0 : mData.size();
     }
 
     public void setAktien(ArrayList<Aktie> data) {

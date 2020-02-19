@@ -64,9 +64,9 @@ public class Requests {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 RequestSymbol regs = null;
                 try {
-                    String p = new String();
                     String s = Objects.requireNonNull(response.body()).string();
-                    regs = new RequestSymbol(p);
+                    System.out.println(s);
+                    regs = new RequestSymbol(s);
                     regs.getAk();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RequestSymbol {
 
     Aktie ak = new Aktie();
-    ArrayList akl = new ArrayList();
+    ArrayList<Aktie> akl = new ArrayList<>();
    public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
@@ -34,7 +34,7 @@ public class RequestSymbol {
 
     }
 
-    public ArrayList getAk() {
+    public ArrayList<Aktie> getAk() {
         Model m = new Model();
         m.getDaten().addAktienList(akl);
         return akl;

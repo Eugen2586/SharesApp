@@ -11,6 +11,7 @@ public class Model {
             //ToDo Hier die persistenz füllen!
             //Chris K.
             daten = new Data();
+            daten.getDepot().setGeldwert(50000);
         }
         return daten;
     }

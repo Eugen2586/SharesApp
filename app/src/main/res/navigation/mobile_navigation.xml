@@ -34,11 +34,13 @@
         android:name="com.example.sharesapp.ui.newgame.NewgameFragment"
         android:label="@string/menu_newgame"
         tools:layout="@layout/fragment_newgame" />
+
     <fragment
         android:id="@+id/aktienDetailsFragment"
         android:name="com.example.sharesapp.ui.aktien.details.AktienDetailsFragment"
         android:label="Wertpapier Details"
         tools:layout="@layout/fragment_aktien_details" />
+
     <fragment
         android:id="@+id/uebersichtFragment"
         android:name="com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment"

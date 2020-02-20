@@ -19,6 +19,10 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class AktienDetailsFragment extends Fragment {
@@ -67,6 +71,8 @@ public class AktienDetailsFragment extends Fragment {
                     String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
                     TextView cash = buyDialogView.findViewById(R.id.geldwert);
                     cash.setText((wert + "€"));
+                    TextView price = buyDialogView.findViewById(R.id.price_one);
+                    price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
                     builder.setCancelable(true);
                     builder.setView(buyDialogView);
                     builder.setPositiveButton("Kaufen",
@@ -112,8 +118,10 @@ public class AktienDetailsFragment extends Fragment {
         symbolTV.setText(stock.getSymbol());
         TextView nameTV = root.findViewById(R.id.name_field);
         nameTV.setText(stock.getName());
+        TextView nameBig = root.findViewById(R.id.name_big);
+        nameBig.setText(stock.getName());
         TextView priceTV = root.findViewById(R.id.latest_price_field);
-        priceTV.setText(String.valueOf(stock.getPreis()));
+        priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
         TextView dateTV = root.findViewById(R.id.date_field);
         dateTV.setText(stock.getDate());
         // todo set all fields

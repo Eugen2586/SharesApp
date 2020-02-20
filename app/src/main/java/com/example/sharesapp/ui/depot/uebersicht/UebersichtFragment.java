@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
@@ -23,12 +24,16 @@ import java.util.ArrayList;
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     View root;
+    StockRecyclerViewAdapter adapter = null;
     RecyclerView recyclerView = null;
+
+    Data d;
     TextView cash;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Model model = new Model();
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
         Data data = new Model().getDaten();

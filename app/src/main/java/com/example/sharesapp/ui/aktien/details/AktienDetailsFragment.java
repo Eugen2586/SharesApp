@@ -27,10 +27,12 @@ public class AktienDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
         Button buy_button = root.findViewById(R.id.kaufen_button);
+        System.out.println("--------------------------------------------------1");
 
         buy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("--------------------------------------------------2");
                 Context context = AktienDetailsFragment.this.getContext();
                 if (context != null) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -55,6 +57,6 @@ public class AktienDetailsFragment extends Fragment {
                 }
             }
         });
-        return inflater.inflate(R.layout.fragment_aktien_details, container, false);
+        return root;
     }
 }

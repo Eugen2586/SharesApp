@@ -15,7 +15,7 @@ public class RequestSearch {
 
     ArrayList urls = new ArrayList();
 
-    RequestSearch(String st) throws ParseException {
+    public RequestSearch(String st) throws ParseException {
         urls = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);

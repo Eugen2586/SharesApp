@@ -104,7 +104,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        // opens stock details
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();

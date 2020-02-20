@@ -32,7 +32,7 @@ public class RequestSymbol {
             akl.add(ak);
         }
        Model m = new Model();
-       m.getData().addAktienList(akl);
+       m.getData().getAktienList().postValue(akl);
     }
 
 

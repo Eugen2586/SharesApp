@@ -2,7 +2,6 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
-import com.example.sharesapp.Model.FromServerClasses.SearchedURLS;
 import com.example.sharesapp.Model.Model;
 
 import org.json.simple.JSONArray;
@@ -42,18 +41,21 @@ public class RequestHistoricalQuotePrices {
             dbs.add(db);
         }
         Model m = new Model();
-        for (Object f: m.getData().getAktienList().getValue()){
+        ArrayList<Aktie> stockList = m.getData().getAktienList().getValue();
+        for (Object f : stockList) {
             Aktie g = (Aktie) f;
-            if (dbs.size()> 0 && g.getName().equals(((Aktie)dbs.get(0)).getName())){
+            if (dbs.size() > 0 && g.getName().equals(((Aktie) dbs.get(0)).getName())) {
                 g.setChart(dbs);
             }
         }
+        m.getData().getAktienList().postValue(stockList);
     }
+
     public ArrayList getDbs() {
         return dbs;
     }
 
-    public void setURLS( ArrayList dbs) {
+    public void setURLS(ArrayList dbs) {
         this.dbs = dbs;
     }
 }

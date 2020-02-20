@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
@@ -34,7 +35,8 @@ public class NewgameFragment extends Fragment {
 
         d = new Model().getDaten();
         cash = root.findViewById(R.id.betrag_text);
-        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
+        String wert = (new Anzeige()).makeItBeautiful(d.getDepot().getGeldwert());
+        cash.setText((wert + "€"));
 
         Button reset_button = root.findViewById(R.id.reset_button);
         reset_button.setOnClickListener(new View.OnClickListener() {

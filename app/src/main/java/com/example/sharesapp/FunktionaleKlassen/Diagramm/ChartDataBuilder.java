@@ -23,7 +23,6 @@ public class ChartDataBuilder {
         System.out.println(xAxisData.length);
         int[] yAxisData = new int[xAxisData.length];
         for (int i = 0; i < xAxisData.length; i++) {
-            System.out.print(xAxisData[i] + " ");
             yAxisData[i] = i;
         }
 

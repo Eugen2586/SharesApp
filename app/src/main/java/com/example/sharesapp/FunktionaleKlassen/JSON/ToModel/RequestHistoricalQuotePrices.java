@@ -1,5 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.SearchedURLS;
@@ -18,6 +19,7 @@ public class RequestHistoricalQuotePrices {
     DataPoint db;
 
     public RequestHistoricalQuotePrices(String s) throws ParseException {
+
         dbs = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);
@@ -26,7 +28,7 @@ public class RequestHistoricalQuotePrices {
             //ToDo zweite Datenebene
             db = new DataPoint();
             JSONObject json = (JSONObject) t;
-            db.setDate(json.get("name").toString());
+            //db.setDate(json.get("name").toString());
             db.setDate(json.get("date").toString());
             db.setOpen(json.get("open").toString());
             db.setClose(json.get("close").toString());
@@ -42,7 +44,7 @@ public class RequestHistoricalQuotePrices {
             dbs.add(db);
         }
         Model m = new Model();
-        for (Object f: m.getDaten().getAktienList().getValue()){
+        for (Object f: m.getData().getAktienList().getValue()){
             Aktie g = (Aktie) f;
             if (dbs.size()> 0 && g.getName().equals(((Aktie)dbs.get(0)).getName())){
                 g.setChart(dbs);

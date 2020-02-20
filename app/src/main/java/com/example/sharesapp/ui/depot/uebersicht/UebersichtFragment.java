@@ -35,7 +35,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        Data data = new Model().getDaten();
+        Data data = new Model().getData();
         String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         cash = root.findViewById(R.id.stock_value_text);
         cash.setText((wert + "€"));

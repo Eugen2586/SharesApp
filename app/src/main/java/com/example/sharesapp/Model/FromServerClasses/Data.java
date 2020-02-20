@@ -3,6 +3,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 
 import java.util.ArrayList;
 
@@ -11,16 +12,25 @@ public class Data {
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> favoriten;
+    private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
+    public AvailType getAvailType() {
+        if (availType == null){
+            availType = new AvailType();
+        }
+        return availType;
+    }
+
+    public void setAvailType(AvailType availType) {
+        this.availType = availType;
+    }
+
+
+
     public Data(){
-        //ToDo initialisation Stuff here!
-        LoadFromJson j = new LoadFromJson();
-        try {
-        j.readJson();
-        }
-        catch(Exception e){
-        }
+
+
     }
     public Depot getDepot() {
         if (depot == null) {
@@ -87,10 +97,11 @@ public class Data {
         return tradesMutable;
     }
 
-    protected void finalize(){
+    @Override
+    public void finalize(){
         //ToDo do Persistenz
         try {
-            //SaveToJSON stj = new SaveToJSON(aktien.getValue(), );
+            SaveToJSON stj = new SaveToJSON();
         } catch(Exception e){
             e.printStackTrace();
         }

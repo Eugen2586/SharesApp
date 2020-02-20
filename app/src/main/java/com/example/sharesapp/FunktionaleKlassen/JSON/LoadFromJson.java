@@ -66,9 +66,6 @@ public class LoadFromJson {
                 i++;
             }
         }
-        Model model = new Model();
-        model.getDaten().addAktienList(aktien);
-        model.getDaten().getAktienList().getValue().
 
     }
 }

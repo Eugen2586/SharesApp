@@ -2,24 +2,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/fab_margin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin">
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:text="Aktien kaufen"
         android:textAlignment="center"
         android:textSize="18sp" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/fab_margin">
+        android:layout_height="match_parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView"
@@ -29,11 +30,32 @@
 
             <TextView
                 android:id="@+id/geldwert"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/fab_margin"
+                android:paddingEnd="@dimen/fab_margin"
                 android:text="set geldwert"
-                android:textAlignment="viewEnd" />
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preis pro Stück" />
+
+            <TextView
+                android:id="@+id/price_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:paddingEnd="@dimen/fab_margin"
+                android:text="set preis"
+                android:textAlignment="center" />
         </TableRow>
 
         <TableRow
@@ -73,6 +95,25 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textAlignment="textEnd" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gesamt Preis" />
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="set total_preis"
+                android:textAlignment="center"
+                android:textSize="18dp" />
         </TableRow>
 
     </TableLayout>

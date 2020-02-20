@@ -26,24 +26,25 @@ import java.util.ArrayList;
             ArrayList p = d.getAktienList().getValue();
             //Arraylisten für die Aktien/Symbol Verknüpfung
             JSONArray jsonArray = new JSONArray();
-            for (Object e: p) {
-                JSONObject a = new JSONObject();
-                Aktie e1 = (Aktie)e;
-                a.put("Currency", e1.getCurrency());
-                a.put("Date", e1.getDate());
-                a.put("Enabled", e1.getEnabled());
-                a.put("Exchange",e1.getExchange());
-                a.put("Name", e1.getName());
-                a.put("Region", e1.getRegion());
-                a.put("Symbol", e1.getSymbol());
-                a.put("Type", e1.getType());
-                jsonArray.add(a);
+            if(new Model().getDaten().getAktienList().getValue() != null) {
+                for (Object e : p) {
+                    JSONObject a = new JSONObject();
+                    Aktie e1 = (Aktie) e;
+                    a.put("Currency", e1.getCurrency());
+                    a.put("Date", e1.getDate());
+                    a.put("Enabled", e1.getEnabled());
+                    a.put("Exchange", e1.getExchange());
+                    a.put("Name", e1.getName());
+                    a.put("Region", e1.getRegion());
+                    a.put("Symbol", e1.getSymbol());
+                    a.put("Type", e1.getType());
+                    jsonArray.add(a);
+                }
+
+                //Arrayliste für das Depot Anlegen
+                JSONObject depot = new JSONObject();
+                //depot.put
             }
-
-            //Arrayliste für das Depot Anlegen
-            JSONObject depot = new JSONObject();
-            //depot.put
-
             //ArrayListe für die vergangenen Trades
             return ((String) jsonArray.toString());
         }

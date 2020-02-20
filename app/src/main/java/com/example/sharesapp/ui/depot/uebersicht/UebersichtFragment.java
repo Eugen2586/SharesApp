@@ -27,7 +27,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     StockRecyclerViewAdapter adapter = null;
     RecyclerView recyclerView = null;
 
-    Data d;
     TextView cash;
 
     @Override
@@ -37,8 +36,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
         Data data = new Model().getDaten();
+        String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         cash = root.findViewById(R.id.stock_value_text);
-        cash.setText(data.getDepot().getGeldwert() + "€");
+        cash.setText((wert + "€"));
 
         initRecyclerView();
 

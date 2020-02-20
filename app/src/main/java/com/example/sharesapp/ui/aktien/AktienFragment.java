@@ -29,10 +29,8 @@ import java.util.Objects;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    Model model = new Model();
-    private AktienViewModel aktienViewModel;
-//    private String[] typeList = {"crypto", "oil", "us-market", "etfs", "bonds", "funding", "fx", "capital-raise"};
-    private MutableLiveData<Aktie> currentQuote = new MutableLiveData<>();
+    private Model model = new Model();
+    private MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
     private RecyclerView recyclerView = null;
     private View root;
     private StockRecyclerViewAdapter adapter = null;
@@ -49,30 +47,27 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                setCurrentQuote();
-                setAdapter(aktienList);
+                setCurrentStock();
                 setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
-        final Observer<Aktie> currentQuoteObserver = new Observer<Aktie>() {
+        final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
             @Override
             public void onChanged(Aktie aktie) {
-                Aktie cq = currentQuote.getValue();
-                assert cq != null;
-                TextView symbolTV = root.findViewById(R.id.symbol_field);
-                symbolTV.setText(cq.getSymbol());
-                TextView nameTV = root.findViewById(R.id.name_field);
-                nameTV.setText(cq.getName());
+//                Aktie stock = currentStock.getValue();
+//                assert stock != null;
+//                TextView symbolTV = root.findViewById(R.id.symbol_field);
+//                symbolTV.setText(stock.getSymbol());
+//                TextView nameTV = root.findViewById(R.id.name_field);
+//                nameTV.setText(stock.getName());
                 // todo set all fields
             }
         };
 
-        currentQuote.observe(getViewLifecycleOwner(), currentQuoteObserver);
-
-        setAdapter(model.getData().getAktienList().getValue());
+        currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
 
         if (tabLayout != null) {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -96,12 +91,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         return root;
     }
 
-    private void setCurrentQuote() {
-        if (currentQuote.getValue() != null) {
-            Model model = new Model();
+    private void setCurrentStock() {
+        if (currentStock.getValue() != null) {
             ArrayList<Aktie> quotes = model.getData().getAktienList().getValue();
-            int index = Objects.requireNonNull(quotes).indexOf(currentQuote.getValue());
-            currentQuote.setValue(quotes.get(index));
+            int index = Objects.requireNonNull(quotes).indexOf(currentStock.getValue());
+            currentStock.setValue(quotes.get(index));
         }
 
     }
@@ -140,11 +134,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     public void onItemClick(View view, int position) {
         //todo bind to aktien
         Requests requests = new Requests();
-        TextView symbolView = root.findViewById(R.id.stock_symbol_text);
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
-        Aktie quote = new Aktie();
-        quote.setSymbol(symbol);
-        currentQuote.setValue(quote);
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        currentStock.setValue(stock);
         try {
             requests.asyncRun(RequestsBuilder.getQuote(symbol));
         } catch (IOException e) {

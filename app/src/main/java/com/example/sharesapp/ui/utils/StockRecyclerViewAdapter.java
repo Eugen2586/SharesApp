@@ -39,8 +39,8 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Aktie aktie = mData.get(position);
-        String name = aktie.getName();
-        holder.myTextView.setText(name);
+        holder.myTextView.setText(aktie.getName());
+        holder.myTypeView.setText(aktie.getType());
     }
 
     // total number of rows
@@ -57,10 +57,12 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        TextView myTypeView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.stock_text);
+            myTypeView = itemView.findViewById(R.id.stock_percentage_text);
             itemView.setOnClickListener(this);
         }
 

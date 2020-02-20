@@ -24,6 +24,7 @@ public class RequestQuotePrices {
                 if(jsonar.get("symbol").equals(((Aktie)t).getName())){
                     ((Aktie)t).setPreis(Float.parseFloat((String)(jsonar.get("latestPrice"))));
                     ((Aktie)t).setChange(Float.parseFloat((String)(jsonar.get("change"))));
+                    ((Aktie)t).setDate((String) jsonar.get("date"));
             }
         }
     }

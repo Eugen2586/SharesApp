@@ -32,14 +32,15 @@ public class RequestSymbol {
             ak.setCurrency(json.get("currency").toString());
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
-            if(!type.contains(ak.getType())){
+            System.out.print(json.get("name").toString());
+            if( (!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()) ){
                 type.add(ak.getType());
             }
         }
        Model m = new Model();
        m.getData().addAktienList(akl);
-       Object[] t = type.toArray();
-       m.getData().getAvailType().setType_abbr_list(t);
+       Object[] data = type.toArray();
+       m.getData().getAvailType().setType_abbr_list(data);
     }
 
 

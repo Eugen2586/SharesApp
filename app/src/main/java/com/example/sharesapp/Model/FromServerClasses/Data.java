@@ -40,6 +40,16 @@ public class Data {
 
     }
 
+    public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+
+    public Aktie getCurrentStock() {
+        return currentStock.getValue();
+    }
+
+    public void setCurrentStock(Aktie currentStock) {
+        this.currentStock.setValue(currentStock);
+    }
+
     public void setDepot(Depot depot) {
         this.depot = depot;
     }

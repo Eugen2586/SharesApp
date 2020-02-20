@@ -96,7 +96,6 @@ public class DrawerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -35,11 +35,11 @@ public class ChartDataBuilder {
         List lines = new ArrayList();
         lines.add(line);
 
-        for(int i = 0; i < xAxisData.length; i++){
+        for (int i = 0; i < xAxisData.length; i++) {
             axisValues.add(i, new AxisValue(i).setLabel(xAxisData[i]));
         }
 
-        for (int i = 0; i < yAxisData.length; i++){
+        for (int i = 0; i < yAxisData.length; i++) {
             yAxisValues.add(new PointValue(i, yAxisData[i]));
         }
 
@@ -62,9 +62,9 @@ public class ChartDataBuilder {
             case 0:
                 int numberHours = 24;
                 int hourIndex = time.getHours() + 1;
-                String[] hours = new String[2*numberHours];
+                String[] hours = new String[2 * numberHours];
                 String hourString;
-                for(int i = 0; i < 2; i++) {
+                for (int i = 0; i < 2; i++) {
                     for (int j = 0; j < numberHours; j++) {
                         if (j < 10) {
                             hourString = "0";

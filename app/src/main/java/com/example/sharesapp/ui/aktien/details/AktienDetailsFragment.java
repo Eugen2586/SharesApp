@@ -29,6 +29,7 @@ public class AktienDetailsFragment extends Fragment {
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
+                System.out.println("Hallo");
                 setCurrentStock();
                 setStockDetails();
             }
@@ -69,6 +70,10 @@ public class AktienDetailsFragment extends Fragment {
         symbolTV.setText(stock.getSymbol());
         TextView nameTV = root.findViewById(R.id.name_field);
         nameTV.setText(stock.getName());
+        TextView priceTV = root.findViewById(R.id.latest_price_field);
+        priceTV.setText(String.valueOf(stock.getPreis()));
+        TextView dateTV = root.findViewById(R.id.date_field);
+        dateTV.setText(stock.getDate());
         // todo set all fields
     }
 }

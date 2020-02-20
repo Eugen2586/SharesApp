@@ -32,6 +32,9 @@ public class AktienDetailsFragment extends Fragment {
 
     private Model model = new Model();
     private View root;
+    EditText kaufMenge;
+    EditText Limit;
+    TextView totalPrice;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -76,18 +79,16 @@ public class AktienDetailsFragment extends Fragment {
                     cash.setText((wert + "€"));
                     TextView price = buyDialogView.findViewById(R.id.price_one);
                     price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
-                    TextView totalPrice = buyDialogView.findViewById(R.id.total_price);
+                    totalPrice = buyDialogView.findViewById(R.id.total_price);
 
 
-                    EditText kaufMenge = buyDialogView.findViewById(R.id.kaufMenge);
+                    kaufMenge = buyDialogView.findViewById(R.id.kaufMenge);
 
                     kaufMenge.addTextChangedListener(new TextWatcher() {
 
                         public void afterTextChanged(Editable s) {
 
-                            // you can call or do what you want with your EditText here
-
-                            // yourEditText...
+                            setTotalPrice();
                         }
 
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -95,15 +96,13 @@ public class AktienDetailsFragment extends Fragment {
                         public void onTextChanged(CharSequence s, int start, int before, int count) {}
                     });
 
-                    EditText Limit = buyDialogView.findViewById(R.id.Limit);
+                    Limit = buyDialogView.findViewById(R.id.Limit);
 
                     Limit.addTextChangedListener(new TextWatcher() {
 
                         public void afterTextChanged(Editable s) {
 
-                            // you can call or do what you want with your EditText here
-
-                            // yourEditText...
+                            setTotalPrice();
                         }
 
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -153,7 +152,22 @@ public class AktienDetailsFragment extends Fragment {
     }
 
     private void setTotalPrice() {
-        
+
+        float limit;
+        if (!Limit.getText().toString().isEmpty()) {
+            limit = Float.valueOf(Limit.getText().toString());
+        } else {
+            limit = model.getData().getCurrentStock().getPreis();
+        }
+        if (kaufMenge.getText().toString().isEmpty()) {
+            return;
+        }
+        float number = Float.valueOf(kaufMenge.getText().toString());
+
+        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(limit * number) ));
+
+
+
     }
 
     private void setStockDetails() {

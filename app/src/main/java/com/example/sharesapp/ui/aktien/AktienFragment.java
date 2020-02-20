@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,12 +24,10 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
-    private MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
     private RecyclerView recyclerView = null;
     private View root;
     private StockRecyclerViewAdapter adapter = null;
@@ -47,27 +44,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                setCurrentStock();
                 setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
-
-        final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
-            @Override
-            public void onChanged(Aktie aktie) {
-//                Aktie stock = currentStock.getValue();
-//                assert stock != null;
-//                TextView symbolTV = root.findViewById(R.id.symbol_field);
-//                symbolTV.setText(stock.getSymbol());
-//                TextView nameTV = root.findViewById(R.id.name_field);
-//                nameTV.setText(stock.getName());
-                // todo set all fields
-            }
-        };
-
-        currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
 
         if (tabLayout != null) {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,15 +70,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         }
 
         return root;
-    }
-
-    private void setCurrentStock() {
-        if (currentStock.getValue() != null) {
-            ArrayList<Aktie> quotes = model.getData().getAktienList().getValue();
-            int index = Objects.requireNonNull(quotes).indexOf(currentStock.getValue());
-            currentStock.setValue(quotes.get(index));
-        }
-
     }
 
     private void addTabs(TabLayout tabLayout) {
@@ -133,12 +105,12 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     @Override
     public void onItemClick(View view, int position) {
         //todo bind to aktien
-        Requests requests = new Requests();
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
-        currentStock.setValue(stock);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
         try {
             requests.asyncRun(RequestsBuilder.getQuote(symbol));
         } catch (IOException e) {

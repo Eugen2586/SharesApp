@@ -12,6 +12,7 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     public void onBindViewHolder(ViewHolder holder, int position) {
         Aktie aktie = mData.get(position);
         holder.myTextView.setText(aktie.getName());
+        holder.mySymbolView.setText(aktie.getSymbol());
+        holder.myTextView.setText(aktie.getName());
         holder.myTypeView.setText(aktie.getType());
     }
 
@@ -58,10 +61,12 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         TextView myTypeView;
+        TextView mySymbolView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.stock_text);
+            mySymbolView = itemView.findViewById(R.id.stock_symbol_text);
             myTypeView = itemView.findViewById(R.id.stock_percentage_text);
             itemView.setOnClickListener(this);
         }

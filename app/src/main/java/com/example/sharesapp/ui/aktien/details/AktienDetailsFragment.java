@@ -8,27 +8,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
+import java.util.ArrayList;
+
 public class AktienDetailsFragment extends Fragment {
 
-    View root;
+    private Model model = new Model();
+    private View root;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_aktien_details, container, false);
-        // Inflate the layout for this fragment
+
+        final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> aktienList) {
+                System.out.println("Hallo");
+                setCurrentStock();
+                setStockDetails();
+            }
+        };
+
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
+
+        final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
+            @Override
+            public void onChanged(Aktie aktie) {
+                setStockDetails();
+            }
+        };
+
+        model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
+
+        setStockDetails();
 
         Button buy_button = root.findViewById(R.id.kaufen_button);
 
@@ -64,6 +88,34 @@ public class AktienDetailsFragment extends Fragment {
                 }
             }
         });
+
+        // Inflate the layout for this fragment
         return root;
+    }
+
+    private void setCurrentStock() {
+        String symbol = model.getData().getCurrentStock().getSymbol();
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        Aktie currentStock = null;
+        for (Aktie stock : stockList) {
+            if (symbol.equals(stock.getSymbol())) {
+                currentStock = stock;
+                break;
+            }
+        }
+        model.getData().setCurrentStock(currentStock);
+    }
+
+    private void setStockDetails() {
+        Aktie stock = model.getData().getCurrentStock();
+        TextView symbolTV = root.findViewById(R.id.symbol_field);
+        symbolTV.setText(stock.getSymbol());
+        TextView nameTV = root.findViewById(R.id.name_field);
+        nameTV.setText(stock.getName());
+        TextView priceTV = root.findViewById(R.id.latest_price_field);
+        priceTV.setText(String.valueOf(stock.getPreis()));
+        TextView dateTV = root.findViewById(R.id.date_field);
+        dateTV.setText(stock.getDate());
+        // todo set all fields
     }
 }

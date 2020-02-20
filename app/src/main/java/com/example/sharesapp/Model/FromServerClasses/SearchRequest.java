@@ -6,7 +6,7 @@ public class SearchRequest {
     String securityType;
     String region;
     String exchange;
-    
+
     public String getSymbol() {
         return symbol;
     }
@@ -34,11 +34,5 @@ public class SearchRequest {
         this.region = region;
         this.exchange = exchange;
     }
-
-
-
-
-
-
 
 }

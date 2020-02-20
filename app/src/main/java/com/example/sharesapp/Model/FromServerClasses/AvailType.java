@@ -32,14 +32,17 @@ public class AvailType {
 
                 }
             }
+
         }
         ArrayList<String> loktype_list = new ArrayList<>();
         for (Object z: list) {
             int h = (int) z;
             loktype_list.add(type_list[h]);
         }
-        type_list = new String[type_abbr_list1.length];
+        type_list = new String[loktype_list.size()];
         int zaehl = 0;
+        type_list = new String[loktype_list.size()];
+        type_abbr_list =new String[type_abbr_list1.length];
         for (Object o:loktype_list) {
             String st = (String)o;
             type_list[zaehl] = st;
@@ -48,6 +51,13 @@ public class AvailType {
         for (Object o: list) {
             int st = (int)o;
             type_abbr_list[zaehl] = Constants.TYPE_ABBRE_LIST[st];
+        zaehl = 0;
+        for (Object o:i) {
+            String st =  o.toString();
+            int zahl;
+            zahl = Integer.parseInt(st);
+            type_abbr_list[zaehl] = Constants.TYPE_ABBRE_LIST[zahl];
+            zaehl++;
         }
     }
 }

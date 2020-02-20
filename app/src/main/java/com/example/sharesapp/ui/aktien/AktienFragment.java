@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,17 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
+    private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
     private StockRecyclerViewAdapter adapter = null;
-    private Model model = new Model();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
         final TabLayout finalTabLayout = tabLayout;
 
-        final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
+        final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
                 addTabs(finalTabLayout);
@@ -44,7 +48,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             }
         };
 
-        model.getData().getAktienList().observe(getViewLifecycleOwner(), observer);
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -67,6 +71,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void addTabs(TabLayout tabLayout) {
+        for (String category : Constants.TYPE_LIST) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(category);
+            tabLayout.addTab(tab);
+        }
         // remove all Tabs
         tabLayout.removeAllTabs();
 
@@ -109,7 +118,18 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 

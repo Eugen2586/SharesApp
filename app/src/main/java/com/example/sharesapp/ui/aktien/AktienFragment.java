@@ -8,31 +8,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener{
+public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    private AktienViewModel aktienViewModel;
-
-    RecyclerView recyclerView = null;
-    View root;
-    StockRecyclerViewAdapter adapter = null;
-    Model model = new Model();
+    private RecyclerView recyclerView = null;
+    private View root;
+    private StockRecyclerViewAdapter adapter = null;
+    private Model model = new Model();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,54 +39,67 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
+                addTabs(finalTabLayout);
                 setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
         model.getData().getAktienList().observe(getViewLifecycleOwner(), observer);
 
-        if (tabLayout != null) {
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    setCategory(tab.getPosition());
-                }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setCategory(tab.getPosition());
+            }
 
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                }
+            }
 
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-                }
-            });
-        }
+            }
+        });
 
         return root;
     }
 
     private void addTabs(TabLayout tabLayout) {
-        for (String category: Constants.TYPE_LIST) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            tab.setText(category);
-            tabLayout.addTab(tab);
+        // remove all Tabs
+        tabLayout.removeAllTabs();
+
+        // add Portfolio Tab
+        addTabWithString(tabLayout, "portfolio");
+
+        // add Tabs for existing StockTypes
+        String[] availableTypes = model.getData().getAvailType().getType_list();
+//        for (String str : availableTypes) {
+//            System.out.print(str + " ");
+//        }
+        for (String category : availableTypes) {
+            addTabWithString(tabLayout, category);
         }
+    }
+
+    private void addTabWithString(TabLayout tabLayout, String text) {
+        TabLayout.Tab tab = tabLayout.newTab();
+        tab.setText(text);
+        tabLayout.addTab(tab);
     }
 
     private void setCategory(int position) {
         if (position == 0) {
-            // TODO: portfolio einfügen
             System.out.println("Portfolio einfügen");
         } else {
             position--;
 
             ArrayList<Aktie> aktien = model.getData().getAktienList().getValue();
             if (aktien != null) {
-                String type = Constants.TYPE_ABBRE_LIST[position];
+                String type = model.getData().getAvailType().getType_abbr_list()[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();
-                for (Aktie aktie: aktien) {
+                for (Aktie aktie : aktien) {
                     if (aktie.getType().equals(type)) {
                         filtered_aktien.add(aktie);
                     }

@@ -50,7 +50,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             }
         };
 
-        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), observer);
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), observer);
 
         if (tabLayout != null) {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,7 +89,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         } else {
             position--;
 
-            ArrayList<Aktie> aktien = model.getDaten().getAktienList().getValue();
+            ArrayList<Aktie> aktien = model.getData().getAktienList().getValue();
             if (aktien != null) {
                 String type = Constants.TYPE_ABBRE_LIST[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();

@@ -24,7 +24,8 @@ import com.example.sharesapp.R;
 public class NewgameFragment extends Fragment {
 
     private NewgameViewModel newgameViewModel;
-    Data d;
+    private Model model = new Model();
+    Data data;
     TextView cash;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,9 +34,9 @@ public class NewgameFragment extends Fragment {
                 ViewModelProviders.of(this).get(NewgameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_newgame, container, false);
 
-        d = new Model().getDaten();
+        data = model.getData();
         cash = root.findViewById(R.id.betrag_text);
-        String wert = (new Anzeige()).makeItBeautiful(d.getDepot().getGeldwert());
+        String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         cash.setText((wert + "€"));
 
         Button reset_button = root.findViewById(R.id.reset_button);
@@ -53,7 +54,10 @@ public class NewgameFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Toast.makeText(NewgameFragment.this.getContext(), "Betrag und alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
+
                                     // TODO: Betrag und alle gekauften Aktien und Favoriten zurücksetzen und auf Depot weiterleiten
+                                    model.resetData();
+
                                     View view = getView();
                                     if (view != null) {
                                         Navigation.findNavController(view).navigateUp();

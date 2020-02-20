@@ -18,8 +18,8 @@ public class RequestQuotePrices {
         JSONObject jsonar = (JSONObject) parser.parse(s);
         for (Object t : m) {
             if (jsonar.get("symbol").equals(((Aktie) t).getSymbol())) {
-                ((Aktie) t).setPreis(Float.parseFloat((String) (jsonar.get("latestPrice"))));
-                ((Aktie) t).setChange(Float.parseFloat((String) (jsonar.get("change"))));
+                ((Aktie) t).setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
+                ((Aktie) t).setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
             }
         }
     }

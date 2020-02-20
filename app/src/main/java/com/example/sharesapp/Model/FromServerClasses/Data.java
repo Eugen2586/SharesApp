@@ -10,6 +10,7 @@ public class Data {
     private ArrayList<Trade> tradelist;
     private Depot depot;
     private ArrayList<Aktie> favoriten;
+    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
     public Data(){
         //ToDo initialisation Stuff here!
@@ -32,7 +33,7 @@ public class Data {
         this.depot = depot;
     }
 
-    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+
 
     public void addTrade(Trade trade){
         tradelist.add(trade);

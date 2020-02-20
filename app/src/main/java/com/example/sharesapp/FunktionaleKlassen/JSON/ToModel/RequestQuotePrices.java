@@ -1,12 +1,8 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.Model;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -27,5 +23,6 @@ public class RequestQuotePrices {
                     ((Aktie)t).setDate((String) jsonar.get("date"));
             }
         }
+        new Model().getData().getAktienList().postValue(m);
     }
 }

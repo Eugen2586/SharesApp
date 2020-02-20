@@ -9,9 +9,12 @@ import java.util.ArrayList;
 
 public class Data {
     private ArrayList<Trade> tradelist;
+    private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> favoriten;
     private AvailType availType;
+    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+
     private ArrayList<SearchRequest> searches;
 
     public ArrayList<SearchRequest> getSearches() {
@@ -21,6 +24,7 @@ public class Data {
     public void setSearches(ArrayList<SearchRequest> searches) {
         this.searches = searches;
     }
+
 
     public AvailType getAvailType() {
         if (availType == null){
@@ -47,19 +51,32 @@ public class Data {
 
     }
 
+    public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+
+    public Aktie getCurrentStock() {
+        return currentStock.getValue();
+    }
+
+    public void setCurrentStock(Aktie currentStock) {
+        this.currentStock.setValue(currentStock);
+    }
+
     public void setDepot(Depot depot) {
         this.depot = depot;
     }
 
-    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+
 
     public void addTrade(Trade trade){
         tradelist.add(trade);
+        tradesMutable.setValue(tradelist);
     }
 
     public void setTradelist(ArrayList<Trade> trades){
         tradelist = trades;
+        tradesMutable.setValue(tradelist);
     }
+
     public ArrayList<Trade> getTrades(){
         return tradelist;
     }
@@ -95,6 +112,10 @@ public class Data {
 
     public MutableLiveData<ArrayList<Aktie>> getAktienList() {
         return aktien;
+    }
+
+    public MutableLiveData<ArrayList<Trade>> getTradesMutable() {
+        return tradesMutable;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.sharesapp.ui.aktien.details;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -164,7 +165,14 @@ public class AktienDetailsFragment extends Fragment {
         }
         float number = Float.valueOf(kaufMenge.getText().toString());
 
-        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(limit * number) ));
+        float price = limit*number;
+        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price) ));
+
+        if (price > model.getData().getDepot().getGeldwert()) {
+            totalPrice.setTextColor(Color.RED);
+        } else {
+            totalPrice.setTextColor(Color.DKGRAY);
+        }
 
 
 

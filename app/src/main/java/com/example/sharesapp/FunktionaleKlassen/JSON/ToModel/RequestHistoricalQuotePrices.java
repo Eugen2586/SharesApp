@@ -18,6 +18,8 @@ public class RequestHistoricalQuotePrices {
     DataPoint db;
 
     public RequestHistoricalQuotePrices(String s) throws ParseException {
+
+        
         dbs = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);

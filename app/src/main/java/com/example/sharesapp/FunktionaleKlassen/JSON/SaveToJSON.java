@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
     public class SaveToJSON {
-        ArrayList objects = new ArrayList();
-        JSONArray b = new JSONArray();
-
-        public SaveToJSON() throws IOException {
+        public SaveToJSON(){
 
         }
 

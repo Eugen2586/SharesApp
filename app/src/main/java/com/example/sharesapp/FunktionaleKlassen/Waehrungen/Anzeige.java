@@ -12,4 +12,8 @@ public class Anzeige {
         return s;
     }
 
+    public String makeItBeautifulEuro(float num) {
+        return (makeItBeautiful(num) + "€");
+    }
+
 }

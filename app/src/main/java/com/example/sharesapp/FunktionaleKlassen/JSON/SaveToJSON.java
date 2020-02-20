@@ -18,22 +18,10 @@ import java.util.ArrayList;
         JSONArray b = new JSONArray();
 
         public SaveToJSON() throws IOException {
-            //Deklarationsbereich
-            JSONArray jsonArray = new JSONArray();
-            //ToDo Hier muss man alle Vairiablen ergänzen die gestashed werden sollen.
-            //jsonArray.add(createJSONAktien(data));
-            jsonArray.add(new JSONObject().put("Teest", "test"));
-            //File Schreiben
-            //context.openFileOutput("config.txt", Context.MODE_PRIVATE)
-            // Wir suchen hier eine Context, der die entsprechenden einzelteile zusammenführt.
-            FileWriter frw = new FileWriter(Environment.getDownloadCacheDirectory() + "keep.dat");
-            frw.write(String.valueOf(jsonArray));
-            frw.flush();
-            frw.close();
+
         }
 
-
-        private JSONArray createJSONAktien(){
+        public String getJson() {
             Data d = new Model().getDaten();
             ArrayList p = d.getAktienList().getValue();
             //Arraylisten für die Aktien/Symbol Verknüpfung
@@ -57,7 +45,6 @@ import java.util.ArrayList;
             //depot.put
 
             //ArrayListe für die vergangenen Trades
-            return jsonArray;
+            return ((String) jsonArray.toString());
         }
-
-}
+    }

@@ -1,5 +1,4 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
-import android.net.ParseException;
 import android.os.Environment;
 import android.view.Display;
 
@@ -11,6 +10,7 @@ import com.example.sharesapp.Model.Model;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,6 +37,10 @@ public class LoadFromJson {
                 st = st + line;
             }
         }
+
+    }
+
+    public void getJson(String st) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
@@ -64,5 +68,6 @@ public class LoadFromJson {
         }
         Model model = new Model();
         model.getDaten().addAktienList(aktien);
+
     }
 }

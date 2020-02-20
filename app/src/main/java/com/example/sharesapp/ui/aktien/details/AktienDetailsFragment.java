@@ -7,12 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 public class AktienDetailsFragment extends Fragment {
@@ -35,16 +39,20 @@ public class AktienDetailsFragment extends Fragment {
                 if (context != null) {
                     View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    Data data = new Model().getData();
+                    String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
+                    TextView cash = buyDialogView.findViewById(R.id.geldwert);
+                    cash.setText((wert + "€"));
                     builder.setCancelable(true);
                     builder.setView(buyDialogView);
-                    builder.setPositiveButton("Ja",
+                    builder.setPositiveButton("Kaufen",
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //todo kaufen
                                 }
                             });
-                    builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

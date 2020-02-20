@@ -4,14 +4,6 @@
     android:layout_margin="@dimen/fab_margin"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:contentDescription="@string/app_name"
-        android:scaleType="center"
-        android:src="@drawable/big_logo" />
-
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
@@ -24,6 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/fab_margin">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mein Geld" />
+
+            <TextView
+                android:id="@+id/geldwert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:text="set geldwert"
+                android:textAlignment="viewEnd" />
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -40,7 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textAlignment="textEnd" />
 
         </TableRow>
 
@@ -59,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textAlignment="textEnd" />
         </TableRow>
 
     </TableLayout>

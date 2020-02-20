@@ -131,7 +131,7 @@ public class ExampleUnitTest {
         if ( b != null) {
             System.out.print(b);
         }
-        ArrayList<Aktie> t = new Model().getDaten().getAktienList().getValue();
+        ArrayList<Aktie> t = new Model().getData().getAktienList().getValue();
     //ToDO Dieser Request füllt nicht das Model!
 
         for (Object v : t) {

@@ -139,8 +139,8 @@ public class Aktie implements Comparator {
 
         Aktie aktie  = new Aktie();
         aktie.setSymbol("AAPL");
-        int ind = new Model().getDaten().getAktienList().getValue().indexOf(aktie);
-        new Model().getDaten().getAktienList().getValue().get(ind);
+        int ind = new Model().getData().getAktienList().getValue().indexOf(aktie);
+        new Model().getData().getAktienList().getValue().get(ind);
 
 
         return chart;

@@ -76,12 +76,11 @@ public class DrawerActivity extends AppCompatActivity {
         LoadFromJson lfj = new LoadFromJson();
         FileInputStream fis = context.openFileInput("keep.dat");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        Flow f = (Flow) ois.readObject();
-        String st = f.toString();
+        String st = (String) ois.readObject();
         lfj.getJson(st);
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
         // Initializes RequestClient and loads all symbols
 
@@ -89,7 +88,7 @@ public class DrawerActivity extends AppCompatActivity {
         try {
             Model m = new Model();
             System.out.println(m.getDaten().getAktienList().getValue().size());
-            if(m.getDaten().getAktienList().getValue() != null && m.getDaten().getAktienList().getValue().size() > 2) {
+            if(m.getDaten().getAktienList().getValue() != null && m.getDaten().getAktienList().getValue().size() < 2) {
                 req.asyncRun(RequestsBuilder.getAllSymbolsURL());
             }
         } catch (Exception e) {

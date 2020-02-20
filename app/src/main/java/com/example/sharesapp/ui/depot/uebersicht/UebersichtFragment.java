@@ -67,6 +67,8 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         recyclerView.setLayoutManager(layoutManager);
     }
 
+    //to bind the uebersicht und aktien from tradelist
+
     public void setAdapter(ArrayList<Trade> tradesList) {
         System.out.println("Called setAdapter");
         if (recyclerView == null) {

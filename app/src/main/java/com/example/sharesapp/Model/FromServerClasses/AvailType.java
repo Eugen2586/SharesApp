@@ -5,6 +5,9 @@ import com.example.sharesapp.Model.Constants;
 import java.util.ArrayList;
 
 public class AvailType {
+    /*
+    This Class is for Reorganize the Tabs from Stock-Trading!
+     */
     private String[] type_list = {"ADR", "REIT", "Stock and Bond Fund", "Secondary Issue", "Limited Partnerships", "Common Stock", "ETF", "Warrant", "Right", "Unit", "Temporary", "Not Available"};
     private Object[] type_abbr_list = {"ad", "re", "ce", "si", "lp", "cs", "et", "wt", "rt", "ut", "temp", " "};
 

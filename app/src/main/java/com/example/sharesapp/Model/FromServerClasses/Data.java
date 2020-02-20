@@ -9,17 +9,39 @@ import java.util.ArrayList;
 
 public class Data {
     private ArrayList<Trade> tradelist;
+    private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> favoriten;
+    private AvailType availType;
+    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+
+    private ArrayList<SearchRequest> searches;
+
+    public ArrayList<SearchRequest> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(ArrayList<SearchRequest> searches) {
+        this.searches = searches;
+    }
+
+
+    public AvailType getAvailType() {
+        if (availType == null){
+            availType = new AvailType();
+        }
+        return availType;
+    }
+
+    public void setAvailType(AvailType availType) {
+        this.availType = availType;
+    }
+
+
 
     public Data(){
-        //ToDo initialisation Stuff here!
-        LoadFromJson j = new LoadFromJson();
-        try {
-        j.readJson();
-        }
-        catch(Exception e){
-        }
+
+
     }
     public Depot getDepot() {
         if (depot == null) {
@@ -43,15 +65,18 @@ public class Data {
         this.depot = depot;
     }
 
-    private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+
 
     public void addTrade(Trade trade){
         tradelist.add(trade);
+        tradesMutable.setValue(tradelist);
     }
 
     public void setTradelist(ArrayList<Trade> trades){
         tradelist = trades;
+        tradesMutable.setValue(tradelist);
     }
+
     public ArrayList<Trade> getTrades(){
         return tradelist;
     }
@@ -87,6 +112,10 @@ public class Data {
 
     public MutableLiveData<ArrayList<Aktie>> getAktienList() {
         return aktien;
+    }
+
+    public MutableLiveData<ArrayList<Trade>> getTradesMutable() {
+        return tradesMutable;
     }
 
     @Override

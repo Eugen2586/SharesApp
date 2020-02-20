@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 
 import org.json.simple.parser.ParseException;
@@ -43,6 +44,12 @@ public class AsyncTaskHandler {
         } else if (url.contains("chart")) {
             try {
                 new RequestHistoricalQuotePrices(s);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else if(url.contains("search") ){
+            try {
+                new RequestSearch(s);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

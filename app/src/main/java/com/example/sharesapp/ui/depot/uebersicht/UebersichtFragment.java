@@ -15,32 +15,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    View root;
-    StockRecyclerViewAdapter adapter = null;
-    RecyclerView recyclerView = null;
-
-    TextView cash;
+    private View root;
+    private StockRecyclerViewAdapter adapter = null;
+    private RecyclerView recyclerView = null;
+    private Model model = new Model();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Model model = new Model();
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
         Data data = new Model().getData();
         String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
-        cash = root.findViewById(R.id.stock_value_text);
+        TextView cash = root.findViewById(R.id.stock_value_text);
         cash.setText((wert + "€"));
 
-        initRecyclerView();
+        final Observer<ArrayList<Trade>> observer = new Observer<ArrayList<Trade>>() {
+            @Override
+            public void onChanged(ArrayList<Trade> tradesList) {
+                setAdapter(tradesList);
+            }
+        };
+
+        data.getTradesMutable().observe(getViewLifecycleOwner(), observer);
+        setAdapter(data.getTradesMutable().getValue());
 
         return root;
     }
@@ -51,9 +61,32 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    public void initRecyclerView() {
+    private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    //to bind the uebersicht und aktien from tradelist
+
+    private void setAdapter(ArrayList<Trade> tradesList) {
+        System.out.println("Called setAdapter");
+        if (recyclerView == null) {
+            initRecyclerView();
+        }
+        if (tradesList != null) {
+
+            ArrayList<Aktie> trades = new ArrayList<>();
+            for (Trade t : tradesList) {
+                trades.add(t.getAktie());
+            }
+            if (adapter == null) {
+                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), trades);
+                adapter.setClickListener(UebersichtFragment.this);
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.setAktien(trades);
+            }
+        }
     }
 }

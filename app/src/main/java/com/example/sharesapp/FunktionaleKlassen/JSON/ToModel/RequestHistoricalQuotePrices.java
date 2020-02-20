@@ -1,5 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.SearchedURLS;
@@ -19,7 +20,6 @@ public class RequestHistoricalQuotePrices {
 
     public RequestHistoricalQuotePrices(String s) throws ParseException {
 
-        
         dbs = new ArrayList();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);

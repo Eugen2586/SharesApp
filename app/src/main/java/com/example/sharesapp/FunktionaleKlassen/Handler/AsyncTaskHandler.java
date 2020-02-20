@@ -55,7 +55,6 @@ public class AsyncTaskHandler {
             };
         } else if(url.contains("chart") ){
             try {
-                System.out.print(s);
                 new RequestHistoricalQuotePrices(s);
             } catch (ParseException e) {
                 e.printStackTrace();

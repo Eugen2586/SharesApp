@@ -87,10 +87,10 @@ public class DrawerActivity extends AppCompatActivity {
         Requests req = new Requests();
         try {
             Model m = new Model();
-            boolean b = m.getDaten().getAktienList().getValue()!= null;
+            boolean b = m.getData().getAktienList().getValue()!= null;
             boolean a  = true;
             if(b) {
-                 a = m.getDaten().getAktienList().getValue().size() < 2;
+                 a = m.getData().getAktienList().getValue().size() < 2;
             }
             if( a && !b) {
                 req.asyncRun(RequestsBuilder.getAllSymbolsURL());

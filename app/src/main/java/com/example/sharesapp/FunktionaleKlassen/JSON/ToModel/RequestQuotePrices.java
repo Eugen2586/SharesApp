@@ -17,7 +17,7 @@ public class RequestQuotePrices {
 
 
     public RequestQuotePrices(String s) throws ParseException {
-        ArrayList<Aktie> m = new Model().getDaten().getAktienList().getValue();
+        ArrayList<Aktie> m = new Model().getData().getAktienList().getValue();
         JSONParser parser = new JSONParser();
         JSONObject jsonar = (JSONObject) parser.parse(s);
             for (Object t: m) {

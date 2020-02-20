@@ -32,13 +32,13 @@ public class RequestSymbol {
             akl.add(ak);
         }
        Model m = new Model();
-       m.getDaten().addAktienList(akl);
+       m.getData().addAktienList(akl);
     }
 
 
     public ArrayList<Aktie> getAk() {
         Model m = new Model();
-        m.getDaten().addAktienList(akl);
+        m.getData().addAktienList(akl);
         return akl;
     }
 }

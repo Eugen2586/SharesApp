@@ -88,7 +88,7 @@ public class DrawerActivity extends AppCompatActivity {
         try {
             Model m = new Model();
             System.out.println(m.getDaten().getAktienList().getValue().size());
-            if(m.getDaten().getAktienList().getValue() == null || m.getDaten().getAktienList().getValue().size() < 2) {
+            if(m.getDaten().getAktienList().getValue() != null && m.getDaten().getAktienList().getValue().size() < 2) {
                 req.asyncRun(RequestsBuilder.getAllSymbolsURL());
             }
         } catch (Exception e) {

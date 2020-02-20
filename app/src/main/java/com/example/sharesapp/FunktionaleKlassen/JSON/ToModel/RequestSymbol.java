@@ -38,7 +38,8 @@ public class RequestSymbol {
         }
        Model m = new Model();
        m.getData().addAktienList(akl);
-       m.getData().getAvailType().setType_abbr_list((String[])type.toArray());
+       Object[] t = type.toArray();
+       m.getData().getAvailType().setType_abbr_list(t);
     }
 
 

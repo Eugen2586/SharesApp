@@ -26,8 +26,17 @@
             android:layout_toStartOf="@+id/stock_percentage_text"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Bezeichnung"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:text="Bezeichnung" />
+
+        <TextView
+            android:id="@+id/stock_symbol_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stock_text"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Symbol" />
 
         <TextView
             android:id="@+id/stock_value_text"

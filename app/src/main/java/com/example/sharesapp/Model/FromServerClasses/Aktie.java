@@ -1,11 +1,14 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+import com.example.sharesapp.Model.Model;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
-public class Aktie {
+public class Aktie implements Comparator {
     //ToDo neue Variablen für die Aktie
 
 
@@ -133,6 +136,24 @@ public class Aktie {
     }
 
     public ArrayList getChart() {
+
+        Aktie aktie  = new Aktie();
+        aktie.setSymbol("AAPL");
+        int ind = new Model().getData().getAktienList().getValue().indexOf(aktie);
+        new Model().getData().getAktienList().getValue().get(ind);
+
+
         return chart;
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        Aktie t1 , t2;
+        t1 = (Aktie) o1;
+        t2 = (Aktie) o2;
+        if(t1.getSymbol().equals(t2.getSymbol())){
+            return 0;
+        }
+        return -1;
     }
 }

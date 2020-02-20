@@ -26,7 +26,7 @@ public class RequestHistoricalQuotePrices {
             //ToDo zweite Datenebene
             db = new DataPoint();
             JSONObject json = (JSONObject) t;
-            db.setDate(json.get("name").toString());
+            //db.setDate(json.get("name").toString());
             db.setDate(json.get("date").toString());
             db.setOpen(json.get("open").toString());
             db.setClose(json.get("close").toString());
@@ -42,7 +42,7 @@ public class RequestHistoricalQuotePrices {
             dbs.add(db);
         }
         Model m = new Model();
-        for (Object f: m.getDaten().getAktienList().getValue()){
+        for (Object f: m.getData().getAktienList().getValue()){
             Aktie g = (Aktie) f;
             if (dbs.size()> 0 && g.getName().equals(((Aktie)dbs.get(0)).getName())){
                 g.setChart(dbs);

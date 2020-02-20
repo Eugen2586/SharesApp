@@ -1,7 +1,9 @@
 package com.example.sharesapp;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 
@@ -13,9 +15,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
@@ -23,20 +28,73 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.intellij.lang.annotations.Flow;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import okhttp3.internal.http2.Http2Reader;
+
+import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 
 
 public class DrawerActivity extends AppCompatActivity {
-
+    private Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //If the App Stopps we store the Data!
+        try {
+
+            SaveToJSON stj = new SaveToJSON();
+            String s = stj.getJson();
+            context = this.getBaseContext();
+            FileOutputStream fos = context.openFileOutput("keep.dat", MODE_APPEND );
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(s);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* Persistenz Stuff für die
+
+
+         */
+        context = this.getBaseContext();
+        try{
+        LoadFromJson lfj = new LoadFromJson();
+        FileInputStream fis = context.openFileInput("keep.dat");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        String st = (String) ois.readObject();
+        lfj.getJson(st);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         // Initializes RequestClient and loads all symbols
+
         Requests req = new Requests();
         try {
-            req.asyncRun(RequestsBuilder.getAllSymbolsURL());
+            Model m = new Model();
+            boolean b = m.getData().getAktienList().getValue()!= null;
+            boolean a  = true;
+            if(b) {
+                 a = m.getData().getAktienList().getValue().size() < 2;
+            }
+            if( a && !b) {
+                req.asyncRun(RequestsBuilder.getAllSymbolsURL());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

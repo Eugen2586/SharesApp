@@ -39,7 +39,7 @@ public class Depot {
             geldwert = geldwert - a.getPreis() * a.getAnzahl();
             Model m = new Model();
             Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
-            m.getDaten().addTrade(trade);
+            m.getData().addTrade(trade);
         }
         }
     }
@@ -63,7 +63,7 @@ public class Depot {
                 aktienImDepot.add(a);
                 Model m = new Model();
                 Trade trade = new Trade(a, a.getAnzahl(), false,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
-                m.getDaten().addTrade(trade);
+                m.getData().addTrade(trade);
             }
             geldwert = geldwert - a.getPreis();
         }

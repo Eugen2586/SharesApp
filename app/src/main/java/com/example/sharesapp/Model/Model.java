@@ -4,16 +4,20 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 
 public class Model {
     //Hierdrin werden alle Daten gestored.
-    static Data daten;
+    static Data data;
 
-    public Data getDaten(){
-        if (daten == null){
+    public Data getData(){
+        if (data == null){
             //ToDo Hier die persistenz füllen!
             //Chris K.
-            daten = new Data();
-            daten.getDepot().setGeldwert(50000);
+            resetData();
         }
-        return daten;
+        return data;
+    }
+
+    public void resetData() {
+        data = new Data();
+        data.getDepot().setGeldwert(Constants.MONEY);
     }
 
 }

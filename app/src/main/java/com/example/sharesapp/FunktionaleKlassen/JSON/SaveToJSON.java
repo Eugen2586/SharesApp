@@ -19,11 +19,11 @@ import java.util.ArrayList;
         }
 
         public String getJson() {
-            Data d = new Model().getDaten();
+            Data d = new Model().getData();
             ArrayList p = d.getAktienList().getValue();
             //Arraylisten für die Aktien/Symbol Verknüpfung
             JSONArray jsonArray = new JSONArray();
-            if(new Model().getDaten().getAktienList().getValue() != null) {
+            if(new Model().getData().getAktienList().getValue() != null) {
                 for (Object e : p) {
                     JSONObject a = new JSONObject();
                     Aktie e1 = (Aktie) e;

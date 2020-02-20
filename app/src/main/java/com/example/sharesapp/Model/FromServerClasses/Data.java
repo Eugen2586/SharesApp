@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Data {
     private ArrayList<Trade> tradelist;
+    private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> favoriten;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
@@ -37,11 +38,14 @@ public class Data {
 
     public void addTrade(Trade trade){
         tradelist.add(trade);
+        tradesMutable.setValue(tradelist);
     }
 
     public void setTradelist(ArrayList<Trade> trades){
         tradelist = trades;
+        tradesMutable.setValue(tradelist);
     }
+
     public ArrayList<Trade> getTrades(){
         return tradelist;
     }
@@ -77,6 +81,10 @@ public class Data {
 
     public MutableLiveData<ArrayList<Aktie>> getAktienList() {
         return aktien;
+    }
+
+    public MutableLiveData<ArrayList<Trade>> getTradesMutable() {
+        return tradesMutable;
     }
 
     protected void finalize(){

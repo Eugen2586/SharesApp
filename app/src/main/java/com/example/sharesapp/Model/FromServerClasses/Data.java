@@ -12,6 +12,15 @@ public class Data {
     private Depot depot;
     private ArrayList<Aktie> favoriten;
     private AvailType availType;
+    private ArrayList<SearchRequest> searches;
+
+    public ArrayList<SearchRequest> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(ArrayList<SearchRequest> searches) {
+        this.searches = searches;
+    }
 
     public AvailType getAvailType() {
         if (availType == null){

@@ -13,46 +13,50 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener{
 
     private AktienViewModel aktienViewModel;
-//    private String[] typeList = {"crypto", "oil", "us-market", "etfs", "bonds", "funding", "fx", "capital-raise"};
 
     RecyclerView recyclerView = null;
     View root;
     StockRecyclerViewAdapter adapter = null;
+    Model model = new Model();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_aktien, container, false);
-        Model model = new Model();
+        TabLayout tabLayout = root.findViewById(R.id.category_tab_layout);
+
+        addTabs(tabLayout);
+
+        final TabLayout finalTabLayout = tabLayout;
 
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                setAdapter(aktienList);
+                setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
         model.getDaten().getAktienList().observe(getViewLifecycleOwner(), observer);
-        setAdapter(model.getDaten().getAktienList().getValue());
 
-        TabLayout tabs = root.findViewById(R.id.category_tab_layout);
-
-        if (tabs != null) {
-            tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    changeCategory(tab.getPosition());
+                    setCategory(tab.getPosition());
                 }
 
                 @Override
@@ -65,17 +69,38 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
                 }
             });
-        } else {
-            System.out.println("TABS NULL");
         }
 
         return root;
     }
 
-    private void changeCategory(int position) {
-        switch(position) {
-            case 0:
+    private void addTabs(TabLayout tabLayout) {
+        for (String category: Constants.TYPE_LIST) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(category);
+            tabLayout.addTab(tab);
+        }
+    }
 
+    private void setCategory(int position) {
+        if (position == 0) {
+            // TODO: portfolio einfügen
+            System.out.println("Portfolio einfügen");
+        } else {
+            position--;
+
+            ArrayList<Aktie> aktien = model.getDaten().getAktienList().getValue();
+            if (aktien != null) {
+                String type = Constants.TYPE_ABBRE_LIST[position];
+                ArrayList<Aktie> filtered_aktien = new ArrayList<>();
+                for (Aktie aktie: aktien) {
+                    if (aktie.getType().equals(type)) {
+                        filtered_aktien.add(aktie);
+                    }
+                }
+
+                setAdapter(filtered_aktien);
+            }
         }
     }
 
@@ -85,18 +110,16 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    public void initRecyclerView() {
+    private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.aktien_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    public void setAdapter(ArrayList<Aktie> aktienList) {
-        System.out.println("Called setAdapter");
-        if (recyclerView == null) {
-            initRecyclerView();
-        }
+    private void setAdapter(ArrayList<Aktie> aktienList) {
+        System.out.println("Called setAdapter " + aktienList);
         if (aktienList != null) {
+            initRecyclerView();
             if (adapter == null) {
                 adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
                 adapter.setClickListener(AktienFragment.this);

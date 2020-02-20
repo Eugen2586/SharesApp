@@ -12,6 +12,7 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,8 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Aktie aktie = mData.get(position);
-        String name = aktie.getName();
-        holder.myTextView.setText(name);
+        holder.myTextView.setText(aktie.getName());
+        holder.mySymbolView.setText(aktie.getSymbol());
     }
 
     // total number of rows
@@ -57,10 +58,12 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        TextView mySymbolView;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.stock_text);
+            mySymbolView = itemView.findViewById(R.id.stock_symbol_text);
             itemView.setOnClickListener(this);
         }
 

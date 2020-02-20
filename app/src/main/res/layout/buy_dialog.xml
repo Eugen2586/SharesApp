@@ -72,10 +72,11 @@
                 android:id="@+id/kaufMenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_margin"
                 android:ems="10"
                 android:inputType="number"
                 android:text="0"
-                android:textAlignment="textEnd" />
+                android:textAlignment="center" />
 
         </TableRow>
 
@@ -93,9 +94,10 @@
                 android:id="@+id/Limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_margin"
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:textAlignment="textEnd" />
+                android:textAlignment="center" />
         </TableRow>
 
         <TableRow
@@ -112,7 +114,7 @@
                 android:id="@+id/total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="set total_preis"
+                android:text="0.00 €"
                 android:textAlignment="center"
                 android:textSize="18dp" />
         </TableRow>

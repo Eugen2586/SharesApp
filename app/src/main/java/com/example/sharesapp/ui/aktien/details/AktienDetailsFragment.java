@@ -3,10 +3,13 @@ package com.example.sharesapp.ui.aktien.details;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -58,7 +61,7 @@ public class AktienDetailsFragment extends Fragment {
 
         setStockDetails();
 
-        Button buy_button = root.findViewById(R.id.kaufen_button);
+        final Button buy_button = root.findViewById(R.id.kaufen_button);
 
         buy_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +76,43 @@ public class AktienDetailsFragment extends Fragment {
                     cash.setText((wert + "€"));
                     TextView price = buyDialogView.findViewById(R.id.price_one);
                     price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    TextView totalPrice = buyDialogView.findViewById(R.id.total_price);
+
+
+                    EditText kaufMenge = buyDialogView.findViewById(R.id.kaufMenge);
+
+                    kaufMenge.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            // you can call or do what you want with your EditText here
+
+                            // yourEditText...
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                    });
+
+                    EditText Limit = buyDialogView.findViewById(R.id.Limit);
+
+                    Limit.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            // you can call or do what you want with your EditText here
+
+                            // yourEditText...
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                    });
+
+
+
                     builder.setCancelable(true);
                     builder.setView(buyDialogView);
                     builder.setPositiveButton("Kaufen",
@@ -110,6 +150,10 @@ public class AktienDetailsFragment extends Fragment {
             }
         }
         model.getData().setCurrentStock(currentStock);
+    }
+
+    private void setTotalPrice() {
+        
     }
 
     private void setStockDetails() {

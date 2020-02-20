@@ -15,6 +15,17 @@ public class Data {
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
+    private ArrayList<SearchRequest> searches;
+
+    public ArrayList<SearchRequest> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(ArrayList<SearchRequest> searches) {
+        this.searches = searches;
+    }
+
+
     public AvailType getAvailType() {
         if (availType == null){
             availType = new AvailType();

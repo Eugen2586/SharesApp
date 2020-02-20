@@ -38,4 +38,5 @@
     <string name="tag">Tag</string>
     <string name="cash">Cash:</string>
     <string name="aktienwerte">Aktienwerte:</string>
+    <string name="billanzsumme">Billanzsumme:</string>
 </resources>

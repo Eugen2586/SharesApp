@@ -54,9 +54,6 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
         }
-        if (runnable != null) {
-            mHandler.post(runnable);
-        }
 
     }
 }

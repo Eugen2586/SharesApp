@@ -37,25 +37,27 @@ public class DepotFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht).commit();
         TabLayout tabs = root.findViewById(R.id.depot_tab_layout);
 
-        if (tabs == null) {
-            System.out.println("NULL");
+        if (tabs != null) {
+            tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    changeFragment(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        } else {
+            System.out.println("TABS NULL");
         }
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                changeFragment(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         return root;
     }

@@ -10,38 +10,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Quote;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    private AktienViewModel aktienViewModel;
-    private MutableLiveData<Aktie> currentQuote = new MutableLiveData<>();
-//    private String[] typeList = {"crypto", "oil", "us-market", "etfs", "bonds", "funding", "fx", "capital-raise"};
-
-    RecyclerView recyclerView = null;
-    View root;
-    StockRecyclerViewAdapter adapter = null;
     Model model = new Model();
+    private AktienViewModel aktienViewModel;
+//    private String[] typeList = {"crypto", "oil", "us-market", "etfs", "bonds", "funding", "fx", "capital-raise"};
+    private MutableLiveData<Aktie> currentQuote = new MutableLiveData<>();
     private RecyclerView recyclerView = null;
     private View root;
     private StockRecyclerViewAdapter adapter = null;
@@ -64,24 +55,24 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             }
         };
 
-        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), listObserver);
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
         final Observer<Aktie> currentQuoteObserver = new Observer<Aktie>() {
             @Override
             public void onChanged(Aktie aktie) {
-                View aktienDetailsFrag = root.findViewById(R.id.aktienDetailsFragment);
                 Aktie cq = currentQuote.getValue();
                 assert cq != null;
-                TextView symbolTV = aktienDetailsFrag.findViewById(R.id.symbol_field);
+                TextView symbolTV = root.findViewById(R.id.symbol_field);
                 symbolTV.setText(cq.getSymbol());
-                TextView nameTV = aktienDetailsFrag.findViewById(R.id.name_field);
+                TextView nameTV = root.findViewById(R.id.name_field);
                 nameTV.setText(cq.getName());
                 // todo set all fields
             }
         };
 
-        setAdapter(model.getDaten().getAktienList().getValue());
-        model.getData().getAktienList().observe(getViewLifecycleOwner(), observer);
+        currentQuote.observe(getViewLifecycleOwner(), currentQuoteObserver);
+
+        setAdapter(model.getData().getAktienList().getValue());
 
         if (tabLayout != null) {
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -108,18 +99,15 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void setCurrentQuote() {
         if (currentQuote.getValue() != null) {
             Model model = new Model();
-            ArrayList<Aktie> quotes = model.getDaten().getAktienList().getValue();
+            ArrayList<Aktie> quotes = model.getData().getAktienList().getValue();
             int index = Objects.requireNonNull(quotes).indexOf(currentQuote.getValue());
             currentQuote.setValue(quotes.get(index));
         }
 
     }
 
-    private void changeCategory(int position) {
-        switch (position) {
-            case 0:
     private void addTabs(TabLayout tabLayout) {
-        for (String category: Constants.TYPE_LIST) {
+        for (String category : Constants.TYPE_LIST) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setText(category);
             tabLayout.addTab(tab);
@@ -137,7 +125,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             if (aktien != null) {
                 String type = Constants.TYPE_ABBRE_LIST[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();
-                for (Aktie aktie: aktien) {
+                for (Aktie aktie : aktien) {
                     if (aktie.getType().equals(type)) {
                         filtered_aktien.add(aktie);
                     }

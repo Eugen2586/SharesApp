@@ -75,9 +75,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
         // add Tabs for existing StockTypes
         String[] availableTypes = model.getData().getAvailType().getType_list();
-//        for (String str : availableTypes) {
-//            System.out.print(str + " ");
-//        }
         for (String category : availableTypes) {
             addTabWithString(tabLayout, category);
         }

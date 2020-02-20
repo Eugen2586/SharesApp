@@ -37,4 +37,7 @@
     <string name="bbb">BBB</string>
     <string name="tag">Tag</string>
     <string name="suche_aktie">Suche Aktie</string>
+    <string name="kategorie">Kategorie:</string>
+    <string name="deine_suche_ergab_folgende_treffer">Deine Suche ergab folgende Treffer:</string>
+    <string name="menu_suche">Suche</string>
 </resources>

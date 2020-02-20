@@ -18,17 +18,19 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
-    View root;
-    StockRecyclerViewAdapter adapter = null;
-    RecyclerView recyclerView = null;
-
-    TextView cash;
+    private View root;
+    private StockRecyclerViewAdapter adapter = null;
+    private RecyclerView recyclerView = null;
+    private Model model = new Model();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +39,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
         Data data = new Model().getData();
         String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
-        cash = root.findViewById(R.id.stock_value_text);
+        TextView cash = root.findViewById(R.id.stock_value_text);
         cash.setText((wert + "€"));
 
         final Observer<ArrayList<Trade>> observer = new Observer<ArrayList<Trade>>() {
@@ -47,8 +49,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
             }
         };
 
-
-
         data.getTradesMutable().observe(getViewLifecycleOwner(), observer);
         setAdapter(data.getTradesMutable().getValue());
 
@@ -57,11 +57,21 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    public void initRecyclerView() {
+    private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -69,7 +79,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     //to bind the uebersicht und aktien from tradelist
 
-    public void setAdapter(ArrayList<Trade> tradesList) {
+    private void setAdapter(ArrayList<Trade> tradesList) {
         System.out.println("Called setAdapter");
         if (recyclerView == null) {
             initRecyclerView();

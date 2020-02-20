@@ -16,52 +16,26 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     View root;
-    StockRecyclerViewAdapter adapter = null;
     RecyclerView recyclerView = null;
-
-    Data d;
     TextView cash;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Model model = new Model();
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        d = new Model().getDaten();
+        Data data = new Model().getDaten();
         cash = root.findViewById(R.id.stock_value_text);
-        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
+        cash.setText(data.getDepot().getGeldwert() + "€");
 
-        final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
-            @Override
-            public void onChanged(ArrayList<Aktie> aktienList) {
-                System.out.println("CHANGED: " + aktienList);
-                System.out.println("RECYLERVIEW: " + recyclerView);
-                if (recyclerView == null) {
-                    initRecyclerview();
-                }
-                if (adapter == null) {
-                    adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), aktienList);
-                    adapter.setClickListener(UebersichtFragment.this);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    adapter.setAktien(aktienList);
-                }
-            }
-        };
-
-        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), aktienObserver);
-
-        // set up the RecyclerView
-        if (recyclerView == null) {
-            initRecyclerview();
-        }
+        initRecyclerView();
 
         return root;
     }
@@ -72,7 +46,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    public void initRecyclerview() {
+    public void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);

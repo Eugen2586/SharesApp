@@ -1,4 +1,4 @@
-package com.example.sharesapp.ui.depot.uebersicht;
+package com.example.sharesapp.ui.utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    StockRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
+    public StockRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -78,7 +78,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

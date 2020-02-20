@@ -19,9 +19,9 @@
     <string name="menu_historie">Historie</string>
     <string name="menu_erfolge">Erfolge</string>
     <string name="menu_newgame">NewGame</string>
-    <string name="uebersicht">Übersicht</string>
-    <string name="statistik">Statistik</string>
-    <string name="portfolio">Portfolio</string>
+    <string name="uebersicht">übersicht</string>
+    <string name="statistik">statistik</string>
+    <string name="portfolio">portfolio</string>
     <string name="crypto">crypto</string>
     <string name="oil">oil</string>
     <string name="us_market">us-market</string>

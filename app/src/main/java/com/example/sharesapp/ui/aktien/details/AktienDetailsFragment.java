@@ -20,21 +20,20 @@ public class AktienDetailsFragment extends Fragment {
     View root;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_aktien_details, container, false);
         // Inflate the layout for this fragment
-        final View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
+
         Button buy_button = root.findViewById(R.id.kaufen_button);
-        System.out.println("--------------------------------------------------1");
 
         buy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("--------------------------------------------------2");
                 Context context = AktienDetailsFragment.this.getContext();
                 if (context != null) {
+                    View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setCancelable(true);
                     builder.setView(buyDialogView);

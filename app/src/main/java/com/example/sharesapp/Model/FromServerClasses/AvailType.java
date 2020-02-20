@@ -8,8 +8,8 @@ public class AvailType {
     /*
     This Class is for Reorganize the Tabs from Stock-Trading!
      */
-    private String[] type_list = {"ADR", "REIT", "Stock and Bond Fund", "Secondary Issue", "Limited Partnerships", "Common Stock", "ETF", "Warrant", "Right", "Unit", "Temporary", "Not Available"};
-    private String[] type_abbr_list = {"ad", "re", "ce", "si", "lp", "cs", "et", "wt", "rt", "ut", "temp", " "};
+    private String[] type_list = Constants.TYPE_LIST;
+    private String[] type_abbr_list = Constants.TYPE_ABBRE_LIST;
 
     public String[] getType_abbr_list() {
         return type_abbr_list;
@@ -20,49 +20,21 @@ public class AvailType {
     }
 
     public void setType_abbr_list(Object[] type_abbr_list1) {
-        ArrayList i = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(0);
         for (Object s: type_abbr_list1) {
-            try {
-                if (((String) type_abbr_list1[0]).equals(s)) {
-                    i.add(0);
-                }
-                if (((String) type_abbr_list1[1]).equals(s)) {
-                    i.add(1);
-                }
-                if (((String) type_abbr_list1[2]).equals(s)) {
-                    i.add(2);
-                }
-                if (((String) type_abbr_list1[3]).equals(s)) {
-                    i.add(3);
-                }
-                if (((String) type_abbr_list1[4]).equals(s)) {
-                    i.add(4);
-                }
-                if (((String) type_abbr_list1[5]).equals(s)) {
-                    i.add(5);
-                }
-                if (((String) type_abbr_list1[6]).equals(s)) {
-                    i.add(6);
-                }
-                if (((String) type_abbr_list1[7]).equals(s)) {
-                    i.add(7);
-                }
-                if (((String) type_abbr_list1[8]).equals(s)) {
-                    i.add(8);
-                }
-                if (((String) type_abbr_list1[9]).equals(s)) {
-                    i.add(9);
-                }
-                if (((String) type_abbr_list1[10]).equals(s)) {
-                    i.add(10);
-                }
-            }catch(IndexOutOfBoundsException e){
+            for (int i = 1; i < type_abbr_list1.length; i++) {
+                try {
+                    if ((type_abbr_list1[i]).equals(s)) {
+                        list.add(i);
+                    }
+                } catch (Exception e) {
 
+                }
             }
-
         }
-        ArrayList loktype_list = new ArrayList();
-        for (Object z: i) {
+        ArrayList<String> loktype_list = new ArrayList<>();
+        for (Object z: list) {
             int h = (int) z;
             loktype_list.add(type_list[h]);
         }
@@ -73,7 +45,7 @@ public class AvailType {
             type_list[zaehl] = st;
             zaehl++;
         }
-        for (Object o:i) {
+        for (Object o: list) {
             int st = (int)o;
             type_abbr_list[zaehl] = Constants.TYPE_ABBRE_LIST[st];
         }

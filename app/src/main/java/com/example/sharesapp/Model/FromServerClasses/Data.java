@@ -11,15 +11,24 @@ public class Data {
     private ArrayList<Trade> tradelist;
     private Depot depot;
     private ArrayList<Aktie> favoriten;
+    private AvailType availType;
+
+    public AvailType getAvailType() {
+        if (availType == null){
+            availType = new AvailType();
+        }
+        return availType;
+    }
+
+    public void setAvailType(AvailType availType) {
+        this.availType = availType;
+    }
+
+
 
     public Data(){
-        //ToDo initialisation Stuff here!
-        LoadFromJson j = new LoadFromJson();
-        try {
-        j.readJson();
-        }
-        catch(Exception e){
-        }
+
+
     }
     public Depot getDepot() {
         if (depot == null) {

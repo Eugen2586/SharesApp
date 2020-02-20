@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class RequestSymbol {
 
+
+    ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
     ArrayList<Aktie> akl = new ArrayList<>();
    public RequestSymbol(String st) throws Exception {
@@ -30,9 +32,14 @@ public class RequestSymbol {
             ak.setCurrency(json.get("currency").toString());
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
+            if(!type.contains(ak.getType())){
+                type.add(ak.getType());
+            }
         }
        Model m = new Model();
        m.getData().addAktienList(akl);
+       Object[] t = type.toArray();
+       m.getData().getAvailType().setType_abbr_list(t);
     }
 
 

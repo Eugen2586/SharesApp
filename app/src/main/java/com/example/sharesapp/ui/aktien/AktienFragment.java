@@ -18,6 +18,7 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -43,10 +44,39 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         };
 
         model.getDaten().getAktienList().observe(getViewLifecycleOwner(), observer);
-
         setAdapter(model.getDaten().getAktienList().getValue());
 
+        TabLayout tabs = root.findViewById(R.id.category_tab_layout);
+
+        if (tabs != null) {
+            tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    changeCategory(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        } else {
+            System.out.println("TABS NULL");
+        }
+
         return root;
+    }
+
+    private void changeCategory(int position) {
+        switch(position) {
+            case 0:
+
+        }
     }
 
     @Override

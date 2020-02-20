@@ -23,32 +23,19 @@ import java.util.ArrayList;
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     View root;
-    StockRecyclerViewAdapter adapter = null;
     RecyclerView recyclerView = null;
-
-    Data d;
     TextView cash;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Model model = new Model();
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        d = new Model().getDaten();
+        Data data = new Model().getDaten();
         cash = root.findViewById(R.id.stock_value_text);
-        cash.setText(String.valueOf(d.getDepot().getGeldwert()) + "€");
+        cash.setText(data.getDepot().getGeldwert() + "€");
 
-        final Observer<ArrayList<Aktie>> aktienObserver = new Observer<ArrayList<Aktie>>() {
-            @Override
-            public void onChanged(ArrayList<Aktie> aktienList) {
-                setAdapter(aktienList);
-            }
-        };
-
-        model.getDaten().getAktienList().observe(getViewLifecycleOwner(), aktienObserver);
-
-        setAdapter(model.getDaten().getAktienList().getValue());
+        initRecyclerView();
 
         return root;
     }
@@ -63,20 +50,5 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
-    }
-
-    public void setAdapter(ArrayList<Aktie> aktienList) {
-        if (recyclerView == null) {
-            initRecyclerView();
-        }
-        if (aktienList != null) {
-            if (adapter == null) {
-                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), aktienList);
-                adapter.setClickListener(UebersichtFragment.this);
-                recyclerView.setAdapter(adapter);
-            } else {
-                adapter.setAktien(aktienList);
-            }
-        }
     }
 }

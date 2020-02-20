@@ -152,8 +152,8 @@ public class Aktie implements Comparator {
         t1 = (Aktie) o1;
         t2 = (Aktie) o2;
         if(t1.getSymbol().equals(t2.getSymbol())){
-            return 2;
+            return 0;
         }
-        return 0;
+        return -1;
     }
 }

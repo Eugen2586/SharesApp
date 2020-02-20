@@ -26,7 +26,7 @@ public class RequestHistoricalQuotePrices {
             //ToDo zweite Datenebene
             db = new DataPoint();
             JSONObject json = (JSONObject) t;
-            db.setDate(json.get("name").toString());
+            //db.setDate(json.get("name").toString());
             db.setDate(json.get("date").toString());
             db.setOpen(json.get("open").toString());
             db.setClose(json.get("close").toString());

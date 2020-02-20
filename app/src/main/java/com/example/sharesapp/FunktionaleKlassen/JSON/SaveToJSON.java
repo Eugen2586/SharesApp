@@ -1,6 +1,7 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 
 import android.content.Context;
+import android.os.Environment;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
@@ -13,52 +14,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 
     public class SaveToJSON {
-        ArrayList objects = new ArrayList();
-        JSONArray b = new JSONArray();
+        public SaveToJSON(){
 
-        public SaveToJSON(ArrayList<Aktie> data, Context context) throws IOException {
-            //Deklarationsbereich
-            JSONArray jsonArray = new JSONArray();
-            //ToDo Hier muss man alle Vairiablen ergänzen die gestashed werden sollen.
-            //jsonArray.add(createJSONAktien(data));
-
-
-
-            //File Schreiben
-            //context.openFileOutput("config.txt", Context.MODE_PRIVATE)
-            // Wir suchen hier eine Context, der die entsprechenden einzelteile zusammenführt.
-            FileWriter frw = new FileWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE ) + "keep.dat");
-            frw.write(String.valueOf(jsonArray));
-            frw.flush();
-            frw.close();
         }
 
-
-        private JSONArray createJSONAktien(){
+        public String getJson() {
             Data d = new Model().getDaten();
             ArrayList p = d.getAktienList().getValue();
             //Arraylisten für die Aktien/Symbol Verknüpfung
             JSONArray jsonArray = new JSONArray();
-            for (Object e: p) {
-                JSONObject a = new JSONObject();
-                Aktie e1 = (Aktie)e;
-                a.put("Currency", e1.getCurrency());
-                a.put("Date", e1.getDate());
-                a.put("Enabled", e1.getEnabled());
-                a.put("Exchange",e1.getExchange());
-                a.put("Name", e1.getName());
-                a.put("Region", e1.getRegion());
-                a.put("Symbol", e1.getSymbol());
-                a.put("Type", e1.getType());
-                jsonArray.add(a);
+            if(new Model().getDaten().getAktienList().getValue() != null) {
+                for (Object e : p) {
+                    JSONObject a = new JSONObject();
+                    Aktie e1 = (Aktie) e;
+                    a.put("Currency", e1.getCurrency());
+                    a.put("Date", e1.getDate());
+                    a.put("Enabled", e1.getEnabled());
+                    a.put("Exchange", e1.getExchange());
+                    a.put("Name", e1.getName());
+                    a.put("Region", e1.getRegion());
+                    a.put("Symbol", e1.getSymbol());
+                    a.put("Type", e1.getType());
+                    jsonArray.add(a);
+                }
+
+                //Arrayliste für das Depot Anlegen
+                JSONObject depot = new JSONObject();
+                //depot.put
             }
-
-            //Arrayliste für das Depot Anlegen
-            JSONObject depot = new JSONObject();
-            //depot.put
-
             //ArrayListe für die vergangenen Trades
-            return jsonArray;
+            return ((String) jsonArray.toString());
         }
-
-}
+    }

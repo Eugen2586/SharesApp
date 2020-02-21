@@ -2,7 +2,6 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 
 import java.util.ArrayList;

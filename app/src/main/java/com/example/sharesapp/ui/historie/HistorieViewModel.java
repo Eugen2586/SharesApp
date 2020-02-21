@@ -4,16 +4,22 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sharesapp.Model.FromServerClasses.Trade;
+import com.example.sharesapp.Model.Model;
+
 public class HistorieViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<Trade> mTrades;
 
     public HistorieViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is historie fragment");
+        mTrades = new MutableLiveData<>();
+        for (Trade e: new Model().getData().getTrades()) {
+            mTrades.postValue(e);
+        }
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<Trade> getText() {
+        return mTrades;
     }
 }

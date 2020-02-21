@@ -12,7 +12,7 @@ public class Depot {
 
 
     float geldwert;
-    boolean in;
+    boolean in; //
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot = aktienImDepot;
@@ -25,19 +25,22 @@ public class Depot {
     }
 
     public void kaufeAktie(Aktie a){
-        if(geldwert - a.getPreis() > 0){
+        if(geldwert - a.getPreis()*a.getAnzahl() >= 0){
         in = false;
+        Model m = new Model();
         for (Object t: aktienImDepot) {
             Aktie ak = (Aktie) t;
             if(ak.getName().equals(a.getName())){
                 in = true;
                 ak.setAnzahl(a.getAnzahl() + ak.getAnzahl() );
+                geldwert = geldwert - a.getPreis() * a.getAnzahl();
+                Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
+                m.getData().addTrade(trade);
             }
         }
         if(in != true){
             aktienImDepot.add(a);
             geldwert = geldwert - a.getPreis() * a.getAnzahl();
-            Model m = new Model();
             Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
             m.getData().addTrade(trade);
         }

@@ -120,6 +120,12 @@ public class AktienDetailsFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //todo kaufen
+                                    Aktie a = new Aktie();
+                                    a.setAnzahl();
+                                    a.setPreis();
+                                    a.setName();
+
+                                    new Model().getData().getDepot().kaufeAktie();
                                 }
                             });
                     builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {

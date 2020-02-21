@@ -21,29 +21,34 @@ public class Depot {
     }
 
     public Depot() {
-
+        this.aktienImDepot = new ArrayList<Aktie>();
     }
 
     public void kaufeAktie(Aktie a){
+        System.out.println("kaufe");
         if(geldwert - a.getPreis()*a.getAnzahl() >= 0){
-        in = false;
-        Model m = new Model();
-        for (Object t: aktienImDepot) {
-            Aktie ak = (Aktie) t;
-            if(ak.getName().equals(a.getName())){
-                in = true;
-                ak.setAnzahl(a.getAnzahl() + ak.getAnzahl() );
+            in = false;
+            Model m = new Model();
+            if (!aktienImDepot.isEmpty()) {
+                for (Object t : aktienImDepot) {
+                    Aktie ak = (Aktie) t;
+                    if (ak.getName().equals(a.getName())) {
+                        in = true;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl();
+                        System.out.println(geldwert);
+                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        m.getData().addTrade(trade);
+                    }
+                }
+            }
+            if(!in){
+                aktienImDepot.add(a);
                 geldwert = geldwert - a.getPreis() * a.getAnzahl();
+                System.out.println(geldwert);
                 Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
             }
-        }
-        if(in != true){
-            aktienImDepot.add(a);
-            geldwert = geldwert - a.getPreis() * a.getAnzahl();
-            Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
-            m.getData().addTrade(trade);
-        }
         }
     }
 

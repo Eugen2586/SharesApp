@@ -8,8 +8,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import java.util.ArrayList;
 
 public class Data {
-
-    private ArrayList<Trade> tradelist;
+    private ArrayList<Trade> tradelist = new ArrayList<Trade>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> portfolioList = new ArrayList<>();

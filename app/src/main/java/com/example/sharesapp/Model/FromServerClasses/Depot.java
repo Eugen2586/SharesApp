@@ -13,6 +13,7 @@ public class Depot {
 
     float geldwert;
     boolean in;
+    float prozent = 1.01f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot = aktienImDepot;
@@ -21,26 +22,33 @@ public class Depot {
     }
 
     public Depot() {
+        this.aktienImDepot = new ArrayList<Aktie>();
 
     }
 
     public void kaufeAktie(Aktie a){
-        if(geldwert - a.getPreis() > 0){
-        in = false;
-        for (Object t: aktienImDepot) {
-            Aktie ak = (Aktie) t;
-            if(ak.getName().equals(a.getName())){
-                in = true;
-                ak.setAnzahl(a.getAnzahl() + ak.getAnzahl() );
-            }
-        }
-        if(in != true){
-            aktienImDepot.add(a);
-            geldwert = geldwert - a.getPreis() * a.getAnzahl();
+        System.out.println("kaufe");
+        if(geldwert - a.getPreis()*a.getAnzahl() >= 0){
+            in = false;
             Model m = new Model();
-            Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
-            m.getData().addTrade(trade);
-        }
+            if (!aktienImDepot.isEmpty()) {
+                for (Object t : aktienImDepot) {
+                    Aktie ak = (Aktie) t;
+                    if (ak.getName().equals(a.getName())) {
+                        in = true;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        m.getData().addTrade(trade);
+                    }
+                }
+            }
+            if(!in){
+                aktienImDepot.add(a);
+                geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
+                m.getData().addTrade(trade);
+            }
         }
     }
 
@@ -77,6 +85,10 @@ public class Depot {
 
     public void setGeldwert(float geldwert) {
         this.geldwert = geldwert;
+    }
+
+    public float getProzent() {
+        return this.prozent;
     }
 
 

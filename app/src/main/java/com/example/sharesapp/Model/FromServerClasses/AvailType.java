@@ -26,7 +26,7 @@ public class AvailType {
             int i = 0;
             for (String t: Constants.TYPE_ABBRE_LIST) {
                 if(s.equals(t)){
-                    l_type_list.add(Constants.TYPE_ABBRE_LIST[i]);
+                    l_type_list.add(Constants.TYPE_LIST[i]);
                     break;
                 }
                 i++;

@@ -50,6 +50,7 @@ public class DrawerActivity extends AppCompatActivity {
     private Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
+    private Requests requests = new Requests();
     @Override
     protected void onStop() {
         super.onStop();
@@ -156,6 +157,12 @@ public class DrawerActivity extends AppCompatActivity {
                     searchView.setIconified(true);
                 }
                 myActionMenuItem.collapseActionView();
+                // send SearchRequest to server
+                try {
+                    requests.asyncRun(RequestsBuilder.getSearchURL(query));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 model.getData().setCurrentSearchString(query);
                 Navigation.findNavController(DrawerActivity.this, R.id.nav_host_fragment).
                         navigate(R.id.nav_search);

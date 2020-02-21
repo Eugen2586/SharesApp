@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RequestSymbol {
 
 
+
     ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
     ArrayList<Aktie> akl = new ArrayList<>();
@@ -46,8 +47,7 @@ public class RequestSymbol {
            sts[i] = t.toString();
            i++;
        }
-       m.getData().getAvailType().setType_abbr_list(sts);
-    }
+       m.getData().getAvailType().setType_abbr_list(sts);}
 
 
     public ArrayList<Aktie> getAk() {

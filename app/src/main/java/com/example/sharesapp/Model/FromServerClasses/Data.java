@@ -11,7 +11,7 @@ public class Data {
     private ArrayList<Trade> tradelist;
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
-    private ArrayList<Aktie> favoriten;
+    private ArrayList<Aktie> portfolioList = new ArrayList<>();
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
 
@@ -127,5 +127,21 @@ public class Data {
             e.printStackTrace();
         }
 
+    }
+
+    public ArrayList<Aktie> getPortfolioList() {
+        return portfolioList;
+    }
+
+    public void setPortfolioList(ArrayList<Aktie> portfolioList) {
+        this.portfolioList = portfolioList;
+    }
+
+    public void addToOrRemoveFromPortfolio(Aktie stock) {
+        if (portfolioList.contains(stock)) {
+            portfolioList.remove(stock);
+        } else {
+            portfolioList.add(stock);
+        }
     }
 }

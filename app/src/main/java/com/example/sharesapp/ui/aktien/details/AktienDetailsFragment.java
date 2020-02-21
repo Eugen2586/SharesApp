@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -24,6 +26,7 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.ui.newgame.NewgameFragment;
 
 import org.w3c.dom.Text;
 
@@ -123,7 +126,8 @@ public class AktienDetailsFragment extends Fragment {
                                     int number = Integer.parseInt(kaufMenge.getText().toString());
                                     float price = limit*number;
                                     if (price > model.getData().getDepot().getGeldwert()) {
-                                        // todo benachrichtigung, dass es nicht geht
+                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
+
                                     } else {
                                         Aktie a = model.getData().currentStock.getValue().getClone();
                                         //todo kaufen für echten preis, kaufen für limit getrennt

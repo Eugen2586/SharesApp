@@ -18,8 +18,11 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {

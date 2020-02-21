@@ -44,59 +44,80 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
+                addTabs(finalTabLayout);
                 setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
-        if (tabLayout != null) {
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    setCategory(tab.getPosition());
-                }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setCategory(tab.getPosition());
+            }
 
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                }
+            }
 
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-                }
-            });
-        }
+            }
+        });
 
         return root;
     }
 
     private void addTabs(TabLayout tabLayout) {
-        for (String category : Constants.TYPE_LIST) {
+        for (String category : Constants.TYPES) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setText(category);
             tabLayout.addTab(tab);
         }
+        // remove all Tabs
+        tabLayout.removeAllTabs();
+
+        // add Portfolio and Alles Tab
+        addTabWithString(tabLayout, "portfolio");
+        addTabWithString(tabLayout, "alles");
+
+        // add Tabs for existing StockTypes
+        String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
+        if (availableTypes != null) {
+            for (String category : availableTypes) {
+                addTabWithString(tabLayout, category);
+            }
+        }
+    }
+
+    private void addTabWithString(TabLayout tabLayout, String text) {
+        TabLayout.Tab tab = tabLayout.newTab();
+        tab.setText(text);
+        tabLayout.addTab(tab);
     }
 
     private void setCategory(int position) {
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
-            // TODO: portfolio einfügen
             System.out.println("Portfolio einfügen");
+            setAdapter(model.getData().getPortfolioList());
+        } else if (position == 1) {
+            System.out.println("Alles einfügen");
+            setAdapter(stockList);
         } else {
-            position--;
+            position -= 2;
 
-            ArrayList<Aktie> aktien = model.getData().getAktienList().getValue();
-            if (aktien != null) {
-                String type = Constants.TYPE_ABBRE_LIST[position];
+            if (stockList != null) {
+                String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();
-                for (Aktie aktie : aktien) {
-                    if (aktie.getType().equals(type)) {
-                        filtered_aktien.add(aktie);
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(type)) {
+                        filtered_aktien.add(stock);
                     }
                 }
-
                 setAdapter(filtered_aktien);
             }
         }
@@ -126,7 +147,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setAdapter(ArrayList<Aktie> aktienList) {
-        System.out.println("Called setAdapter " + aktienList);
         if (aktienList != null) {
             initRecyclerView();
             adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);

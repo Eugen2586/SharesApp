@@ -133,7 +133,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number;
+                                        float price = limit * number*model.getData().getDepot().getProzent();
                                         if (price > model.getData().getDepot().getGeldwert()) {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
@@ -196,9 +196,15 @@ public class AktienDetailsFragment extends Fragment {
         if (kaufMenge.getText().toString().isEmpty()) {
             return;
         }
-        float number = Float.valueOf(kaufMenge.getText().toString());
 
-        float price = limit*number;
+        float number = 0;
+        System.out.println(number);
+        if (!kaufMenge.getText().toString().isEmpty()) {
+            number = Float.valueOf(kaufMenge.getText().toString());
+            System.out.println(number);
+        }
+
+        float price = limit*number*model.getData().getDepot().getProzent();
         totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price) ));
 
         if (price > model.getData().getDepot().getGeldwert()) {

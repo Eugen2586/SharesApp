@@ -31,6 +31,7 @@ import com.example.sharesapp.ui.newgame.NewgameFragment;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AktienDetailsFragment extends Fragment {
 
@@ -215,6 +216,9 @@ public class AktienDetailsFragment extends Fragment {
         priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
         TextView dateTV = root.findViewById(R.id.date_field);
         dateTV.setText(stock.getDate());
+        TextView typeTV = root.findViewById(R.id.type_field);
+        typeTV.setText(stock.getType());
         // todo set all fields
     }
+
 }

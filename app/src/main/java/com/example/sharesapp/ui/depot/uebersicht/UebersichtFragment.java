@@ -54,17 +54,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
-        String symbol = (String) symbolView.getText();
-        Aktie stock = new Aktie();
-        stock.setSymbol(symbol);
-        model.getData().setCurrentStock(stock);
-        Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //todo bind to aktien
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 

@@ -23,11 +23,11 @@ public class HistorieFragment extends Fragment {
         historieViewModel =
                 ViewModelProviders.of(this).get(HistorieViewModel.class);
         View root = inflater.inflate(R.layout.fragment_historie, container, false);
-//        final TextView textView = root.findViewById(R.id.text_historie);
+        final TextView textView = root.findViewById(R.id.text_historie);
         historieViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-//                textView.setText(s);
+                textView.setText(s);
             }
         });
         return root;

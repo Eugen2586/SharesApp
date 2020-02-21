@@ -20,7 +20,6 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AktienDetailsFragment extends Fragment {
 

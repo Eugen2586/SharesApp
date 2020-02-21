@@ -57,7 +57,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 String[] types = new String[availableTypes.length + 1];
                 types[0] = "Alles";
                 for (int i = 0; i < availableTypes.length; i++) {
-                    types[i+1] = availableTypes[i];
+                    types[i + 1] = availableTypes[i];
                 }
                 availableTypes = types.clone();
             }
@@ -79,9 +79,30 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setAdapter(ArrayList<Aktie> stockList) {
-        if (searchIndex != 0) {
-            // filter for searched type
+        if (stockList != null) {
+            ArrayList<Aktie> filteredStockList;
+            if (searchIndex == 0) {
+                // do not filter
+                filteredStockList = stockList;
+            } else {
+                // filter for searched type
+                String searchType = model.getData().getAvailType().getAvailableTypeAbbreviations()[searchIndex - 1];
+                filteredStockList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(searchType)) {
+                        filteredStockList.add(stock);
+                    }
+                }
+            }
 
+            showSearchTextView();
+
+            initRecyclerView();
+            adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
+            adapter.setClickListener(SearchFragment.this);
+            recyclerView.setAdapter(adapter);
+            adapter.setAktien(filteredStockList);
+            recyclerView.setAdapter(adapter);
         }
     }
 

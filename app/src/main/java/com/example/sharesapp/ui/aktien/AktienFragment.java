@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
@@ -83,7 +84,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         addTabWithString(tabLayout, "portfolio");
 
         // add Tabs for existing StockTypes
-        String[] availableTypes = model.getData().getAvailType().getType_list();
+        String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
         for (String category : availableTypes) {
             addTabWithString(tabLayout, category);
         }
@@ -103,7 +104,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
             ArrayList<Aktie> aktien = model.getData().getAktienList().getValue();
             if (aktien != null) {
-                String type = model.getData().getAvailType().getType_abbr_list()[position];
+                String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();
                 for (Aktie aktie : aktien) {
                     if (aktie.getType().equals(type)) {

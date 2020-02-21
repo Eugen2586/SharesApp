@@ -1,5 +1,6 @@
 package com.example.sharesapp.ui.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,70 +16,65 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener, AdapterView.OnItemClickListener {
+public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener, AdapterView.OnItemSelectedListener {
 
     private Model model = new Model();
     private String searchString = null;
     private RecyclerView recyclerView = null;
     private View root;
     private StockRecyclerViewAdapter adapter = null;
-    private String searchCategory = null;
-    private String[] availableCategories;
+    private int searchIndex = 0;
+    private String[] availableTypes = null;
+    private String[] availableTypeAbbreviations = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
-        initCategorieSpinner();
+        getAvailableTypes();
 
-        setSearchCategory(availableCategories[0]);
+        initCategorieSpinner();
 
         return root;
     }
 
+    private void getAvailableTypes() {
+        availableTypes = model.getData().getAvailType().getAvailableTypes();
+        availableTypeAbbreviations = model.getData().getAvailType().getAvailableTypeAbbreviations();
+
+        // not yet loaded -> set to "Alles"
+        if (availableTypes == null) {
+            availableTypes = new String[1];
+            availableTypes[0] = Constants.TYPE_LIST[0];
+        }
+    }
+
     private void initCategorieSpinner() {
-        availableCategories = model.getData().getAvailType().getType_list();
-
         final Spinner dropdown = root.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_spinner_dropdown_item, availableCategories);
-        dropdown.setAdapter(adapter);
-
-        dropdown.setOnItemClickListener(this);
+        dropdown.setOnItemSelectedListener(this);
+        Context context = this.getContext();
+        if (context != null && availableTypes != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
+                    android.R.layout.simple_spinner_dropdown_item, availableTypes);
+            dropdown.setAdapter(adapter);
+        }
     }
 
     public void setSearchString(String searchString) {
         this.searchString = searchString;
     }
 
-    public void setSearchCategory(String searchCategory) {
-        this.searchCategory = searchCategory;
-        if (!searchCategory.equals(availableCategories[0])) {
-            int categoryIndex = 1;
-            while (categoryIndex < model.getData().getAvailType().getType_list().length) {
-                if (searchCategory.equals(model.getData().getAvailType().getType_list()[categoryIndex])) {
-                    break;
-                }
-            }
-            String searchType = model.getData().getAvailType().getType_list()[categoryIndex];
-            // TODO: Search Request
-            ArrayList<Aktie> stockList = null;
-            ArrayList<Aktie> filteredStockList = new ArrayList<>();
-            for (Aktie stock: stockList) {
-                if (stock.getType().equals(searchType)) {
-                    filteredStockList.add(stock);
-                }
-            }
-            setAdapter(filteredStockList);
-        }
+    public void setSearchIndex(int searchIndex) {
+        this.searchIndex = searchIndex;
+//        setAdapter(model.getData().getAktienList().getValue());
     }
 
     private void initRecyclerView() {
@@ -87,19 +83,44 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setAdapter(ArrayList<Aktie> aktienList) {
-        if (aktienList != null) {
-            initRecyclerView();
-            if (adapter == null) {
-                adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), aktienList);
-                adapter.setClickListener(SearchFragment.this);
-                recyclerView.setAdapter(adapter);
-            } else {
-                adapter.setAktien(aktienList);
-            }
-            showSearchTextView();
-        }
-    }
+//    private void setAdapter(ArrayList<Aktie> aktienList) {
+//        if (aktienList != null) {
+//            initRecyclerView();
+//
+//            // filter aktienList
+//            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+//            if (stockList != null) {
+//                if (!searchCategory.equals(availableCategories[0])) {
+//                    String[] avail_types = model.getData().getAvailType().getType_list();
+//                    String searchType = null;
+//                    for (int categoryIndex = 1; categoryIndex < avail_types.length; categoryIndex++) {
+//                        if (searchCategory.equals(avail_types[categoryIndex])) {
+//                            searchType = avail_types[categoryIndex];
+//                            break;
+//                        }
+//                    }
+//                    // TODO: Search Request
+//                    ArrayList<Aktie> filteredStockList = new ArrayList<>();
+//                    for (Aktie stock : stockList) {
+//                        if (stock.getType().equals(searchType)) {
+//                            filteredStockList.add(stock);
+//                        }
+//                    }
+//                    stockList = filteredStockList;
+//                }
+//
+//                // set adapter on typeFiltered List
+//                if (adapter == null) {
+//                    adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), stockList);
+//                    adapter.setClickListener(SearchFragment.this);
+//                    recyclerView.setAdapter(adapter);
+//                } else {
+//                    adapter.setAktien(stockList);
+//                }
+//                showSearchTextView();
+//            }
+//        }
+//    }
 
     private void showSearchTextView() {
         TextView searchTextView = root.findViewById(R.id.search_text);
@@ -112,7 +133,12 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setSearchCategory(availableCategories[position]);
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        setSearchIndex(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

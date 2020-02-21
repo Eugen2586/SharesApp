@@ -119,13 +119,18 @@ public class AktienDetailsFragment extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //todo kaufen
-                                    Aktie a = new Aktie();
-                                    a.setAnzahl();
-                                    a.setPreis();
-                                    a.setName();
-
-                                    new Model().getData().getDepot().kaufeAktie();
+                                    float limit = Float.valueOf(Limit.getText().toString());
+                                    int number = Integer.parseInt(kaufMenge.getText().toString());
+                                    float price = limit*number;
+                                    if (price > model.getData().getDepot().getGeldwert()) {
+                                        // todo benachrichtigung, dass es nicht geht
+                                    } else {
+                                        Aktie a = model.getData().currentStock.getValue().getClone();
+                                        //todo kaufen für echten preis, kaufen für limit getrennt
+                                        a.setPreis(limit);
+                                        a.setAnzahl(number);
+                                        model.getData().getDepot().kaufeAktie(a);
+                                    }
                                 }
                             });
                     builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {

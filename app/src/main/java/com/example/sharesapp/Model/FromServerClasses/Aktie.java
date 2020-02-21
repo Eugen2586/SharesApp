@@ -43,6 +43,14 @@ public class Aktie implements Comparator {
         this.preis = preis;
     }
 
+    public Aktie(String symbol, String securityName, String securityType, String region, String exchange) {
+        this.exchange = exchange;
+        this.symbol = symbol;
+        this.name = securityName;
+        this.type = securityType;
+        this.region = region;
+    }
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
@@ -155,5 +163,9 @@ public class Aktie implements Comparator {
             return 0;
         }
         return -1;
+    }
+
+    public Aktie getClone() {
+        return new Aktie( this.menge, this.exchange, this.symbol, this.name, this.date, this.type, this.region, this.currency, this.enabled, this.preis);
     }
 }

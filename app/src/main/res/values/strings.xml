@@ -40,4 +40,8 @@
     <string name="aktienwerte">Aktienwerte:</string>
     <string name="billanzsumme">Billanzsumme:</string>
     <string name="euro">€</string>
+    <string name="menu_suche">Suche</string>
+    <string name="kategorie">Kategorie:</string>
+    <string name="deine_suche_ergab_folgende_treffer">Deine Suche ergab folgende Treffer:</string>
+    <string name="suche">Suche</string>
 </resources>

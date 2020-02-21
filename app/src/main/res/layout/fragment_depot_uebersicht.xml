@@ -56,7 +56,7 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/gewinn"
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dir_geh_ren_folgende_wertpapiere" />

@@ -15,7 +15,8 @@ public class RequestSymbol {
     ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
     ArrayList<Aktie> akl = new ArrayList<>();
-   public RequestSymbol(String st) throws Exception {
+
+    public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
@@ -33,20 +34,20 @@ public class RequestSymbol {
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
             System.out.print(json.get("name").toString());
-            if( (!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()) ){
+            if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty())) {
                 type.add(ak.getType());
             }
         }
-       Model m = new Model();
-       m.getData().getAktienList().postValue(akl);
-       Object[] data = type.toArray();
-       String[] sts = new String[ data.length ];
-       int i = 0;
-       for (Object t: data) {
-           sts[i] = t.toString();
-           i++;
-       }
-       m.getData().getAvailType().setType_abbr_list(sts);
+        Model m = new Model();
+        m.getData().getAktienList().postValue(akl);
+        Object[] data = type.toArray();
+        String[] sts = new String[data.length];
+        int i = 0;
+        for (Object t : data) {
+            sts[i] = t.toString();
+            i++;
+        }
+        m.getData().getAvailType().setType_abbr_list(sts);
     }
 
 

@@ -1,8 +1,5 @@
 package com.example.sharesapp.FunktionaleKlassen.Handler;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
@@ -16,8 +13,6 @@ import java.util.Objects;
 import okhttp3.Response;
 
 public class AsyncTaskHandler {
-
-    private static Handler mHandler = new Handler(Looper.getMainLooper());
 
     public static void handle(Response response) throws IOException {
 
@@ -47,13 +42,12 @@ public class AsyncTaskHandler {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }else if(url.contains("search") ){
+        } else if (url.contains("search")) {
             try {
                 new RequestSearch(s);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }

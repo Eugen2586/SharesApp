@@ -50,7 +50,6 @@ public class HistorieFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Trade> trades) {
 
-
             }
         });
 

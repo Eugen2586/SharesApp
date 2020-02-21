@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class RequestSymbol {
 
 
-    //ArrayList type = new ArrayList();
+
+    ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
     ArrayList<Aktie> akl = new ArrayList<>();
    public RequestSymbol(String st) throws Exception {
@@ -32,16 +33,21 @@ public class RequestSymbol {
             ak.setCurrency(json.get("currency").toString());
             ak.setEnabled(json.get("isEnabled").toString());
             akl.add(ak);
-            //System.out.print(json.get("name").toString());
-            //if( (!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()) ){
-            //    type.add(ak.getType());
-            //}
+            System.out.print(json.get("name").toString());
+            if( (!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()) ){
+                type.add(ak.getType());
+            }
         }
        Model m = new Model();
        m.getData().getAktienList().postValue(akl);
-       //Object[] data = type.toArray();
-       //m.getData().getAvailType().setType_abbr_list(data);
-    }
+       Object[] data = type.toArray();
+       String[] sts = new String[ data.length ];
+       int i = 0;
+       for (Object t: data) {
+           sts[i] = t.toString();
+           i++;
+       }
+       m.getData().getAvailType().setType_abbr_list(sts);}
 
 
     public ArrayList<Aktie> getAk() {

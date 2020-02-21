@@ -8,12 +8,14 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import java.util.ArrayList;
 
 public class Data {
+
     private ArrayList<Trade> tradelist;
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
     private ArrayList<Aktie> portfolioList = new ArrayList<>();
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
+    private String currentSearchString;
 
     private ArrayList<SearchRequest> searches;
 
@@ -143,5 +145,13 @@ public class Data {
         } else {
             portfolioList.add(stock);
         }
+    }
+
+    public String getCurrentSearchString() {
+        return currentSearchString;
+    }
+
+    public void setCurrentSearchString(String currentSearchString) {
+        this.currentSearchString = currentSearchString;
     }
 }

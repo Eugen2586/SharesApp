@@ -49,6 +49,7 @@ import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 public class DrawerActivity extends AppCompatActivity {
     private Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
+    private Model model = new Model();
     @Override
     protected void onStop() {
         super.onStop();
@@ -155,11 +156,13 @@ public class DrawerActivity extends AppCompatActivity {
                     searchView.setIconified(true);
                 }
                 myActionMenuItem.collapseActionView();
+                model.getData().setCurrentSearchString(query);
+                Navigation.findNavController(DrawerActivity.this, R.id.nav_host_fragment).
+                        navigate(R.id.nav_search);
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
                 return false;
             }
         });

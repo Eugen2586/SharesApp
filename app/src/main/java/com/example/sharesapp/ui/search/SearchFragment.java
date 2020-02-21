@@ -38,6 +38,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
         initCategorieSpinner();
 
+//        setAdapter();
+
         return root;
     }
 
@@ -69,7 +71,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     public void setSearchIndex(int searchIndex) {
         this.searchIndex = searchIndex;
-        setAdapter(model.getData().getAktienList().getValue());
     }
 
     private void initRecyclerView() {

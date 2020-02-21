@@ -1,79 +1,81 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Trade;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Depot {
-    ArrayList<Aktie> aktienImDepot;
-
+    public MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
 
     float geldwert;
     boolean in;
     float prozent = 1.01f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
-        this.aktienImDepot = aktienImDepot;
+        this.aktienImDepot.postValue(aktienImDepot);
         this.geldwert = geldwert;
         this.in = in;
     }
 
     public Depot() {
-        this.aktienImDepot = new ArrayList<Aktie>();
-
+        this.aktienImDepot.postValue(new ArrayList<Aktie>());
     }
 
-    public void kaufeAktie(Aktie a){
+    public void kaufeAktie(Aktie a) {
         System.out.println("kaufe");
-        if(geldwert - a.getPreis()*a.getAnzahl() >= 0){
+        if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
             in = false;
             Model m = new Model();
-            if (!aktienImDepot.isEmpty()) {
-                for (Object t : aktienImDepot) {
-                    Aktie ak = (Aktie) t;
-                    if (ak.getName().equals(a.getName())) {
-                        in = true;
-                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
-                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
-                        m.getData().addTrade(trade);
-                    }
+            ArrayList<Aktie> stocks = aktienImDepot.getValue();
+
+            for (Object t : stocks) {
+                Aktie ak = (Aktie) t;
+                if (ak.getName().equals(a.getName())) {
+                    in = true;
+                    geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                    ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                    Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                    m.getData().addTrade(trade);
                 }
             }
-            if(!in){
-                aktienImDepot.add(a);
+
+            if (!in) {
+                stocks.add(a);
                 geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                Trade trade = new Trade(a, a.getAnzahl(), true,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
+                Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
             }
+            aktienImDepot.postValue(stocks);
         }
     }
 
-    public void verkaufeAktie (Aktie a){
-            in = false;
-            for (Object t: aktienImDepot) {
-                Aktie ak = (Aktie) t;
-                if(ak.getName() == a.getName()){
+    public void verkaufeAktie(Aktie a) {
+        in = false;
+        ArrayList<Aktie> stocks = aktienImDepot.getValue();
+        for (Object t : stocks) {
+            Aktie ak = (Aktie) t;
+            if (ak.getName().equals(a.getName())) {
+                in = true;
+                if (a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()) {
                     in = true;
-                    if(a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()){
-                        in = true;
-                        ak.setAnzahl( ak.getAnzahl() - a.getAnzahl() );
-                        geldwert = geldwert + a.getAnzahl() * a.getPreis();
-                        if(ak.getAnzahl() == 0){
-                            aktienImDepot.remove(ak);
-                        }
+                    ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
+                    geldwert = geldwert + a.getAnzahl() * a.getPreis();
+                    if (ak.getAnzahl() == 0) {
+                        stocks.remove(ak);
+                    }
                 }
             }
-            if(in != true){
-                aktienImDepot.add(a);
+            if (!in) {
+                stocks.add(a);
                 Model m = new Model();
-                Trade trade = new Trade(a, a.getAnzahl(), false,(a.getAnzahl()*a.getPreis()) , GregorianCalendar.getInstance().getTime());
+                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
             }
             geldwert = geldwert - a.getPreis();
+            aktienImDepot.postValue(stocks);
         }
 
 
@@ -91,5 +93,21 @@ public class Depot {
         return this.prozent;
     }
 
+    public ArrayList<Aktie> getAktienImDepot() {
+        return aktienImDepot.getValue();
+    }
 
+    public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
+        this.aktienImDepot.setValue(aktienImDepot);
+    }
+
+    public Aktie findStockbySymbol(String symbol) {
+        Aktie stock = null;
+        for (Aktie s : getAktienImDepot()) {
+            if (s.getSymbol().equals(symbol)) {
+                stock = s;
+            }
+        }
+        return stock;
+    }
 }

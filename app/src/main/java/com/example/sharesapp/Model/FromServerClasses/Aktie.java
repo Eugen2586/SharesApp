@@ -156,4 +156,8 @@ public class Aktie implements Comparator {
         }
         return -1;
     }
+
+    public Aktie getClone() {
+        return new Aktie( this.menge, this.exchange, this.symbol, this.name, this.date, this.type, this.region, this.currency, this.enabled, this.preis);
+    }
 }

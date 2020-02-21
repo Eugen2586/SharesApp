@@ -153,4 +153,14 @@ public class Data {
     public void setCurrentSearchString(String currentSearchString) {
         this.currentSearchString = currentSearchString;
     }
+
+    public Aktie findStockbySymbol(String symbol) {
+        Aktie stock = null;
+        for (Aktie s : getAktienList().getValue()) {
+            if (s.getSymbol().equals(symbol)) {
+                stock = s;
+            }
+        }
+        return stock;
+    }
 }

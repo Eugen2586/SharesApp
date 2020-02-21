@@ -141,6 +141,7 @@ public class AktienDetailsFragment extends Fragment {
                                             a.setPreis(limit);
                                             a.setAnzahl(number);
                                             model.getData().getDepot().kaufeAktie(a);
+                                            Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                         }
                                     } else {
                                         Toast.makeText(AktienDetailsFragment.this.getContext(), "Kann nicht kaufen, keine Anzahl eingegeben.", Toast.LENGTH_LONG).show();

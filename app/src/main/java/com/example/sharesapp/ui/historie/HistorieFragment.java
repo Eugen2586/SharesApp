@@ -43,7 +43,7 @@ public class HistorieFragment extends Fragment {
 
         float akwert = 0;
         if(new Model().getData().getDepot().getAktien() != null) {
-            for (Aktie a : new Model().getData().getDepot().getAktien()) {
+            for (Aktie a : new Model().getData().getDepot().getAktien().getValue()) {
                 akwert += a.getPreis() * a.getAnzahl();
             }
         }

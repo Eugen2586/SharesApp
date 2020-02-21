@@ -2,7 +2,6 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 
 import java.util.ArrayList;
@@ -83,16 +82,18 @@ public class Data {
     }
 
     public float getGewinn(){
-        float sum = 0;
-        for (Object e: tradelist) {
-            Trade t = (Trade) e;
-            if(t.isKauf()) {
-                sum -= t.getPreis();
-            }
-            else{
-                sum += t.getPreis();
+        float sum = Float.parseFloat("0.0");
+        if(tradelist != null) {
+            for (Object e : tradelist) {
+                Trade t = (Trade) e;
+                if (t.isKauf()) {
+                    sum -= t.getPreis();
+                } else {
+                    sum += t.getPreis();
+                }
             }
         }
+        sum += depot.geldwert;
         return sum;
     }
 

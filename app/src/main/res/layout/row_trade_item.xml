@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20">
+
+        <TextView
+            android:id="@+id/art"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/anzahl"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/umsatz"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/euro"
+            android:textAlignment="viewEnd" />
+    </TableRow>
+
+</LinearLayout>

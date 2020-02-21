@@ -101,6 +101,9 @@ public class Depot {
         this.aktienImDepot.setValue(aktienImDepot);
     }
 
+    public MutableLiveData<ArrayList<Aktie>> getAktien() {
+        return aktienImDepot;
+	}
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;
         for (Aktie s : getAktienImDepot()) {
@@ -109,5 +112,6 @@ public class Depot {
             }
         }
         return stock;
+
     }
 }

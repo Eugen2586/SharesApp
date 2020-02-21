@@ -151,8 +151,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             initRecyclerView();
             adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
             adapter.setClickListener(AktienFragment.this);
-            recyclerView.setAdapter(adapter);
-        } else {
             adapter.setAktien(aktienList);
             recyclerView.setAdapter(adapter);
         }

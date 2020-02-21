@@ -24,9 +24,9 @@ public class AvailType {
         ArrayList<String> l_type_list = new ArrayList<String>();
         for (String s: ( type_abbr_list1)) {
             int i = 0;
-            for (String t: Constants.TYPE_ABBRE_LIST) {
+            for (String t: Constants.TYPE_ABBREVIATIONS) {
                 if(s.equals(t)){
-                    l_type_list.add(Constants.TYPE_LIST[i]);
+                    l_type_list.add(Constants.TYPES[i]);
                     break;
                 }
                 i++;

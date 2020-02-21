@@ -53,15 +53,15 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         // not yet loaded -> set to "Alles"
         if (availableTypes == null) {
             availableTypes = new String[1];
-            availableTypes[0] = Constants.TYPE_LIST[0];
+            availableTypes[0] = Constants.TYPES[0];
         }
     }
 
     private void initCategorieSpinner() {
-        final Spinner dropdown = root.findViewById(R.id.spinner);
-        dropdown.setOnItemSelectedListener(this);
         Context context = this.getContext();
-        if (context != null && availableTypes != null) {
+        if (context != null) {
+            final Spinner dropdown = root.findViewById(R.id.spinner);
+            dropdown.setOnItemSelectedListener(this);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                     android.R.layout.simple_spinner_dropdown_item, availableTypes);
             dropdown.setAdapter(adapter);

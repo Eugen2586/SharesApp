@@ -72,7 +72,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void addTabs(TabLayout tabLayout) {
-        for (String category : Constants.TYPE_LIST) {
+        for (String category : Constants.TYPES) {
             TabLayout.Tab tab = tabLayout.newTab();
             tab.setText(category);
             tabLayout.addTab(tab);
@@ -80,13 +80,16 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         // remove all Tabs
         tabLayout.removeAllTabs();
 
-        // add Portfolio Tab
+        // add Portfolio and Alles Tab
         addTabWithString(tabLayout, "portfolio");
+        addTabWithString(tabLayout, "alles");
 
         // add Tabs for existing StockTypes
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
-        for (String category : availableTypes) {
-            addTabWithString(tabLayout, category);
+        if (availableTypes != null) {
+            for (String category : availableTypes) {
+                addTabWithString(tabLayout, category);
+            }
         }
     }
 
@@ -97,21 +100,23 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setCategory(int position) {
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
             System.out.println("Portfolio einfügen");
+        } else if (position == 1) {
+            System.out.println("Alles einfügen");
+            setAdapter(stockList);
         } else {
-            position--;
+            position -= 2;
 
-            ArrayList<Aktie> aktien = model.getData().getAktienList().getValue();
-            if (aktien != null) {
+            if (stockList != null) {
                 String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];
                 ArrayList<Aktie> filtered_aktien = new ArrayList<>();
-                for (Aktie aktie : aktien) {
-                    if (aktie.getType().equals(type)) {
-                        filtered_aktien.add(aktie);
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(type)) {
+                        filtered_aktien.add(stock);
                     }
                 }
-
                 setAdapter(filtered_aktien);
             }
         }

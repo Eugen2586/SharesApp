@@ -1,25 +1,23 @@
 package com.example.sharesapp.ui.historie;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 
+import java.util.ArrayList;
+
 public class HistorieViewModel extends ViewModel {
 
-    private final MutableLiveData<Trade> mTrades;
+    protected final MutableLiveData<ArrayList<Trade>> mTrades = new MutableLiveData<ArrayList<Trade>>();
 
     public HistorieViewModel() {
-        mTrades = new MutableLiveData<>();
-        for (Trade e: new Model().getData().getTrades()) {
-            mTrades.postValue(e);
-        }
+        mTrades.postValue(new Model().getData().getTrades());
 
     }
 
-    public LiveData<Trade> getText() {
-        return mTrades;
+    public ArrayList<Trade> getTrades() {
+        return mTrades.getValue();
     }
 }

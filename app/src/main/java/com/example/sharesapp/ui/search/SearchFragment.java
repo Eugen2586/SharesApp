@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.SearchRequest;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
@@ -38,7 +40,14 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
         initCategorieSpinner();
 
-//        setAdapter();
+        model.getData().searches.observe(getViewLifecycleOwner(), new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> searchRequests) {
+                setAdapter(searchRequests);
+            }
+        });
+
+        setAdapter(model.getData().getSearches());
 
         return root;
     }
@@ -69,7 +78,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         }
     }
 
-    public void setSearchIndex(int searchIndex) {
+    private void setSearchIndex(int searchIndex) {
         this.searchIndex = searchIndex;
     }
 

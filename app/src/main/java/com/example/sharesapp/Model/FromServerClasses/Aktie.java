@@ -43,6 +43,14 @@ public class Aktie implements Comparator {
         this.preis = preis;
     }
 
+    public Aktie(String symbol, String securityName, String securityType, String region, String exchange) {
+        this.exchange = exchange;
+        this.symbol = symbol;
+        this.name = securityName;
+        this.type = securityType;
+        this.region = region;
+    }
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }

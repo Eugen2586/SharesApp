@@ -16,14 +16,14 @@ public class Data {
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
     private String currentSearchString;
 
-    private ArrayList<SearchRequest> searches;
+    public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
-    public ArrayList<SearchRequest> getSearches() {
-        return searches;
+    public ArrayList<Aktie> getSearches() {
+        return searches.getValue();
     }
 
-    public void setSearches(ArrayList<SearchRequest> searches) {
-        this.searches = searches;
+    public void setSearches(ArrayList<Aktie> searches) {
+        this.searches.setValue(searches);
     }
 
 

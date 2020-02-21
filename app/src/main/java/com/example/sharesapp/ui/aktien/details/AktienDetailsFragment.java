@@ -31,7 +31,6 @@ import com.example.sharesapp.ui.newgame.NewgameFragment;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AktienDetailsFragment extends Fragment {
 

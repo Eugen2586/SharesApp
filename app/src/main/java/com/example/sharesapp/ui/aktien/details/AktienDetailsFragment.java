@@ -125,8 +125,10 @@ public class AktienDetailsFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (!kaufMenge.getText().toString().isEmpty()) {
                                         float limit;
+                                        boolean limit_b = false; // shows if we want to buy with limit or direct with the price
                                         if (!Limit.getText().toString().isEmpty()) {
                                             limit = Float.valueOf(Limit.getText().toString());
+                                            limit_b = true;
                                         } else {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
@@ -136,15 +138,19 @@ public class AktienDetailsFragment extends Fragment {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
                                         } else {
-                                            Aktie a = model.getData().currentStock.getValue().getClone();
-                                            //todo kaufen für echten preis, kaufen für limit getrennt
-                                            a.setPreis(limit);
-                                            a.setAnzahl(number);
-                                            model.getData().getDepot().kaufeAktie(a);
-                                            Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                            if (!limit_b) {
+                                                Aktie a = model.getData().currentStock.getValue().getClone();
+                                                a.setAnzahl(number);
+                                                model.getData().getDepot().kaufeAktie(a);
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                //todo kaufen mit limit
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "TODO: AKTIEN KAUFEN", Toast.LENGTH_LONG).show();
+
+                                            }
                                         }
                                     } else {
-                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Kann nicht kaufen, keine Anzahl eingegeben.", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Bitte Kaufmenge eingeben.", Toast.LENGTH_LONG).show();
 
                                     }
                                 }

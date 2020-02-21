@@ -39,4 +39,5 @@
     <string name="cash">Cash:</string>
     <string name="aktienwerte">Aktienwerte:</string>
     <string name="billanzsumme">Billanzsumme:</string>
+    <string name="euro">€</string>
 </resources>

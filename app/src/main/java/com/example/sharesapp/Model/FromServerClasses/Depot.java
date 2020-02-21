@@ -1,7 +1,5 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
@@ -80,4 +78,7 @@ public class Depot {
     }
 
 
+    public ArrayList<Aktie> getAktien() {
+        return aktienImDepot;
+    }
 }

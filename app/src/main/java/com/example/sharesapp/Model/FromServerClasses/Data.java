@@ -81,16 +81,18 @@ public class Data {
     }
 
     public float getGewinn(){
-        float sum = 0;
-        for (Object e: tradelist) {
-            Trade t = (Trade) e;
-            if(t.isKauf()) {
-                sum -= t.getPreis();
-            }
-            else{
-                sum += t.getPreis();
+        float sum = Float.parseFloat("0.0");
+        if(tradelist != null) {
+            for (Object e : tradelist) {
+                Trade t = (Trade) e;
+                if (t.isKauf()) {
+                    sum -= t.getPreis();
+                } else {
+                    sum += t.getPreis();
+                }
             }
         }
+        sum += depot.geldwert;
         return sum;
     }
 

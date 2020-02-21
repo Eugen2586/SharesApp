@@ -39,8 +39,5 @@ public class AvailType {
             type_abbr_list[i] = j.toString();
             i++;
         }
-        if (2==3){
-            return;
-        }
     }
 }

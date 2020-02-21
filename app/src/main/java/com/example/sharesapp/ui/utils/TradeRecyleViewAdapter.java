@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Trade;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,14 +20,14 @@ import java.util.ArrayList;
 
 public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleViewAdapter.ViewHolder> {
 
-    private ArrayList<Aktie> mData;
+    private ArrayList<Trade> mData;
     private LayoutInflater mInflater;
     private TradeRecyleViewAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public TradeRecyleViewAdapter(Context context, ArrayList<Aktie> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.mData = new Model().getData().getTrades();
     }
 
     // inflates the row layout from xml when needed
@@ -39,11 +41,19 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
     //Binds data to the Gui
     @Override
     public void onBindViewHolder(@NonNull TradeRecyleViewAdapter.ViewHolder holder, int position) {
-        Aktie aktie = mData.get(position);
-        holder.myTextView.setText(aktie.getName());
-        holder.mySymbolView.setText(aktie.getSymbol());
-        holder.myTextView.setText(aktie.getName());
-        holder.myTypeView.setText(aktie.getType());
+        Trade trade = mData.get(position);
+        //holder.view.set;
+        holder.name.setText(trade.getAktie().getSymbol());
+        holder.anzahl.setText(String.valueOf(trade.getAnzahl()));
+        holder.umsatz.setText(String.valueOf(Float.parseFloat (String.valueOf(trade.getPreis() * trade.getAnzahl()))));
+
+        if(trade.isKauf()){
+            holder.art.setText("-");
+        }else{
+            holder.art.setText("+");
+        }
+
+
     }
 
     // total number of rows
@@ -52,22 +62,26 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
         return mData == null ? 0 : mData.size();
     }
 
-    public void setAktien(ArrayList<Aktie> data) {
+    public void setTrades(ArrayList<Trade> data) {
         mData = data;
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
-        TextView myTypeView;
-        TextView mySymbolView;
+        View view;
+        TextView name;
+        TextView anzahl;
+        TextView umsatz;
+        TextView art;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.stock_text);
-            mySymbolView = itemView.findViewById(R.id.stock_symbol_text);
-            myTypeView = itemView.findViewById(R.id.stock_percentage_text);
+//            view = itemView.findViewById(R.id.view);
+            name = itemView.findViewById(R.id.name);
+            anzahl = itemView.findViewById(R.id.anzahl);
+            umsatz = itemView.findViewById(R.id.umsatz);
+            art = itemView.findViewById(R.id.art);
             itemView.setOnClickListener(this);
         }
 
@@ -80,7 +94,7 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
     }
 
     // convenience method for getting data at click position
-    Aktie getItem(int id) {
+    Trade getItem(int id) {
         return mData.get(id);
     }
 

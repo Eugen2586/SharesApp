@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
@@ -43,17 +44,15 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
     public void onBindViewHolder(@NonNull TradeRecyleViewAdapter.ViewHolder holder, int position) {
         Trade trade = mData.get(position);
         //holder.view.set;
-        holder.name.setText(trade.getAktie().getSymbol());
-        holder.anzahl.setText(String.valueOf(trade.getAnzahl()));
-        holder.umsatz.setText(String.valueOf(Float.parseFloat (String.valueOf(trade.getPreis() * trade.getAnzahl()))));
-
-        if(trade.isKauf()){
-            holder.art.setText("-");
+        if(trade.isKauf()) {
+            holder.name.setText( trade.getAktie().getName());
+            holder.anzahl.setText(" + " +String.valueOf(trade.getAnzahl())+" x");
+            holder.umsatz.setText(String.valueOf(Float.parseFloat( new Anzeige().makeItBeautiful(trade.getPreis() * trade.getAnzahl()))));
         }else{
-            holder.art.setText("+");
+            holder.name.setText(trade.getAktie().getName());
+            holder.anzahl.setText(" - " +String.valueOf(trade.getAnzahl())+" x");
+            holder.umsatz.setText(String.valueOf(Float.parseFloat(String.valueOf(new Anzeige().makeItBeautiful(trade.getPreis() * trade.getAnzahl())))));
         }
-
-
     }
 
     // total number of rows
@@ -81,7 +80,7 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
             name = itemView.findViewById(R.id.name);
             anzahl = itemView.findViewById(R.id.anzahl);
             umsatz = itemView.findViewById(R.id.umsatz);
-            art = itemView.findViewById(R.id.art);
+//            art = itemView.findViewById(R.id.art);
             itemView.setOnClickListener(this);
         }
 

@@ -73,5 +73,6 @@ obj/
 .externalNativeBuild
 .idea/misc.xml
 .externalNativeBuild
-Doku/Doku.pdf
 Doku/Doku.synctex.gz
+Doku/Doku.pdf
+

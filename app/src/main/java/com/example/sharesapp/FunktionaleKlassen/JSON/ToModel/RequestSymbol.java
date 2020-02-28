@@ -19,21 +19,55 @@ public class RequestSymbol {
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
+        jsonar.isEmpty();
         //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
             //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
-            ak.setSymbol(json.get("symbol").toString());
-            ak.setExchange(json.get("exchange").toString());
-            ak.setName(json.get("name").toString());
-            ak.setDate(json.get("date").toString());
-            ak.setType(json.get("type").toString());
-            ak.setRegion(json.get("region").toString());
-            ak.setCurrency(json.get("currency").toString());
-            ak.setEnabled(json.get("isEnabled").toString());
+            try {
+                ak.setSymbol(json.get("Symbol").toString());
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setExchange(json.get("Exchange").toString());
+            }catch(Exception e) {
+
+            }try{
+                ak.setName(json.get("Name").toString());
+            }catch(Exception e) {
+
+            }try {
+                ak.setDate(json.get("Date").toString());
+            }catch(Exception e){
+
+            }try {
+                ak.setType(json.get("Type").toString());
+            }catch(Exception e){
+
+            }try {
+                ak.setRegion(json.get("Region").toString());
+            }catch (Exception e) {
+
+            }try {
+                ak.setCurrency(json.get("Currency").toString());
+            }catch(Exception e){
+
+            }try {
+                ak.setEnabled(json.get("IsEnabled").toString());
+            }catch(Exception e){
+
+            }try {
+                ak.setChange(Float.parseFloat(json.get("Change").toString()));
+            }catch(Exception e){
+
+            }try{
+                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+            }catch(Exception e){
+
+            }
             akl.add(ak);
-            System.out.print(json.get("name").toString());
             if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty())) {
                 type.add(ak.getType());
             }

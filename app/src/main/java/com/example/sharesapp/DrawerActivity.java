@@ -1,6 +1,7 @@
 package com.example.sharesapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +33,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.intellij.lang.annotations.Flow;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -40,6 +45,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import okhttp3.internal.http2.Http2Reader;
 
@@ -47,26 +53,23 @@ import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 
 
 public class DrawerActivity extends AppCompatActivity {
+    SharedPreferences prefs;
     private Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
     private Requests requests = new Requests();
     @Override
     protected void onStop() {
-        super.onStop();
-        //If the App Stopps we store the Data!
         try {
-
-            SaveToJSON stj = new SaveToJSON();
-            String s = stj.getJson();
-            context = this.getBaseContext();
-            FileOutputStream fos = context.openFileOutput("keep.dat", MODE_APPEND );
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(s);
-            oos.close();
-        } catch (IOException e) {
+            prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            new SaveToJSON( editor);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        super.onStop();
+        //If the App Stopps we store the Data!
+
     }
 
     @Override
@@ -76,18 +79,32 @@ public class DrawerActivity extends AppCompatActivity {
 
 
          */
-        context = this.getBaseContext();
         try{
-        LoadFromJson lfj = new LoadFromJson();
-        FileInputStream fis = context.openFileInput("keep.dat");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        String st = (String) ois.readObject();
-        lfj.getJson(st);
+            String s = null;
+            prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
+            JSONParser parser = new JSONParser();
+            s = prefs.getString("AktienSymbole", null);
+            new RequestSymbol(s);
+            parser = new JSONParser();
+            s = prefs.getString("Depot", null);
+            new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+            s = prefs.getString("Geldwert", null);
+            new Model().getData().getDepot().setGeldwert(Float.parseFloat(String.valueOf(s)));
+            s = prefs.getString("Portfolioliste", null);
+            new Model().getData().setPortfolioList(aktienList(s));
+            s = prefs.getString("Trades", null);
+            new Model().getData().setPortfolioList(getTradeListe(s));
+
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        // Initializes RequestClient and loads all symbols
+        try{
+
+        }catch(Exception e){
+
+        }
+        // Initializes RequestClient and loads all symbols only if the Persisenz doesn't work.
 
         Requests req = new Requests();
         try {
@@ -140,6 +157,141 @@ public class DrawerActivity extends AppCompatActivity {
   //      } catch (Exception e) {
 //
   //      }
+    }
+
+    private ArrayList<Aktie> getTradeListe(String st) throws ParseException {
+
+        Aktie ak = null;
+        ArrayList akl = null;
+        JSONParser parser = new JSONParser();
+        org.json.simple.JSONArray jsonar = (JSONArray) parser.parse(st);
+        jsonar.isEmpty();
+        //TODO pflege hier die Daten, die hier eingelesen werden.
+        for (Object t : jsonar) {
+            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
+            ak = new Aktie();
+            org.json.simple.JSONObject json = (JSONObject) t;
+            try {
+                ak.setSymbol(json.get("Symbol").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setExchange(json.get("Exchange").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setName(json.get("Name").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setDate(json.get("Date").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setType(json.get("Type").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setRegion(json.get("Region").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setCurrency(json.get("Currency").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setEnabled(json.get("IsEnabled").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setChange(Float.parseFloat(json.get("Change").toString()));
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+            } catch (Exception e) {
+
+            }
+            akl.add(ak);
+        }
+        Model m = new Model();
+        return akl;
+    }
+
+    private ArrayList aktienList(String st) throws ParseException {
+        Aktie ak = null;
+        ArrayList akl = null;
+        JSONParser parser = new JSONParser();
+        org.json.simple.JSONArray jsonar = (JSONArray) parser.parse(st);
+        jsonar.isEmpty();
+        //TODO pflege hier die Daten, die hier eingelesen werden.
+        for (Object t : jsonar) {
+            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
+            ak = new Aktie();
+            org.json.simple.JSONObject json = (JSONObject) t;
+            try {
+                ak.setSymbol(json.get("Symbol").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setExchange(json.get("Exchange").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setName(json.get("Name").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setDate(json.get("Date").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setType(json.get("Type").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setRegion(json.get("Region").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setCurrency(json.get("Currency").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setEnabled(json.get("IsEnabled").toString());
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setChange(Float.parseFloat(json.get("Change").toString()));
+            } catch (Exception e) {
+
+            }
+            try {
+                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+            } catch (Exception e) {
+
+            }
+            akl.add(ak);
+        }
+        Model m = new Model();
+        return akl;
     }
 
     @Override

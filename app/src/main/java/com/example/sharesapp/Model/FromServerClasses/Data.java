@@ -120,17 +120,6 @@ public class Data {
         return tradesMutable;
     }
 
-    @Override
-    public void finalize(){
-        //ToDo do Persistenz
-        try {
-            SaveToJSON stj = new SaveToJSON();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
     public ArrayList<Aktie> getPortfolioList() {
         return portfolioList;
     }

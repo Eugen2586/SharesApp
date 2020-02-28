@@ -1,22 +1,99 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON;
 
-import android.content.Context;
-import android.os.Environment;
+import android.content.SharedPreferences;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
     public class SaveToJSON {
-        public SaveToJSON(){
+        public SaveToJSON(SharedPreferences.Editor editor){
+            String s = null;
+            //Here it should all Data from the Model get putted!
 
+            //Trades
+            s = tradesToString();
+            editor.putString("Trades", s);
+            s = null;
+
+            //Depot Inhalt
+            s = aktienImDepotToString();
+            editor.putString("Depot", s);
+            editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+            s = null;
+
+            //Portfolio Liste
+            s = portfolioListeToString();
+            editor.putString("Portfolioliste", s);
+            s = null;
+
+            //Aktien
+            s = aktienSymbolListToString();
+            editor.putString("AktienSymbole", s);
+            s = null;
+
+            //This make it in the OS.
+            editor.apply();
         }
+
+        private String aktienSymbolListToString() {
+            /*
+            This Method is for Building a String from the Aktien Symbol list.
+             */
+            String s = new String();
+            JSONArray ar = new JSONArray();
+            for (Object o:new Model().getData().getAktienList().getValue()) {
+                Aktie ak = (Aktie) o;
+                ar.add(ak.getJsonFromAktie());
+            }
+            s = ar.toJSONString();
+            return s;
+        }
+
+        private String portfolioListeToString() {
+            String s = null;
+            JSONArray ar = new JSONArray();
+            for (Object o:new Model().getData().getPortfolioList()) {
+                Aktie ak = (Aktie) o;
+                ar.add(ak.getJsonFromAktie());
+            }
+            s = ar.toJSONString();
+            return s;
+        }
+
+        private String aktienImDepotToString() {
+            String s = null;
+            JSONArray ar = new JSONArray();
+            for (Object o:new Model().getData().getDepot().getAktienImDepot()) {
+                Aktie ak = (Aktie) o;
+                ar.add(ak.getJsonFromAktie());
+            }
+            s = ar.toJSONString();
+            return s;
+        }
+
+        private String tradesToString() {
+            String s = null;
+            JSONArray ar = new JSONArray();
+            for (Object o:new Model().getData().getDepot().getAktienImDepot()) {
+                Trade ak = (Trade) o;
+                JSONObject obj = new JSONObject();
+                obj.put("Aktie", ak.getAktie().getJsonFromAktie());
+                obj.put("Symbol", ak.getAnzahl());
+                obj.put("Exchange", ak.getDate());
+                obj.put("Date", ak.getPreis());
+                ar.add(obj);
+            }
+            s = ar.toJSONString();
+            return s;
+
+        };
 
         public String getJson() {
             Data d = new Model().getData();

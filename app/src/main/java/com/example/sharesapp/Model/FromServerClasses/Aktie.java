@@ -2,7 +2,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import com.example.sharesapp.Model.Model;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -167,5 +167,23 @@ public class Aktie implements Comparator {
 
     public Aktie getClone() {
         return new Aktie( this.menge, this.exchange, this.symbol, this.name, this.date, this.type, this.region, this.currency, this.enabled, this.preis);
+    }
+
+    public JSONObject getJsonFromAktie() {
+        org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
+        obj.put("Menge", menge);
+        obj.put("Exchange",exchange);
+        obj.put("Symbol",symbol);
+        obj.put("Name",name);
+        obj.put("Date",date);
+        obj.put("Type", type);
+        obj.put("Region",region);
+        obj.put("Currency",currency);
+        obj.put("Enabled", enabled);
+        obj.put("Preis", String.valueOf(preis));
+        obj.put("Anzahl", String.valueOf(anzahl));
+        obj.put("Change", String.valueOf(change));
+
+        return obj;
     }
 }

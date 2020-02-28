@@ -39,33 +39,4 @@ public class LoadFromJson {
         }
 
     }
-
-    public void getJson(String st) throws ParseException {
-        JSONParser parser = new JSONParser();
-        JSONArray jsonar = (JSONArray) parser.parse(st);
-        //TODO pflege hier die Daten, die hier eingelesen werden.
-        int i = 1;
-        for (Object t : jsonar) {
-            if (i == 1) {
-                //ToDo Oberste Datenbene
-                for (Object ts : ((JSONArray) t)) {
-
-                    JSONObject obj = (JSONObject) ts;
-                    Aktie aktie = new Aktie();
-                    //ToDo zweite Datenebene
-                    aktie.setCurrency((String) obj.get("Currency"));
-                    aktie.setDate((String) obj.get("Date"));
-                    aktie.setEnabled((String) obj.get("Enabled"));
-                    aktie.setExchange((String) obj.get("Exchange"));
-                    aktie.setName((String) obj.get("Name"));
-                    aktie.setRegion((String) obj.get("Region"));
-                    aktie.setSymbol((String) obj.get("Symbol"));
-                    aktie.setType((String) obj.get("Type"));
-                    aktien.add(aktie);
-                }
-                i++;
-            }
-        }
-
-    }
 }

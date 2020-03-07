@@ -85,9 +85,10 @@ import java.util.ArrayList;
                 Trade ak = (Trade) o;
                 JSONObject obj = new JSONObject();
                 obj.put("Aktie", ak.getAktie().getJsonFromAktie());
-                obj.put("Symbol", ak.getAnzahl());
-                obj.put("Exchange", ak.getDate());
-                obj.put("Date", ak.getPreis());
+                obj.put("Anzahl", ak.getAnzahl());
+                obj.put("Date", ak.getDate());
+                obj.put("Preis", ak.getPreis());
+                obj.put("isKauf", ak.isKauf());
                 ar.add(obj);
             }
             s = ar.toJSONString();

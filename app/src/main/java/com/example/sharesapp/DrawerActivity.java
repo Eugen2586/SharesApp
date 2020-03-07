@@ -24,6 +24,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
@@ -45,6 +46,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import okhttp3.internal.http2.Http2Reader;
@@ -93,7 +96,7 @@ public class DrawerActivity extends AppCompatActivity {
             s = prefs.getString("Portfolioliste", null);
             new Model().getData().setPortfolioList(aktienList(s));
             s = prefs.getString("Trades", null);
-            new Model().getData().setPortfolioList(getTradeListe(s));
+            new Model().getData().setTradelist(getTradeListe(s));
 
         }
         catch(Exception e){
@@ -159,10 +162,10 @@ public class DrawerActivity extends AppCompatActivity {
   //      }
     }
 
-    private ArrayList<Aktie> getTradeListe(String st) throws ParseException {
-
+    private ArrayList<Trade> getTradeListe(String st) throws ParseException {
+        Trade tr = null;
         Aktie ak = null;
-        ArrayList akl = null;
+        ArrayList<Trade> akl = null;
         JSONParser parser = new JSONParser();
         org.json.simple.JSONArray jsonar = (JSONArray) parser.parse(st);
         jsonar.isEmpty();
@@ -221,7 +224,16 @@ public class DrawerActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-            akl.add(ak);
+            Boolean isKauf = null;
+            try{
+                isKauf = Boolean.parseBoolean(json.get("isKauf").toString());
+
+            }
+            catch(Exception e){
+
+            }
+            tr = new Trade(ak, Integer.parseInt(json.get("Anzahl").toString()), isKauf,Float.parseFloat(json.get("Preis").toString()), Date.valueOf(json.get("Date").toString()));
+            akl.add(tr);
         }
         Model m = new Model();
         return akl;

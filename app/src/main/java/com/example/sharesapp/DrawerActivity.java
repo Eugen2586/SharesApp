@@ -75,7 +75,7 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* Persistenz Stuff für die
+        /* Do persistance Stuff.
 
 
          */

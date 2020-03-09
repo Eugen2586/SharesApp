@@ -108,17 +108,9 @@ public class DrawerActivity extends AppCompatActivity {
 
         Requests req = new Requests();
         try {
-            Model m = new Model();
-            boolean b = m.getData().getAktienList().getValue()!= null;
-            boolean a  = true;
-            if(b) {
-                 a = m.getData().getAktienList().getValue().size() < 2;
-            }
-            if( a && !b) {
-                req.asyncRun(RequestsBuilder.getAllSymbolsURL());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            req.asyncRun(RequestsBuilder.getAllSymbolsURL());
+        }catch(Exception e){
+
         }
 
         setContentView(R.layout.activity_drawer);

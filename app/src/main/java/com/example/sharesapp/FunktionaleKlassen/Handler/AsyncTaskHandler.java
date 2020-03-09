@@ -24,7 +24,6 @@ public class AsyncTaskHandler {
         if (url.contains("ref-data")) {
 
             try {
-                new Model().getData().getAktienList().postValue(null);
                 new RequestSymbol(s);
             } catch (Exception e) {
                 e.printStackTrace();

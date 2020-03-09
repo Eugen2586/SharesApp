@@ -19,7 +19,6 @@ public class RequestSymbol {
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
-        jsonar.isEmpty();
         //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
             //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
@@ -67,7 +66,9 @@ public class RequestSymbol {
             }catch(Exception e){
 
             }
-            akl.add(ak);
+            if (!akl.contains(ak)) {
+                akl.add(ak);
+            }
             if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty())) {
                 type.add(ak.getType());
             }

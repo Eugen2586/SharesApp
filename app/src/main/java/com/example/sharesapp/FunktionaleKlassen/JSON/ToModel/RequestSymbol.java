@@ -78,7 +78,7 @@ public class RequestSymbol {
                 if (!akl.contains(ak)) {
                     akl.add(ak);
                 }
-                if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && ak.getName() != null && (!ak.getName().isEmpty())) {
+                if (ak.getName() != null && ak.getName() != null && ak.getSymbol()!= null && ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) &&  (!ak.getName().isEmpty()))) {
                     type.add(ak.getType());
                 }
             }

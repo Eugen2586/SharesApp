@@ -78,12 +78,16 @@ public class RequestSymbol {
                 if (!akl.contains(ak)) {
                     akl.add(ak);
                 }
-                if (ak.getName() != null && ak.getName() != null && ak.getSymbol()!= null && ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) &&  (!ak.getName().isEmpty()))) {
-                    type.add(ak.getType());
+                try {
+                    if (((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()))) {
+                        type.add(ak.getType());
+                    }
+                }catch(Exception e){
+
                 }
             }
             Model m = new Model();
-            m.getData().getAktienList().postValue(akl);
+            m.getData().getAktienList().setValue(akl);
             Object[] data = type.toArray();
             String[] sts = new String[data.length];
             int i = 0;
@@ -91,6 +95,7 @@ public class RequestSymbol {
                 sts[i] = t.toString();
                 i++;
             }
+
             m.getData().getAvailType().setType_abbr_list(sts);
         }
     }

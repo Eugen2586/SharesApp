@@ -25,7 +25,7 @@ public class AsyncTaskHandler {
 
             try {
                 new RequestSymbol(s);
-            } catch (Exception e) {
+             } catch (Exception e) {
                 e.printStackTrace();
             }
 

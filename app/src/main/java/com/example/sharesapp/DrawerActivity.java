@@ -92,9 +92,9 @@ public class DrawerActivity extends AppCompatActivity {
             if(s != null && !s.isEmpty()) {
                 new Model().getData().getDepot().setAktienImDepot(aktienList(s));
             }
-            s = prefs.getString("Geldwert", null);
+            Float f = prefs.getFloat("Geldwert", 0.0f);
             if(s != null && !s.isEmpty()) {
-                new Model().getData().getDepot().setGeldwert(Float.parseFloat(String.valueOf(s)));
+                new Model().getData().getDepot().setGeldwert(f);
             }
             s = prefs.getString("Portfolioliste", null);
             if(s != null && !s.isEmpty()) {

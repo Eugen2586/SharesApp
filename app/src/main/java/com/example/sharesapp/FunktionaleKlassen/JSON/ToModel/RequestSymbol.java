@@ -3,7 +3,8 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
-import org.json.simple.JSONArray;
+
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -19,59 +20,73 @@ public class RequestSymbol {
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
         if (st != null && !st.isEmpty()) {
-            JSONArray jsonar = (JSONArray) parser.parse(st);
-            //TODO pflege hier die Daten, die hier eingelesen werden.
+            JSONArray jsonay;
+            try {
+                jsonay = (JSONArray) parser.parse(st);
+            }catch(Exception e){
+                jsonay = new JSONArray(st);
+            }
+            ArrayList jsonar = new ArrayList();
+            for(int i = 0; i < jsonay.length(); i++ ){
+                jsonar.add(jsonay.get(i));
+            }
             for (Object t : jsonar) {
                 //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
                 ak = new Aktie();
-                org.json.simple.JSONObject json = (JSONObject) t;
+                org.json.JSONObject json = null;
                 try {
-                    ak.setSymbol(json.get("Symbol").toString());
+                    json = (org.json.JSONObject) t;
+                }catch(Exception e){
+                    System.out.println(e);
+                    System.out.println("BehinderterMongo");
+                }
+                try {
+                    ak.setSymbol(json.getString("symbol").toString());
+                } catch (Exception e) {
+                    System.out.print(e);
+                }
+                try {
+                    ak.setExchange(json.getString("exchange").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setExchange(json.get("Exchange").toString());
+                    ak.setName(json.getString("name").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setName(json.get("Name").toString());
+                    ak.setDate(json.getString("date").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setDate(json.get("Date").toString());
+                    ak.setType(json.getString("type").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setType(json.get("Type").toString());
+                    ak.setRegion(json.getString("region").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setRegion(json.get("Region").toString());
+                    ak.setCurrency(json.getString("currency").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setCurrency(json.get("Currency").toString());
+                    ak.setEnabled(json.getString("IsEnabled").toString());
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setEnabled(json.get("IsEnabled").toString());
+                    ak.setChange(Float.parseFloat(json.getString("Change").toString()));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setChange(Float.parseFloat(json.get("Change").toString()));
-                } catch (Exception e) {
-
-                }
-                try {
-                    ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+                    ak.setAnzahl(Integer.getInteger(String.valueOf(json.getInt("Menge"))));
                 } catch (Exception e) {
 
                 }
@@ -87,8 +102,10 @@ public class RequestSymbol {
                 }
             }
             Model m = new Model();
-            if(m.getData().getAktienList().getValue().size() != 0) {
-                m.getData().getAktienList().getValue().clear();
+            if(m.getData().getAktienList().getValue() != null) {
+                m.getData().getAktienList().postValue(akl);
+            }
+            else{
                 m.getData().getAktienList().postValue(akl);
             }
             Object[] data = type.toArray();

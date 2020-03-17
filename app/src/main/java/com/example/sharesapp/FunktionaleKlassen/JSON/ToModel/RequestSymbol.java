@@ -18,71 +18,81 @@ public class RequestSymbol {
 
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
-        JSONArray jsonar = (JSONArray) parser.parse(st);
-        //TODO pflege hier die Daten, die hier eingelesen werden.
-        for (Object t : jsonar) {
-            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
-            ak = new Aktie();
-            org.json.simple.JSONObject json = (JSONObject) t;
-            try {
-                ak.setSymbol(json.get("Symbol").toString());
-            }catch(Exception e){
+        if (st != null) {
+            JSONArray jsonar = (JSONArray) parser.parse(st);
+            //TODO pflege hier die Daten, die hier eingelesen werden.
+            for (Object t : jsonar) {
+                //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
+                ak = new Aktie();
+                org.json.simple.JSONObject json = (JSONObject) t;
+                try {
+                    ak.setSymbol(json.get("Symbol").toString());
+                } catch (Exception e) {
 
+                }
+                try {
+                    ak.setExchange(json.get("Exchange").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setName(json.get("Name").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setDate(json.get("Date").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setType(json.get("Type").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setRegion(json.get("Region").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setCurrency(json.get("Currency").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setEnabled(json.get("IsEnabled").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setChange(Float.parseFloat(json.get("Change").toString()));
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+                } catch (Exception e) {
+
+                }
+                if (!akl.contains(ak)) {
+                    akl.add(ak);
+                }
+                if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && ak.getName() != null && (!ak.getName().isEmpty())) {
+                    type.add(ak.getType());
+                }
             }
-            try {
-                ak.setExchange(json.get("Exchange").toString());
-            }catch(Exception e) {
-
-            }try{
-                ak.setName(json.get("Name").toString());
-            }catch(Exception e) {
-
-            }try {
-                ak.setDate(json.get("Date").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setType(json.get("Type").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setRegion(json.get("Region").toString());
-            }catch (Exception e) {
-
-            }try {
-                ak.setCurrency(json.get("Currency").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setEnabled(json.get("IsEnabled").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setChange(Float.parseFloat(json.get("Change").toString()));
-            }catch(Exception e){
-
-            }try{
-                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
-            }catch(Exception e){
-
+            Model m = new Model();
+            m.getData().getAktienList().postValue(akl);
+            Object[] data = type.toArray();
+            String[] sts = new String[data.length];
+            int i = 0;
+            for (Object t : data) {
+                sts[i] = t.toString();
+                i++;
             }
-            if (!akl.contains(ak)) {
-                akl.add(ak);
-            }
-            if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && ak.getName() != null && (!ak.getName().isEmpty())) {
-                type.add(ak.getType());
-            }
+            m.getData().getAvailType().setType_abbr_list(sts);
         }
-        Model m = new Model();
-        m.getData().getAktienList().postValue(akl);
-        Object[] data = type.toArray();
-        String[] sts = new String[data.length];
-        int i = 0;
-        for (Object t : data) {
-            sts[i] = t.toString();
-            i++;
-        }
-        m.getData().getAvailType().setType_abbr_list(sts);
     }
 
 

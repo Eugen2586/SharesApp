@@ -18,7 +18,7 @@ public class RequestSymbol {
 
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
-        if (st != null) {
+        if (st != null && !st.isEmpty()) {
             JSONArray jsonar = (JSONArray) parser.parse(st);
             //TODO pflege hier die Daten, die hier eingelesen werden.
             for (Object t : jsonar) {

@@ -5,7 +5,6 @@ import com.example.sharesapp.Model.Model;
 
 
 import org.json.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
@@ -31,19 +30,16 @@ public class RequestSymbol {
                 jsonar.add(jsonay.get(i));
             }
             for (Object t : jsonar) {
-                //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
+                // hier wird die Zerlegung der Nachrichtenvorgenommen.
                 ak = new Aktie();
                 org.json.JSONObject json = null;
                 try {
                     json = (org.json.JSONObject) t;
                 }catch(Exception e){
-                    System.out.println(e);
-                    System.out.println("BehinderterMongo");
                 }
                 try {
                     ak.setSymbol(json.getString("symbol").toString());
                 } catch (Exception e) {
-                    System.out.print(e);
                 }
                 try {
                     ak.setExchange(json.getString("exchange").toString());

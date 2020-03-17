@@ -95,7 +95,6 @@ public class RequestSymbol {
                 sts[i] = t.toString();
                 i++;
             }
-
             m.getData().getAvailType().setType_abbr_list(sts);
         }
     }

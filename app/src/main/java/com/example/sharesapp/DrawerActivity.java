@@ -84,16 +84,26 @@ public class DrawerActivity extends AppCompatActivity {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             JSONParser parser = new JSONParser();
             s = prefs.getString("AktienSymbole", null);
-            new RequestSymbol(s);
+            if(s != null && !s.isEmpty()) {
+                new RequestSymbol(s);
+            }
             parser = new JSONParser();
             s = prefs.getString("Depot", null);
-            new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+            }
             s = prefs.getString("Geldwert", null);
-            new Model().getData().getDepot().setGeldwert(Float.parseFloat(String.valueOf(s)));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().getDepot().setGeldwert(Float.parseFloat(String.valueOf(s)));
+            }
             s = prefs.getString("Portfolioliste", null);
-            new Model().getData().setPortfolioList(aktienList(s));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().setPortfolioList(aktienList(s));
+            }
             s = prefs.getString("Trades", null);
-            new Model().getData().setPortfolioList(getTradeListe(s));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().setPortfolioList(getTradeListe(s));
+            }
 
         }
         catch(Exception e){

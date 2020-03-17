@@ -19,23 +19,37 @@ import java.util.ArrayList;
 
             //Trades
             s = tradesToString();
-            editor.putString("Trades", s);
-            s = null;
+            try {
+                editor.putString("Trades", s);
+            }catch(Exception e) {
 
+            }
+            s = null;
             //Depot Inhalt
             s = aktienImDepotToString();
-            editor.putString("Depot", s);
-            editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+            try {
+                editor.putString("Depot", s);
+                editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+            }catch(Exception e) {
+
+            }
             s = null;
 
             //Portfolio Liste
             s = portfolioListeToString();
-            editor.putString("Portfolioliste", s);
-            s = null;
+            try {
+                editor.putString("Portfolioliste", s);
+            }catch(Exception e) {
+                s = null;
+            }
 
             //Aktien
             s = aktienSymbolListToString();
-            editor.putString("AktienSymbole", s);
+            try {
+                editor.putString("AktienSymbole", s);
+            }catch(Exception e){
+                
+            }
             s = null;
 
             //This make it in the OS.

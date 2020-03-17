@@ -87,7 +87,10 @@ public class RequestSymbol {
                 }
             }
             Model m = new Model();
-            m.getData().getAktienList().setValue(akl);
+            if(m.getData().getAktienList().getValue().size() != 0) {
+                m.getData().getAktienList().getValue().clear();
+                m.getData().getAktienList().postValue(akl);
+            }
             Object[] data = type.toArray();
             String[] sts = new String[data.length];
             int i = 0;

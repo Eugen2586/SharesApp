@@ -59,12 +59,10 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -102,10 +100,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
-            System.out.println("Portfolio einfügen");
             setAdapter(model.getData().getPortfolioList());
         } else if (position == 1) {
-            System.out.println("Alles einfügen");
             setAdapter(stockList);
         } else {
             position -= 2;

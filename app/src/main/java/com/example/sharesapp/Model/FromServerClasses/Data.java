@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Data {
     private ArrayList<Trade> tradelist = new ArrayList<Trade>();
@@ -98,17 +100,39 @@ public class Data {
     }
 
 
-    public void addAktie(Aktie aktie) {
-        if (aktien == null) {
-            ArrayList<Aktie> a = null;
-            aktien.postValue(a);
-            a.add(aktie);
-            aktien.setValue(a);
-        }
+//    private void addAktie(Aktie stock) {
+//        ArrayList<Aktie> newStockList = aktien.getValue();
+//        if (newStockList == null) {
+//            newStockList = new ArrayList<>();
+//        }
+//        aktien.postValue(newStockList);
+//        newStockList.add(stock);
+//        Collections.sort(newStockList, new Comparator<Aktie>() {
+//            @Override
+//            public int compare(Aktie stock1, Aktie stock2) {
+//                return stock1.getSymbol().compareTo(stock2.getSymbol());
+//            }
+//        });
+//        aktien.setValue(newStockList);
+//    }
 
+    public void addAktienList(ArrayList<Aktie> stockList) {
+        ArrayList<Aktie> newStockList = aktien.getValue();
+        if (newStockList == null) {
+            newStockList = new ArrayList<>();
+        }
+        aktien.postValue(newStockList);
+        newStockList.addAll(stockList);
+        Collections.sort(newStockList, new Comparator<Aktie>() {
+            @Override
+            public int compare(Aktie stock1, Aktie stock2) {
+                return stock1.getSymbol().compareTo(stock2.getSymbol());
+            }
+        });
+        aktien.setValue(newStockList);
     }
 
-    public void addAktienList(ArrayList<Aktie> ar) {
+    public void setAktienList(ArrayList<Aktie> ar) {
         aktien.setValue(ar);
     }
 

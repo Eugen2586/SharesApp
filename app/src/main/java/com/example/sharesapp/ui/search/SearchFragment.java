@@ -128,6 +128,28 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             adapter.setClickListener(SearchFragment.this);
             adapter.setAktien(filteredStockList);
             recyclerView.setAdapter(adapter);
+
+            // add stocks to existingStockList if not yet included
+            ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
+            ArrayList<Aktie> stocksToAdd = new ArrayList<>();
+            if (existingStockList != null) {
+                for (Aktie stock : stockList) {
+                    String symbol = stock.getSymbol();
+                    boolean found = false;
+                    for (Aktie existingStock: existingStockList) {
+                        if (symbol.equals(existingStock.getSymbol())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        stocksToAdd.add(stock);
+                    }
+                }
+                model.getData().addAktienList(stocksToAdd);
+            } else {
+                model.getData().addAktienList(stockList);
+            }
         }
     }
 

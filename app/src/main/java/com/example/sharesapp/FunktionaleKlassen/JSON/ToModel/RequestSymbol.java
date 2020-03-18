@@ -118,7 +118,7 @@ public class RequestSymbol {
 
     public ArrayList<Aktie> getAk() {
         Model m = new Model();
-        m.getData().addAktienList(akl);
+        m.getData().setAktienList(akl);
         return akl;
     }
 }

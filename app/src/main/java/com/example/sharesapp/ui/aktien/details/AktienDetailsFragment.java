@@ -36,9 +36,9 @@ public class AktienDetailsFragment extends Fragment {
 
     private Model model = new Model();
     private View root;
-    EditText kaufMenge;
-    EditText Limit;
-    TextView totalPrice;
+    private EditText kaufMenge;
+    private EditText Limit;
+    private TextView totalPrice;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -68,9 +68,9 @@ public class AktienDetailsFragment extends Fragment {
 
         setStockDetails();
 
-        final Button buy_button = root.findViewById(R.id.kaufen_button);
+        final Button buyButton = root.findViewById(R.id.kaufen_button);
 
-        buy_button.setOnClickListener(new View.OnClickListener() {
+        buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = AktienDetailsFragment.this.getContext();
@@ -95,9 +95,11 @@ public class AktienDetailsFragment extends Fragment {
                             setTotalPrice();
                         }
 
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
 
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
                     });
 
                     Limit = buyDialogView.findViewById(R.id.Limit);
@@ -109,11 +111,12 @@ public class AktienDetailsFragment extends Fragment {
                             setTotalPrice();
                         }
 
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
 
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
                     });
-
 
 
                     builder.setCancelable(true);
@@ -132,7 +135,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number*model.getData().getDepot().getProzent();
+                                        float price = limit * number * model.getData().getDepot().getProzent();
                                         if (price > model.getData().getDepot().getGeldwert()) {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
@@ -167,21 +170,44 @@ public class AktienDetailsFragment extends Fragment {
             }
         });
 
+        final Button portfolioButton = root.findViewById(R.id.portfolio_button);
+        boolean foundInPortfolio = getFoundInPortfolio();
+        setTextForPortfolioButton(portfolioButton, foundInPortfolio);
+        System.out.println(model.getData().getPortfolioList());
+        portfolioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(model.getData().getPortfolioList());
+                boolean foundInPortfolio = getFoundInPortfolio();
+                setTextForPortfolioButton(portfolioButton, !foundInPortfolio);
+
+                // add to or remove from Portfolio
+                String currentSymbol = model.getData().getCurrentStock().getSymbol();
+                if (foundInPortfolio) {
+                    model.getData().removeFromPortfolio(currentSymbol);
+                } else {
+                    model.getData().addToPortfolio(model.getData().getCurrentStock(), currentSymbol);
+                }
+            }
+        });
+
         // Inflate the layout for this fragment
         return root;
     }
 
     private void setCurrentStock() {
-        String symbol = model.getData().getCurrentStock().getSymbol();
+        Aktie currentStock = model.getData().getCurrentStock();
+        String symbol = currentStock.getSymbol();
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-        Aktie currentStock = null;
-        for (Aktie stock : stockList) {
-            if (symbol.equals(stock.getSymbol())) {
-                currentStock = stock;
-                break;
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (symbol.equals(stock.getSymbol())) {
+                    currentStock = stock;
+                    break;
+                }
             }
+            model.getData().setCurrentStock(currentStock);
         }
-        model.getData().setCurrentStock(currentStock);
     }
 
     private void setTotalPrice() {
@@ -203,15 +229,14 @@ public class AktienDetailsFragment extends Fragment {
             System.out.println(number);
         }
 
-        float price = limit*number*model.getData().getDepot().getProzent();
-        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price) ));
+        float price = limit * number * model.getData().getDepot().getProzent();
+        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
 
         if (price > model.getData().getDepot().getGeldwert()) {
             totalPrice.setTextColor(Color.RED);
         } else {
             totalPrice.setTextColor(Color.DKGRAY);
         }
-
 
 
     }
@@ -233,4 +258,28 @@ public class AktienDetailsFragment extends Fragment {
         // todo set all fields
     }
 
+    private boolean getFoundInPortfolio() {
+        boolean foundInPortfolio = false;
+
+        // change foundInPortfolio if portfolio contains currentStock
+        String currentSymbol = model.getData().getCurrentStock().getSymbol();
+        if (model.getData().getPortfolioList().getValue() != null) {
+            for (Aktie portfolioStock : model.getData().getPortfolioList().getValue()) {
+                if (portfolioStock.getSymbol().equals(currentSymbol)) {
+                    foundInPortfolio = true;
+                    break;
+                }
+            }
+        }
+
+        return foundInPortfolio;
+    }
+
+    private void setTextForPortfolioButton(Button portfolioButton, boolean foundInPortfolio) {
+        if (foundInPortfolio) {
+            portfolioButton.setText(R.string.remove_from_portfolio);
+        } else {
+            portfolioButton.setText(R.string.add_to_portfolio);
+        }
+    }
 }

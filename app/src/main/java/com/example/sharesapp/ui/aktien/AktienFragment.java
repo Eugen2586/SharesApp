@@ -30,7 +30,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private StockRecyclerViewAdapter adapter = null;
+    private int tabChangeCount = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,17 +54,19 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (tabChangeCount > 0) {
+                    model.getData().setPreviouslySelectedTabIndex(tab.getPosition());
+                }
                 setCategory(tab.getPosition());
+                tabChangeCount++;
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -91,6 +93,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                 addTabWithString(tabLayout, category);
             }
         }
+
+        selectPreviouslySelectedTab(tabLayout);
     }
 
     private void addTabWithString(TabLayout tabLayout, String text) {
@@ -102,10 +106,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
-            System.out.println("Portfolio einfügen");
-            setAdapter(model.getData().getPortfolioList());
+            setAdapter(model.getData().getPortfolioList().getValue());
         } else if (position == 1) {
-            System.out.println("Alles einfügen");
             setAdapter(stockList);
         } else {
             position -= 2;
@@ -147,12 +149,18 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setAdapter(ArrayList<Aktie> aktienList) {
-        if (aktienList != null) {
-            initRecyclerView();
-            adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
-            adapter.setClickListener(AktienFragment.this);
-            adapter.setAktien(aktienList);
-            recyclerView.setAdapter(adapter);
+        if (aktienList == null) {
+            aktienList = new ArrayList<>();
         }
+        initRecyclerView();
+        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
+        adapter.setClickListener(AktienFragment.this);
+        adapter.setAktien(aktienList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void selectPreviouslySelectedTab(TabLayout tabLayout) {
+        System.out.println(model.getData().getPreviouslySelectedTabIndex());
+        tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
     }
 }

@@ -3,17 +3,23 @@ package com.example.sharesapp.Model.FromServerClasses;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Data {
     private ArrayList<Trade> tradelist = new ArrayList<Trade>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
-    private ArrayList<Aktie> portfolioList = new ArrayList<>();
+    private MutableLiveData<ArrayList<Aktie>> portfolio = new MutableLiveData<>();
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
     private String currentSearchString;
+    private int previouslySelectedTabIndex = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -97,19 +103,18 @@ public class Data {
         return sum;
     }
 
-
-    public void addAktie(Aktie aktie) {
-        if (aktien == null) {
-            ArrayList<Aktie> a = null;
-            aktien.postValue(a);
-            a.add(aktie);
-            aktien.setValue(a);
+    public void addAktienList(ArrayList<Aktie> stockList) {
+        // TODO: add Depot and Portfolio to stocklist on start of app and loading
+        Set<Aktie> stockSet;
+        if (aktien.getValue() == null) {
+            stockSet = new HashSet<>();
+        } else {
+            stockSet = new HashSet<>(aktien.getValue());
         }
-
-    }
-
-    public void addAktienList(ArrayList<Aktie> ar) {
-        aktien.setValue(ar);
+        stockSet.addAll(stockList);
+        ArrayList<Aktie> newStockList = new ArrayList<>(stockSet);
+        sortStockList(newStockList);
+        aktien.setValue(newStockList);
     }
 
     public MutableLiveData<ArrayList<Aktie>> getAktienList() {
@@ -120,20 +125,46 @@ public class Data {
         return tradesMutable;
     }
 
-    public ArrayList<Aktie> getPortfolioList() {
-        return portfolioList;
+    public MutableLiveData<ArrayList<Aktie>> getPortfolioList() {
+        return portfolio;
     }
 
     public void setPortfolioList(ArrayList<Aktie> portfolioList) {
-        this.portfolioList = portfolioList;
+        portfolio.setValue(portfolioList);
     }
 
-    public void addToOrRemoveFromPortfolio(Aktie stock) {
-        if (portfolioList.contains(stock)) {
-            portfolioList.remove(stock);
+    public void addToPortfolio(Aktie stock, String symbol) {
+        ArrayList<Aktie> portfolioList = portfolio.getValue();
+        if (portfolioList != null) {
+            for (Aktie portfolioStock : portfolioList) {
+                if (portfolioStock.getSymbol().equals(symbol)) {
+                    // already in portfolio
+                    return;
+                }
+            }
         } else {
-            portfolioList.add(stock);
+            portfolioList = new ArrayList<>();
         }
+        portfolioList.add(stock);
+        sortStockList(portfolioList);
+        portfolio.setValue(portfolioList);
+    }
+
+    public void removeFromPortfolio(String symbol) {
+        ArrayList<Aktie> portfolioList = portfolio.getValue();
+        if (portfolioList != null) {
+            Aktie stockToRemove = null;
+            for (Aktie portfolioStock : portfolioList) {
+                if (portfolioStock.getSymbol().equals(symbol)) {
+                    stockToRemove = portfolioStock;
+                    break;
+                }
+            }
+            if (stockToRemove != null) {
+                portfolioList.remove(stockToRemove);
+            }
+        }
+        portfolio.setValue(portfolioList);
     }
 
     public String getCurrentSearchString() {
@@ -152,5 +183,22 @@ public class Data {
             }
         }
         return stock;
+    }
+
+    private void sortStockList(ArrayList<Aktie> stockList) {
+        Collections.sort(stockList, new Comparator<Aktie>() {
+            @Override
+            public int compare(Aktie stock1, Aktie stock2) {
+                return stock1.getSymbol().compareTo(stock2.getSymbol());
+            }
+        });
+    }
+
+    public void setPreviouslySelectedTabIndex(int tabIndex) {
+        previouslySelectedTabIndex = tabIndex;
+    }
+
+    public int getPreviouslySelectedTabIndex() {
+        return previouslySelectedTabIndex;
     }
 }

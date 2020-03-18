@@ -128,12 +128,34 @@ public class Data {
         this.portfolioList = portfolioList;
     }
 
-    public void addToOrRemoveFromPortfolio(Aktie stock) {
-        if (portfolioList.contains(stock)) {
-            portfolioList.remove(stock);
+    public void addToPortfolio(Aktie stock, String symbol) {
+        if (portfolioList != null) {
+            for (Aktie portfolioStock : portfolioList) {
+                if (portfolioStock.getSymbol().equals(symbol)) {
+                    // already in portfolio
+                    return;
+                }
+            }
         } else {
-            portfolioList.add(stock);
+            portfolioList = new ArrayList<>();
         }
+        portfolioList.add(stock);
+    }
+
+    public void removeFromPortfolio(String symbol) {
+        if (portfolioList != null) {
+            Aktie stockToRemove = null;
+            for (Aktie portfolioStock : portfolioList) {
+                if (portfolioStock.getSymbol().equals(symbol)) {
+                    stockToRemove = portfolioStock;
+                    break;
+                }
+            }
+            if (stockToRemove != null) {
+                portfolioList.remove(stockToRemove);
+            }
+        }
+
     }
 
     public String getCurrentSearchString() {

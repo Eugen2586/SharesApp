@@ -44,4 +44,6 @@
     <string name="kategorie">Kategorie:</string>
     <string name="deine_suche_ergab_folgende_treffer">Deine Suche ergab folgende Treffer:</string>
     <string name="suche">Suche</string>
+    <string name="add_to_portfolio">Zu Portfolio hinzufügen</string>
+    <string name="remove_from_portfolio">Aus Portfolio entfernen</string>
 </resources>

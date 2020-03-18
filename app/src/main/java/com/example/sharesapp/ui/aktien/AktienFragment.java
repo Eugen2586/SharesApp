@@ -100,7 +100,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
-            setAdapter(model.getData().getPortfolioList());
+            setAdapter(model.getData().getPortfolioList().getValue());
         } else if (position == 1) {
             setAdapter(stockList);
         } else {

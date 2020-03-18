@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
     public class SaveToJSON {
+        private Model model = new Model();
         public SaveToJSON(SharedPreferences.Editor editor){
             String s = null;
             //Here it should all Data from the Model get putted!
@@ -60,24 +61,25 @@ import java.util.ArrayList;
             /*
             This Method is for Building a String from the Aktien Symbol list.
              */
-            String s = new String();
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getAktienList().getValue()) {
+            for (Object o:model.getData().getAktienList().getValue()) {
                 Aktie ak = (Aktie) o;
                 ar.add(ak.getJsonFromAktie());
             }
-            s = ar.toJSONString();
+            String s = ar.toJSONString();
             return s;
         }
 
         private String portfolioListeToString() {
             String s = null;
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getPortfolioList()) {
-                Aktie ak = (Aktie) o;
-                ar.add(ak.getJsonFromAktie());
+            if (model.getData().getPortfolioList().getValue() != null) {
+                for (Object o:model.getData().getPortfolioList().getValue()) {
+                    Aktie ak = (Aktie) o;
+                    ar.add(ak.getJsonFromAktie());
+                }
+                s = ar.toJSONString();
             }
-            s = ar.toJSONString();
             return s;
         }
 

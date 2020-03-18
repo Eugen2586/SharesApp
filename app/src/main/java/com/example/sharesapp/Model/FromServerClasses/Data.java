@@ -12,7 +12,7 @@ public class Data {
     private ArrayList<Trade> tradelist = new ArrayList<Trade>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot;
-    private ArrayList<Aktie> portfolioList = new ArrayList<>();
+    private MutableLiveData<ArrayList<Aktie>> portfolio = new MutableLiveData<>();
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
     private String currentSearchString;
@@ -121,14 +121,9 @@ public class Data {
         if (newStockList == null) {
             newStockList = new ArrayList<>();
         }
-        aktien.postValue(newStockList);
+//        aktien.postValue(newStockList);
         newStockList.addAll(stockList);
-        Collections.sort(newStockList, new Comparator<Aktie>() {
-            @Override
-            public int compare(Aktie stock1, Aktie stock2) {
-                return stock1.getSymbol().compareTo(stock2.getSymbol());
-            }
-        });
+        sortStockList(newStockList);
         aktien.setValue(newStockList);
     }
 
@@ -144,15 +139,16 @@ public class Data {
         return tradesMutable;
     }
 
-    public ArrayList<Aktie> getPortfolioList() {
-        return portfolioList;
+    public MutableLiveData<ArrayList<Aktie>> getPortfolioList() {
+        return portfolio;
     }
 
     public void setPortfolioList(ArrayList<Aktie> portfolioList) {
-        this.portfolioList = portfolioList;
+        portfolio.setValue(portfolioList);
     }
 
     public void addToPortfolio(Aktie stock, String symbol) {
+        ArrayList<Aktie> portfolioList = portfolio.getValue();
         if (portfolioList != null) {
             for (Aktie portfolioStock : portfolioList) {
                 if (portfolioStock.getSymbol().equals(symbol)) {
@@ -164,9 +160,12 @@ public class Data {
             portfolioList = new ArrayList<>();
         }
         portfolioList.add(stock);
+        sortStockList(portfolioList);
+        portfolio.setValue(portfolioList);
     }
 
     public void removeFromPortfolio(String symbol) {
+        ArrayList<Aktie> portfolioList = portfolio.getValue();
         if (portfolioList != null) {
             Aktie stockToRemove = null;
             for (Aktie portfolioStock : portfolioList) {
@@ -179,7 +178,7 @@ public class Data {
                 portfolioList.remove(stockToRemove);
             }
         }
-
+        portfolio.setValue(portfolioList);
     }
 
     public String getCurrentSearchString() {
@@ -199,4 +198,14 @@ public class Data {
         }
         return stock;
     }
+
+    private void sortStockList(ArrayList<Aktie> stockList) {
+        Collections.sort(stockList, new Comparator<Aktie>() {
+            @Override
+            public int compare(Aktie stock1, Aktie stock2) {
+                return stock1.getSymbol().compareTo(stock2.getSymbol());
+            }
+        });
+    }
+
 }

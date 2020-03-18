@@ -263,8 +263,8 @@ public class AktienDetailsFragment extends Fragment {
 
         // change foundInPortfolio if portfolio contains currentStock
         String currentSymbol = model.getData().getCurrentStock().getSymbol();
-        if (model.getData().getPortfolioList() != null) {
-            for (Aktie portfolioStock : model.getData().getPortfolioList()) {
+        if (model.getData().getPortfolioList().getValue() != null) {
+            for (Aktie portfolioStock : model.getData().getPortfolioList().getValue()) {
                 if (portfolioStock.getSymbol().equals(currentSymbol)) {
                     foundInPortfolio = true;
                     break;

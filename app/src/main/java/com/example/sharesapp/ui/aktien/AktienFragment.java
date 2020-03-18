@@ -30,7 +30,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private StockRecyclerViewAdapter adapter = null;
+    private int tabChangeCount = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (tabChangeCount > 0) {
+                    model.getData().setPreviouslySelectedTabIndex(tab.getPosition());
+                }
                 setCategory(tab.getPosition());
+                tabChangeCount++;
             }
 
             @Override
@@ -89,6 +93,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                 addTabWithString(tabLayout, category);
             }
         }
+
+        selectPreviouslySelectedTab(tabLayout);
     }
 
     private void addTabWithString(TabLayout tabLayout, String text) {
@@ -147,9 +153,14 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             aktienList = new ArrayList<>();
         }
         initRecyclerView();
-        adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
+        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
         adapter.setClickListener(AktienFragment.this);
         adapter.setAktien(aktienList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void selectPreviouslySelectedTab(TabLayout tabLayout) {
+        System.out.println(model.getData().getPreviouslySelectedTabIndex());
+        tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
     }
 }

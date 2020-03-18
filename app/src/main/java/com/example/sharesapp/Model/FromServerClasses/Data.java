@@ -3,6 +3,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,7 @@ public class Data {
     private AvailType availType;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
     private String currentSearchString;
+    private int previouslySelectedTabIndex = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -102,6 +104,7 @@ public class Data {
     }
 
     public void addAktienList(ArrayList<Aktie> stockList) {
+        // TODO: add Depot and Portfolio to stocklist on start of app and loading
         Set<Aktie> stockSet;
         if (aktien.getValue() == null) {
             stockSet = new HashSet<>();
@@ -191,4 +194,11 @@ public class Data {
         });
     }
 
+    public void setPreviouslySelectedTabIndex(int tabIndex) {
+        previouslySelectedTabIndex = tabIndex;
+    }
+
+    public int getPreviouslySelectedTabIndex() {
+        return previouslySelectedTabIndex;
+    }
 }

@@ -196,16 +196,22 @@ public class AktienDetailsFragment extends Fragment {
     }
 
     private void setCurrentStock() {
-        String symbol = model.getData().getCurrentStock().getSymbol();
-        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-        Aktie currentStock = null;
-        for (Aktie stock : stockList) {
-            if (symbol.equals(stock.getSymbol())) {
-                currentStock = stock;
-                break;
+        Aktie currentStock = model.getData().getCurrentStock();
+        if (currentStock == null) {
+            System.out.println("CurrentStock is null!!!");
+        } else {
+            String symbol = currentStock.getSymbol();
+            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+            if (stockList != null) {
+                for (Aktie stock : stockList) {
+                    if (symbol.equals(stock.getSymbol())) {
+                        currentStock = stock;
+                        break;
+                    }
+                }
+                model.getData().setCurrentStock(currentStock);
             }
         }
-        model.getData().setCurrentStock(currentStock);
     }
 
     private void setTotalPrice() {
@@ -241,19 +247,23 @@ public class AktienDetailsFragment extends Fragment {
 
     private void setStockDetails() {
         Aktie stock = model.getData().getCurrentStock();
-        TextView symbolTV = root.findViewById(R.id.symbol_field);
-        symbolTV.setText(stock.getSymbol());
-        TextView nameTV = root.findViewById(R.id.name_field);
-        nameTV.setText(stock.getName());
-        TextView nameBig = root.findViewById(R.id.name_big);
-        nameBig.setText(stock.getName());
-        TextView priceTV = root.findViewById(R.id.latest_price_field);
-        priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
-        TextView dateTV = root.findViewById(R.id.date_field);
-        dateTV.setText(stock.getDate());
-        TextView typeTV = root.findViewById(R.id.type_field);
-        typeTV.setText(stock.getType());
-        // todo set all fields
+        if (stock == null) {
+            System.out.println("CurrentStock is null!!!");
+        } else {
+            TextView symbolTV = root.findViewById(R.id.symbol_field);
+            symbolTV.setText(stock.getSymbol());
+            TextView nameTV = root.findViewById(R.id.name_field);
+            nameTV.setText(stock.getName());
+            TextView nameBig = root.findViewById(R.id.name_big);
+            nameBig.setText(stock.getName());
+            TextView priceTV = root.findViewById(R.id.latest_price_field);
+            priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
+            TextView dateTV = root.findViewById(R.id.date_field);
+            dateTV.setText(stock.getDate());
+            TextView typeTV = root.findViewById(R.id.type_field);
+            typeTV.setText(stock.getType());
+            // todo set all fields
+        }
     }
 
     private boolean getFoundInPortfolio() {

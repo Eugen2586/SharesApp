@@ -22,23 +22,40 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.SearchRequest;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
+import com.example.sharesapp.ui.aktien.AktienFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener, AdapterView.OnItemSelectedListener {
+public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private StockRecyclerViewAdapter adapter = null;
     private int searchIndex = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
-        initCategorieSpinner();
+        final Spinner spinner = root.findViewById(R.id.spinner);
+        initCategorieSpinner(spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setSearchIndex(position);
+                setAdapter(model.getData().getSearches());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                setSearchIndex(0);
+                setAdapter(model.getData().getSearches());
+            }
+        });
 
         model.getData().searches.observe(getViewLifecycleOwner(), new Observer<ArrayList<Aktie>>() {
             @Override
@@ -52,11 +69,9 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         return root;
     }
 
-    private void initCategorieSpinner() {
+    private void initCategorieSpinner(Spinner spinner) {
         Context context = this.getContext();
         if (context != null) {
-            final Spinner dropdown = root.findViewById(R.id.spinner);
-            dropdown.setOnItemSelectedListener(this);
             String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
             if (availableTypes == null || availableTypes.length == 0) {
                 // not yet available -> set Alles as default value
@@ -66,7 +81,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 // available -> set Alles as first value
                 System.out.println(availableTypes.length);
                 String[] types = new String[availableTypes.length + 1];
-                types[0] = "Alles";
+                types[0] = Constants.TYPES[0];
                 for (int i = 0; i < availableTypes.length; i++) {
                     types[i + 1] = availableTypes[i];
                 }
@@ -74,7 +89,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                     android.R.layout.simple_spinner_dropdown_item, availableTypes);
-            dropdown.setAdapter(adapter);
+            spinner.setAdapter(adapter);
         }
     }
 
@@ -105,35 +120,41 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 }
             }
 
-            showSearchTextView();
+            boolean stocksFound = filteredStockList.size() != 0;
+            showSearchTextView(stocksFound);
 
             initRecyclerView();
-            adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
+            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
             adapter.setClickListener(SearchFragment.this);
-            recyclerView.setAdapter(adapter);
             adapter.setAktien(filteredStockList);
             recyclerView.setAdapter(adapter);
         }
     }
 
-    private void showSearchTextView() {
+    private void showSearchTextView(boolean stocksFound) {
         TextView searchTextView = root.findViewById(R.id.search_text);
+        if (stocksFound) {
+            searchTextView.setText(R.string.deine_suche_ergab_folgende_treffer);
+        } else {
+            searchTextView.setText(R.string.deine_suche_ergab_keine_treffer);
+        }
         searchTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onItemClick(View view, int position) {
+        // opens stock details copied from AktienFragment
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        setSearchIndex(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        System.out.println("OnNothingSelectedCalled");
-        setSearchIndex(0);
     }
 }

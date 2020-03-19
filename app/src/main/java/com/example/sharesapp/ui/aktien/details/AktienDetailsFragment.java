@@ -67,6 +67,14 @@ public class AktienDetailsFragment extends Fragment {
 
         setStockDetails();
 
+        final Button sellButton = root.findViewById(R.id.verkaufen_button);
+        int anzahl = getFoundInDepot();
+        if (anzahl == 0) {
+            sellButton.setVisibility(View.INVISIBLE);
+        } else {
+            sellButton.setVisibility(View.VISIBLE);
+        }
+
         final Button buyButton = root.findViewById(R.id.kaufen_button);
 
         buyButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +99,7 @@ public class AktienDetailsFragment extends Fragment {
 
                         public void afterTextChanged(Editable s) {
 
-                            setTotalPrice();
+                            setTotalPrice(true);
                         }
 
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,7 +115,7 @@ public class AktienDetailsFragment extends Fragment {
 
                         public void afterTextChanged(Editable s) {
 
-                            setTotalPrice();
+                            setTotalPrice(true);
                         }
 
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -143,6 +151,7 @@ public class AktienDetailsFragment extends Fragment {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(number);
                                                 model.getData().getDepot().kaufeAktie(a);
+                                                sellButton.setVisibility(View.VISIBLE);
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                             } else {
                                                 //todo kaufen mit limit
@@ -188,8 +197,129 @@ public class AktienDetailsFragment extends Fragment {
             }
         });
 
+
+
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = AktienDetailsFragment.this.getContext();
+                if (context != null) {
+                    View sellDialogView = inflater.inflate(R.layout.sell_dialog, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    TextView meine_anzahl = sellDialogView.findViewById(R.id.anzahl_aktien);
+                    meine_anzahl.setText(String.valueOf(getFoundInDepot()));
+                    TextView price = sellDialogView.findViewById(R.id.price_one);
+                    price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    totalPrice = sellDialogView.findViewById(R.id.total_price);
+
+
+                    kaufMenge = sellDialogView.findViewById(R.id.verkaufMenge);
+
+                    kaufMenge.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            setTotalPrice(false);
+                            checkVerkaufMenge(getFoundInDepot());
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+                    });
+
+                    Limit = sellDialogView.findViewById(R.id.Limit);
+
+                    Limit.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            setTotalPrice(false);
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+                    });
+
+
+                    builder.setCancelable(true);
+                    builder.setView(sellDialogView);
+                    builder.setPositiveButton("Verkaufen",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (!kaufMenge.getText().toString().isEmpty()) {
+                                        float limit;
+                                        boolean limit_b = false; // shows if we want to buy with limit or direct with the price
+                                        if (!Limit.getText().toString().isEmpty()) {
+                                            limit = Float.valueOf(Limit.getText().toString());
+                                            limit_b = true;
+                                        } else {
+                                            limit = model.getData().currentStock.getValue().getPreis();
+                                        }
+                                        int number = Integer.parseInt(kaufMenge.getText().toString());
+                                        float price = limit * number * (2f - model.getData().getDepot().getProzent());
+                                        if (Integer.parseInt(kaufMenge.getText().toString()) > getFoundInDepot()) {
+                                            // falls will mehr verakufen als habe
+                                            Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Aktien zu verkaufen!", Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            if (!limit_b) {
+                                                Aktie a = model.getData().currentStock.getValue().getClone();
+                                                a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
+                                                model.getData().getDepot().verkaufeAktie(a);
+                                                int anzahl = getFoundInDepot();
+                                                if (anzahl == 0) {
+                                                    sellButton.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                }
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien verkauft.", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                //todo verkaufen mit limit
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "TODO: AKTIEN VERKAUFEN", Toast.LENGTH_LONG).show();
+
+                                            }
+                                        }
+                                    } else {
+                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Bitte Kaufmenge eingeben.", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            });
+                    builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+
         // Inflate the layout for this fragment
         return root;
+    }
+
+    private void checkVerkaufMenge(int anzahl) {
+        if (kaufMenge.getText().toString().isEmpty()) {
+            return;
+        }
+
+        if (Integer.parseInt(kaufMenge.getText().toString()) > anzahl) {
+            kaufMenge.setTextColor(Color.RED);
+        } else {
+            kaufMenge.setTextColor(Color.DKGRAY);
+        }
+
     }
 
     private void setCurrentStock() {
@@ -207,7 +337,7 @@ public class AktienDetailsFragment extends Fragment {
         }
     }
 
-    private void setTotalPrice() {
+    private void setTotalPrice(boolean kaufen) {
 
         float limit;
         if (!Limit.getText().toString().isEmpty()) {
@@ -229,10 +359,12 @@ public class AktienDetailsFragment extends Fragment {
         float price = limit * number * model.getData().getDepot().getProzent();
         totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
 
-        if (price > model.getData().getDepot().getGeldwert()) {
-            totalPrice.setTextColor(Color.RED);
-        } else {
-            totalPrice.setTextColor(Color.DKGRAY);
+        if (kaufen) {
+            if (price > model.getData().getDepot().getGeldwert()) {
+                totalPrice.setTextColor(Color.RED);
+            } else {
+                totalPrice.setTextColor(Color.DKGRAY);
+            }
         }
 
 
@@ -278,5 +410,22 @@ public class AktienDetailsFragment extends Fragment {
         } else {
             portfolioButton.setText(R.string.add_to_portfolio);
         }
+    }
+
+    private int getFoundInDepot() {
+        int foundInDepot = 0;
+
+        // return the number of stocks if available
+        String currentSymbol = model.getData().getCurrentStock().getSymbol();
+        if (model.getData().getDepot().getAktien().getValue() != null) {
+            for (Aktie Stock : model.getData().getDepot().getAktien().getValue()) {
+                if (Stock.getSymbol().equals(currentSymbol)) {
+                    foundInDepot = Stock.getAnzahl();
+                    break;
+                }
+            }
+        }
+
+        return foundInDepot;
     }
 }

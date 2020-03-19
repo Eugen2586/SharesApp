@@ -40,11 +40,11 @@ public class HistorieFragment extends Fragment {
         final TextView umsatz = root.findViewById(R.id.sum);
         final TextView aktienwert = root.findViewById(R.id.aktienwert);
         //Fill the Cash you have at the Moment.
-        cash.setText(String.valueOf(new Model().getData().getGewinn()));
+        cash.setText(String.valueOf(new Model().getData().getDepot().getGeldwert()));
 
         Float stockValue = model.getData().getDepot().calculateStockValue();
         aktienwert.setText(String.valueOf(stockValue));
-        String l_s = String.valueOf(stockValue + new Model().getData().getGewinn());
+        String l_s = String.valueOf(stockValue + new Model().getData().getDepot().getGeldwert());
         umsatz.setText( l_s );
 
 

@@ -14,6 +14,7 @@ public class Depot {
     private float geldwert;
     private boolean in;
     private float prozent = 1.01f;
+    private float vProzent = 0.99f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -56,21 +57,21 @@ public class Depot {
     public void verkaufeAktie(Aktie a) {
         in = false;
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
-        for (Object t : stocks) {
-            Aktie ak = (Aktie) t;
+        Aktie toRemove = null;
+        for (Aktie ak : stocks) {
             if (ak.getName().equals(a.getName())) {
                 in = true;
                 if (a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()) {
-                    in = true;
+                    in = false;
                     ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
-                    geldwert = geldwert + a.getAnzahl() * a.getPreis();
+                    geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
                     if (ak.getAnzahl() == 0) {
-                        stocks.remove(ak);
+                        toRemove = ak;
                     }
                 }
             }
             if (!in) {
-                stocks.add(a);
+                //stocks.add(a);
                 Model m = new Model();
                 Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
@@ -78,6 +79,8 @@ public class Depot {
             geldwert = geldwert - a.getPreis();
             aktienImDepot.postValue(stocks);
         }
+
+        stocks.remove(toRemove);
 
 
     }

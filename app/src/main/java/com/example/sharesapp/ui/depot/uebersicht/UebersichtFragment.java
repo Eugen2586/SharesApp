@@ -33,6 +33,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private Model model = new Model();
     TextView notEmptyTextView;
     TextView emptyTextView;
+    TextView stockValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,15 +42,19 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
         notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
         emptyTextView = root.findViewById(R.id.empty_depot_text_view);
+        stockValueTextView = root.findViewById(R.id.stock_value_text);
 
         Data data = new Model().getData();
-        String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
-        TextView cash = root.findViewById(R.id.stock_value_text);
-        cash.setText((wert + "€"));
+        String cashValue = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
+        TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
+        cashValueTextView.setText((cashValue + "€"));
+
+        setStockValue();
 
         final Observer<ArrayList<Trade>> observer = new Observer<ArrayList<Trade>>() {
             @Override
             public void onChanged(ArrayList<Trade> tradesList) {
+                setStockValue();
                 setAdapter(tradesList);
             }
         };
@@ -98,5 +103,10 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
             emptyTextView.setVisibility(View.GONE);
             notEmptyTextView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setStockValue() {
+        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue());
+        stockValueTextView.setText((stockValue + "€"));
     }
 }

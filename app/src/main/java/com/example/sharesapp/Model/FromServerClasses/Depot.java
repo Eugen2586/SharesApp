@@ -21,7 +21,7 @@ public class Depot {
         this.in = in;
     }
 
-    public Depot() {
+    Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
         this.geldwert = Constants.MONEY;
     }
@@ -106,6 +106,7 @@ public class Depot {
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
 	}
+
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;
         for (Aktie s : getAktienImDepot()) {
@@ -115,5 +116,17 @@ public class Depot {
         }
         return stock;
 
+    }
+
+    public float calculateStockValue() {
+        if (aktienImDepot == null || aktienImDepot.getValue() == null) {
+            return 0.0f;
+        } else {
+            float sum = 0.0f;
+            for (Aktie a : aktienImDepot.getValue()) {
+                sum += a.getPreis() * a.getAnzahl();
+            }
+            return sum;
+        }
     }
 }

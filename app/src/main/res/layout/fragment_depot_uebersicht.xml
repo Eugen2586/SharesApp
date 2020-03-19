@@ -18,14 +18,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/konto"
-            android:textAlignment="center" />
+            android:textAlignment="viewStart" />
 
         <TextView
-            android:id="@+id/stock_value_text"
+            android:id="@+id/cash_value_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textAlignment="center" />
+            android:textAlignment="viewEnd" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,13 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/wertpapier"
-            android:textAlignment="center" />
+            android:textAlignment="viewStart" />
 
         <TextView
-            android:id="@+id/wertpapier_value_text"
+            android:id="@+id/stock_value_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.5"
+            android:textAlignment="viewEnd" />
     </LinearLayout>
 
     <TextView

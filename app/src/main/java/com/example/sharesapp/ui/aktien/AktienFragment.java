@@ -32,7 +32,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private RecyclerView recyclerView = null;
     private View root;
     private TextView emptyPortfolioTextView;
-    private String[] previousAvailableTypes = null;
+    private ArrayList<String> previousAvailableTypes = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,13 +40,12 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         TabLayout tabLayout = root.findViewById(R.id.category_tab_layout);
         emptyPortfolioTextView = root.findViewById(R.id.empty_portfolio_text);
 
-        addTabs(tabLayout);
-
         final TabLayout finalTabLayout = tabLayout;
 
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
+                System.out.println("AddTabs called......");
                 addTabs(finalTabLayout);
                 setCategory(finalTabLayout.getSelectedTabPosition());
             }
@@ -90,28 +89,37 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
     private void addTabs(TabLayout tabLayout) {
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
+        if (availableTypes != null) {
+            boolean differentCategories = false;
+            if (previousAvailableTypes != null) {
+                for (String str : availableTypes) {
+                    if (!previousAvailableTypes.contains(str)) {
+                        for (int i = 0; i < previousAvailableTypes.size(); i++) {
+                            System.out.println(previousAvailableTypes.get(i));
+                        }
+                        System.out.println(str);
+                        differentCategories = true;
+                    }
+                }
+            }
+            if (previousAvailableTypes == null || differentCategories) {
+                previousAvailableTypes = new ArrayList<>(Arrays.asList(availableTypes));
+//                for (int i = 0; i < previousAvailableTypes.size(); i++) {
+//                    System.out.println(previousAvailableTypes.get(i) + availableTypes[i]);
+//                }
+                System.out.println(previousAvailableTypes.size() + " " + availableTypes.length);
+                // remove all Tabs
+                tabLayout.removeAllTabs();
 
-        if(previousAvailableTypes != null) {
-            Arrays.sort(availableTypes);
-            Arrays.sort(previousAvailableTypes);
-        }
-        if (previousAvailableTypes == null || !Arrays.equals(availableTypes, previousAvailableTypes)) {
-            // remove all Tabs
-            tabLayout.removeAllTabs();
+                // add Portfolio and Alles Tab
+                addTabWithString(tabLayout, "portfolio");
+                addTabWithString(tabLayout, "alles");
 
-            // add Portfolio and Alles Tab
-            addTabWithString(tabLayout, "portfolio");
-            addTabWithString(tabLayout, "alles");
-
-            // add Tabs for existing StockTypes
-            if (availableTypes != null) {
-                System.out.println("insert Types");
+                // add Tabs for existing StockTypes
                 for (String category : availableTypes) {
                     addTabWithString(tabLayout, category);
                 }
             }
-            previousAvailableTypes = availableTypes;
-
             selectPreviouslySelectedTab(tabLayout);
         }
     }
@@ -136,9 +144,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             setAdapter(stockList);
         } else {
             position -= 2;
-            if (position < 0) {
-                position = model.getData().getPreviouslySelectedTabIndex();
-            }
 
             if (stockList != null) {
                 String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];

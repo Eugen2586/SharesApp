@@ -15,14 +15,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
+public class DepotRecyclerViewAdapter extends RecyclerView.Adapter<DepotRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<Aktie> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public StockRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
+    public DepotRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

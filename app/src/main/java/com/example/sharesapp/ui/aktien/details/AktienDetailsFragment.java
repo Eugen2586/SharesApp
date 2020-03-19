@@ -271,7 +271,7 @@ public class AktienDetailsFragment extends Fragment {
                                         } else {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
-                                                a.setAnzahl(getFoundInDepot());
+                                                a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
                                                 model.getData().getDepot().verkaufeAktie(a);
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien verkauft.", Toast.LENGTH_LONG).show();
                                             } else {

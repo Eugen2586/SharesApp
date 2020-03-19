@@ -49,7 +49,16 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             }
         };
 
+        final Observer<Integer> resetObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                addTabs(finalTabLayout);
+                setCategory(finalTabLayout.getSelectedTabPosition());
+            }
+        };
+
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
+        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -74,11 +83,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void addTabs(TabLayout tabLayout) {
-        for (String category : Constants.TYPES) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            tab.setText(category);
-            tabLayout.addTab(tab);
-        }
         // remove all Tabs
         tabLayout.removeAllTabs();
 
@@ -89,6 +93,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         // add Tabs for existing StockTypes
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
         if (availableTypes != null) {
+            System.out.println("insert Types");
             for (String category : availableTypes) {
                 addTabWithString(tabLayout, category);
             }

@@ -7,6 +7,8 @@ import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Depot {
     private MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
@@ -49,6 +51,7 @@ public class Depot {
                 Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
             }
+
             aktienImDepot.postValue(stocks);
         }
     }
@@ -78,8 +81,6 @@ public class Depot {
             geldwert = geldwert - a.getPreis();
             aktienImDepot.postValue(stocks);
         }
-
-
     }
 
     public float getGeldwert() {

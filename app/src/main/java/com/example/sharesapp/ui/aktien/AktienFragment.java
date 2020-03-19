@@ -22,23 +22,25 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private int tabChangeCount = 0;
     private TextView emptyPortfolioTextView;
+    private ArrayList<String> previousAvailableTypes = null;
+    private TabLayout tabLayout;
+    private int selectedTabsCounter = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_aktien, container, false);
-        TabLayout tabLayout = root.findViewById(R.id.category_tab_layout);
+        tabLayout = root.findViewById(R.id.category_tab_layout);
         emptyPortfolioTextView = root.findViewById(R.id.empty_portfolio_text);
-
-        addTabs(tabLayout);
 
         final TabLayout finalTabLayout = tabLayout;
 
@@ -46,7 +48,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
                 addTabs(finalTabLayout);
-                setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
@@ -54,7 +55,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             @Override
             public void onChanged(Integer integer) {
                 addTabs(finalTabLayout);
-                setCategory(finalTabLayout.getSelectedTabPosition());
             }
         };
 
@@ -64,11 +64,11 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tabChangeCount > 0) {
-                    model.getData().setPreviouslySelectedTabIndex(tab.getPosition());
+                if (selectedTabsCounter != 0) {
+                    model.getData().setPreviouslySelectedTabIndex(tabLayout.getSelectedTabPosition());
                 }
+                selectedTabsCounter++;
                 setCategory(tab.getPosition());
-                tabChangeCount++;
             }
 
             @Override
@@ -83,24 +83,47 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         return root;
     }
 
+    @Override
+    public void onResume() {
+        previousAvailableTypes = null;
+        addTabs(tabLayout);
+        super.onResume();
+    }
+
     private void addTabs(TabLayout tabLayout) {
-        // remove all Tabs
-        tabLayout.removeAllTabs();
-
-        // add Portfolio and Alles Tab
-        addTabWithString(tabLayout, "portfolio");
-        addTabWithString(tabLayout, "alles");
-
-        // add Tabs for existing StockTypes
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
         if (availableTypes != null) {
-            System.out.println("insert Types");
-            for (String category : availableTypes) {
-                addTabWithString(tabLayout, category);
+            boolean differentCategories = false;
+            if (previousAvailableTypes != null) {
+                for (String str : availableTypes) {
+                    if (!previousAvailableTypes.contains(str)) {
+                        for (int i = 0; i < previousAvailableTypes.size(); i++) {
+                            System.out.println(previousAvailableTypes.get(i));
+                        }
+                        System.out.println(str);
+                        differentCategories = true;
+                    }
+                }
             }
-        }
+            if (previousAvailableTypes == null || differentCategories) {
+                previousAvailableTypes = new ArrayList<>(Arrays.asList(availableTypes));
+                selectedTabsCounter = 0;
 
-        selectPreviouslySelectedTab(tabLayout);
+                // remove all Tabs
+                tabLayout.removeAllTabs();
+
+                // add Portfolio and Alles Tab
+                addTabWithString(tabLayout, "portfolio");
+                addTabWithString(tabLayout, "alles");
+
+                // add Tabs for existing StockTypes
+                for (String category : availableTypes) {
+                    addTabWithString(tabLayout, category);
+                }
+            }
+            selectPreviouslySelectedTab(tabLayout);
+            setCategory(tabLayout.getSelectedTabPosition());
+        }
     }
 
     private void addTabWithString(TabLayout tabLayout, String text) {
@@ -123,6 +146,9 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             setAdapter(stockList);
         } else {
             position -= 2;
+            if (position < 0) {
+                position = 0;
+            }
 
             if (stockList != null) {
                 String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];

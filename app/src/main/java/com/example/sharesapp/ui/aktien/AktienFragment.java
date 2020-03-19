@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,13 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private RecyclerView recyclerView = null;
     private View root;
     private int tabChangeCount = 0;
+    private TextView emptyPortfolioTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_aktien, container, false);
         TabLayout tabLayout = root.findViewById(R.id.category_tab_layout);
+        emptyPortfolioTextView = root.findViewById(R.id.empty_portfolio_text);
 
         addTabs(tabLayout);
 
@@ -111,7 +114,13 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
-            setAdapter(model.getData().getPortfolioList().getValue());
+            ArrayList<Aktie> portfolioList = model.getData().getPortfolioList().getValue();
+            if (portfolioList == null || portfolioList.size() == 0) {
+                setAdapter(new ArrayList<Aktie>());
+                emptyPortfolioTextView.setVisibility(View.VISIBLE);
+            } else {
+                setAdapter(portfolioList);
+            }
         } else if (position == 1) {
             setAdapter(stockList);
         } else {
@@ -154,6 +163,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setAdapter(ArrayList<Aktie> aktienList) {
+        emptyPortfolioTextView.setVisibility(View.GONE);
         if (aktienList == null) {
             aktienList = new ArrayList<>();
         }

@@ -13,7 +13,6 @@
     <string name="nav_header_subtitle">shares.app.de</string>
     <string name="nav_header_desc">App for Shares</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_depot">Depot</string>
     <string name="menu_aktien">Aktien</string>
     <string name="menu_historie">Historie</string>
@@ -47,4 +46,6 @@
     <string name="suche">Suche</string>
     <string name="add_to_portfolio">Zu Portfolio hinzufügen</string>
     <string name="remove_from_portfolio">Aus Portfolio entfernen</string>
+    <string name="leeres_portfolio">Du hast momentan noch keine Aktien in deinem Portfolio.</string>
+
 </resources>

@@ -273,6 +273,12 @@ public class AktienDetailsFragment extends Fragment {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
                                                 model.getData().getDepot().verkaufeAktie(a);
+                                                int anzahl = getFoundInDepot();
+                                                if (anzahl == 0) {
+                                                    sellButton.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                }
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien verkauft.", Toast.LENGTH_LONG).show();
                                             } else {
                                                 //todo verkaufen mit limit

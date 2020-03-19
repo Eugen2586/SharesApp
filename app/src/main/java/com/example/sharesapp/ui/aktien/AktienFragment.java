@@ -31,7 +31,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private int tabChangeCount = 0;
     private TextView emptyPortfolioTextView;
     private String[] previousAvailableTypes = null;
 
@@ -67,11 +66,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tabChangeCount > 0) {
-                    model.getData().setPreviouslySelectedTabIndex(tab.getPosition());
-                }
+                model.getData().setPreviouslySelectedTabIndex(tab.getPosition());
                 setCategory(tab.getPosition());
-                tabChangeCount++;
             }
 
             @Override
@@ -84,6 +80,12 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         });
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        previousAvailableTypes = null;
+        super.onResume();
     }
 
     private void addTabs(TabLayout tabLayout) {
@@ -134,6 +136,9 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             setAdapter(stockList);
         } else {
             position -= 2;
+            if (position < 0) {
+                position = model.getData().getPreviouslySelectedTabIndex();
+            }
 
             if (stockList != null) {
                 String type = model.getData().getAvailType().getAvailableTypeAbbreviations()[position];

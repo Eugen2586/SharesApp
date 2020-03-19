@@ -48,5 +48,7 @@
     <string name="remove_from_portfolio">Aus Portfolio entfernen</string>
     <string name="leeres_portfolio">Du hast momentan noch keine Aktien in deinem Portfolio.</string>
     <string name="dir_geh_ren_momentan_noch_keine_aktien">Dir gehören momentan noch keine Aktien.</string>
+    <string name="prozent">Prozent</string>
+    <string name="lade_preis">Lade Preis…</string>
 
 </resources>

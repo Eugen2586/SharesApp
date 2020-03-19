@@ -27,7 +27,6 @@ public class Depot {
     }
 
     public void kaufeAktie(Aktie a) {
-        System.out.println("kaufe");
         if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
             in = false;
             Model m = new Model();
@@ -95,8 +94,8 @@ public class Depot {
         return this.prozent;
     }
 
-    public ArrayList<Aktie> getAktienImDepot() {
-        return aktienImDepot.getValue();
+    public MutableLiveData<ArrayList<Aktie>> getAktienImDepot() {
+        return aktienImDepot;
     }
 
     public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
@@ -109,13 +108,14 @@ public class Depot {
 
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;
-        for (Aktie s : getAktienImDepot()) {
-            if (s.getSymbol().equals(symbol)) {
-                stock = s;
+        if (getAktienImDepot().getValue() != null) {
+            for (Aktie s : getAktienImDepot().getValue()) {
+                if (s.getSymbol().equals(symbol)) {
+                    stock = s;
+                }
             }
         }
         return stock;
-
     }
 
     public float calculateStockValue() {

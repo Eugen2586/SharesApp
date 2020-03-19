@@ -31,9 +31,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private StockRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
     private Model model = new Model();
-    TextView notEmptyTextView;
-    TextView emptyTextView;
-    TextView stockValueTextView;
+    private TextView notEmptyTextView;
+    private TextView emptyTextView;
+    private TextView stockValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +67,18 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 

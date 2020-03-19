@@ -86,7 +86,7 @@ import java.util.ArrayList;
         private String aktienImDepotToString() {
             String s = null;
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getDepot().getAktienImDepot()) {
+            for (Object o:new Model().getData().getDepot().getAktienImDepot().getValue()) {
                 Aktie ak = (Aktie) o;
                 ar.add(ak.getJsonFromAktie());
             }
@@ -97,7 +97,7 @@ import java.util.ArrayList;
         private String tradesToString() {
             String s = null;
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getDepot().getAktienImDepot()) {
+            for (Object o:new Model().getData().getDepot().getAktienImDepot().getValue()) {
                 Trade ak = (Trade) o;
                 JSONObject obj = new JSONObject();
                 obj.put("Aktie", ak.getAktie().getJsonFromAktie());

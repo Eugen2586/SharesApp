@@ -49,7 +49,6 @@ public class AktienDetailsFragment extends Fragment {
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                System.out.println("Hallo");
                 setCurrentStock();
                 setStockDetails();
             }
@@ -173,11 +172,9 @@ public class AktienDetailsFragment extends Fragment {
         final Button portfolioButton = root.findViewById(R.id.portfolio_button);
         boolean foundInPortfolio = getFoundInPortfolio();
         setTextForPortfolioButton(portfolioButton, foundInPortfolio);
-        System.out.println(model.getData().getPortfolioList());
         portfolioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(model.getData().getPortfolioList());
                 boolean foundInPortfolio = getFoundInPortfolio();
                 setTextForPortfolioButton(portfolioButton, !foundInPortfolio);
 

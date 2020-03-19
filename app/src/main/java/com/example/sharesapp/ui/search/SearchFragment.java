@@ -19,12 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.SearchRequest;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.aktien.AktienFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.io.IOException;
@@ -79,7 +77,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 availableTypes[0] = Constants.TYPES[0];
             } else {
                 // available -> set Alles as first value
-                System.out.println(availableTypes.length);
                 String[] types = new String[availableTypes.length + 1];
                 types[0] = Constants.TYPES[0];
                 for (int i = 0; i < availableTypes.length; i++) {
@@ -166,7 +163,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     @Override
     public void onItemClick(View view, int position) {
         // opens stock details copied from AktienFragment
-        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        TextView symbolView = view.findViewById(R.id.stock_text);
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);

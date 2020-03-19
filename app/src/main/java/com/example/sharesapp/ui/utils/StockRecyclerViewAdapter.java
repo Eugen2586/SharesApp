@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -40,10 +41,21 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Aktie aktie = mData.get(position);
-        holder.myTextView.setText(aktie.getName());
         holder.mySymbolView.setText(aktie.getSymbol());
         holder.myTextView.setText(aktie.getName());
         holder.myTypeView.setText(aktie.getType());
+
+        // set value if stock in depot
+        ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();
+        if (depotList != null) {
+            for (Aktie depotStock : depotList) {
+                if (depotStock.getSymbol().equals(aktie.getSymbol())) {
+                    String text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautiful(depotStock.getPreis()) + "€";
+                    holder.myDepotValueView.setText(text);
+                    break;
+                }
+            }
+        }
     }
 
     // total number of rows
@@ -62,20 +74,20 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         TextView myTextView;
         TextView myTypeView;
         TextView mySymbolView;
+        TextView myDepotValueView;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.stock_text);
             mySymbolView = itemView.findViewById(R.id.stock_symbol_text);
-            myTypeView = itemView.findViewById(R.id.stock_percentage_text);
+            myTextView = itemView.findViewById(R.id.stock_text);
+            myTypeView = itemView.findViewById(R.id.stock_category_text);
+            myDepotValueView = itemView.findViewById(R.id.depot_value_text);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-            System.out.println(mData.get(getAdapterPosition()));
-
         }
     }
 

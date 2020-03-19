@@ -12,17 +12,17 @@
         android:padding="@dimen/row_stock_item_padding">
 
         <TextView
-            android:id="@+id/stock_category_text"
+            android:id="@+id/depot_value_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/stock_symbol_text" />
 
         <TextView
             android:id="@+id/stock_symbol_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/stock_category_text"
             android:ellipsize="end"
             android:maxLines="1" />
 
@@ -32,14 +32,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/stock_symbol_text"
             android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/stock_category_text"
             android:ellipsize="end"
             android:maxLines="1" />
 
         <TextView
-            android:id="@+id/cash_value_text"
+            android:id="@+id/stock_category_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/stock_category_text"
+            android:layout_below="@+id/depot_value_text"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>

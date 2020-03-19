@@ -18,11 +18,8 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
@@ -31,9 +28,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private StockRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
     private Model model = new Model();
-    TextView notEmptyTextView;
-    TextView emptyTextView;
-    TextView stockValueTextView;
+    private TextView notEmptyTextView;
+    private TextView emptyTextView;
+    private TextView stockValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

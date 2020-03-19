@@ -14,7 +14,7 @@
             android:title="@string/menu_aktien" />
         <item
             android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search"
+            android:icon="@drawable/ic_search_black"
             android:title="@string/menu_suche" />
         <item
             android:id="@+id/nav_historie"

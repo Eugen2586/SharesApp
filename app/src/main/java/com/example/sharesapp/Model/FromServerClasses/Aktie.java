@@ -21,8 +21,8 @@ public class Aktie implements Comparator {
     private String region;
     private String currency;
     private String enabled;
-    private float  preis;
-    private int anzahl;
+    private float preis = 0.0f;
+    private int anzahl = 0;
     private float change;
     private ArrayList chart;
 

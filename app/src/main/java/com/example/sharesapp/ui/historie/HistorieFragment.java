@@ -67,7 +67,6 @@ public class HistorieFragment extends Fragment {
     //to bind the uebersicht und aktien from tradelist
 
     private void setAdapter(ArrayList<Trade> tradesList) {
-        System.out.println("Called setAdapter");
         if (recyclerView == null) {
             initRecyclerView();
         }

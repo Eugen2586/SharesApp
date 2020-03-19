@@ -46,7 +46,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         holder.myTypeView.setText(aktie.getType());
 
         // set value if stock in depot
-        ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot();
+        ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();
         if (depotList != null) {
             for (Aktie depotStock : depotList) {
                 if (depotStock.getSymbol().equals(aktie.getSymbol())) {
@@ -88,8 +88,6 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-            System.out.println(mData.get(getAdapterPosition()));
-
         }
     }
 

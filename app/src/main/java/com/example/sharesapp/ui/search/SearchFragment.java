@@ -77,7 +77,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 availableTypes[0] = Constants.TYPES[0];
             } else {
                 // available -> set Alles as first value
-                System.out.println(availableTypes.length);
                 String[] types = new String[availableTypes.length + 1];
                 types[0] = Constants.TYPES[0];
                 for (int i = 0; i < availableTypes.length; i++) {

@@ -18,8 +18,11 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
@@ -64,7 +67,18 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 

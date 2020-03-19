@@ -39,7 +39,7 @@
             android:text="Symbol" />
 
         <TextView
-            android:id="@+id/stock_value_text"
+            android:id="@+id/cash_value_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/stock_percentage_text"

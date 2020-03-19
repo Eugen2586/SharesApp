@@ -2,17 +2,18 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Depot {
-    public MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
 
-    float geldwert;
-    boolean in;
-    float prozent = 1.01f;
+    private float geldwert;
+    private boolean in;
+    private float prozent = 1.01f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -20,8 +21,9 @@ public class Depot {
         this.in = in;
     }
 
-    public Depot() {
+    Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
+        this.geldwert = Constants.MONEY;
     }
 
     public void kaufeAktie(Aktie a) {
@@ -104,6 +106,7 @@ public class Depot {
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
 	}
+
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;
         for (Aktie s : getAktienImDepot()) {
@@ -113,5 +116,17 @@ public class Depot {
         }
         return stock;
 
+    }
+
+    public float calculateStockValue() {
+        if (aktienImDepot == null || aktienImDepot.getValue() == null) {
+            return 0.0f;
+        } else {
+            float sum = 0.0f;
+            for (Aktie a : aktienImDepot.getValue()) {
+                sum += a.getPreis() * a.getAnzahl();
+            }
+            return sum;
+        }
     }
 }

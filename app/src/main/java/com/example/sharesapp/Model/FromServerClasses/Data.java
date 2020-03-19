@@ -12,14 +12,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Data {
-    private ArrayList<Trade> tradelist = new ArrayList<Trade>();
+    private ArrayList<Trade> tradelist = new ArrayList<>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
-    private Depot depot;
+    private Depot depot = null;
     private MutableLiveData<ArrayList<Aktie>> portfolio = new MutableLiveData<>();
-    private AvailType availType;
+    private AvailType availType = null;
     private MutableLiveData<ArrayList<Aktie>> aktien = new MutableLiveData<>();
     private String currentSearchString;
     private int previouslySelectedTabIndex = 0;
+    private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -54,7 +55,6 @@ public class Data {
             depot = new Depot();
         }
         return depot;
-
     }
 
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
@@ -99,7 +99,7 @@ public class Data {
                 }
             }
         }
-        sum += depot.geldwert;
+        sum += depot.getGeldwert();
         return sum;
     }
 
@@ -200,5 +200,28 @@ public class Data {
 
     public int getPreviouslySelectedTabIndex() {
         return previouslySelectedTabIndex;
+    }
+
+    public void resetData() {
+        tradelist = new ArrayList<>();
+        tradesMutable = new MutableLiveData<>();
+        depot = new Depot();
+        portfolio = new MutableLiveData<>();
+        previouslySelectedTabIndex = 0;
+        increaseResetValue();
+
+        // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
+    }
+
+    private void increaseResetValue() {
+        if (resetCounter.getValue() == null) {
+            resetCounter.setValue(1);
+        } else {
+            resetCounter.setValue(resetCounter.getValue() + 1);
+        }
+    }
+
+    public MutableLiveData<Integer> getResetCounter() {
+        return resetCounter;
     }
 }

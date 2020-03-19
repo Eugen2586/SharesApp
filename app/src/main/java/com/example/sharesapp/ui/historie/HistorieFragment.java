@@ -34,6 +34,7 @@ public class HistorieFragment extends Fragment {
         historieViewModel =
                 ViewModelProviders.of(this).get(HistorieViewModel.class);
         root = inflater.inflate(R.layout.fragment_historie, container, false);
+        Model model = new Model();
         setAdapter(new Model().getData().getTrades());
         final TextView cash = root.findViewById(R.id.cash);
         final TextView umsatz = root.findViewById(R.id.sum);
@@ -41,14 +42,9 @@ public class HistorieFragment extends Fragment {
         //Fill the Cash you have at the Moment.
         cash.setText(String.valueOf(new Model().getData().getGewinn()));
 
-        float akwert = 0;
-        if(new Model().getData().getDepot().getAktien() != null) {
-            for (Aktie a : new Model().getData().getDepot().getAktien().getValue()) {
-                akwert += a.getPreis() * a.getAnzahl();
-            }
-        }
-        aktienwert.setText(String.valueOf(akwert));
-        String l_s = String.valueOf(akwert + new Model().getData().getGewinn());
+        Float stockValue = model.getData().getDepot().calculateStockValue();
+        aktienwert.setText(String.valueOf(stockValue));
+        String l_s = String.valueOf(stockValue + new Model().getData().getGewinn());
         umsatz.setText( l_s );
 
 

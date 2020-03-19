@@ -10,14 +10,8 @@ public class Model {
         if (data == null){
             //ToDo Hier die persistenz füllen!
             //Chris K.
-            resetData();
+            data = new Data();
         }
         return data;
     }
-
-    public void resetData() {
-        data = new Data();
-        data.getDepot().setGeldwert(Constants.MONEY);
-    }
-
 }

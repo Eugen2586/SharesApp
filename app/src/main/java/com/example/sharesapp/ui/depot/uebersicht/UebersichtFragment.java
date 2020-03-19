@@ -31,20 +31,30 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private StockRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
     private Model model = new Model();
+    TextView notEmptyTextView;
+    TextView emptyTextView;
+    TextView stockValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
+        notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
+        emptyTextView = root.findViewById(R.id.empty_depot_text_view);
+        stockValueTextView = root.findViewById(R.id.stock_value_text);
+
         Data data = new Model().getData();
-        String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
-        TextView cash = root.findViewById(R.id.stock_value_text);
-        cash.setText((wert + "€"));
+        String cashValue = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
+        TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
+        cashValueTextView.setText((cashValue + "€"));
+
+        setStockValue();
 
         final Observer<ArrayList<Trade>> observer = new Observer<ArrayList<Trade>>() {
             @Override
             public void onChanged(ArrayList<Trade> tradesList) {
+                setStockValue();
                 setAdapter(tradesList);
             }
         };
@@ -70,12 +80,10 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     //to bind the uebersicht und aktien from tradelist
 
     private void setAdapter(ArrayList<Trade> tradesList) {
-        System.out.println("Called setAdapter");
         if (recyclerView == null) {
             initRecyclerView();
         }
         if (tradesList != null) {
-
             ArrayList<Aktie> trades = new ArrayList<>();
             for (Trade t : tradesList) {
                 trades.add(t.getAktie());
@@ -88,5 +96,17 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                 adapter.setAktien(trades);
             }
         }
+        if (tradesList == null || tradesList.size() == 0) {
+            notEmptyTextView.setVisibility(View.GONE);
+            emptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyTextView.setVisibility(View.GONE);
+            notEmptyTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setStockValue() {
+        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue());
+        stockValueTextView.setText((stockValue + "€"));
     }
 }

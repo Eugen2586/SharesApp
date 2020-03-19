@@ -81,6 +81,13 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setStockValue();
+        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
+    }
+
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
@@ -88,7 +95,6 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     }
 
     //to bind the uebersicht und aktien from depotlist
-
     private void setAdapter(ArrayList<Aktie> depotList) {
         if (recyclerView == null) {
             initRecyclerView();
@@ -114,5 +120,10 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private void setStockValue() {
         String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue());
         stockValueTextView.setText((stockValue + "€"));
+    }
+
+    public void reselectedTab() {
+        setStockValue();
+        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
     }
 }

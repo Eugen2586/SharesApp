@@ -22,7 +22,9 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -31,6 +33,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private View root;
     private int tabChangeCount = 0;
     private TextView emptyPortfolioTextView;
+    private String[] previousAvailableTypes = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,23 +87,31 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void addTabs(TabLayout tabLayout) {
-        // remove all Tabs
-        tabLayout.removeAllTabs();
-
-        // add Portfolio and Alles Tab
-        addTabWithString(tabLayout, "portfolio");
-        addTabWithString(tabLayout, "alles");
-
-        // add Tabs for existing StockTypes
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
-        if (availableTypes != null) {
-            System.out.println("insert Types");
-            for (String category : availableTypes) {
-                addTabWithString(tabLayout, category);
-            }
-        }
 
-        selectPreviouslySelectedTab(tabLayout);
+        if(previousAvailableTypes != null) {
+            Arrays.sort(availableTypes);
+            Arrays.sort(previousAvailableTypes);
+        }
+        if (previousAvailableTypes == null || !Arrays.equals(availableTypes, previousAvailableTypes)) {
+            // remove all Tabs
+            tabLayout.removeAllTabs();
+
+            // add Portfolio and Alles Tab
+            addTabWithString(tabLayout, "portfolio");
+            addTabWithString(tabLayout, "alles");
+
+            // add Tabs for existing StockTypes
+            if (availableTypes != null) {
+                System.out.println("insert Types");
+                for (String category : availableTypes) {
+                    addTabWithString(tabLayout, category);
+                }
+            }
+            previousAvailableTypes = availableTypes;
+
+            selectPreviouslySelectedTab(tabLayout);
+        }
     }
 
     private void addTabWithString(TabLayout tabLayout, String text) {

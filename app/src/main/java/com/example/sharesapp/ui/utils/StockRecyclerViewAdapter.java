@@ -65,9 +65,11 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     }
 
     public void setAktien(ArrayList<Aktie> data) {
-        mData = data;
+        if (!data.equals(mData)) {
+            mData = data;
+            notifyDataSetChanged();
+        }
     }
-
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

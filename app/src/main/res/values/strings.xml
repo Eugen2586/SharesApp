@@ -50,5 +50,6 @@
     <string name="dir_geh_ren_momentan_noch_keine_aktien">Dir gehören momentan noch keine Aktien.</string>
     <string name="prozent">Prozent</string>
     <string name="lade_preis">Lade Preis…</string>
+    <string name="unbekannt">unbekannt</string>
 
 </resources>

@@ -70,7 +70,7 @@ public class AktienDetailsFragment extends Fragment {
         final Button sellButton = root.findViewById(R.id.verkaufen_button);
         int anzahl = getFoundInDepot();
         if (anzahl == 0) {
-            sellButton.setVisibility(View.INVISIBLE);
+            sellButton.setVisibility(View.GONE);
         } else {
             sellButton.setVisibility(View.VISIBLE);
         }
@@ -275,7 +275,7 @@ public class AktienDetailsFragment extends Fragment {
                                                 model.getData().getDepot().verkaufeAktie(a);
                                                 int anzahl = getFoundInDepot();
                                                 if (anzahl == 0) {
-                                                    sellButton.setVisibility(View.INVISIBLE);
+                                                    sellButton.setVisibility(View.GONE);
                                                 } else {
                                                     sellButton.setVisibility(View.VISIBLE);
                                                 }

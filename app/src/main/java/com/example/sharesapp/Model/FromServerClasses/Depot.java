@@ -2,17 +2,21 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Depot {
-    public MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
 
-    float geldwert;
-    boolean in;
-    float prozent = 1.01f;
+    private float geldwert;
+    private boolean in;
+    private float prozent = 1.01f;
+    private float vProzent = 0.99f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -20,12 +24,12 @@ public class Depot {
         this.in = in;
     }
 
-    public Depot() {
+    Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
+        this.geldwert = Constants.MONEY;
     }
 
     public void kaufeAktie(Aktie a) {
-        System.out.println("kaufe");
         if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
             in = false;
             Model m = new Model();
@@ -48,6 +52,7 @@ public class Depot {
                 Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
             }
+
             aktienImDepot.postValue(stocks);
         }
     }
@@ -55,21 +60,21 @@ public class Depot {
     public void verkaufeAktie(Aktie a) {
         in = false;
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
-        for (Object t : stocks) {
-            Aktie ak = (Aktie) t;
+        Aktie toRemove = null;
+        for (Aktie ak : stocks) {
             if (ak.getName().equals(a.getName())) {
                 in = true;
                 if (a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()) {
-                    in = true;
+                    in = false;
                     ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
-                    geldwert = geldwert + a.getAnzahl() * a.getPreis();
+                    geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
                     if (ak.getAnzahl() == 0) {
-                        stocks.remove(ak);
+                        toRemove = ak;
                     }
                 }
             }
             if (!in) {
-                stocks.add(a);
+                //stocks.add(a);
                 Model m = new Model();
                 Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                 m.getData().addTrade(trade);
@@ -77,6 +82,8 @@ public class Depot {
             geldwert = geldwert - a.getPreis();
             aktienImDepot.postValue(stocks);
         }
+
+        stocks.remove(toRemove);
 
 
     }
@@ -93,8 +100,8 @@ public class Depot {
         return this.prozent;
     }
 
-    public ArrayList<Aktie> getAktienImDepot() {
-        return aktienImDepot.getValue();
+    public MutableLiveData<ArrayList<Aktie>> getAktienImDepot() {
+        return aktienImDepot;
     }
 
     public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
@@ -104,14 +111,28 @@ public class Depot {
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
 	}
+
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;
-        for (Aktie s : getAktienImDepot()) {
-            if (s.getSymbol().equals(symbol)) {
-                stock = s;
+        if (getAktienImDepot().getValue() != null) {
+            for (Aktie s : getAktienImDepot().getValue()) {
+                if (s.getSymbol().equals(symbol)) {
+                    stock = s;
+                }
             }
         }
         return stock;
+    }
 
+    public float calculateStockValue() {
+        if (aktienImDepot == null || aktienImDepot.getValue() == null) {
+            return 0.0f;
+        } else {
+            float sum = 0.0f;
+            for (Aktie a : aktienImDepot.getValue()) {
+                sum += a.getPreis() * a.getAnzahl();
+            }
+            return sum;
+        }
     }
 }

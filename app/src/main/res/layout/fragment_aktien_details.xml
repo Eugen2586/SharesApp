@@ -149,7 +149,13 @@
             android:id="@+id/portfolio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zu portfolio hinzufügen" />
+            android:text="@string/add_to_portfolio" />
+
+        <Button
+            android:id="@+id/verkaufen_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verkaufen" />
 
     </LinearLayout>
 </ScrollView>

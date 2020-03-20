@@ -3,8 +3,8 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
+import org.json.JSONArray;
 import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
@@ -18,70 +18,101 @@ public class RequestSymbol {
 
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();
-        JSONArray jsonar = (JSONArray) parser.parse(st);
-        jsonar.isEmpty();
-        //TODO pflege hier die Daten, die hier eingelesen werden.
-        for (Object t : jsonar) {
-            //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
-            ak = new Aktie();
-            org.json.simple.JSONObject json = (JSONObject) t;
+        if (st != null && !st.isEmpty()) {
+            JSONArray jsonay;
             try {
-                ak.setSymbol(json.get("Symbol").toString());
+                jsonay = (JSONArray) parser.parse(st);
             }catch(Exception e){
-
+                jsonay = new JSONArray(st);
             }
-            try {
-                ak.setExchange(json.get("Exchange").toString());
-            }catch(Exception e) {
-
-            }try{
-                ak.setName(json.get("Name").toString());
-            }catch(Exception e) {
-
-            }try {
-                ak.setDate(json.get("Date").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setType(json.get("Type").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setRegion(json.get("Region").toString());
-            }catch (Exception e) {
-
-            }try {
-                ak.setCurrency(json.get("Currency").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setEnabled(json.get("IsEnabled").toString());
-            }catch(Exception e){
-
-            }try {
-                ak.setChange(Float.parseFloat(json.get("Change").toString()));
-            }catch(Exception e){
-
-            }try{
-                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
-            }catch(Exception e){
-
+            ArrayList jsonar = new ArrayList();
+            for(int i = 0; i < jsonay.length(); i++ ){
+                jsonar.add(jsonay.get(i));
             }
-            akl.add(ak);
-            if ((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty())) {
-                type.add(ak.getType());
+            for (Object t : jsonar) {
+                // hier wird die Zerlegung der Nachrichtenvorgenommen.
+                ak = new Aktie();
+                org.json.JSONObject json = null;
+                try {
+                    json = (org.json.JSONObject) t;
+                }catch(Exception e){
+                }
+                try {
+                    ak.setSymbol(json.getString("symbol").toString());
+                } catch (Exception e) {
+                }
+                try {
+                    ak.setExchange(json.getString("exchange").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setName(json.getString("name").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setDate(json.getString("date").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setType(json.getString("type").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setRegion(json.getString("region").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setCurrency(json.getString("currency").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setEnabled(json.getString("IsEnabled").toString());
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setChange(Float.parseFloat(json.getString("Change").toString()));
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setAnzahl(Integer.getInteger(String.valueOf(json.getInt("Menge"))));
+                } catch (Exception e) {
+
+                }
+                if (!akl.contains(ak)) {
+                    akl.add(ak);
+                }
+                try {
+                    if (((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()))) {
+                        type.add(ak.getType());
+                    }
+                }catch(Exception e){
+
+                }
             }
+            Model m = new Model();
+            if(m.getData().getAktienList().getValue() != null) {
+                m.getData().getAktienList().postValue(akl);
+            }
+            else{
+                m.getData().getAktienList().postValue(akl);
+            }
+            Object[] data = type.toArray();
+            String[] sts = new String[data.length];
+            int i = 0;
+            for (Object t : data) {
+                sts[i] = t.toString();
+                i++;
+            }
+            m.getData().getAvailType().setType_abbr_list(sts);
         }
-        Model m = new Model();
-        m.getData().getAktienList().postValue(akl);
-        Object[] data = type.toArray();
-        String[] sts = new String[data.length];
-        int i = 0;
-        for (Object t : data) {
-            sts[i] = t.toString();
-            i++;
-        }
-        m.getData().getAvailType().setType_abbr_list(sts);
     }
 
 

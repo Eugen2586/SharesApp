@@ -21,8 +21,8 @@ public class Aktie implements Comparator {
     private String region;
     private String currency;
     private String enabled;
-    private float  preis;
-    private int anzahl;
+    private float preis = 0.0f;
+    private int anzahl = 0;
     private float change;
     private ArrayList chart;
 
@@ -171,18 +171,18 @@ public class Aktie implements Comparator {
 
     public JSONObject getJsonFromAktie() {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
-        obj.put("Menge", menge);
-        obj.put("Exchange",exchange);
-        obj.put("Symbol",symbol);
-        obj.put("Name",name);
-        obj.put("Date",date);
-        obj.put("Type", type);
-        obj.put("Region",region);
-        obj.put("Currency",currency);
-        obj.put("Enabled", enabled);
-        obj.put("Preis", String.valueOf(preis));
-        obj.put("Anzahl", String.valueOf(anzahl));
-        obj.put("Change", String.valueOf(change));
+        obj.put("menge", menge);
+        obj.put("exchange",exchange);
+        obj.put("symbol",symbol);
+        obj.put("name",name);
+        obj.put("date",date);
+        obj.put("type", type);
+        obj.put("region",region);
+        obj.put("currency",currency);
+        obj.put("enabled", enabled);
+        obj.put("preis", String.valueOf(preis));
+        obj.put("anzahl", String.valueOf(anzahl));
+        obj.put("change", String.valueOf(change));
 
         return obj;
     }

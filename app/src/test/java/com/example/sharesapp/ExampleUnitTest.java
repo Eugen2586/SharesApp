@@ -40,7 +40,6 @@ public class ExampleUnitTest {
             RequestSymbol regs = new RequestSymbol(s);
             ArrayList a = regs.getAk();
             Model model = new Model();
-            System.out.print("erreicht!");
             */
         } catch (Exception e) {
             e.printStackTrace();

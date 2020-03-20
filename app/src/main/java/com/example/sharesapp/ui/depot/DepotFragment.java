@@ -21,8 +21,8 @@ public class DepotFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    private Fragment uebersicht;
-    private Fragment statistik;
+    private UebersichtFragment uebersicht;
+    private StatistikFragment statistik;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,30 +54,19 @@ public class DepotFragment extends Fragment {
 
                 }
             });
-        } else {
-            System.out.println("TABS NULL");
         }
-
 
         return root;
     }
 
     private void changeFragment(int position) {
-
         fragmentTransaction = fragmentManager.beginTransaction();
-
-
         if (position == 0) {
-
             fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht);
-        }
-        if (position == 1) {
-
+        } else if (position == 1) {
             fragmentTransaction.replace(R.id.fragment_loader_linear_layout, statistik);
-
         }
 
-        //fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitNow();
     }
 }

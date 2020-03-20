@@ -13,16 +13,26 @@ public class RequestQuotePrices {
 
 
     public RequestQuotePrices(String s) throws ParseException {
-        ArrayList<Aktie> m = new Model().getData().getAktienList().getValue();
         JSONParser parser = new JSONParser();
         JSONObject jsonar = (JSONObject) parser.parse(s);
-        for (Object t : m) {
-            if (jsonar.get("symbol").equals(((Aktie) t).getSymbol())) {
+
+        Model model = new Model();
+        if (model.getData().getAktienList().getValue() != null) {
+            model.getData().getAktienList().postValue(actualizeArrayList(jsonar, model.getData().getAktienList().getValue()));
+        }
+        if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
+            model.getData().getDepot().getAktienImDepot().postValue(actualizeArrayList(jsonar, model.getData().getDepot().getAktienImDepot().getValue()));
+        }
+    }
+
+    private ArrayList<Aktie> actualizeArrayList(JSONObject jsonar, ArrayList<Aktie> list) {
+        for (Aktie t : list) {
+            if (jsonar.get("symbol").equals(t.getSymbol())) {
                 System.out.println(t);
-                ((Aktie) t).setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
-                ((Aktie) t).setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
+                t.setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
+                t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
             }
         }
-        new Model().getData().getAktienList().postValue(m);
+        return list;
     }
 }

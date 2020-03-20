@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
-import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
@@ -31,34 +30,62 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private StockRecyclerViewAdapter adapter = null;
     private RecyclerView recyclerView = null;
     private Model model = new Model();
+    private TextView notEmptyTextView;
+    private TextView emptyTextView;
+    private TextView stockValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        Data data = new Model().getData();
-        String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
-        TextView cash = root.findViewById(R.id.stock_value_text);
-        cash.setText((wert + "€"));
+        notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
+        emptyTextView = root.findViewById(R.id.empty_depot_text_view);
+        stockValueTextView = root.findViewById(R.id.stock_value_text);
 
-        final Observer<ArrayList<Trade>> observer = new Observer<ArrayList<Trade>>() {
+        Data data = new Model().getData();
+        String cashValue = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
+        TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
+        cashValueTextView.setText((cashValue + "€"));
+
+        setStockValue();
+
+        final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
-            public void onChanged(ArrayList<Trade> tradesList) {
-                setAdapter(tradesList);
+            public void onChanged(ArrayList<Aktie> depotList) {
+                setStockValue();
+                setAdapter(depotList);
             }
         };
 
-        data.getTradesMutable().observe(getViewLifecycleOwner(), observer);
-        setAdapter(data.getTradesMutable().getValue());
+        data.getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
+        setAdapter(data.getDepot().getAktienImDepot().getValue());
 
         return root;
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        //todo bind to aktien
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Aktie stock = new Aktie();
+        stock.setSymbol(symbol);
+        model.getData().setCurrentStock(stock);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getQuote(symbol));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setStockValue();
+        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
     }
 
     private void initRecyclerView() {
@@ -67,26 +94,36 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    //to bind the uebersicht und aktien from tradelist
-
-    private void setAdapter(ArrayList<Trade> tradesList) {
-        System.out.println("Called setAdapter");
+    //to bind the uebersicht und aktien from depotlist
+    private void setAdapter(ArrayList<Aktie> depotList) {
         if (recyclerView == null) {
             initRecyclerView();
         }
-        if (tradesList != null) {
-
-            ArrayList<Aktie> trades = new ArrayList<>();
-            for (Trade t : tradesList) {
-                trades.add(t.getAktie());
-            }
+        if (depotList != null) {
             if (adapter == null) {
-                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), trades);
+                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), depotList);
                 adapter.setClickListener(UebersichtFragment.this);
                 recyclerView.setAdapter(adapter);
             } else {
-                adapter.setAktien(trades);
+                adapter.setAktien(depotList);
             }
         }
+        if (depotList == null || depotList.size() == 0) {
+            notEmptyTextView.setVisibility(View.GONE);
+            emptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyTextView.setVisibility(View.GONE);
+            notEmptyTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setStockValue() {
+        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue());
+        stockValueTextView.setText((stockValue + "€"));
+    }
+
+    public void reselectedTab() {
+        setStockValue();
+        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
     }
 }

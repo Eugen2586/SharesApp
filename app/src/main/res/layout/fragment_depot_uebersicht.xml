@@ -13,19 +13,19 @@
         android:weightSum="1.0">
 
         <TextView
-            android:id="@+id/stock_text"
+            android:id="@+id/stock_symbol_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/konto"
-            android:textAlignment="center" />
+            android:textAlignment="viewStart" />
 
         <TextView
-            android:id="@+id/stock_value_text"
+            android:id="@+id/cash_value_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textAlignment="center" />
+            android:textAlignment="viewEnd" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,13 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/wertpapier"
-            android:textAlignment="center" />
+            android:textAlignment="viewStart" />
 
         <TextView
-            android:id="@+id/wertpapier_value_text"
+            android:id="@+id/stock_value_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.5"
+            android:textAlignment="viewEnd" />
     </LinearLayout>
 
     <TextView
@@ -56,10 +57,19 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/not_empty_depot_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dir_geh_ren_folgende_wertpapiere" />
+        android:text="@string/dir_geh_ren_folgende_wertpapiere"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/empty_depot_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/dir_geh_ren_momentan_noch_keine_aktien"
+        android:textAlignment="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

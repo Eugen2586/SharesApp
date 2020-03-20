@@ -36,9 +36,9 @@ public class AktienDetailsFragment extends Fragment {
 
     private Model model = new Model();
     private View root;
-    EditText kaufMenge;
-    EditText Limit;
-    TextView totalPrice;
+    private EditText kaufMenge;
+    private EditText Limit;
+    private TextView totalPrice;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -49,7 +49,6 @@ public class AktienDetailsFragment extends Fragment {
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                System.out.println("Hallo");
                 setCurrentStock();
                 setStockDetails();
             }
@@ -68,9 +67,17 @@ public class AktienDetailsFragment extends Fragment {
 
         setStockDetails();
 
-        final Button buy_button = root.findViewById(R.id.kaufen_button);
+        final Button sellButton = root.findViewById(R.id.verkaufen_button);
+        int anzahl = getFoundInDepot();
+        if (anzahl == 0) {
+            sellButton.setVisibility(View.INVISIBLE);
+        } else {
+            sellButton.setVisibility(View.VISIBLE);
+        }
 
-        buy_button.setOnClickListener(new View.OnClickListener() {
+        final Button buyButton = root.findViewById(R.id.kaufen_button);
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = AktienDetailsFragment.this.getContext();
@@ -92,12 +99,14 @@ public class AktienDetailsFragment extends Fragment {
 
                         public void afterTextChanged(Editable s) {
 
-                            setTotalPrice();
+                            setTotalPrice(true);
                         }
 
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
 
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
                     });
 
                     Limit = buyDialogView.findViewById(R.id.Limit);
@@ -106,14 +115,15 @@ public class AktienDetailsFragment extends Fragment {
 
                         public void afterTextChanged(Editable s) {
 
-                            setTotalPrice();
+                            setTotalPrice(true);
                         }
 
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
 
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
                     });
-
 
 
                     builder.setCancelable(true);
@@ -132,7 +142,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number*model.getData().getDepot().getProzent();
+                                        float price = limit * number * model.getData().getDepot().getProzent();
                                         if (price > model.getData().getDepot().getGeldwert()) {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
@@ -141,6 +151,7 @@ public class AktienDetailsFragment extends Fragment {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(number);
                                                 model.getData().getDepot().kaufeAktie(a);
+                                                sellButton.setVisibility(View.VISIBLE);
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                             } else {
                                                 //todo kaufen mit limit
@@ -167,24 +178,166 @@ public class AktienDetailsFragment extends Fragment {
             }
         });
 
+        final Button portfolioButton = root.findViewById(R.id.portfolio_button);
+        boolean foundInPortfolio = getFoundInPortfolio();
+        setTextForPortfolioButton(portfolioButton, foundInPortfolio);
+        portfolioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean foundInPortfolio = getFoundInPortfolio();
+                setTextForPortfolioButton(portfolioButton, !foundInPortfolio);
+
+                // add to or remove from Portfolio
+                String currentSymbol = model.getData().getCurrentStock().getSymbol();
+                if (foundInPortfolio) {
+                    model.getData().removeFromPortfolio(currentSymbol);
+                } else {
+                    model.getData().addToPortfolio(model.getData().getCurrentStock(), currentSymbol);
+                }
+            }
+        });
+
+
+
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = AktienDetailsFragment.this.getContext();
+                if (context != null) {
+                    View sellDialogView = inflater.inflate(R.layout.sell_dialog, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    TextView meine_anzahl = sellDialogView.findViewById(R.id.anzahl_aktien);
+                    meine_anzahl.setText(String.valueOf(getFoundInDepot()));
+                    TextView price = sellDialogView.findViewById(R.id.price_one);
+                    price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    totalPrice = sellDialogView.findViewById(R.id.total_price);
+
+
+                    kaufMenge = sellDialogView.findViewById(R.id.verkaufMenge);
+
+                    kaufMenge.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            setTotalPrice(false);
+                            checkVerkaufMenge(getFoundInDepot());
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+                    });
+
+                    Limit = sellDialogView.findViewById(R.id.Limit);
+
+                    Limit.addTextChangedListener(new TextWatcher() {
+
+                        public void afterTextChanged(Editable s) {
+
+                            setTotalPrice(false);
+                        }
+
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+                    });
+
+
+                    builder.setCancelable(true);
+                    builder.setView(sellDialogView);
+                    builder.setPositiveButton("Verkaufen",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (!kaufMenge.getText().toString().isEmpty()) {
+                                        float limit;
+                                        boolean limit_b = false; // shows if we want to buy with limit or direct with the price
+                                        if (!Limit.getText().toString().isEmpty()) {
+                                            limit = Float.valueOf(Limit.getText().toString());
+                                            limit_b = true;
+                                        } else {
+                                            limit = model.getData().currentStock.getValue().getPreis();
+                                        }
+                                        int number = Integer.parseInt(kaufMenge.getText().toString());
+                                        float price = limit * number * (2f - model.getData().getDepot().getProzent());
+                                        if (Integer.parseInt(kaufMenge.getText().toString()) > getFoundInDepot()) {
+                                            // falls will mehr verakufen als habe
+                                            Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Aktien zu verkaufen!", Toast.LENGTH_LONG).show();
+
+                                        } else {
+                                            if (!limit_b) {
+                                                Aktie a = model.getData().currentStock.getValue().getClone();
+                                                a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
+                                                model.getData().getDepot().verkaufeAktie(a);
+                                                int anzahl = getFoundInDepot();
+                                                if (anzahl == 0) {
+                                                    sellButton.setVisibility(View.INVISIBLE);
+                                                } else {
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                }
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien verkauft.", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                //todo verkaufen mit limit
+                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "TODO: AKTIEN VERKAUFEN", Toast.LENGTH_LONG).show();
+
+                                            }
+                                        }
+                                    } else {
+                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Bitte Kaufmenge eingeben.", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            });
+                    builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+
         // Inflate the layout for this fragment
         return root;
     }
 
-    private void setCurrentStock() {
-        String symbol = model.getData().getCurrentStock().getSymbol();
-        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-        Aktie currentStock = null;
-        for (Aktie stock : stockList) {
-            if (symbol.equals(stock.getSymbol())) {
-                currentStock = stock;
-                break;
-            }
+    private void checkVerkaufMenge(int anzahl) {
+        if (kaufMenge.getText().toString().isEmpty()) {
+            return;
         }
-        model.getData().setCurrentStock(currentStock);
+
+        if (Integer.parseInt(kaufMenge.getText().toString()) > anzahl) {
+            kaufMenge.setTextColor(Color.RED);
+        } else {
+            kaufMenge.setTextColor(Color.DKGRAY);
+        }
+
     }
 
-    private void setTotalPrice() {
+    private void setCurrentStock() {
+        Aktie currentStock = model.getData().getCurrentStock();
+        String symbol = currentStock.getSymbol();
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (symbol.equals(stock.getSymbol())) {
+                    currentStock = stock;
+                    break;
+                }
+            }
+            model.getData().setCurrentStock(currentStock);
+        }
+    }
+
+    private void setTotalPrice(boolean kaufen) {
 
         float limit;
         if (!Limit.getText().toString().isEmpty()) {
@@ -203,15 +356,16 @@ public class AktienDetailsFragment extends Fragment {
             System.out.println(number);
         }
 
-        float price = limit*number*model.getData().getDepot().getProzent();
-        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price) ));
+        float price = limit * number * model.getData().getDepot().getProzent();
+        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
 
-        if (price > model.getData().getDepot().getGeldwert()) {
-            totalPrice.setTextColor(Color.RED);
-        } else {
-            totalPrice.setTextColor(Color.DKGRAY);
+        if (kaufen) {
+            if (price > model.getData().getDepot().getGeldwert()) {
+                totalPrice.setTextColor(Color.RED);
+            } else {
+                totalPrice.setTextColor(Color.DKGRAY);
+            }
         }
-
 
 
     }
@@ -233,4 +387,45 @@ public class AktienDetailsFragment extends Fragment {
         // todo set all fields
     }
 
+    private boolean getFoundInPortfolio() {
+        boolean foundInPortfolio = false;
+
+        // change foundInPortfolio if portfolio contains currentStock
+        String currentSymbol = model.getData().getCurrentStock().getSymbol();
+        if (model.getData().getPortfolioList().getValue() != null) {
+            for (Aktie portfolioStock : model.getData().getPortfolioList().getValue()) {
+                if (portfolioStock.getSymbol().equals(currentSymbol)) {
+                    foundInPortfolio = true;
+                    break;
+                }
+            }
+        }
+
+        return foundInPortfolio;
+    }
+
+    private void setTextForPortfolioButton(Button portfolioButton, boolean foundInPortfolio) {
+        if (foundInPortfolio) {
+            portfolioButton.setText(R.string.remove_from_portfolio);
+        } else {
+            portfolioButton.setText(R.string.add_to_portfolio);
+        }
+    }
+
+    private int getFoundInDepot() {
+        int foundInDepot = 0;
+
+        // return the number of stocks if available
+        String currentSymbol = model.getData().getCurrentStock().getSymbol();
+        if (model.getData().getDepot().getAktien().getValue() != null) {
+            for (Aktie Stock : model.getData().getDepot().getAktien().getValue()) {
+                if (Stock.getSymbol().equals(currentSymbol)) {
+                    foundInDepot = Stock.getAnzahl();
+                    break;
+                }
+            }
+        }
+
+        return foundInDepot;
+    }
 }

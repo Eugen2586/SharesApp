@@ -78,7 +78,7 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* Persistenz Stuff für die
+        /* Do persistance Stuff.
 
 
          */
@@ -87,16 +87,26 @@ public class DrawerActivity extends AppCompatActivity {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             JSONParser parser = new JSONParser();
             s = prefs.getString("AktienSymbole", null);
-            new RequestSymbol(s);
+            if(s != null && !s.isEmpty()) {
+                new RequestSymbol(s);
+            }
             parser = new JSONParser();
             s = prefs.getString("Depot", null);
-            new Model().getData().getDepot().setAktienImDepot(aktienList(s));
-            s = prefs.getString("Geldwert", null);
-            new Model().getData().getDepot().setGeldwert(Float.parseFloat(String.valueOf(s)));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+            }
+            Float f = prefs.getFloat("Geldwert", 0.0f);
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().getDepot().setGeldwert(f);
+            }
             s = prefs.getString("Portfolioliste", null);
-            new Model().getData().setPortfolioList(aktienList(s));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().setPortfolioList(aktienList(s));
+            }
             s = prefs.getString("Trades", null);
-            new Model().getData().setTradelist(getTradeListe(s));
+            if(s != null && !s.isEmpty()) {
+                new Model().getData().setPortfolioList(getTradeListe(s));
+            }
 
         }
         catch(Exception e){
@@ -111,17 +121,9 @@ public class DrawerActivity extends AppCompatActivity {
 
         Requests req = new Requests();
         try {
-            Model m = new Model();
-            boolean b = m.getData().getAktienList().getValue()!= null;
-            boolean a  = true;
-            if(b) {
-                 a = m.getData().getAktienList().getValue().size() < 2;
-            }
-            if( a && !b) {
-                req.asyncRun(RequestsBuilder.getAllSymbolsURL());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            req.asyncRun(RequestsBuilder.getAllSymbolsURL());
+        }catch(Exception e){
+
         }
 
         setContentView(R.layout.activity_drawer);

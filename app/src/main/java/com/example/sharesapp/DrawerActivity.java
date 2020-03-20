@@ -1,7 +1,10 @@
 package com.example.sharesapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,11 +12,16 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
@@ -21,6 +29,7 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
+import com.example.sharesapp.kotlin.OwnWorker;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.simple.JSONArray;
@@ -30,6 +39,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class DrawerActivity extends AppCompatActivity {
@@ -156,6 +166,46 @@ public class DrawerActivity extends AppCompatActivity {
 //                }
 //            }
 //        }, 0, 10000);
+
+//        showNotification();
+        createWorker();
+    }
+
+    private void showNotification() {
+        // https://developer.android.com/training/notify-user/build-notification#kotlin
+        // build notification channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "channel_name";
+            String description = "channel_desciption";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("channel_id", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // build notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("BBB")
+                .setContentText("Content Content")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // notify user
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+    }
+
+    private void createWorker() {
+        PeriodicWorkRequest.Builder myWorkBuilder =
+                new PeriodicWorkRequest.Builder(OwnWorker.class, 15, TimeUnit.MINUTES);
+
+        PeriodicWorkRequest myWork = myWorkBuilder.build();
+        WorkManager.getInstance()
+                .enqueueUniquePeriodicWork("jobTag", ExistingPeriodicWorkPolicy.KEEP, myWork);
     }
 
     private ArrayList<Aktie> getTradeListe(String st) throws ParseException {

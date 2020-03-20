@@ -105,7 +105,7 @@ public class DrawerActivity extends AppCompatActivity {
             }
             s = prefs.getString("Trades", null);
             if(s != null && !s.isEmpty()) {
-                new Model().getData().setPortfolioList(getTradeListe(s));
+                new Model().getData().setTradelist(getTradeListe(s));
             }
 
         }
@@ -253,52 +253,52 @@ public class DrawerActivity extends AppCompatActivity {
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
             try {
-                ak.setSymbol(json.get("Symbol").toString());
+                ak.setSymbol(json.get("symbol").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setExchange(json.get("Exchange").toString());
+                ak.setExchange(json.get("exchange").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setName(json.get("Name").toString());
+                ak.setName(json.get("name").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setDate(json.get("Date").toString());
+                ak.setDate(json.get("date").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setType(json.get("Type").toString());
+                ak.setType(json.get("type").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setRegion(json.get("Region").toString());
+                ak.setRegion(json.get("region").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setCurrency(json.get("Currency").toString());
+                ak.setCurrency(json.get("currency").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setEnabled(json.get("IsEnabled").toString());
+                ak.setEnabled(json.get("isEnabled").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setChange(Float.parseFloat(json.get("Change").toString()));
+                ak.setChange(Float.parseFloat(json.get("change").toString()));
             } catch (Exception e) {
 
             }
             try {
-                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("menge"))));
             } catch (Exception e) {
 
             }

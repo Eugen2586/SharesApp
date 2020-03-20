@@ -4,7 +4,6 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQu
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
-import com.example.sharesapp.Model.Model;
 
 import org.json.simple.parser.ParseException;
 
@@ -30,6 +29,8 @@ public class AsyncTaskHandler {
             }
 
         } else if (url.contains("stock")) {
+
+            System.out.println(s);
 
             try {
                 new RequestQuotePrices(s);

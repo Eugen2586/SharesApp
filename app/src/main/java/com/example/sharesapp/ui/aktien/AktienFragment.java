@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -81,7 +82,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
         return root;
     }
 
@@ -91,6 +91,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         addTabs(tabLayout);
         super.onResume();
         scrollToCategoryScrollState(tabLayout.getSelectedTabPosition());
+        scrollToSelectedTabAfterLayout();
     }
 
     @Override
@@ -207,6 +208,23 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         adapter.setClickListener(AktienFragment.this);
         adapter.setAktien(aktienList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void scrollToSelectedTabAfterLayout() {
+        if (getView() != null) {
+            final ViewTreeObserver observer = tabLayout.getViewTreeObserver();
+
+            if (observer.isAlive()) {
+                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        observer.removeOnGlobalLayoutListener(this);
+                        selectPreviouslySelectedTab(tabLayout);
+                    }
+                });
+            }
+        }
     }
 
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {

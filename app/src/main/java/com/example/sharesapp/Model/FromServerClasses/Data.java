@@ -207,6 +207,7 @@ public class Data {
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
         increaseResetValue();
+        categoryScrollPositions = null;
 
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }

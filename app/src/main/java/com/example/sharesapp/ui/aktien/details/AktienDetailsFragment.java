@@ -23,7 +23,10 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AktienDetailsFragment extends Fragment {
@@ -74,16 +77,25 @@ public class AktienDetailsFragment extends Fragment {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Requests requests = new Requests();
+                try {
+                    requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Context context = AktienDetailsFragment.this.getContext();
                 if (context != null) {
-                    View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
+                    final View buyDialogView = inflater.inflate(R.layout.buy_dialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     Data data = new Model().getData();
                     String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
                     TextView cash = buyDialogView.findViewById(R.id.geldwert);
                     cash.setText((wert + "€"));
-                    TextView price = buyDialogView.findViewById(R.id.price_one);
-                    price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    if (model.getData().getCurrentStock().getPreis() != 0) {
+                        TextView price = buyDialogView.findViewById(R.id.price_one);
+                        price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    }
+
                     totalPrice = buyDialogView.findViewById(R.id.total_price);
 
                     kaufMenge = buyDialogView.findViewById(R.id.kaufMenge);
@@ -91,7 +103,6 @@ public class AktienDetailsFragment extends Fragment {
                     kaufMenge.addTextChangedListener(new TextWatcher() {
 
                         public void afterTextChanged(Editable s) {
-
                             setTotalPrice(true);
                         }
 
@@ -166,6 +177,18 @@ public class AktienDetailsFragment extends Fragment {
                     });
 
                     AlertDialog dialog = builder.create();
+
+                    final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
+                        @Override
+                        public void onChanged(Aktie aktie) {
+                            if (aktie.getPreis() != 0) {
+                                TextView price = buyDialogView.findViewById(R.id.price_one);
+                                price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                            }
+                        }
+                    };
+
+                    model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
                     dialog.show();
                 }
             }
@@ -195,14 +218,22 @@ public class AktienDetailsFragment extends Fragment {
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Requests requests = new Requests();
+                try {
+                    requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Context context = AktienDetailsFragment.this.getContext();
                 if (context != null) {
-                    View sellDialogView = inflater.inflate(R.layout.sell_dialog, null);
+                    final View sellDialogView = inflater.inflate(R.layout.sell_dialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     TextView meine_anzahl = sellDialogView.findViewById(R.id.anzahl_aktien);
                     meine_anzahl.setText(String.valueOf(getFoundInDepot()));
-                    TextView price = sellDialogView.findViewById(R.id.price_one);
-                    price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    if (model.getData().getCurrentStock().getPreis() != 0) {
+                        TextView price = sellDialogView.findViewById(R.id.price_one);
+                        price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                    }
                     totalPrice = sellDialogView.findViewById(R.id.total_price);
 
 
@@ -291,6 +322,16 @@ public class AktienDetailsFragment extends Fragment {
                             dialog.cancel();
                         }
                     });
+
+                    final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
+                        @Override
+                        public void onChanged(Aktie aktie) {
+                            if (aktie.getPreis() != 0) {
+                                TextView price = sellDialogView.findViewById(R.id.price_one);
+                                price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                            }
+                        }
+                    };
 
                     AlertDialog dialog = builder.create();
                     dialog.show();

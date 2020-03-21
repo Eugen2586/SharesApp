@@ -48,12 +48,17 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         // set value if stock in depot
         ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();
         if (depotList != null) {
+            boolean notFoundInDepot = true;
             for (Aktie depotStock : depotList) {
                 if (depotStock.getSymbol().equals(aktie.getSymbol())) {
                     String text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautiful(depotStock.getPreis()) + "€";
                     holder.myDepotValueView.setText(text);
+                    notFoundInDepot = false;
                     break;
                 }
+            }
+            if (notFoundInDepot) {
+                holder.myDepotValueView.setText("");
             }
         }
     }

@@ -23,6 +23,7 @@ public class RequestsBuilder {
     }
 
     public static String getQuote(String symbol) {
+        System.out.println("getQuote called.........................................................");
         return "stock/" + symbol + "/quote";
     }
 

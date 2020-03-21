@@ -30,7 +30,10 @@ public class RequestQuotePrices {
             if (jsonar.get("symbol").equals(t.getSymbol())) {
                 System.out.println(t);
                 t.setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
-                t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
+                if (jsonar.get("change") != null) {
+                    t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
+                }
+
             }
         }
         return list;

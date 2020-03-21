@@ -17,18 +17,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.navigation.Navigation;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-
-import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
-import com.example.sharesapp.ui.newgame.NewgameFragment;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -91,7 +85,6 @@ public class AktienDetailsFragment extends Fragment {
                     TextView price = buyDialogView.findViewById(R.id.price_one);
                     price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
                     totalPrice = buyDialogView.findViewById(R.id.total_price);
-
 
                     kaufMenge = buyDialogView.findViewById(R.id.kaufMenge);
 
@@ -372,23 +365,26 @@ public class AktienDetailsFragment extends Fragment {
 
     private void setStockDetails() {
         Aktie stock = model.getData().getCurrentStock();
-        TextView symbolTV = root.findViewById(R.id.symbol_field);
-        symbolTV.setText(stock.getSymbol());
-        TextView nameTV = root.findViewById(R.id.name_field);
-        nameTV.setText(stock.getName());
-        TextView nameBig = root.findViewById(R.id.name_big);
-        nameBig.setText(stock.getName());
-        TextView priceTV = root.findViewById(R.id.latest_price_field);
-        priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
-        TextView dateTV = root.findViewById(R.id.date_field);
-        if (stock.getDate() == null) {
-            dateTV.setText(R.string.unbekannt);
-        } else {
-            dateTV.setText(stock.getDate());
+        // dont show if lastPrice == 0.0f
+        float lastPrice = stock.getPreis();
+        if (lastPrice != 0.0f) {
+            TextView symbolTV = root.findViewById(R.id.symbol_field);
+            symbolTV.setText(stock.getSymbol());
+            TextView nameTV = root.findViewById(R.id.name_field);
+            nameTV.setText(stock.getName());
+            TextView nameBig = root.findViewById(R.id.name_big);
+            nameBig.setText(stock.getName());
+            TextView priceTV = root.findViewById(R.id.latest_price_field);
+            priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
+            TextView dateTV = root.findViewById(R.id.date_field);
+            if (stock.getDate() == null) {
+                dateTV.setText(R.string.unbekannt);
+            } else {
+                dateTV.setText(stock.getDate());
+            }
+            TextView typeTV = root.findViewById(R.id.type_field);
+            typeTV.setText(stock.getType());
         }
-        TextView typeTV = root.findViewById(R.id.type_field);
-        typeTV.setText(stock.getType());
-        // todo set all fields
     }
 
     private boolean getFoundInPortfolio() {

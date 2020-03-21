@@ -22,7 +22,6 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -35,6 +34,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private ArrayList<String> previousAvailableTypes = null;
     private TabLayout tabLayout;
     private int selectedTabsCounter = 0;
+    private int numberOfTabs = 2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,12 +67,14 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                 if (selectedTabsCounter != 0) {
                     model.getData().setPreviouslySelectedTabIndex(tabLayout.getSelectedTabPosition());
                 }
-                selectedTabsCounter++;
                 setCategory(tab.getPosition());
+                scrollToCategoryScrollState(tab.getPosition());
+                selectedTabsCounter++;
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                saveCategoryScrollState(tab.getPosition());
             }
 
             @Override
@@ -88,6 +90,13 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         previousAvailableTypes = null;
         addTabs(tabLayout);
         super.onResume();
+        scrollToCategoryScrollState(tabLayout.getSelectedTabPosition());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveCategoryScrollState(tabLayout.getSelectedTabPosition());
     }
 
     private void addTabs(TabLayout tabLayout) {
@@ -120,6 +129,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                 for (String category : availableTypes) {
                     addTabWithString(tabLayout, category);
                 }
+
+                numberOfTabs = availableTypes.length + 2;
             }
             selectPreviouslySelectedTab(tabLayout);
             setCategory(tabLayout.getSelectedTabPosition());
@@ -201,5 +212,29 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
         System.out.println(model.getData().getPreviouslySelectedTabIndex());
         tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
+    }
+
+    private void saveCategoryScrollState(int tabPosition) {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int scrollState = 0;
+        if (linearLayoutManager != null) {
+            scrollState = linearLayoutManager.findFirstVisibleItemPosition();
+        }
+        ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();
+        if (categoryScrollPositions == null || categoryScrollPositions.size() < numberOfTabs) {
+            model.getData().createCategoryScrollPositions(numberOfTabs);
+        }
+        if (scrollState != -1) {
+            categoryScrollPositions.set(tabPosition, scrollState);
+        }
+    }
+
+    private void scrollToCategoryScrollState(int tabPosition) {
+        int scrollState = 0;
+        ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();
+        if (categoryScrollPositions != null && tabPosition < categoryScrollPositions.size()) {
+            scrollState = categoryScrollPositions.get(tabPosition);
+        }
+        recyclerView.scrollToPosition(scrollState);
     }
 }

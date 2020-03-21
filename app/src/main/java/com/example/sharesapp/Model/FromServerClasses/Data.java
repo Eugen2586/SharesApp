@@ -2,9 +2,6 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
-import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +18,7 @@ public class Data {
     private String currentSearchString;
     private int previouslySelectedTabIndex = 0;
     private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
+    private ArrayList<Integer> categoryScrollPositions = null;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -223,5 +221,16 @@ public class Data {
 
     public MutableLiveData<Integer> getResetCounter() {
         return resetCounter;
+    }
+
+    public ArrayList<Integer> getCategoryScrollPositions() {
+        return categoryScrollPositions;
+    }
+
+    public void createCategoryScrollPositions(int tabCount) {
+        categoryScrollPositions = new ArrayList<>();
+        for (int i = 0; i < tabCount; i++) {
+            categoryScrollPositions.add(0);
+        }
     }
 }

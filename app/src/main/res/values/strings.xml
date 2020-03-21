@@ -51,5 +51,22 @@
     <string name="prozent">Prozent</string>
     <string name="lade_preis">Lade Preis…</string>
     <string name="unbekannt">unbekannt</string>
+    <string name="name">Name</string>
+    <string name="symbol">Symbol</string>
+    <string name="aktueller_kurs">Aktueller Kurs</string>
+    <string name="zuletzt_aktualisiert">Zuletzt aktualisiert</string>
+    <string name="type">Type</string>
+    <string name="kaufen">Kaufen</string>
+    <string name="verkaufen">Verkaufen</string>
+    <string name="aktien_kaufen">Aktien kaufen</string>
+    <string name="mein_geld">Mein Geld</string>
+    <string name="kaufmenge">Kaufmenge</string>
+    <string name="_0_00">0.00€</string>
+    <string name="aktien_verkaufen">Aktien verkaufen</string>
+    <string name="anzahl">Anzahl</string>
+    <string name="preis_pro_st_ck">Preis pro Stück</string>
+    <string name="verkaufmenge">Verkaufmenge</string>
+    <string name="limit">Limit</string>
+    <string name="gesamt_preis">Gesamt Preis</string>
 
 </resources>

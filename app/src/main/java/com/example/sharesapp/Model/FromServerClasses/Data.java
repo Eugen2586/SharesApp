@@ -19,6 +19,7 @@ public class Data {
     private int previouslySelectedTabIndex = 0;
     private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
     private ArrayList<Integer> categoryScrollPositions = null;
+    private int searchScrollPosition = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -208,6 +209,7 @@ public class Data {
         previouslySelectedTabIndex = 0;
         increaseResetValue();
         categoryScrollPositions = null;
+        searchScrollPosition = 0;
 
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
@@ -233,5 +235,13 @@ public class Data {
         for (int i = 0; i < tabCount; i++) {
             categoryScrollPositions.add(0);
         }
+    }
+
+    public int getSearchScrollPosition() {
+        return searchScrollPosition;
+    }
+
+    public void setSearchScrollPosition(int searchScrollPosition) {
+        this.searchScrollPosition = searchScrollPosition;
     }
 }

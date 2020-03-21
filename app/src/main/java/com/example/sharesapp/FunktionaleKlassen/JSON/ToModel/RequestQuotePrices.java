@@ -33,7 +33,7 @@ public class RequestQuotePrices {
                 if (jsonar.get("change") != null) {
                     t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
                 }
-
+                break;
             }
         }
         return list;

@@ -67,6 +67,20 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         return root;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (recyclerView != null) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int scrollState = 0;
+            if (linearLayoutManager != null) {
+                scrollState = linearLayoutManager.findFirstVisibleItemPosition();
+            }
+            model.getData().setSearchScrollPosition(scrollState);
+        }
+    }
+
+
     private void initCategorieSpinner(Spinner spinner) {
         Context context = this.getContext();
         if (context != null) {
@@ -147,6 +161,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             } else {
                 model.getData().addAktienList(stockList);
             }
+
+            recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
     }
 

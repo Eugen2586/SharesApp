@@ -162,8 +162,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     @Override
     public void onItemClick(View view, int position) {
-        // opens stock details copied from AktienFragment
-        TextView symbolView = view.findViewById(R.id.stock_text);
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);

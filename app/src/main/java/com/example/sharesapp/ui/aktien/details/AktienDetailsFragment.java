@@ -381,7 +381,11 @@ public class AktienDetailsFragment extends Fragment {
         TextView priceTV = root.findViewById(R.id.latest_price_field);
         priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
         TextView dateTV = root.findViewById(R.id.date_field);
-        dateTV.setText(stock.getDate());
+        if (stock.getDate() == null) {
+            dateTV.setText(R.string.unbekannt);
+        } else {
+            dateTV.setText(stock.getDate());
+        }
         TextView typeTV = root.findViewById(R.id.type_field);
         typeTV.setText(stock.getType());
         // todo set all fields

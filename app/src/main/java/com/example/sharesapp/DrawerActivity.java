@@ -1,14 +1,11 @@
 package com.example.sharesapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -19,37 +16,22 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
+import com.example.sharesapp.BackgroundHandler.RequestDataService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
-import org.intellij.lang.annotations.Flow;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
-import okhttp3.internal.http2.Http2Reader;
-
-import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 
 
 public class DrawerActivity extends AppCompatActivity {
@@ -60,6 +42,9 @@ public class DrawerActivity extends AppCompatActivity {
     private Requests requests = new Requests();
     @Override
     protected void onStop() {
+        // TODO: intent persistent
+        Intent intent = new Intent(this, RequestDataService.class);
+        startService(intent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
@@ -69,11 +54,12 @@ public class DrawerActivity extends AppCompatActivity {
         }
         super.onStop();
         //If the App Stopps we store the Data!
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO: stop Service with saved intent
+//        stopService();
         super.onCreate(savedInstanceState);
         /* Do persistance Stuff.
 
@@ -126,15 +112,6 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (view != null) {
-//                    Navigation.findNavController(getCallingActivity(), R.id.fragment_).navigateUp();
-//                }
-//            }
-//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -159,6 +136,8 @@ public class DrawerActivity extends AppCompatActivity {
   //      } catch (Exception e) {
 //
   //      }
+
+//        configureBackgroundRequests();
     }
 
     private ArrayList<Aktie> getTradeListe(String st) throws ParseException {

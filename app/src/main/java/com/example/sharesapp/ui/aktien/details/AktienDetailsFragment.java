@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
@@ -154,9 +155,13 @@ public class AktienDetailsFragment extends Fragment {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(number);
-                                                model.getData().getDepot().kaufeAktie(a);
-                                                sellButton.setVisibility(View.VISIBLE);
-                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
+                                                if (depotLimitReached) {
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                }
                                             } else {
                                                 //todo kaufen mit limit
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "TODO: AKTIEN KAUFEN", Toast.LENGTH_LONG).show();

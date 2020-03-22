@@ -29,31 +29,49 @@ public class Depot {
         this.geldwert = Constants.MONEY;
     }
 
-    public void kaufeAktie(Aktie a) {
-        if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
-            in = false;
-            Model m = new Model();
-            ArrayList<Aktie> stocks = aktienImDepot.getValue();
+    public boolean kaufeAktie(Aktie a) {
+        // check if stock already in depot for MaxNumberDifferentStocks in Depot
+        boolean stockAlreadyInDepot = false;
+        if (aktienImDepot.getValue() != null) {
+            for (Aktie stock: aktienImDepot.getValue()) {
+                if(stock.getSymbol().equals(a.getSymbol())) {
+                    stockAlreadyInDepot = true;
+                }
+            }
+        }
 
-            for (Object t : stocks) {
-                Aktie ak = (Aktie) t;
-                if (ak.getName().equals(a.getName())) {
-                    in = true;
+        // if depotStockLimit not reached, buy the stock
+        if (aktienImDepot.getValue() != null &&
+                aktienImDepot.getValue().size() >= Constants.NUMBER_DEPOT_STOCKS &&
+                !stockAlreadyInDepot) {
+            return true;
+        } else {
+            if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
+                in = false;
+                Model m = new Model();
+                ArrayList<Aktie> stocks = aktienImDepot.getValue();
+
+                for (Object t : stocks) {
+                    Aktie ak = (Aktie) t;
+                    if (ak.getName().equals(a.getName())) {
+                        in = true;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        m.getData().addTrade(trade);
+                    }
+                }
+
+                if (!in) {
+                    stocks.add(a);
                     geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                    ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
                     Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                     m.getData().addTrade(trade);
                 }
-            }
 
-            if (!in) {
-                stocks.add(a);
-                geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
-                m.getData().addTrade(trade);
+                aktienImDepot.postValue(stocks);
             }
-
-            aktienImDepot.postValue(stocks);
+            return false;
         }
     }
 

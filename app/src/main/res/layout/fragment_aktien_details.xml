@@ -19,12 +19,12 @@
             android:inputType="textPersonName"
             android:textAlignment="center" />
 
-        <FrameLayout
-            android:id="@+id/graphic_frame"
+        <com.anychart.anychart.AnyChartView
+            android:id="@+id/any_chart_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </FrameLayout>
+        </com.anychart.anychart.AnyChartView>
 
         <TableLayout
             android:layout_width="match_parent"

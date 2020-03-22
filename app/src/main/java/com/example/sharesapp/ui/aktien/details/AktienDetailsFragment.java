@@ -18,6 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.ChartsStock;
+import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
@@ -425,6 +429,10 @@ public class AktienDetailsFragment extends Fragment {
             }
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
+            ChartsStock stockChart = AnyChart.stock();
+            stockChart.setData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
+            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+            anyChartView.setChart(stockChart);
         }
     }
 

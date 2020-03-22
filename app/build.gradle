@@ -44,5 +44,6 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    implementation 'com.github.AnyChart:AnyChart-Android:0.0.3'
 
 }

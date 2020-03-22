@@ -2,6 +2,7 @@ package com.example.sharesapp.BackgroundHandler;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
@@ -58,38 +60,71 @@ public class RequestDataService extends Service {
             @Override
             public void run() {
                 Timer t = new Timer();
+                int timeInterval = 1 * 20 * 1000; // 5 min
                 t.schedule(new TimerTask(){
                     @Override
                     public void run() {
-                        if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
-                            for (Aktie stock: model.getData().getDepot().getAktienImDepot().getValue()) {
-                                try {
-                                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            // TODO: Try to sell or buy stock
-                            // TODO: If all bought or sold, stopSelf();
-                        }
-                        // TODO: enable Notification if something was bought or sold
-//                        showNotification();
+//                        if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
+//                            for (Aktie stock: model.getData().getDepot().getAktienImDepot().getValue()) {
+//                                try {
+//                                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//
+//                            // TODO: Try to sell or buy stock
+//                            // TODO: If all bought or sold, stopSelf();
+//                        }
+//                        // TODO: enable Notification if something was bought or sold
+//                        showComeBackNotification();
+//                        showOrderCompleteNotification();
                     }
-                }, 0, 5 * 60 * 1000); // 5 min
+                }, 0, timeInterval);
             }
         });
         return Service.START_STICKY;
     }
 
-    private void showNotification() {
+    private void showComeBackNotification() {
+        showNotificationWithMessage("Komm zurück und werde reich.");
+    }
+
+    private void showOrderCompleteNotification() {
+        showNotificationWithMessage("Einige deiner Aufträge wurden durchgeführt.");
+    }
+
+    private void showNotificationWithMessage(String message) {
         // https://developer.android.com/training/notify-user/build-notification#kotlin
         // build notification channel
+        String channel_id = buildNotificationChannel();
+
+        // build pendingIntent for opening activity on click on notification
+        Intent intent = new Intent(this, DrawerActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+
+        // build notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel_id)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Broken Broke Broker")
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+
+        // notify user
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+    }
+
+    private String buildNotificationChannel() {
+        final String channel_id = "bbb_channel_id";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "channel_name";
-            String description = "channel_desciption";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("channel_id", name, importance);
+            CharSequence channel_name = "bbb_channel_name";
+            int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
+            String description = "channel for bbb";
+            NotificationChannel channel = new NotificationChannel(channel_id, channel_name, channel_importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -97,16 +132,6 @@ public class RequestDataService extends Service {
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
-
-        // build notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("BBB")
-                .setContentText("Content Content")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        // notify user
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
+        return channel_id;
     }
 }

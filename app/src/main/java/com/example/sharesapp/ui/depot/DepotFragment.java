@@ -21,8 +21,6 @@ public class DepotFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    private UebersichtFragment uebersicht;
-    private StatistikFragment statistik;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,10 +29,7 @@ public class DepotFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        uebersicht = new UebersichtFragment();
-        statistik = new StatistikFragment();
-
-        fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht).commit();
+        fragmentTransaction.replace(R.id.fragment_loader_linear_layout, new UebersichtFragment()).commit();
         TabLayout tabs = root.findViewById(R.id.depot_tab_layout);
 
         if (tabs != null) {
@@ -62,9 +57,9 @@ public class DepotFragment extends Fragment {
     private void changeFragment(int position) {
         fragmentTransaction = fragmentManager.beginTransaction();
         if (position == 0) {
-            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, uebersicht);
+            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, new UebersichtFragment());
         } else if (position == 1) {
-            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, statistik);
+            fragmentTransaction.replace(R.id.fragment_loader_linear_layout, new StatistikFragment());
         }
 
         fragmentTransaction.commitNow();

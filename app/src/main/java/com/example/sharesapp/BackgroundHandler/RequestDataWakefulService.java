@@ -1,15 +1,13 @@
 package com.example.sharesapp.BackgroundHandler;
 
+import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
-import android.os.IBinder;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -17,48 +15,39 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Requests;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RequestDataService extends Service {
-    private final LocalBinder mBinder = new LocalBinder();
-    protected Handler handler;
-    protected Toast mToast;
-    private Requests requests = new Requests();
+public class RequestDataWakefulService extends IntentService {
 
-    public class LocalBinder extends Binder {
-        public RequestDataService getService() {
-            return RequestDataService.this;
-        }
+    public RequestDataWakefulService(String name) {
+        super(name);
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
+    protected void onHandleIntent(Intent intent) {
+        // At this point SimpleWakefulReceiver is still holding a wake lock
+        // for us.  We can do whatever we need to here and then tell it that
+        // it can release the wakelock.  This sample just does some slow work,
+        // but more complicated implementations could take their own wake
+        // lock here before releasing the receiver's.
+        //
+        // Note that when using this approach you should be aware that if your
+        // service gets killed and restarted while in the middle of such work
+        // (so the Intent gets re-delivered to perform the work again), it will
+        // at that point no longer be holding a wake lock since we are depending
+        // on SimpleWakefulReceiver to that for us.  If this is a concern, you can
+        // acquire a separate wake lock here.
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public int onStartCommand(final Intent intent, int flags, int startId) {
         final Model model = new Model();
-        handler = new Handler();
+        Handler handler = new Handler();
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final Timer t = new Timer();
+                Timer t = new Timer();
                 int timeInterval = 1 * 10 * 1000; // 5 min
-                t.schedule(new TimerTask() {
+                t.schedule(new TimerTask(){
                     @Override
                     public void run() {
 //                        if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
@@ -74,16 +63,14 @@ public class RequestDataService extends Service {
 //                            // TODO: If all bought or sold, stopSelf();
 //                        }
                         // TODO: enable Notification if something was bought or sold
-//                        showComeBackNotification();
-                        showOrderCompleteNotification();
-                        stopSelf();
                         showComeBackNotification();
-                        t.cancel();
+//                        showOrderCompleteNotification();
+                        // TODO: completeWakefulIntent after notification
+//                        BootWakefulReceiver.completeWakefulIntent(intent);
                     }
                 }, 0, timeInterval);
             }
         });
-        return Service.START_STICKY;
     }
 
     private void showComeBackNotification() {

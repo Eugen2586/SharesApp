@@ -75,10 +75,10 @@ public class RequestDataService extends Service {
 //                        }
                         // TODO: enable Notification if something was bought or sold
 //                        showComeBackNotification();
-                        showOrderCompleteNotification();
-                        stopSelf();
-                        showComeBackNotification();
-                        t.cancel();
+//                        showOrderCompleteNotification();
+//                        stopSelf();
+//                        showComeBackNotification();
+//                        t.cancel();
                     }
                 }, 0, timeInterval);
             }

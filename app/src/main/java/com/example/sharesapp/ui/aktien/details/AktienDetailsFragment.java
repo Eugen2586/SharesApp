@@ -3,6 +3,7 @@ package com.example.sharesapp.ui.aktien.details;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -159,6 +160,9 @@ public class AktienDetailsFragment extends Fragment {
                                                 if (depotLimitReached) {
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
                                                 } else {
+                                                    // Paper Turn Sound http://soundbible.com/2066-Page-Turn.html
+                                                    MediaPlayer.create(buyButton.getContext(), R.raw.page_turn).start();
+
                                                     sellButton.setVisibility(View.VISIBLE);
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                                 }
@@ -215,6 +219,9 @@ public class AktienDetailsFragment extends Fragment {
                 } else {
                     model.getData().addToPortfolio(model.getData().getCurrentStock(), currentSymbol);
                 }
+
+                // Stapling Paper Sound http://soundbible.com/1537-Stapling-Paper.html
+                MediaPlayer.create(buyButton.getContext(), R.raw.stapling_paper).start();
             }
         });
 
@@ -301,6 +308,10 @@ public class AktienDetailsFragment extends Fragment {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
+
+                                                // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+
                                                 model.getData().getDepot().verkaufeAktie(a);
                                                 int anzahl = getFoundInDepot();
                                                 if (anzahl == 0) {

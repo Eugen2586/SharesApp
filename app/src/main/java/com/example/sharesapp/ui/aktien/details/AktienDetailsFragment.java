@@ -441,6 +441,15 @@ public class AktienDetailsFragment extends Fragment {
             }
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
+
+            // make buttons visible
+            root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
+            root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
+            if (stock.getAnzahl() != 0) {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
+            } else {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+            }
         }
     }
 

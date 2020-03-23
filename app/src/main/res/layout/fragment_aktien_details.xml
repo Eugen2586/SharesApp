@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
+            android:text="@string/lade_inhalte"
             android:textAlignment="center" />
 
         <FrameLayout
@@ -137,19 +138,22 @@
             android:id="@+id/kaufen_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/kaufen" />
+            android:text="@string/kaufen"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/verkaufen_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/verkaufen" />
+            android:text="@string/verkaufen"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/portfolio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_to_portfolio" />
+            android:text="@string/add_to_portfolio"
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>

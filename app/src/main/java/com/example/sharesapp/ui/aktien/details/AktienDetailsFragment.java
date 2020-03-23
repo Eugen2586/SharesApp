@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.Constants;
@@ -28,6 +29,7 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
+import com.example.sharesapp.ui.newgame.NewgameFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -361,8 +363,78 @@ public class AktienDetailsFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
+        initializeOrderButton();
+
         return root;
+    }
+
+    private void initializeOrderButton() {
+        Button orderButton = root.findViewById(R.id.order_button);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDeleteOrderConfirmation();
+            }
+        });
+        showHideDeleteOrderButton();
+
+        // Listener for buyOrderList and sellOrderList
+        final Observer<ArrayList<Order>> buyOrderObserver = new Observer<ArrayList<Order>>() {
+            @Override
+            public void onChanged(ArrayList<Order> orderList) {
+                showHideDeleteOrderButton();
+            }
+        };
+        model.getData().getBuyOrderList().observe(getViewLifecycleOwner(), buyOrderObserver);
+
+        final Observer<ArrayList<Order>> sellOrderObserver = new Observer<ArrayList<Order>>() {
+            @Override
+            public void onChanged(ArrayList<Order> orderList) {
+                showHideDeleteOrderButton();
+            }
+        };
+        model.getData().getSellOrderList().observe(getViewLifecycleOwner(), sellOrderObserver);
+    }
+
+    private void createDeleteOrderConfirmation() {
+        Context context = AktienDetailsFragment.this.getContext();
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Achtung!");
+            builder.setMessage("Sollen wirklich alle Aufträge dieser Aktie gelöscht werden?");
+            builder.setPositiveButton("Ja",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(AktienDetailsFragment.this.getContext(), "Alle Aufträge dieser Aktie wurden gelöscht", Toast.LENGTH_LONG).show();
+
+                            ArrayList<Order> buyOrderListToRemove = getAllOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
+                            model.getData().removeBuyOrderList(buyOrderListToRemove);
+                            ArrayList<Order> sellOrderListToRemove = getAllOrderForCurrentStock(model.getData().getSellOrderList().getValue());
+                            model.getData().removeSellOrderList(sellOrderListToRemove);
+                        }
+                    });
+            builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    private void showHideDeleteOrderButton() {
+        ArrayList<Order> buyOrderList = getAllOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
+        ArrayList<Order> sellOrderList = getAllOrderForCurrentStock(model.getData().getSellOrderList().getValue());
+        if (buyOrderList.size() == 0 && sellOrderList.size() == 0) {
+            root.findViewById(R.id.order_button).setVisibility(View.GONE);
+        } else {
+            root.findViewById(R.id.order_button).setVisibility(View.VISIBLE);
+        }
     }
 
     private void handleBuyOrder(View buyDialogView) {
@@ -393,6 +465,19 @@ public class AktienDetailsFragment extends Fragment {
         } else {
             Toast.makeText(AktienDetailsFragment.this.getContext(), "Angegebenes Limit befindet sich nicht über dem Einzelwert der Aktie.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private ArrayList<Order> getAllOrderForCurrentStock(ArrayList<Order> buySellOrderList) {
+        Aktie currentStock = model.getData().getCurrentStock();
+        ArrayList<Order> orderList = new ArrayList<>();
+        if (buySellOrderList != null) {
+            for (Order order : buySellOrderList) {
+                if (order.getSymbol().equals(currentStock.getSymbol())) {
+                    orderList.add(order);
+                }
+            }
+        }
+        return orderList;
     }
 
     private void checkVerkaufMenge(int anzahl) {

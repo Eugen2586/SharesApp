@@ -78,5 +78,6 @@
     <string name="menu_auftr_ge">Aufträge</string>
     <string name="verkaufauftrag">Verkaufaufträge</string>
     <string name="kaufauftrag">Kaufaufträge</string>
+    <string name="l_sche_alle_auftr_ge">Lösche alle Aufträge</string>
 
 </resources>

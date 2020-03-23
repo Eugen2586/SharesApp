@@ -254,10 +254,12 @@ public class Data {
         buyOrderList.postValue(orderList);
     }
 
-    public void removeBuyOrder(Order buyOrder) {
+    public void removeBuyOrderList(ArrayList<Order> removeOrderList) {
         ArrayList<Order> orderList = buyOrderList.getValue();
         if (orderList != null) {
-            orderList.remove(buyOrder);
+            for (Order order: removeOrderList) {
+                orderList.remove(order);
+            }
             buyOrderList.postValue(orderList);
         }
     }
@@ -285,10 +287,12 @@ public class Data {
         sellOrderList.postValue(orderList);
     }
 
-    public void removeSellOrder(Order sellOrder) {
+    public void removeSellOrderList(ArrayList<Order> removeOrderList) {
         ArrayList<Order> orderList = sellOrderList.getValue();
-        if (orderList != null) {
-            orderList.remove(sellOrder);
+        if (orderList != null && removeOrderList != null) {
+            for (Order order: removeOrderList) {
+                orderList.remove(order);
+            }
             sellOrderList.postValue(orderList);
         }
     }

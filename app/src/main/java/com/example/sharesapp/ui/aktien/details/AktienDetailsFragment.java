@@ -120,7 +120,6 @@ public class AktienDetailsFragment extends Fragment {
                     Limit.addTextChangedListener(new TextWatcher() {
 
                         public void afterTextChanged(Editable s) {
-
                             setTotalPrice(true);
                         }
 
@@ -155,16 +154,27 @@ public class AktienDetailsFragment extends Fragment {
                                         } else {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
-                                                a.setAnzahl(number);
-                                                boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
-                                                if (depotLimitReached) {
-                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
+                                                // new Request if price == 0.0f
+                                                if (a.getPreis() == 0.0f) {
+                                                    Requests requests = new Requests();
+                                                    try {
+                                                        requests.asyncRun(RequestsBuilder.getQuote(a.getSymbol()));
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                                 } else {
-                                                    // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
-                                                    MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+                                                    a.setAnzahl(number);
+                                                    boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
+                                                    if (depotLimitReached) {
+                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                        MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
 
-                                                    sellButton.setVisibility(View.VISIBLE);
-                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                        sellButton.setVisibility(View.VISIBLE);
+                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                    }
                                                 }
                                             } else {
                                                 //todo kaufen mit limit

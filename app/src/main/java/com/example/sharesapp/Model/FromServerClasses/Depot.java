@@ -4,7 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -33,8 +36,8 @@ public class Depot {
         // check if stock already in depot for MaxNumberDifferentStocks in Depot
         boolean stockAlreadyInDepot = false;
         if (aktienImDepot.getValue() != null) {
-            for (Aktie stock: aktienImDepot.getValue()) {
-                if(stock.getSymbol().equals(a.getSymbol())) {
+            for (Aktie stock : aktienImDepot.getValue()) {
+                if (stock.getSymbol().equals(a.getSymbol())) {
                     stockAlreadyInDepot = true;
                 }
             }
@@ -128,7 +131,7 @@ public class Depot {
 
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
-	}
+    }
 
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;

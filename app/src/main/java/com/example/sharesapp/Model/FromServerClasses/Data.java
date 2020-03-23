@@ -20,6 +20,7 @@ public class Data {
     private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
     private ArrayList<Integer> categoryScrollPositions = null;
     private int searchScrollPosition = 0;
+    public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -55,8 +56,6 @@ public class Data {
         }
         return depot;
     }
-
-    public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
 
     public Aktie getCurrentStock() {
         return currentStock.getValue();

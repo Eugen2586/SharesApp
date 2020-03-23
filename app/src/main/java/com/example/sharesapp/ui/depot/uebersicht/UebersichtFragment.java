@@ -33,6 +33,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
     private TextView notEmptyTextView;
     private TextView emptyTextView;
     private TextView stockValueTextView;
+    private TextView overallValueTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,18 +43,19 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
         emptyTextView = root.findViewById(R.id.empty_depot_text_view);
         stockValueTextView = root.findViewById(R.id.stock_value_text);
+        overallValueTextView = root.findViewById(R.id.overall_value_text);
 
         Data data = new Model().getData();
         String cashValue = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
         cashValueTextView.setText((cashValue + "€"));
 
-        setStockValue();
+        setStockAndOverallValue();
 
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> depotList) {
-                setStockValue();
+                setStockAndOverallValue();
                 setAdapter(depotList);
             }
         };
@@ -104,19 +106,24 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         if (depotList == null || depotList.size() == 0) {
             notEmptyTextView.setVisibility(View.GONE);
             emptyTextView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             emptyTextView.setVisibility(View.GONE);
             notEmptyTextView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 
-    private void setStockValue() {
-        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue());
-        stockValueTextView.setText((stockValue + "€"));
+    private void setStockAndOverallValue() {
+        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue()) + "€";
+        stockValueTextView.setText(stockValue);
+
+        String overallValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue() + model.getData().getDepot().getGeldwert()) + "€";
+        overallValueTextView.setText(overallValue);
     }
 
     public void reselectedTab() {
-        setStockValue();
+        setStockAndOverallValue();
         setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
     }
 }

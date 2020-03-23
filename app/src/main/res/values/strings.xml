@@ -47,7 +47,7 @@
     <string name="add_to_portfolio">Zu Portfolio hinzufügen</string>
     <string name="remove_from_portfolio">Aus Portfolio entfernen</string>
     <string name="leeres_portfolio">Du hast momentan noch keine Aktien in deinem Portfolio.</string>
-    <string name="dir_geh_ren_momentan_noch_keine_aktien">Dir gehören momentan noch keine Aktien.</string>
+    <string name="dir_geh_ren_momentan_keine_wertpapiere">Dir gehören momentan keine Wertpapiere.</string>
     <string name="prozent">Prozent</string>
     <string name="lade_preis">Lade Preis…</string>
     <string name="unbekannt">unbekannt</string>
@@ -69,5 +69,6 @@
     <string name="limit">Limit</string>
     <string name="gesamt_preis">Gesamt Preis</string>
     <string name="lade_inhalte">Lade Inhalte...</string>
+    <string name="gesamtwert">Gesamtwert:</string>
 
 </resources>

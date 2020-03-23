@@ -21,6 +21,8 @@ public class Data {
     private ArrayList<Integer> categoryScrollPositions = null;
     private int searchScrollPosition = 0;
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+    private ArrayList<Order> buyOrderList = new ArrayList<>();
+    private ArrayList<Order> sellOrderList = new ArrayList<>();
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -242,5 +244,29 @@ public class Data {
 
     public void setSearchScrollPosition(int searchScrollPosition) {
         this.searchScrollPosition = searchScrollPosition;
+    }
+
+    public void addBuyOrder(Order buyOrder) {
+        buyOrderList.add(buyOrder);
+    }
+
+    public void removeBuyOrder(Order buyOrder) {
+        buyOrderList.remove(buyOrder);
+    }
+
+    public ArrayList<Order> getBuyOrderList() {
+        return buyOrderList;
+    }
+
+    public void addSellOrder(Order sellOrder) {
+        sellOrderList.add(sellOrder);
+    }
+
+    public void removeSellOrder(Order sellOrder) {
+        sellOrderList.remove(sellOrder);
+    }
+
+    public ArrayList<Order> getSellOrderList() {
+        return sellOrderList;
     }
 }

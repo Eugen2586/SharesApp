@@ -46,8 +46,8 @@
     <string name="suche">Suche</string>
     <string name="add_to_portfolio">Zu Portfolio hinzufügen</string>
     <string name="remove_from_portfolio">Aus Portfolio entfernen</string>
-    <string name="leeres_portfolio">Du hast momentan noch keine Aktien in deinem Portfolio.</string>
-    <string name="dir_geh_ren_momentan_keine_wertpapiere">Dir gehören momentan keine Wertpapiere.</string>
+    <string name="leeres_portfolio">Es befinden sich momentan keine Wertpapiere in deinem Portfolio.</string>
+    <string name="dir_geh_ren_momentan_keine_wertpapiere">Du besitzt momentan keine Wertpapiere.</string>
     <string name="prozent">Prozent</string>
     <string name="lade_preis">Lade Preis…</string>
     <string name="unbekannt">unbekannt</string>

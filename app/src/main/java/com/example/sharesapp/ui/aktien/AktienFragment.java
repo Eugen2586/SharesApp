@@ -240,7 +240,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
-        System.out.println(model.getData().getPreviouslySelectedTabIndex());
         tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
     }
 

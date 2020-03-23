@@ -23,6 +23,7 @@ public class Data {
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
+    private int previouslySelectedOrderTabIndex = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -243,6 +244,14 @@ public class Data {
 
     public void setSearchScrollPosition(int searchScrollPosition) {
         this.searchScrollPosition = searchScrollPosition;
+    }
+
+    public int getPreviouslySelectedOrderTabIndex() {
+        return previouslySelectedOrderTabIndex;
+    }
+
+    public void setPreviouslySelectedOrderTabIndex(int previouslySelectedOrderTabIndex) {
+        this.previouslySelectedOrderTabIndex = previouslySelectedOrderTabIndex;
     }
 
     public void addBuyOrder(Order buyOrder) {

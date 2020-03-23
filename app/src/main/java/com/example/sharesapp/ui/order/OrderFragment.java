@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.ui.order.buyorder.BuyOrderFragment;
 import com.example.sharesapp.ui.order.sellorder.SellOrderFragment;
@@ -21,6 +22,8 @@ public class OrderFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
+    Model model = new Model();
+    TabLayout tabLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,10 +33,10 @@ public class OrderFragment extends Fragment {
         fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.order_fragment_loader_linear_layout, new BuyOrderFragment()).commit();
-        TabLayout tabs = root.findViewById(R.id.order_tab_layout);
+        tabLayout = root.findViewById(R.id.order_tab_layout);
 
-        if (tabs != null) {
-            tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     changeFragment(tab.getPosition());
@@ -63,5 +66,17 @@ public class OrderFragment extends Fragment {
         }
 
         fragmentTransaction.commitNow();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedOrderTabIndex()));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.getData().setPreviouslySelectedOrderTabIndex(tabLayout.getSelectedTabPosition());
     }
 }

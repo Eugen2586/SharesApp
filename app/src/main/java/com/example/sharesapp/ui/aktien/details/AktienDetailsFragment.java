@@ -160,8 +160,8 @@ public class AktienDetailsFragment extends Fragment {
                                                 if (depotLimitReached) {
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
                                                 } else {
-                                                    // Paper Turn Sound http://soundbible.com/2066-Page-Turn.html
-                                                    MediaPlayer.create(buyButton.getContext(), R.raw.page_turn).start();
+                                                    // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                    MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
 
                                                     sellButton.setVisibility(View.VISIBLE);
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();

@@ -21,6 +21,9 @@ public class Data {
     private ArrayList<Integer> categoryScrollPositions = null;
     private int searchScrollPosition = 0;
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
+    private int previouslySelectedOrderTabIndex = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -34,7 +37,7 @@ public class Data {
 
 
     public AvailType getAvailType() {
-        if (availType == null){
+        if (availType == null) {
             availType = new AvailType();
         }
         return availType;
@@ -45,11 +48,11 @@ public class Data {
     }
 
 
-
-    public Data(){
+    public Data() {
 
 
     }
+
     public Depot getDepot() {
         if (depot == null) {
             depot = new Depot();
@@ -70,24 +73,23 @@ public class Data {
     }
 
 
-
-    public void addTrade(Trade trade){
+    public void addTrade(Trade trade) {
         tradelist.add(trade);
         tradesMutable.setValue(tradelist);
     }
 
-    public void setTradelist(ArrayList<Trade> trades){
+    public void setTradelist(ArrayList<Trade> trades) {
         tradelist = trades;
         tradesMutable.setValue(tradelist);
     }
 
-    public ArrayList<Trade> getTrades(){
+    public ArrayList<Trade> getTrades() {
         return tradelist;
     }
 
-    public float getGewinn(){
+    public float getGewinn() {
         float sum = Float.parseFloat("0.0");
-        if(tradelist != null) {
+        if (tradelist != null) {
             for (Object e : tradelist) {
                 Trade t = (Trade) e;
                 if (t.isKauf()) {
@@ -242,5 +244,79 @@ public class Data {
 
     public void setSearchScrollPosition(int searchScrollPosition) {
         this.searchScrollPosition = searchScrollPosition;
+    }
+
+    public int getPreviouslySelectedOrderTabIndex() {
+        return previouslySelectedOrderTabIndex;
+    }
+
+    public void setPreviouslySelectedOrderTabIndex(int previouslySelectedOrderTabIndex) {
+        this.previouslySelectedOrderTabIndex = previouslySelectedOrderTabIndex;
+    }
+
+    public void addBuyOrder(Order buyOrder) {
+        ArrayList<Order> orderList = buyOrderList.getValue();
+        if (orderList == null) {
+            orderList = new ArrayList<>();
+        }
+        orderList.add(buyOrder);
+        buyOrderList.postValue(orderList);
+    }
+
+    public void removeBuyOrderList(ArrayList<Order> removeOrderList) {
+        ArrayList<Order> orderList = buyOrderList.getValue();
+        if (orderList != null) {
+            for (Order order: removeOrderList) {
+                orderList.remove(order);
+            }
+            buyOrderList.postValue(orderList);
+        }
+    }
+
+    public ArrayList<Aktie> getBuyOrderStockList() {
+        ArrayList<Aktie> stockList = new ArrayList<>();
+        if (buyOrderList.getValue() != null) {
+            for (Order order: buyOrderList.getValue()) {
+                stockList.add(order.getStock());
+            }
+        }
+        return stockList;
+    }
+
+    public MutableLiveData<ArrayList<Order>> getBuyOrderList() {
+        return buyOrderList;
+    }
+
+    public void addSellOrder(Order sellOrder) {
+        ArrayList<Order> orderList = sellOrderList.getValue();
+        if (orderList == null) {
+            orderList = new ArrayList<>();
+        }
+        orderList.add(sellOrder);
+        sellOrderList.postValue(orderList);
+    }
+
+    public void removeSellOrderList(ArrayList<Order> removeOrderList) {
+        ArrayList<Order> orderList = sellOrderList.getValue();
+        if (orderList != null && removeOrderList != null) {
+            for (Order order: removeOrderList) {
+                orderList.remove(order);
+            }
+            sellOrderList.postValue(orderList);
+        }
+    }
+
+    public ArrayList<Aktie> getSellOrderStockList() {
+        ArrayList<Aktie> stockList = new ArrayList<>();
+        if (sellOrderList.getValue() != null) {
+            for (Order order: sellOrderList.getValue()) {
+                stockList.add(order.getStock());
+            }
+        }
+        return stockList;
+    }
+
+    public MutableLiveData<ArrayList<Order>> getSellOrderList() {
+        return sellOrderList;
     }
 }

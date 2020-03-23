@@ -15,10 +15,17 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.sharesapp.DrawerActivity;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,30 +64,83 @@ public class RequestDataService extends Service {
             @Override
             public void run() {
                 final Timer t = new Timer();
-                int timeInterval = 1 * 10 * 1000; // 5 min
+                int timeInterval = 1 * 10 * 1000; // TODO: set to 15 min
                 t.schedule(new TimerTask() {
                     @Override
                     public void run() {
-//                        if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
-//                            for (Aktie stock: model.getData().getDepot().getAktienImDepot().getValue()) {
-//                                try {
-//                                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                            // TODO: Try to sell or buy stock
-//                            // TODO: If all bought or sold, stopSelf();
-//                        }
-                        // TODO: enable Notification if something was bought or sold
-//                        showComeBackNotification();
-//                        showOrderCompleteNotification();
-//                        stopSelf();
-//                        showComeBackNotification();
-//                        t.cancel();
+                        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+                        if (stockList != null) {
+                            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
+                            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
+                            Set<String> symbolSet = new HashSet<>();
+
+                            // get all symbols for requests
+                            if (buyOrderList != null) {
+                                for (Order buyOrder : buyOrderList) {
+                                    symbolSet.add(buyOrder.getSymbol());
+                                }
+                            }
+                            if (sellOrderList != null) {
+                                for (Order sellOrder : sellOrderList) {
+                                    symbolSet.add(sellOrder.getSymbol());
+                                }
+                            }
+
+                            // requests for all symbols
+                            for (String symbol : symbolSet) {
+                                Requests requests = new Requests();
+                                try {
+                                    requests.asyncRun(RequestsBuilder.getQuote(symbol));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            boolean allOrderCompleted = (buyOrderList == null || buyOrderList.size() == 0) &&
+                                    (sellOrderList == null || sellOrderList.size() == 0);
+                            boolean oneOrderCompleted = false;
+                            // in Observer
+                            // try to buy stock
+                            if (buyOrderList != null) {
+                                for (Order buyOrder : buyOrderList) {
+                                    for (Aktie stock : stockList) {
+                                        if (stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit()) {
+                                            // buy stock to currentPrice
+                                            Aktie stockClone = stock.getClone();
+                                            stockClone.setAnzahl(buyOrder.getNumber());
+                                            model.getData().getDepot().kaufeAktie(stockClone);
+                                            oneOrderCompleted = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            // try to sell stock
+                            if (sellOrderList != null) {
+                                for (Order sellOrder : sellOrderList) {
+                                    for (Aktie stock : stockList) {
+                                        if (stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit()) {
+                                            // buy stock to currentPrice
+                                            Aktie stockClone = stock.getClone();
+                                            stockClone.setAnzahl(sellOrder.getNumber());
+                                            model.getData().getDepot().verkaufeAktie(stockClone);
+                                            oneOrderCompleted = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            // show notification depending on number of completed orders
+                            if (allOrderCompleted) {
+                                showAllOrderCompleteNotification();
+                            } else if (oneOrderCompleted) {
+                                showOneOrderCompleteNotification();
+                            } else {
+                                showComeBackNotification();
+                            }
+                        }
                     }
-                }, 0, timeInterval);
+                }, timeInterval, timeInterval);
             }
         });
         return Service.START_STICKY;
@@ -90,8 +150,12 @@ public class RequestDataService extends Service {
         showNotificationWithMessage("Komm zurück und werde reich.");
     }
 
-    private void showOrderCompleteNotification() {
+    private void showOneOrderCompleteNotification() {
         showNotificationWithMessage("Einige deiner Aufträge wurden durchgeführt.");
+    }
+
+    private void showAllOrderCompleteNotification() {
+        showNotificationWithMessage("Alle Aufträge wurden durchgeführt.");
     }
 
     private void showNotificationWithMessage(String message) {

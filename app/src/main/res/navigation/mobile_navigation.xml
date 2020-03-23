@@ -28,6 +28,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_order"
+        android:name="com.example.sharesapp.ui.order.OrderFragment"
+        android:label="@string/menu_auftr_ge"
+        tools:layout="@layout/fragment_order" />
+
+    <fragment
         android:id="@+id/nav_historie"
         android:name="com.example.sharesapp.ui.historie.HistorieFragment"
         android:label="@string/menu_historie"

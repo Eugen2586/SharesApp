@@ -71,5 +71,13 @@
     <string name="lade_inhalte">Lade Inhalte...</string>
     <string name="gesamtwert">Gesamtwert:</string>
     <string name="suche_nach_einem_begriff_um_suchergebnisse_zu_erhalten">Suche nach einem Begriff um Suchergebnisse zu erhalten.</string>
+    <string name="du_hast_momentan_keine_kaufauftr_ge_erteilt">Du hast momentan keine Kaufaufträge erteilt.</string>
+    <string name="du_hast_momentan_keine_verkaufauftr_ge_erteilt">Du hast momentan keine Verkaufaufträge erteilt.</string>
+    <string name="verkaufsorder">Verkaufsorder</string>
+    <string name="kauforder">Kauforder</string>
+    <string name="menu_auftr_ge">Aufträge</string>
+    <string name="verkaufauftrag">Verkaufaufträge</string>
+    <string name="kaufauftrag">Kaufaufträge</string>
+    <string name="l_sche_alle_auftr_ge">Lösche alle Aufträge</string>
 
 </resources>

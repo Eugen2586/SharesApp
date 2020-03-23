@@ -68,5 +68,6 @@
     <string name="verkaufmenge">Verkaufmenge</string>
     <string name="limit">Limit</string>
     <string name="gesamt_preis">Gesamt Preis</string>
+    <string name="lade_inhalte">Lade Inhalte...</string>
 
 </resources>

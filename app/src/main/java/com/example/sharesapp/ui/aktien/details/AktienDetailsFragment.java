@@ -3,6 +3,7 @@ package com.example.sharesapp.ui.aktien.details;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
@@ -154,9 +156,16 @@ public class AktienDetailsFragment extends Fragment {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(number);
-                                                model.getData().getDepot().kaufeAktie(a);
-                                                sellButton.setVisibility(View.VISIBLE);
-                                                Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
+                                                if (depotLimitReached) {
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                    MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
+                                                }
                                             } else {
                                                 //todo kaufen mit limit
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "TODO: AKTIEN KAUFEN", Toast.LENGTH_LONG).show();
@@ -210,6 +219,9 @@ public class AktienDetailsFragment extends Fragment {
                 } else {
                     model.getData().addToPortfolio(model.getData().getCurrentStock(), currentSymbol);
                 }
+
+                // Stapling Paper Sound http://soundbible.com/1537-Stapling-Paper.html
+                MediaPlayer.create(buyButton.getContext(), R.raw.stapling_paper).start();
             }
         });
 
@@ -296,6 +308,10 @@ public class AktienDetailsFragment extends Fragment {
                                             if (!limit_b) {
                                                 Aktie a = model.getData().currentStock.getValue().getClone();
                                                 a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
+
+                                                // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+
                                                 model.getData().getDepot().verkaufeAktie(a);
                                                 int anzahl = getFoundInDepot();
                                                 if (anzahl == 0) {
@@ -425,6 +441,15 @@ public class AktienDetailsFragment extends Fragment {
             }
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
+
+            // make buttons visible
+            root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
+            root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
+            if (stock.getAnzahl() != 0) {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
+            } else {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+            }
         }
     }
 

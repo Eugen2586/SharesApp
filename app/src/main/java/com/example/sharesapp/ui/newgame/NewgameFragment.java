@@ -2,6 +2,7 @@ package com.example.sharesapp.ui.newgame;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class NewgameFragment extends Fragment {
         String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         cash.setText((wert + "€"));
 
-        Button reset_button = root.findViewById(R.id.reset_button);
+        final Button reset_button = root.findViewById(R.id.reset_button);
         reset_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +51,9 @@ public class NewgameFragment extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    // Bomb Sound http://soundbible.com/1234-Bomb.html
+                                    MediaPlayer.create(reset_button.getContext(), R.raw.bomb).start();
+
                                     Toast.makeText(NewgameFragment.this.getContext(), "Betrag, alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
 
                                     model.getData().resetData();

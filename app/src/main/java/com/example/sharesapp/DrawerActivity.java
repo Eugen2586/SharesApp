@@ -3,6 +3,8 @@ package com.example.sharesapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +42,8 @@ public class DrawerActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
     private Requests requests = new Requests();
+    private MediaPlayer backgroundMediaPlayer;
+
     @Override
     protected void onStop() {
         // TODO: intent persistent
@@ -52,8 +56,20 @@ public class DrawerActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         super.onStop();
         //If the App Stopps we store the Data!
+    }
+
+    @Override
+    protected void onDestroy() {
+        // remove MediaPlayer
+        if (backgroundMediaPlayer != null) {
+            backgroundMediaPlayer.stop();
+            backgroundMediaPlayer.release();
+            backgroundMediaPlayer = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -125,6 +141,11 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // initialize Media Player https://www.bensound.com/royalty-free-music/track/creative-minds
+        backgroundMediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+        backgroundMediaPlayer.setLooping(true);
+        backgroundMediaPlayer.start();
     }
 
     private void sendRequestsForDepot() {
@@ -315,5 +336,21 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (backgroundMediaPlayer.isPlaying()) {
+            backgroundMediaPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
+            backgroundMediaPlayer.start();
+        }
     }
 }

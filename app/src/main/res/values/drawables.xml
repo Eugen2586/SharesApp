@@ -1,6 +1,0 @@
-<resources>
-    <item name="ic_home" type="drawable">drawable/ic_home</item>
-    <item name="ic_dollar" type="drawable">drawable/ic_dollar</item>
-    <item name="ic_clock" type="drawable">drawable/ic_clock</item>
-    <item name="ic_new_game" type="drawable">drawable/ic_new_game</item>
-</resources>

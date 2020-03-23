@@ -28,6 +28,12 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
 
+        } else if (url.contains("chart")) {
+            try {
+                new RequestHistoricalQuotePrices(s);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         } else if (url.contains("stock")) {
 
             System.out.println(s);
@@ -39,12 +45,6 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
 
-        } else if (url.contains("chart")) {
-            try {
-                new RequestHistoricalQuotePrices(s);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         } else if (url.contains("search")) {
             try {
                 new RequestSearch(s);

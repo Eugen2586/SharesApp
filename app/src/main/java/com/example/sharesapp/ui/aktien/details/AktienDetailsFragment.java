@@ -18,9 +18,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
-import com.anychart.anychart.AnyChart;
-import com.anychart.anychart.AnyChartView;
-import com.anychart.anychart.ChartsStock;
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.charts.Stock;
+import com.anychart.core.stock.Plot;
+import com.anychart.core.stock.series.Hilo;
+import com.anychart.data.Table;
+import com.anychart.data.TableMapping;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -216,7 +220,6 @@ public class AktienDetailsFragment extends Fragment {
                 }
             }
         });
-
 
 
         sellButton.setOnClickListener(new View.OnClickListener() {
@@ -429,10 +432,28 @@ public class AktienDetailsFragment extends Fragment {
             }
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
-            ChartsStock stockChart = AnyChart.stock();
-            stockChart.setData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
-            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
-            anyChartView.setChart(stockChart);
+            if (stock.getChart() != null) {
+                // Build the stockdatachart
+                Stock chartStock = AnyChart.stock();
+
+                Plot plot = chartStock.plot(0);
+
+                plot.yGrid(true)
+                        .yMinorGrid(true);
+
+                Table table = Table.instantiate("x");
+                table.addData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
+                TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
+
+                Hilo hilo = plot.hilo(mapping);
+                hilo.name("Stockinfo");
+
+                hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
+                chartStock.tooltip().useHtml(true);
+
+                AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+                anyChartView.setChart(chartStock);
+            }
         }
     }
 

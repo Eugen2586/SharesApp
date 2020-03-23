@@ -46,7 +46,7 @@ public class RequestHistoricalQuotePrices {
 
         currentStock.setChart(dbs);
 
-        m.getData().setCurrentStock(currentStock);
+        m.getData().currentStock.postValue(currentStock);
     }
 
     public ArrayList getDbs() {

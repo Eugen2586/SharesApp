@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -40,6 +41,8 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
+        initializeSwipeRefresh();
+
         notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
         emptyTextView = root.findViewById(R.id.empty_depot_text_view);
         stockValueTextView = root.findViewById(R.id.stock_value_text);
@@ -64,6 +67,29 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         setAdapter(data.getDepot().getAktienImDepot().getValue());
 
         return root;
+    }
+
+    private void initializeSwipeRefresh() {
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+                if (depotList != null) {
+                    Requests requests = new Requests();
+                    for (Aktie stock : depotList) {
+                        try {
+                            requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -91,9 +117,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
 
     //to bind the uebersicht und aktien from depotlist
     private void setAdapter(ArrayList<Aktie> depotList) {
-        if (recyclerView == null) {
-            initRecyclerView();
-        }
+        initRecyclerView();
         if (depotList != null) {
             if (adapter == null) {
                 adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), depotList);

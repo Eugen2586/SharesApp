@@ -21,7 +21,8 @@
         <com.anychart.AnyChartView
             android:id="@+id/any_chart_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="164dp"
+            android:visibility="gone" />
 
         <TableLayout
             android:layout_width="match_parent"

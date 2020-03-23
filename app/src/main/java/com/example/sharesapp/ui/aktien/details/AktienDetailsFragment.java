@@ -56,6 +56,7 @@ public class AktienDetailsFragment extends Fragment {
             public void onChanged(ArrayList<Aktie> aktienList) {
                 setCurrentStock();
                 setStockDetails();
+                makeChart();
             }
         };
 
@@ -65,6 +66,7 @@ public class AktienDetailsFragment extends Fragment {
             @Override
             public void onChanged(Aktie aktie) {
                 setStockDetails();
+                makeChart();
             }
         };
 
@@ -432,28 +434,34 @@ public class AktienDetailsFragment extends Fragment {
             }
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
-            if (stock.getChart() != null) {
-                // Build the stockdatachart
-                Stock chartStock = AnyChart.stock();
+        }
+    }
 
-                Plot plot = chartStock.plot(0);
+    private void makeChart() {
+        Aktie stock = model.getData().getCurrentStock();
+        if (stock.getChart() != null) {
+            // Build the stockdatachart
+            Stock chartStock = AnyChart.stock();
 
-                plot.yGrid(true)
-                        .yMinorGrid(true);
+            Plot plot = chartStock.plot(0);
 
-                Table table = Table.instantiate("x");
-                table.addData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
-                TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
+            plot.yGrid(true)
+                    .yMinorGrid(true);
 
-                Hilo hilo = plot.hilo(mapping);
-                hilo.name("Stockinfo");
+            Table table = Table.instantiate("x");
+            table.addData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
+            TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
 
-                hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
-                chartStock.tooltip().useHtml(true);
+            Hilo hilo = plot.hilo(mapping);
+            hilo.name("Stockinfo");
 
-                AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
-                anyChartView.setChart(chartStock);
-            }
+            hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
+            chartStock.tooltip().useHtml(true);
+
+            // set the chart and make visible
+            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+            anyChartView.setChart(chartStock);
+            anyChartView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -497,5 +505,13 @@ public class AktienDetailsFragment extends Fragment {
         }
 
         return foundInDepot;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+        anyChartView.setVisibility(View.VISIBLE);
+
     }
 }

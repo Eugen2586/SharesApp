@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/no_buyorder_text"
+        android:id="@+id/no_sellorder_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/overview_margin"

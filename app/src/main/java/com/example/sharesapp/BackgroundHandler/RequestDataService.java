@@ -75,11 +75,15 @@ public class RequestDataService extends Service {
                             Set<String> symbolSet = new HashSet<>();
 
                             // get all symbols for requests
-                            for (Order buyOrder : buyOrderList) {
-                                symbolSet.add(buyOrder.getSymbol());
+                            if (buyOrderList != null) {
+                                for (Order buyOrder : buyOrderList) {
+                                    symbolSet.add(buyOrder.getSymbol());
+                                }
                             }
-                            for (Order sellOrder : sellOrderList) {
-                                symbolSet.add(sellOrder.getSymbol());
+                            if (sellOrderList != null) {
+                                for (Order sellOrder : sellOrderList) {
+                                    symbolSet.add(sellOrder.getSymbol());
+                                }
                             }
 
                             // requests for all symbols
@@ -92,30 +96,36 @@ public class RequestDataService extends Service {
                                 }
                             }
 
-                            boolean allOrderCompleted = buyOrderList.size() == 0 && sellOrderList.size() == 0;
+                            boolean allOrderCompleted = (buyOrderList == null || buyOrderList.size() == 0) &&
+                                    (sellOrderList == null || sellOrderList.size() == 0);
                             boolean oneOrderCompleted = false;
                             // in Observer
                             // try to buy stock
-                            for (Order buyOrder : buyOrderList) {
-                                for (Aktie stock : stockList) {
-                                    if (stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit()) {
-                                        // buy stock to currentPrice
-                                        Aktie stockClone = stock.getClone();
-                                        stockClone.setAnzahl(buyOrder.getNumber());
-                                        model.getData().getDepot().kaufeAktie(stockClone);
-                                        oneOrderCompleted = true;
+                            if (buyOrderList != null) {
+                                for (Order buyOrder : buyOrderList) {
+                                    for (Aktie stock : stockList) {
+                                        if (stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit()) {
+                                            // buy stock to currentPrice
+                                            Aktie stockClone = stock.getClone();
+                                            stockClone.setAnzahl(buyOrder.getNumber());
+                                            model.getData().getDepot().kaufeAktie(stockClone);
+                                            oneOrderCompleted = true;
+                                        }
                                     }
                                 }
                             }
+
                             // try to sell stock
-                            for (Order sellOrder : sellOrderList) {
-                                for (Aktie stock : stockList) {
-                                    if (stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit()) {
-                                        // buy stock to currentPrice
-                                        Aktie stockClone = stock.getClone();
-                                        stockClone.setAnzahl(sellOrder.getNumber());
-                                        model.getData().getDepot().verkaufeAktie(stockClone);
-                                        oneOrderCompleted = true;
+                            if (sellOrderList != null) {
+                                for (Order sellOrder : sellOrderList) {
+                                    for (Aktie stock : stockList) {
+                                        if (stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit()) {
+                                            // buy stock to currentPrice
+                                            Aktie stockClone = stock.getClone();
+                                            stockClone.setAnzahl(sellOrder.getNumber());
+                                            model.getData().getDepot().verkaufeAktie(stockClone);
+                                            oneOrderCompleted = true;
+                                        }
                                     }
                                 }
                             }

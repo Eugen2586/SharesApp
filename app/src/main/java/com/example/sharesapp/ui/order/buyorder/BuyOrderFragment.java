@@ -21,12 +21,13 @@ import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.aktien.AktienFragment;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
+import com.example.sharesapp.ui.utils.OrderRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuyOrderFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
+public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView;
@@ -78,15 +79,10 @@ public class BuyOrderFragment extends Fragment implements StockRecyclerViewAdapt
     //to bind the uebersicht und aktien from depotlist
     private void setAdapter(ArrayList<Order> orderList) {
         if (orderList != null) {
-            ArrayList<Aktie> stockList = new ArrayList<>();
-            for (Order order : orderList) {
-                stockList.add(order.getStock());
-            }
-
             initRecyclerView();
-            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(BuyOrderFragment.this.getContext(), stockList);
+            OrderRecyclerViewAdapter adapter = new OrderRecyclerViewAdapter(BuyOrderFragment.this.getContext(), orderList);
             adapter.setClickListener(BuyOrderFragment.this);
-            adapter.setAktien(stockList);
+            adapter.setAktien(orderList);
             recyclerView.setAdapter(adapter);
         }
         showHideComponents(orderList);

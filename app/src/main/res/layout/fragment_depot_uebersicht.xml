@@ -3,78 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/overview_margin"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1.0">
+        android:layout_margin="@dimen/overview_margin"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
+
+            <TextView
+                android:id="@+id/stock_symbol_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/konto"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:id="@+id/cash_value_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/wertpapier"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:id="@+id/stock_value_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/stock_symbol_text"
-            android:layout_width="0dp"
+            android:id="@+id/gesamt_value_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/konto"
-            android:textAlignment="viewStart" />
+            android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/cash_value_text"
-            android:layout_width="0dp"
+            android:id="@+id/not_empty_depot_text_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textAlignment="viewEnd" />
+            android:text="@string/dir_geh_ren_folgende_wertpapiere"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/empty_depot_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/dir_geh_ren_momentan_noch_keine_aktien"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1.0">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/wertpapier"
-            android:textAlignment="viewStart" />
-
-        <TextView
-            android:id="@+id/stock_value_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textAlignment="viewEnd" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/gesamt_value_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/not_empty_depot_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dir_geh_ren_folgende_wertpapiere"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/empty_depot_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/dir_geh_ren_momentan_noch_keine_aktien"
-        android:textAlignment="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/row_stock_item_padding"
         tools:listitem="@layout/row_stock_item"/>
 
 </LinearLayout>

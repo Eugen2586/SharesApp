@@ -26,7 +26,6 @@ public class Depot {
 
     Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
-        this.geldwert = Constants.MONEY;
     }
 
     public void kaufeAktie(Aktie a) {
@@ -34,7 +33,9 @@ public class Depot {
             in = false;
             Model m = new Model();
             ArrayList<Aktie> stocks = aktienImDepot.getValue();
-
+            if (stocks == null){
+                aktienImDepot = new MutableLiveData<>();
+            }
             for (Object t : stocks) {
                 Aktie ak = (Aktie) t;
                 if (ak.getName().equals(a.getName())) {
@@ -105,7 +106,7 @@ public class Depot {
     }
 
     public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
-        this.aktienImDepot.setValue(aktienImDepot);
+        this.aktienImDepot.postValue(aktienImDepot);
     }
 
     public MutableLiveData<ArrayList<Aktie>> getAktien() {

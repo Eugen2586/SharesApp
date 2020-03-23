@@ -30,11 +30,17 @@ import java.util.ArrayList;
             s = aktienImDepotToString();
             try {
                 editor.putString("Depot", s);
-                editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+
             }catch(Exception e) {
 
             }
             s = null;
+            try{
+                editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+            }catch(Exception e){
+
+            }
+
 
             //Portfolio Liste
             s = portfolioListeToString();
@@ -97,14 +103,14 @@ import java.util.ArrayList;
         private String tradesToString() {
             String s = null;
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getDepot().getAktienImDepot().getValue()) {
+            for (Object o:new Model().getData().getTrades()) {
                 Trade ak = (Trade) o;
                 JSONObject obj = new JSONObject();
-                obj.put("Aktie", ak.getAktie().getJsonFromAktie());
-                obj.put("Anzahl", ak.getAnzahl());
-                obj.put("Date", ak.getDate());
-                obj.put("Preis", ak.getPreis());
-                obj.put("isKauf", ak.isKauf());
+                obj.put("aktie", ak.getAktie().getJsonFromAktie());
+                obj.put("anzahl", ak.getAnzahl());
+                obj.put("date", ak.getDate());
+                obj.put("preis", ak.getPreis());
+                obj.put("iskauf", ak.isKauf());
                 ar.add(obj);
             }
             s = ar.toJSONString();

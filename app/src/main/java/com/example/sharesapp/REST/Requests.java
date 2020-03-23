@@ -34,6 +34,10 @@ public class Requests {
     public String run(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(baseURL + url + token)
+                .addHeader("ruleName", "\"My Rule\",\n" +
+                        "            conditions: [\n" +
+                        "                ['latestPrice','>',0.01]\n" +
+                        "            ],")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {

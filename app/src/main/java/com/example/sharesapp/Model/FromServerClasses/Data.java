@@ -3,6 +3,7 @@ package com.example.sharesapp.Model.FromServerClasses;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
+import com.example.sharesapp.Model.Constants;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -74,6 +75,12 @@ public class Data {
 
 
     public void addTrade(Trade trade){
+        if( tradelist == null){
+            tradelist = new ArrayList<>();
+        }
+        if(tradesMutable == null){
+            tradesMutable  = new MutableLiveData<>();
+        }
         tradelist.add(trade);
         tradesMutable.setValue(tradelist);
     }
@@ -208,8 +215,8 @@ public class Data {
         depot = new Depot();
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
+        depot.setGeldwert(Constants.MONEY);
         increaseResetValue();
-
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 

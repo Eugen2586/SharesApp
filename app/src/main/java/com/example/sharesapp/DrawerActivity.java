@@ -2,13 +2,9 @@ package com.example.sharesapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -19,40 +15,24 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.LoadFromJson;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
-import org.intellij.lang.annotations.Flow;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.Date;
-import java.time.Instant;
 import java.util.ArrayList;
-
-import okhttp3.internal.http2.Http2Reader;
-
-import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 
 
 public class DrawerActivity extends AppCompatActivity {
@@ -65,6 +45,7 @@ public class DrawerActivity extends AppCompatActivity {
     protected void onStop() {
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
+            prefs.edit().clear();
             SharedPreferences.Editor editor = prefs.edit();
             new SaveToJSON( editor);
         } catch (Exception e) {
@@ -86,36 +67,61 @@ public class DrawerActivity extends AppCompatActivity {
             String s = null;
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             JSONParser parser = new JSONParser();
+            try{
             s = prefs.getString("AktienSymbole", null);
             if(s != null && !s.isEmpty()) {
                 new RequestSymbol(s);
             }
-            parser = new JSONParser();
-            s = prefs.getString("Depot", null);
-            if(s != null && !s.isEmpty()) {
-                new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+            }catch(Exception e){
+
             }
-            Float f = prefs.getFloat("Geldwert", 0.0f);
-            if(s != null && !s.isEmpty()) {
-                new Model().getData().getDepot().setGeldwert(f);
+            s = null;
+            try {
+                s = prefs.getString("Depot", null);
+                if (s != null && !s.isEmpty()) {
+                    new Model().getData().getDepot().setAktienImDepot(aktienList(s));
+                }
+            }catch(Exception e){
+
             }
-            s = prefs.getString("Portfolioliste", null);
-            if(s != null && !s.isEmpty()) {
-                new Model().getData().setPortfolioList(aktienList(s));
+            s = null;
+            try {
+                Float f = Float.parseFloat(prefs.getString("Geldwert", null));
+                if( f == 0.0f ){
+                    f = Float.parseFloat(String.valueOf(Constants.MONEY));
+                }
+                if (s != null && !s.isEmpty()) {
+                    new Model().getData().getDepot().setGeldwert(f);
+                }
+            }catch(Exception e){
+                String t = e.getMessage();
             }
-            s = prefs.getString("Trades", null);
-            if(s != null && !s.isEmpty()) {
-                new Model().getData().setTradelist(getTradeListe(s));
+            s = null;
+            try {
+                s = prefs.getString("Portfolioliste", null);
+                if (s != null && !s.isEmpty()) {
+                    new Model().getData().setPortfolioList(aktienList(s));
+                }
+            }catch(Exception e){
+
+            }
+            s = null;
+            try {
+                s = prefs.getString("Trades", null);
+                char t = s.charAt(265);
+                System.out.print(t);
+                if (s != null && !s.isEmpty()) {
+                    new Model().getData().setTradelist(getTradeListe(s));
+                }
+            }catch(Exception e){
+                System.out.print(e.getMessage());
+                String g = new String();
+                System.out.print(s.charAt(265));
             }
 
         }
         catch(Exception e){
             e.printStackTrace();
-        }
-        try{
-
-        }catch(Exception e){
-
         }
         // Initializes RequestClient and loads all symbols only if the Persisenz doesn't work.
 
@@ -169,81 +175,105 @@ public class DrawerActivity extends AppCompatActivity {
         Aktie ak = null;
         ArrayList<Trade> akl = null;
         JSONParser parser = new JSONParser();
-        org.json.simple.JSONArray jsonar = (JSONArray) parser.parse(st);
-        jsonar.isEmpty();
+        JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
             //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
+            ak = getAktie(json.get("aktie").toString());
             try {
-                ak.setSymbol(json.get("Symbol").toString());
+                ak.setType(json.get("date").toString());
             } catch (Exception e) {
 
             }
             try {
-                ak.setExchange(json.get("Exchange").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setName(json.get("Name").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setDate(json.get("Date").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setType(json.get("Type").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setRegion(json.get("Region").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setCurrency(json.get("Currency").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setEnabled(json.get("IsEnabled").toString());
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setChange(Float.parseFloat(json.get("Change").toString()));
-            } catch (Exception e) {
-
-            }
-            try {
-                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("Menge"))));
+                ak.setRegion(json.get("preis").toString());
             } catch (Exception e) {
 
             }
             Boolean isKauf = null;
-            try{
-                isKauf = Boolean.parseBoolean(json.get("isKauf").toString());
+            try {
+                isKauf = Boolean.parseBoolean(json.get("iskauf").toString());
+            } catch (Exception e) {
 
             }
-            catch(Exception e){
-
-            }
-            tr = new Trade(ak, Integer.parseInt(json.get("Anzahl").toString()), isKauf,Float.parseFloat(json.get("Preis").toString()), Date.valueOf(json.get("Date").toString()));
+            tr = new Trade(ak, Integer.parseInt(json.get("anzahl").toString()), isKauf ,Float.parseFloat(json.get("Preis").toString()), Date.valueOf(json.get("Date").toString()));
+            new Model().getData().addTrade(tr);
             akl.add(tr);
         }
-        Model m = new Model();
         return akl;
+    }
+
+    private Aktie getAktie(String st) throws ParseException {
+        Aktie ak = null;
+        ArrayList akl = new ArrayList();
+        JSONParser parser = new JSONParser();
+        org.json.simple.JSONObject json = (JSONObject) parser.parse(st);
+        ak = new Aktie();
+        try {
+            ak.setSymbol(json.get("symbol").toString());
+
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setExchange(json.get("exchange").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setName(json.get("name").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setDate(json.get("date").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setType(json.get("type").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setRegion(json.get("region").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setCurrency(json.get("currency").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setEnabled(json.get("isEnabled").toString());
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setChange(Float.parseFloat(json.get("change").toString()));
+        } catch (Exception e) {
+
+        }
+        try {
+            ak.setAnzahl(Integer.parseInt(json.get("anzahl").toString()));
+        } catch (Exception e) {
+
+        }
+        try{
+            ak.setPreis(Float.parseFloat((json.get("preis").toString())));
+        }
+        catch(Exception e){
+
+        }
+        return ak;
     }
 
     private ArrayList aktienList(String st) throws ParseException {
         Aktie ak = null;
-        ArrayList akl = null;
+        ArrayList akl = new ArrayList();
         JSONParser parser = new JSONParser();
         org.json.simple.JSONArray jsonar = (JSONArray) parser.parse(st);
         jsonar.isEmpty();
@@ -254,6 +284,7 @@ public class DrawerActivity extends AppCompatActivity {
             org.json.simple.JSONObject json = (JSONObject) t;
             try {
                 ak.setSymbol(json.get("symbol").toString());
+
             } catch (Exception e) {
 
             }
@@ -298,13 +329,18 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setAnzahl(Integer.getInteger(String.valueOf(json.get("menge"))));
+                ak.setAnzahl(Integer.parseInt(json.get("anzahl").toString()));
             } catch (Exception e) {
+
+            }
+            try{
+                ak.setPreis(Float.parseFloat((json.get("preis").toString())));
+            }
+            catch(Exception e){
 
             }
             akl.add(ak);
         }
-        Model m = new Model();
         return akl;
     }
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.Constants;
@@ -47,6 +48,8 @@ public class AktienDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_aktien_details, container, false);
+
+        initializeSwipeRefresh();
 
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -368,6 +371,24 @@ public class AktienDetailsFragment extends Fragment {
         initializeOrderButton();
 
         return root;
+    }
+
+    private void initializeSwipeRefresh() {
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                Requests requests = new Requests();
+                try {
+                    requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void initializeOrderButton() {

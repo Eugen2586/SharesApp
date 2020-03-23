@@ -40,7 +40,7 @@
     <string name="billanzsumme">Billanzsumme:</string>
     <string name="euro">€</string>
     <string name="menu_suche">Suche</string>
-    <string name="kategorie">Kategorie:</string>
+    <string name="such_kategorie">Suchkategorie:</string>
     <string name="deine_suche_ergab_folgende_treffer">Deine Suche ergab folgende Treffer:</string>
     <string name="deine_suche_ergab_keine_treffer">Deine Suche ergab keine Treffer.</string>
     <string name="suche">Suche</string>
@@ -70,5 +70,6 @@
     <string name="gesamt_preis">Gesamt Preis</string>
     <string name="lade_inhalte">Lade Inhalte...</string>
     <string name="gesamtwert">Gesamtwert:</string>
+    <string name="suche_nach_einem_begriff_um_suchergebnisse_zu_erhalten">Suche nach einem Begriff um Suchergebnisse zu erhalten.</string>
 
 </resources>

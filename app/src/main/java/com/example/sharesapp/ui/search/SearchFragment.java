@@ -25,6 +25,8 @@ import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,10 +36,15 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private RecyclerView recyclerView = null;
     private View root;
     private int searchIndex = 0;
+    private TextView noSearchText;
+    private TextView searchText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_search, container, false);
+
+        noSearchText = root.findViewById(R.id.no_search_text);
+        searchText = root.findViewById(R.id.search_text);
 
         final Spinner spinner = root.findViewById(R.id.spinner);
         initCategorieSpinner(spinner);
@@ -132,7 +139,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             }
 
             boolean stocksFound = filteredStockList.size() != 0;
-            showSearchTextView(stocksFound);
 
             initRecyclerView();
             StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
@@ -164,16 +170,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
             recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
-    }
 
-    private void showSearchTextView(boolean stocksFound) {
-        TextView searchTextView = root.findViewById(R.id.search_text);
-        if (stocksFound) {
-            searchTextView.setText(R.string.deine_suche_ergab_folgende_treffer);
-        } else {
-            searchTextView.setText(R.string.deine_suche_ergab_keine_treffer);
-        }
-        searchTextView.setVisibility(View.VISIBLE);
+        showHideComponents(stockList);
     }
 
     @Override
@@ -191,5 +189,26 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             e.printStackTrace();
         }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
+    private void showHideComponents(ArrayList<Aktie> stockList) {
+        if (stockList == null || stockList.size() == 0) {
+            noSearchText.setVisibility(View.VISIBLE);
+            searchText.setVisibility(View.GONE);
+            if (recyclerView != null) {
+                recyclerView.setVisibility(View.GONE);
+            }
+            if (model.getData().getCurrentSearchString() == null || model.getData().getCurrentSearchString().equals("")) {
+                noSearchText.setText(R.string.suche_nach_einem_begriff_um_suchergebnisse_zu_erhalten);
+            } else {
+                noSearchText.setText(R.string.deine_suche_ergab_keine_treffer);
+            }
+        } else {
+            noSearchText.setVisibility(View.GONE);
+            searchText.setVisibility(View.VISIBLE);
+            if (recyclerView != null) {
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

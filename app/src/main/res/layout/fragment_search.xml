@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -16,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="@string/kategorie"
+            android:text="@string/such_kategorie"
             android:textAlignment="gravity" />
 
         <Spinner
@@ -34,9 +35,22 @@
         android:text="@string/deine_suche_ergab_folgende_treffer"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/no_search_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fab_margin"
+        android:gravity="center"
+        android:text="@string/suche_nach_einem_begriff_um_suchergebnisse_zu_erhalten"
+        android:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/row_stock_item_padding"
+        tools:listitem="@layout/row_stock_item"
+        android:visibility="gone"/>
 
 </LinearLayout>

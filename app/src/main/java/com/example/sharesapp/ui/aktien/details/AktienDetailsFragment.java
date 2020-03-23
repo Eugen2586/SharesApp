@@ -445,11 +445,16 @@ public class AktienDetailsFragment extends Fragment {
             // make buttons visible
             root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
             root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
-            if (stock.getAnzahl() != 0) {
-                root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
-            } else {
-                root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+            ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+            if (depotList != null) {
+                for (Aktie depotStock: depotList) {
+                    if (stock.getSymbol().equals(depotStock.getSymbol())) {
+                        root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
+                        return;
+                    }
+                }
             }
+            root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
         }
     }
 

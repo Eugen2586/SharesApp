@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.navigation.Navigation;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.Constants;
@@ -29,7 +30,6 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.newgame.NewgameFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,6 +119,7 @@ public class AktienDetailsFragment extends Fragment {
                     });
 
                     Limit = buyDialogView.findViewById(R.id.limit);
+                    setInputFilter(Limit);
 
                     Limit.addTextChangedListener(new TextWatcher() {
 
@@ -277,6 +278,7 @@ public class AktienDetailsFragment extends Fragment {
                     });
 
                     Limit = sellDialogView.findViewById(R.id.limit);
+                    setInputFilter(Limit);
 
                     Limit.addTextChangedListener(new TextWatcher() {
 
@@ -626,5 +628,33 @@ public class AktienDetailsFragment extends Fragment {
         }
 
         return foundInDepot;
+    }
+
+    private void setInputFilter(EditText limit) {
+        InputFilter filter = new InputFilter() {
+            final int maxDigitsBeforeDecimalPoint = 6;
+            final int maxDigitsAfterDecimalPoint = 2;
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                StringBuilder builder = new StringBuilder(dest);
+                builder.replace(dstart, dend, source
+                        .subSequence(start, end).toString());
+                if (!builder.toString().matches(
+                        "(([1-9]{1})([0-9]{0," + (maxDigitsBeforeDecimalPoint - 1) + "})?)?(\\.[0-9]{0," + maxDigitsAfterDecimalPoint + "})?"
+
+                )) {
+                    if (source.length() == 0)
+                        return dest.subSequence(dstart, dend);
+                    return "";
+                }
+
+                return null;
+
+            }
+        };
+
+        limit.setFilters(new InputFilter[] { filter });
     }
 }

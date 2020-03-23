@@ -131,13 +131,13 @@ public class RequestDataService extends Service {
                             }
 
                             // show notification depending on number of completed orders
-                            if (allOrderCompleted) {
-                                showAllOrderCompleteNotification();
-                            } else if (oneOrderCompleted) {
-                                showOneOrderCompleteNotification();
-                            } else {
-                                showComeBackNotification();
-                            }
+//                            if (allOrderCompleted) {
+//                                showAllOrderCompleteNotification();
+//                            } else if (oneOrderCompleted) {
+//                                showOneOrderCompleteNotification();
+//                            } else {
+//                                showComeBackNotification();
+//                            }
                         }
                     }
                 }, timeInterval, timeInterval);

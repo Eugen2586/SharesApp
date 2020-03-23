@@ -121,9 +121,4 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         String overallValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue() + model.getData().getDepot().getGeldwert()) + "€";
         overallValueTextView.setText(overallValue);
     }
-
-    public void reselectedTab() {
-        setStockAndOverallValue();
-        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
-    }
 }

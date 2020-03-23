@@ -178,12 +178,11 @@ public class AktienDetailsFragment extends Fragment {
                                                     }
                                                 }
                                             } else {
-                                                handleBuyOrder();
+                                                handleBuyOrder(buyDialogView);
                                             }
                                         }
                                     } else {
                                         Toast.makeText(AktienDetailsFragment.this.getContext(), "Bitte Kaufmenge eingeben.", Toast.LENGTH_LONG).show();
-
                                     }
                                 }
                             });
@@ -330,7 +329,7 @@ public class AktienDetailsFragment extends Fragment {
                                                 }
                                                 Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien verkauft.", Toast.LENGTH_LONG).show();
                                             } else {
-                                                handleSellOrder();
+                                                handleSellOrder(sellDialogView);
                                             }
                                         }
                                     } else {
@@ -366,31 +365,33 @@ public class AktienDetailsFragment extends Fragment {
         return root;
     }
 
-    private void handleBuyOrder() {
-        EditText numberText = root.findViewById(R.id.kaufMenge);
-        EditText limitText = root.findViewById(R.id.limit);
+    private void handleBuyOrder(View buyDialogView) {
+        EditText numberText = buyDialogView.findViewById(R.id.kaufMenge);
+        EditText limitText = buyDialogView.findViewById(R.id.limit);
         int number = Integer.parseInt(numberText.getText().toString());
         float limit = Float.parseFloat(limitText.getText().toString());
 
         if (limit < model.getData().getCurrentStock().getPreis()) {
-            Order buyOrder = new Order(model.getData().getCurrentStock().getSymbol(), number, limit);
+            Order buyOrder = new Order(model.getData().getCurrentStock(), model.getData().getCurrentStock().getSymbol(), number, limit);
             model.getData().addBuyOrder(buyOrder);
+            Toast.makeText(AktienDetailsFragment.this.getContext(), "Kaufsauftrag wurde erstellt.", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(AktienDetailsFragment.this.getContext(), "Kaufsauftrag konnte nicht erstellt werden, da sich das angegebene Limit nicht unter dem Einzelwert der Aktie befindet.", Toast.LENGTH_LONG).show();
+            Toast.makeText(AktienDetailsFragment.this.getContext(), "Angegebenes Limit befindet sich nicht unter dem Einzelwert der Aktie.", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void handleSellOrder() {
-        EditText numberText = root.findViewById(R.id.verkaufMenge);
-        EditText limitText = root.findViewById(R.id.limit);
+    private void handleSellOrder(View sellDialogView) {
+        EditText numberText = sellDialogView.findViewById(R.id.verkaufMenge);
+        EditText limitText = sellDialogView.findViewById(R.id.limit);
         int number = Integer.parseInt(numberText.getText().toString());
         float limit = Float.parseFloat(limitText.getText().toString());
 
         if (limit > model.getData().getCurrentStock().getPreis()) {
-            Order sellOrder = new Order(model.getData().getCurrentStock().getSymbol(), number, limit);
+            Order sellOrder = new Order(model.getData().getCurrentStock(), model.getData().getCurrentStock().getSymbol(), number, limit);
             model.getData().addSellOrder(sellOrder);
+            Toast.makeText(AktienDetailsFragment.this.getContext(), "Verkaufauftrag wurde erstellt.", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(AktienDetailsFragment.this.getContext(), "Verkaufsauftrag konnte nicht erstellt werden, da sich das angegebene Limit nicht über dem Einzelwert der Aktie befindet.", Toast.LENGTH_LONG).show();
+            Toast.makeText(AktienDetailsFragment.this.getContext(), "Angegebenes Limit befindet sich nicht über dem Einzelwert der Aktie.", Toast.LENGTH_LONG).show();
         }
     }
 

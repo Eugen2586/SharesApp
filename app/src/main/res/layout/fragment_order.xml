@@ -7,26 +7,26 @@
     tools:context=".DrawerActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/depot_tab_layout"
+        android:id="@+id/order_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_uebersicht"
+            android:id="@+id/tab_buyorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/kauforder" />
+            android:text="@string/kaufauftrag" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_statistik"
+            android:id="@+id/tab_sellorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/verkaufsorder" />
+            android:text="@string/verkaufauftrag" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <LinearLayout
-        android:id="@+id/fragment_loader_linear_layout"
+        android:id="@+id/order_fragment_loader_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" />

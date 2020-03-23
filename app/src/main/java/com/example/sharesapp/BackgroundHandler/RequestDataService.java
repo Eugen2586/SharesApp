@@ -70,8 +70,8 @@ public class RequestDataService extends Service {
                     public void run() {
                         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
                         if (stockList != null) {
-                            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList();
-                            ArrayList<Order> sellOrderList = model.getData().getSellOrderList();
+                            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
+                            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
                             Set<String> symbolSet = new HashSet<>();
 
                             // get all symbols for requests

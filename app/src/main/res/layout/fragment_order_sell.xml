@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/overview_margin"
         android:gravity="center"
-        android:text="@string/du_hast_momentan_keine_vekaufauftr_ge_erteilt"
+        android:text="@string/du_hast_momentan_keine_verkaufauftr_ge_erteilt"
         android:textAlignment="center" />
 
     <androidx.recyclerview.widget.RecyclerView

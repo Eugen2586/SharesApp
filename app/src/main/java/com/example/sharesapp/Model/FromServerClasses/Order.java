@@ -1,14 +1,20 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
 public class Order {
+    private Aktie stock;
     private String symbol;
     private int number;
     private float limit;
 
-    public Order(String symbol, int number, float limit) {
+    public Order(Aktie stock, String symbol, int number, float limit) {
+        this.stock = stock;
         this.symbol = symbol;
         this.number = number;
         this.limit = limit;
+    }
+
+    public Aktie getStock() {
+        return stock;
     }
 
     public String getSymbol() {

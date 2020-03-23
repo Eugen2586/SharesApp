@@ -465,6 +465,13 @@ public class AktienDetailsFragment extends Fragment {
                 }
             }
             root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+        } else {
+            Requests requests = new Requests();
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

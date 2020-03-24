@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/overview_margin"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/overview_margin"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,12 +23,11 @@
                 android:text="@string/lade_inhalte"
                 android:textAlignment="center" />
 
-            <FrameLayout
-                android:id="@+id/graphic_frame"
+            <com.anychart.AnyChartView
+                android:id="@+id/any_chart_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </FrameLayout>
+                android:layout_height="164dp"
+                android:visibility="gone" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -66,7 +65,7 @@
                         android:id="@+id/name_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="10"/>
+                        android:ems="10" />
                 </TableRow>
 
                 <TableRow

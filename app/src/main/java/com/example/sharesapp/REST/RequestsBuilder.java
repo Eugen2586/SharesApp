@@ -28,6 +28,6 @@ public class RequestsBuilder {
     }
 
     public static String getHistoricalQuotePrices(String symbol, String range) {
-        return "stock/" + symbol + "/chart/" + range.toString();
+        return "stock/" + symbol + "/chart/" + range;
     }
 }

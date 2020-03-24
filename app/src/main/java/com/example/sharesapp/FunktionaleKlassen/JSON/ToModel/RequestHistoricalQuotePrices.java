@@ -1,6 +1,5 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
-import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.Model;
@@ -31,8 +30,8 @@ public class RequestHistoricalQuotePrices {
             db.setDate(json.get("date").toString());
             db.setOpen(json.get("open").toString());
             db.setClose(json.get("close").toString());
-            db.setHigh(json.get("high").toString());
-            db.setLow(json.get("low").toString());
+            db.setHigh(Double.parseDouble(String.valueOf(json.get("high"))));
+            db.setLow(Double.parseDouble(String.valueOf(json.get("low"))));
             db.setVolume(json.get("volume").toString());
             db.setUVolume(json.get("uVolume").toString());
             db.setuHigh(json.get("uHigh").toString());
@@ -43,14 +42,11 @@ public class RequestHistoricalQuotePrices {
             dbs.add(db);
         }
         Model m = new Model();
-        ArrayList<Aktie> stockList = m.getData().getAktienList().getValue();
-        for (Object f : stockList) {
-            Aktie g = (Aktie) f;
-            if (dbs.size() > 0 && g.getName().equals(((Aktie) dbs.get(0)).getName())) {
-                g.setChart(dbs);
-            }
-        }
-        m.getData().getAktienList().postValue(stockList);
+        Aktie currentStock = m.getData().getCurrentStock();
+
+        currentStock.setChart(dbs);
+
+        m.getData().currentStock.postValue(currentStock);
     }
 
     public ArrayList getDbs() {

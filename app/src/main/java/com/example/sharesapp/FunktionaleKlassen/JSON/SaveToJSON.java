@@ -19,11 +19,10 @@ import java.util.ArrayList;
             //Here it should all Data from the Model get putted!
 
             //Trades
-            s = tradesToString();
             try {
-                editor.putString("Trades", s);
+                editor.putString("Tr", tradesToString());
             }catch(Exception e) {
-
+                System.out.print(e.getMessage());
             }
             s = null;
             //Depot Inhalt

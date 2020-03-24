@@ -29,6 +29,8 @@
                 android:id="@+id/receiptlist"
                 android:layout_width="362dp"
                 android:layout_height="370dp"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/row_stock_item_padding"
                 tools:listitem="@layout/row_trade_item" />
 
         </LinearLayout>

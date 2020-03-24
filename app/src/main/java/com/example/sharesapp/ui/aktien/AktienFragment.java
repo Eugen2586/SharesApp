@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,6 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -35,6 +35,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
     private ArrayList<String> previousAvailableTypes = null;
     private TabLayout tabLayout;
     private int selectedTabsCounter = 0;
+    private int numberOfTabs = 2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,19 +48,27 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                addTabs(finalTabLayout);
+                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
             }
         };
 
         final Observer<Integer> resetObserver = new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                addTabs(finalTabLayout);
+                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+            }
+        };
+
+        final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> depotList) {
+                setCategory(0);
             }
         };
 
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
         model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
+        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -67,62 +76,77 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                 if (selectedTabsCounter != 0) {
                     model.getData().setPreviouslySelectedTabIndex(tabLayout.getSelectedTabPosition());
                 }
-                selectedTabsCounter++;
                 setCategory(tab.getPosition());
+                scrollToCategoryScrollState(tab.getPosition());
+                selectedTabsCounter++;
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                saveCategoryScrollState(tab.getPosition());
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
         return root;
     }
 
     @Override
     public void onResume() {
         previousAvailableTypes = null;
-        addTabs(tabLayout);
+        addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
         super.onResume();
+        scrollToCategoryScrollState(tabLayout.getSelectedTabPosition());
+        scrollToSelectedTabAfterLayout();
     }
 
-    private void addTabs(TabLayout tabLayout) {
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveCategoryScrollState(tabLayout.getSelectedTabPosition());
+    }
+
+    private void addTabsAndStocksToCurrentlySelectedCategory(TabLayout tabLayout) {
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
         if (availableTypes != null) {
-            boolean differentCategories = false;
-            if (previousAvailableTypes != null) {
-                for (String str : availableTypes) {
-                    if (!previousAvailableTypes.contains(str)) {
-                        for (int i = 0; i < previousAvailableTypes.size(); i++) {
-                            System.out.println(previousAvailableTypes.get(i));
-                        }
-                        System.out.println(str);
-                        differentCategories = true;
-                    }
-                }
-            }
-            if (previousAvailableTypes == null || differentCategories) {
-                previousAvailableTypes = new ArrayList<>(Arrays.asList(availableTypes));
-                selectedTabsCounter = 0;
-
-                // remove all Tabs
-                tabLayout.removeAllTabs();
-
-                // add Portfolio and Alles Tab
-                addTabWithString(tabLayout, "portfolio");
-                addTabWithString(tabLayout, "alles");
-
-                // add Tabs for existing StockTypes
-                for (String category : availableTypes) {
-                    addTabWithString(tabLayout, category);
-                }
-            }
+            addTabs(tabLayout, availableTypes);
             selectPreviouslySelectedTab(tabLayout);
             setCategory(tabLayout.getSelectedTabPosition());
+        }
+    }
+
+    private void addTabs(TabLayout tabLayout, String[] availableTypes) {
+        boolean differentCategories = false;
+        if (previousAvailableTypes != null) {
+            for (String str : availableTypes) {
+                if (!previousAvailableTypes.contains(str)) {
+                    for (int i = 0; i < previousAvailableTypes.size(); i++) {
+                        System.out.println(previousAvailableTypes.get(i));
+                    }
+                    System.out.println(str);
+                    differentCategories = true;
+                }
+            }
+        }
+        if (previousAvailableTypes == null || differentCategories) {
+            previousAvailableTypes = new ArrayList<>(Arrays.asList(availableTypes));
+            selectedTabsCounter = 0;
+
+            // remove all Tabs
+            tabLayout.removeAllTabs();
+
+            // add Portfolio and Alles Tab
+            addTabWithString(tabLayout, "portfolio");
+            addTabWithString(tabLayout, "alles");
+
+            // add Tabs for existing StockTypes
+            for (String category : availableTypes) {
+                addTabWithString(tabLayout, category);
+            }
+
+            numberOfTabs = availableTypes.length + 2;
         }
     }
 
@@ -198,8 +222,48 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         recyclerView.setAdapter(adapter);
     }
 
+    private void scrollToSelectedTabAfterLayout() {
+        if (getView() != null) {
+            final ViewTreeObserver observer = tabLayout.getViewTreeObserver();
+
+            if (observer.isAlive()) {
+                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        observer.removeOnGlobalLayoutListener(this);
+                        selectPreviouslySelectedTab(tabLayout);
+                    }
+                });
+            }
+        }
+    }
+
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
-        System.out.println(model.getData().getPreviouslySelectedTabIndex());
         tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
+    }
+
+    private void saveCategoryScrollState(int tabPosition) {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int scrollState = 0;
+        if (linearLayoutManager != null) {
+            scrollState = linearLayoutManager.findFirstVisibleItemPosition();
+        }
+        ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();
+        if (categoryScrollPositions == null || categoryScrollPositions.size() < numberOfTabs) {
+            model.getData().createCategoryScrollPositions(numberOfTabs);
+        }
+        if (scrollState != -1) {
+            categoryScrollPositions.set(tabPosition, scrollState);
+        }
+    }
+
+    private void scrollToCategoryScrollState(int tabPosition) {
+        int scrollState = 0;
+        ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();
+        if (categoryScrollPositions != null && tabPosition < categoryScrollPositions.size()) {
+            scrollState = categoryScrollPositions.get(tabPosition);
+        }
+        recyclerView.scrollToPosition(scrollState);
     }
 }

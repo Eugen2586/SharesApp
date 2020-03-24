@@ -1,7 +1,10 @@
 package com.example.sharesapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.sharesapp.BackgroundHandler.RequestDataService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
@@ -41,8 +45,13 @@ public class DrawerActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
     private Requests requests = new Requests();
+    private MediaPlayer backgroundMediaPlayer;
+
     @Override
     protected void onStop() {
+        // TODO: intent persistent
+        Intent intent = new Intent(this, RequestDataService.class);
+        startService(intent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
@@ -51,13 +60,27 @@ public class DrawerActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         super.onStop();
         //If the App Stopps we store the Data!
+    }
 
+    @Override
+    protected void onDestroy() {
+        // remove MediaPlayer
+        if (backgroundMediaPlayer != null) {
+            backgroundMediaPlayer.stop();
+            backgroundMediaPlayer.release();
+            backgroundMediaPlayer = null;
+        }
+        super.onDestroy();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sendRequestsForDepot();
+        // TODO: stop Service with saved intent
+//        stopService();
         super.onCreate(savedInstanceState);
         /* Do persistance Stuff.
 
@@ -131,39 +154,37 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (view != null) {
-//                    Navigation.findNavController(getCallingActivity(), R.id.fragment_).navigateUp();
-//                }
-//            }
-//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_depot, R.id.nav_search, R.id.nav_aktien, R.id.nav_historie,
-                R.id.nav_erfolge, R.id.nav_newgame)
+                R.id.nav_depot, R.id.nav_search, R.id.nav_aktien, R.id.nav_order,
+                R.id.nav_historie, R.id.nav_erfolge, R.id.nav_newgame)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Initializes RequestClient
-        //Requests req = new Requests();
-        //String s = null;
-        //try {
-        //    s =  req.run(RequestsBuilder.getAllSymbolsURL());
-        //    RequestSymbol regs = new RequestSymbol(s);
-        //    ArrayList a = regs.getAk();
-//
-  //      } catch (Exception e) {
-//
-  //      }
+        // initialize Media Player https://www.bensound.com/royalty-free-music/track/creative-minds
+        backgroundMediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+        backgroundMediaPlayer.setLooping(true);
+        backgroundMediaPlayer.start();
+    }
+
+    private void sendRequestsForDepot() {
+        ArrayList<Aktie> stockList = model.getData().getDepot().getAktienImDepot().getValue();
+        Requests requests = new Requests();
+        if (stockList != null) {
+            for (Aktie stock: stockList) {
+                try {
+                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private ArrayList<Trade> getTradeListe(String st) throws ParseException {
@@ -379,5 +400,21 @@ public class DrawerActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (backgroundMediaPlayer.isPlaying()) {
+            backgroundMediaPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
+            backgroundMediaPlayer.start();
+        }
     }
 }

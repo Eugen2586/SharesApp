@@ -28,5 +28,7 @@
         android:id="@+id/aktien_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/row_stock_item_padding"
         tools:listitem="@layout/row_stock_item" />
 </LinearLayout>

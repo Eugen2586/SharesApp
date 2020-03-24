@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
@@ -17,14 +18,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecyclerViewAdapter.ViewHolder> {
+public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Aktie> mData;
+    private ArrayList<Order> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public StockRecyclerViewAdapter(Context context, ArrayList<Aktie> data) {
+    public OrderRecyclerViewAdapter(Context context, ArrayList<Order> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -40,27 +41,15 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Aktie aktie = mData.get(position);
+        Order order = mData.get(position);
+        Aktie aktie = order.getStock();
         holder.mySymbolView.setText(aktie.getSymbol());
         holder.myTextView.setText(aktie.getName());
         holder.myTypeView.setText(aktie.getType());
 
-        // set value if stock in depot
-        ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();
-        if (depotList != null) {
-            boolean notFoundInDepot = true;
-            for (Aktie depotStock : depotList) {
-                if (depotStock.getSymbol().equals(aktie.getSymbol())) {
-                    String text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautiful(depotStock.getPreis()) + "€";
-                    holder.myDepotValueView.setText(text);
-                    notFoundInDepot = false;
-                    break;
-                }
-            }
-            if (notFoundInDepot) {
-                holder.myDepotValueView.setText("");
-            }
-        }
+        // set value for order number and limit
+        String text = order.getNumber() + " x " + (new Anzeige()).makeItBeautifulEuro(order.getLimit());
+        holder.myDepotValueView.setText(text);
     }
 
     // total number of rows
@@ -69,7 +58,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
         return mData == null ? 0 : mData.size();
     }
 
-    public void setAktien(ArrayList<Aktie> data) {
+    public void setAktien(ArrayList<Order> data) {
         if (!data.equals(mData)) {
             mData = data;
             notifyDataSetChanged();
@@ -99,7 +88,7 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     }
 
     // convenience method for getting data at click position
-    Aktie getItem(int id) {
+    Order getItem(int id) {
         return mData.get(id);
     }
 

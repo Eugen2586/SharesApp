@@ -25,6 +25,8 @@ import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,10 +36,15 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private RecyclerView recyclerView = null;
     private View root;
     private int searchIndex = 0;
+    private TextView noSearchText;
+    private TextView searchText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_search, container, false);
+
+        noSearchText = root.findViewById(R.id.no_search_text);
+        searchText = root.findViewById(R.id.search_text);
 
         final Spinner spinner = root.findViewById(R.id.spinner);
         initCategorieSpinner(spinner);
@@ -66,6 +73,20 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
         return root;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (recyclerView != null) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int scrollState = 0;
+            if (linearLayoutManager != null) {
+                scrollState = linearLayoutManager.findFirstVisibleItemPosition();
+            }
+            model.getData().setSearchScrollPosition(scrollState);
+        }
+    }
+
 
     private void initCategorieSpinner(Spinner spinner) {
         Context context = this.getContext();
@@ -118,7 +139,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             }
 
             boolean stocksFound = filteredStockList.size() != 0;
-            showSearchTextView(stocksFound);
 
             initRecyclerView();
             StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
@@ -147,23 +167,17 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             } else {
                 model.getData().addAktienList(stockList);
             }
-        }
-    }
 
-    private void showSearchTextView(boolean stocksFound) {
-        TextView searchTextView = root.findViewById(R.id.search_text);
-        if (stocksFound) {
-            searchTextView.setText(R.string.deine_suche_ergab_folgende_treffer);
-        } else {
-            searchTextView.setText(R.string.deine_suche_ergab_keine_treffer);
+            recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
-        searchTextView.setVisibility(View.VISIBLE);
+
+        showHideComponents(stockList);
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        // opens stock details copied from AktienFragment
-        TextView symbolView = view.findViewById(R.id.stock_text);
+        // opens stock details
+        TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
@@ -175,5 +189,26 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             e.printStackTrace();
         }
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
+    private void showHideComponents(ArrayList<Aktie> stockList) {
+        if (stockList == null || stockList.size() == 0) {
+            noSearchText.setVisibility(View.VISIBLE);
+            searchText.setVisibility(View.GONE);
+            if (recyclerView != null) {
+                recyclerView.setVisibility(View.GONE);
+            }
+            if (model.getData().getCurrentSearchString() == null || model.getData().getCurrentSearchString().equals("")) {
+                noSearchText.setText(R.string.suche_nach_einem_begriff_um_suchergebnisse_zu_erhalten);
+            } else {
+                noSearchText.setText(R.string.deine_suche_ergab_keine_treffer);
+            }
+        } else {
+            noSearchText.setVisibility(View.GONE);
+            searchText.setVisibility(View.VISIBLE);
+            if (recyclerView != null) {
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

@@ -124,6 +124,13 @@
             </TableLayout>
 
             <Button
+                android:id="@+id/order_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/l_sche_alle_auftr_ge"
+                android:visibility="gone" />
+
+            <Button
                 android:id="@+id/kaufen_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,13 +142,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/verkaufen"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/order_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/l_sche_alle_auftr_ge"
                 android:visibility="gone" />
 
             <Button

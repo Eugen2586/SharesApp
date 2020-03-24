@@ -83,9 +83,9 @@ public class Depot {
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
         Aktie toRemove = null;
         for (Aktie ak : stocks) {
-            if (ak.getName().equals(a.getName())) {
+            if (ak.getSymbol().equals(a.getSymbol())) {
                 in = true;
-                if (a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()) {
+                if (a.getSymbol().equals(ak.getSymbol()) && a.getAnzahl() <= ak.getAnzahl()) {
                     in = false;
                     ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
                     geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
@@ -105,8 +105,6 @@ public class Depot {
         }
 
         stocks.remove(toRemove);
-
-
     }
 
     public float getGeldwert() {

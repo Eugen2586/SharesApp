@@ -4,7 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -26,34 +29,52 @@ public class Depot {
 
     Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
-        this.geldwert = Constants.MONEY;
     }
 
-    public void kaufeAktie(Aktie a) {
-        if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
-            in = false;
-            Model m = new Model();
-            ArrayList<Aktie> stocks = aktienImDepot.getValue();
 
-            for (Object t : stocks) {
-                Aktie ak = (Aktie) t;
-                if (ak.getName().equals(a.getName())) {
-                    in = true;
+    public boolean kaufeAktie(Aktie a) {
+        // check if stock already in depot for MaxNumberDifferentStocks in Depot
+        boolean stockAlreadyInDepot = false;
+        if (aktienImDepot.getValue() != null) {
+            for (Aktie stock : aktienImDepot.getValue()) {
+                if (stock.getSymbol().equals(a.getSymbol())) {
+                    stockAlreadyInDepot = true;
+                }
+            }
+        }
+
+        // if depotStockLimit not reached, buy the stock
+        if (aktienImDepot.getValue() != null &&
+                aktienImDepot.getValue().size() >= Constants.NUMBER_DEPOT_STOCKS &&
+                !stockAlreadyInDepot) {
+            return true;
+        } else {
+            if (geldwert - a.getPreis() * a.getAnzahl() >= 0) {
+                in = false;
+                Model m = new Model();
+                ArrayList<Aktie> stocks = aktienImDepot.getValue();
+
+                for (Object t : stocks) {
+                    Aktie ak = (Aktie) t;
+                    if (ak.getName().equals(a.getName())) {
+                        in = true;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        m.getData().addTrade(trade);
+                    }
+                }
+
+                if (!in) {
+                    stocks.add(a);
                     geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                    ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
                     Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                     m.getData().addTrade(trade);
                 }
-            }
 
-            if (!in) {
-                stocks.add(a);
-                geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
-                m.getData().addTrade(trade);
+                aktienImDepot.postValue(stocks);
             }
-
-            aktienImDepot.postValue(stocks);
+            return false;
         }
     }
 
@@ -62,9 +83,9 @@ public class Depot {
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
         Aktie toRemove = null;
         for (Aktie ak : stocks) {
-            if (ak.getName().equals(a.getName())) {
+            if (ak.getSymbol().equals(a.getSymbol())) {
                 in = true;
-                if (a.getName().equals(ak.getName()) && a.getAnzahl() <= ak.getAnzahl()) {
+                if (a.getSymbol().equals(ak.getSymbol()) && a.getAnzahl() <= ak.getAnzahl()) {
                     in = false;
                     ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
                     geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
@@ -84,8 +105,6 @@ public class Depot {
         }
 
         stocks.remove(toRemove);
-
-
     }
 
     public float getGeldwert() {
@@ -105,12 +124,12 @@ public class Depot {
     }
 
     public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
-        this.aktienImDepot.setValue(aktienImDepot);
+        this.aktienImDepot.postValue(aktienImDepot);
     }
 
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
-	}
+    }
 
     public Aktie findStockbySymbol(String symbol) {
         Aktie stock = null;

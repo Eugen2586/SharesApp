@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_dollar"
             android:title="@string/menu_aktien" />
         <item
+            android:id="@+id/nav_order"
+            android:icon="@drawable/ic_order"
+            android:title="@string/menu_auftr_ge" />
+        <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_black"
             android:title="@string/menu_suche" />

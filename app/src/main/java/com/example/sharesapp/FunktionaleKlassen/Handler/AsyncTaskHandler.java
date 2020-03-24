@@ -36,8 +36,6 @@ public class AsyncTaskHandler {
             }
         } else if (url.contains("stock")) {
 
-            System.out.println(s);
-
             try {
                 new RequestQuotePrices(s);
 

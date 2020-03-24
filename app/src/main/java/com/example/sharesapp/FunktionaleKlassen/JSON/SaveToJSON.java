@@ -19,22 +19,29 @@ import java.util.ArrayList;
             //Here it should all Data from the Model get putted!
 
             //Trades
-            s = tradesToString();
             try {
-                editor.putString("Trades", s);
+                editor.putString("Tr", tradesToString());
             }catch(Exception e) {
-
+                System.out.print(e.getMessage());
             }
             s = null;
             //Depot Inhalt
             s = aktienImDepotToString();
             try {
                 editor.putString("Depot", s);
-                editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+
             }catch(Exception e) {
 
             }
             s = null;
+            Float f = 5000.0f;
+            try{
+                f = new Model().getData().getDepot().getGeldwert();
+                editor.putFloat("Geldwert",f);
+            }catch(Exception e){
+                System.out.println(f);
+            }
+
 
             //Portfolio Liste
             s = portfolioListeToString();
@@ -97,13 +104,14 @@ import java.util.ArrayList;
         private String tradesToString() {
             String s = null;
             JSONArray ar = new JSONArray();
-            for (Object o:new Model().getData().getDepot().getAktienImDepot().getValue()) {
+            for (Object o:new Model().getData().getTrades()) {
                 Trade ak = (Trade) o;
                 JSONObject obj = new JSONObject();
-                obj.put("Aktie", ak.getAktie().getJsonFromAktie());
-                obj.put("Symbol", ak.getAnzahl());
-                obj.put("Exchange", ak.getDate());
-                obj.put("Date", ak.getPreis());
+                obj.put("aktie", ak.getAktie().getJsonFromAktie());
+                obj.put("anzahl", ak.getAnzahl());
+                obj.put("date", ak.getDate());
+                obj.put("preis", ak.getPreis());
+                obj.put("iskauf", ak.isKauf());
                 ar.add(obj);
             }
             s = ar.toJSONString();

@@ -28,7 +28,6 @@ public class RequestQuotePrices {
     private ArrayList<Aktie> actualizeArrayList(JSONObject jsonar, ArrayList<Aktie> list) {
         for (Aktie t : list) {
             if (jsonar.get("symbol").equals(t.getSymbol())) {
-                System.out.println(t);
                 t.setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
                 if (jsonar.get("change") != null) {
                     t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));

@@ -127,6 +127,7 @@ public class Aktie implements Comparator {
 
     public void setAnzahl(int anzahl) {
         this.anzahl = anzahl;
+        this.menge = anzahl;
     }
 
     public Object getChange() {

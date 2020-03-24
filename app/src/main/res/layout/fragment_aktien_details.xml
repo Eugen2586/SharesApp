@@ -154,6 +154,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/overview_margin"
+                android:layout_marginBottom="@dimen/overview_margin"
                 android:orientation="vertical">
 
                 <TableLayout
@@ -178,13 +180,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:text="@string/menge" />
+                            android:text="@string/menge"
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/buy_number_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:textAlignment="center"/>
                     </TableRow>
 
                     <TableRow
@@ -195,13 +199,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:text="@string/limit" />
+                            android:text="@string/limit"
+                            android:textAlignment="center"/>
 
                         <TextView
                             android:id="@+id/buy_limit_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:textAlignment="center"/>
                     </TableRow>
                 </TableLayout>
 
@@ -227,13 +233,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:text="@string/menge" />
+                            android:text="@string/menge"
+                            android:textAlignment="center"/>
 
                         <TextView
                             android:id="@+id/sell_number_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:textAlignment="center"/>
                     </TableRow>
 
                     <TableRow
@@ -244,13 +252,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:text="@string/limit" />
+                            android:text="@string/limit"
+                            android:textAlignment="center"/>
 
                         <TextView
                             android:id="@+id/sell_limit_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:textAlignment="center"/>
                     </TableRow>
                 </TableLayout>
 

@@ -253,7 +253,7 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
         if (categoryScrollPositions == null || categoryScrollPositions.size() < numberOfTabs) {
             model.getData().createCategoryScrollPositions(numberOfTabs);
         }
-        if (scrollState != -1) {
+        if (categoryScrollPositions != null && scrollState != -1) {
             categoryScrollPositions.set(tabPosition, scrollState);
         }
     }

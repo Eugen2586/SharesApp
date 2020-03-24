@@ -73,12 +73,6 @@ public class AktienDetailsFragment extends Fragment {
         setStockDetails();
 
         final Button sellButton = root.findViewById(R.id.verkaufen_button);
-        int anzahl = getFoundInDepot();
-        if (anzahl == 0) {
-            sellButton.setVisibility(View.GONE);
-        } else {
-            sellButton.setVisibility(View.VISIBLE);
-        }
 
         final Button buyButton = root.findViewById(R.id.kaufen_button);
 
@@ -399,7 +393,6 @@ public class AktienDetailsFragment extends Fragment {
                 createDeleteOrderConfirmation();
             }
         });
-        showHideDeleteOrderButton();
 
         // Listener for buyOrderList and sellOrderList
         final Observer<ArrayList<Order>> buyOrderObserver = new Observer<ArrayList<Order>>() {
@@ -589,16 +582,13 @@ public class AktienDetailsFragment extends Fragment {
             // make buttons visible
             root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
             root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
-            ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-            if (depotList != null) {
-                for (Aktie depotStock: depotList) {
-                    if (stock.getSymbol().equals(depotStock.getSymbol())) {
-                        root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
-                        return;
-                    }
-                }
+            showHideDeleteOrderButton();
+            int numberInDepot = getFoundInDepot();
+            if (numberInDepot == 0) {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+            } else {
+                root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
             }
-            root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
         } else {
             Requests requests = new Requests();
             try {

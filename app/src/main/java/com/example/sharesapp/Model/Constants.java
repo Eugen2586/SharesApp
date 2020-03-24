@@ -6,5 +6,4 @@ public class Constants {
     public static final String[] TYPE_ABBREVIATIONS = {"alles", "ad", "re", "ce", "si", "lp", "cs", "et", "wt", "rt", "ut", "temp", " ", "oef", "ps", "cef", "struct"};
 
     public static final int MONEY = 50000;
-    public static final int NUMBER_DEPOT_STOCKS = 20;
 }

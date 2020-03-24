@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/row_stock_item_padding">
 
             <TextView
                 android:id="@+id/name_big"
@@ -26,12 +27,13 @@
             <com.anychart.AnyChartView
                 android:id="@+id/any_chart_view"
                 android:layout_width="match_parent"
-                android:layout_height="164dp"
+                android:layout_height="200dp"
                 android:visibility="gone" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overview_margin"
                 android:stretchColumns="*">
 
                 <TableRow
@@ -123,16 +125,11 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/order_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/l_sche_alle_auftr_ge"
-                android:visibility="gone" />
-
-            <Button
                 android:id="@+id/kaufen_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/kaufen"
                 android:visibility="gone" />
 
@@ -140,6 +137,8 @@
                 android:id="@+id/verkaufen_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/verkaufen"
                 android:visibility="gone" />
 
@@ -147,7 +146,123 @@
                 android:id="@+id/portfolio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/add_to_portfolio"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:id="@+id/buy_order_table_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/overview_margin"
+                    android:layout_marginEnd="@dimen/overview_margin"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kaufauftrag"
+                        android:textAlignment="center" />
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:text="@string/menge" />
+
+                        <TextView
+                            android:id="@+id/buy_number_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:text="@string/limit" />
+
+                        <TextView
+                            android:id="@+id/buy_limit_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10" />
+                    </TableRow>
+                </TableLayout>
+
+                <TableLayout
+                    android:id="@+id/sell_order_table_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/overview_margin"
+                    android:layout_marginEnd="@dimen/overview_margin"
+                    android:stretchColumns="*">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/verkaufauftrag"
+                        android:textAlignment="center" />
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:text="@string/menge" />
+
+                        <TextView
+                            android:id="@+id/sell_number_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:text="@string/limit" />
+
+                        <TextView
+                            android:id="@+id/sell_limit_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10" />
+                    </TableRow>
+                </TableLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/order_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
+                android:text="@string/l_sche_alle_auftr_ge"
                 android:visibility="gone" />
 
         </LinearLayout>

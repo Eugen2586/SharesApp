@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,6 @@ import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
-import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Order;
@@ -176,16 +176,13 @@ public class AktienDetailsFragment extends Fragment {
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                                 } else {
                                                     a.setAnzahl(number);
-                                                    boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
-                                                    if (depotLimitReached) {
-                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
-                                                    } else {
-                                                        // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
-                                                        MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+                                                    model.getData().getDepot().kaufeAktie(a);
 
-                                                        sellButton.setVisibility(View.VISIBLE);
-                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
-                                                    }
+                                                    // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                    MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                                 }
                                             } else {
                                                 handleBuyOrder(buyDialogView);
@@ -378,11 +375,9 @@ public class AktienDetailsFragment extends Fragment {
 
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
                 Requests requests = new Requests();
                 try {
                     requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
@@ -407,7 +402,7 @@ public class AktienDetailsFragment extends Fragment {
         final Observer<ArrayList<Order>> buyOrderObserver = new Observer<ArrayList<Order>>() {
             @Override
             public void onChanged(ArrayList<Order> orderList) {
-                showHideDeleteOrderButton();
+                showHideEditOrderViews();
             }
         };
         model.getData().getBuyOrderList().observe(getViewLifecycleOwner(), buyOrderObserver);
@@ -415,7 +410,7 @@ public class AktienDetailsFragment extends Fragment {
         final Observer<ArrayList<Order>> sellOrderObserver = new Observer<ArrayList<Order>>() {
             @Override
             public void onChanged(ArrayList<Order> orderList) {
-                showHideDeleteOrderButton();
+                showHideEditOrderViews();
             }
         };
         model.getData().getSellOrderList().observe(getViewLifecycleOwner(), sellOrderObserver);
@@ -434,10 +429,10 @@ public class AktienDetailsFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Alle Aufträge dieser Aktie wurden gelöscht", Toast.LENGTH_LONG).show();
 
-                            ArrayList<Order> buyOrderListToRemove = getAllOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
-                            model.getData().removeBuyOrderList(buyOrderListToRemove);
-                            ArrayList<Order> sellOrderListToRemove = getAllOrderForCurrentStock(model.getData().getSellOrderList().getValue());
-                            model.getData().removeSellOrderList(sellOrderListToRemove);
+                            Order buyOrder = getOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
+                            model.getData().removeBuyOrder(buyOrder);
+                            Order sellOrder = getOrderForCurrentStock(model.getData().getSellOrderList().getValue());
+                            model.getData().removeSellOrder(sellOrder);
                         }
                     });
             builder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
@@ -452,13 +447,34 @@ public class AktienDetailsFragment extends Fragment {
         }
     }
 
-    private void showHideDeleteOrderButton() {
-        ArrayList<Order> buyOrderList = getAllOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
-        ArrayList<Order> sellOrderList = getAllOrderForCurrentStock(model.getData().getSellOrderList().getValue());
-        if (buyOrderList.size() == 0 && sellOrderList.size() == 0) {
+    private void showHideEditOrderViews() {
+        Order buyOrder = getOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
+        Order sellOrder = getOrderForCurrentStock(model.getData().getSellOrderList().getValue());
+        if (buyOrder == null && sellOrder == null) {
             root.findViewById(R.id.order_button).setVisibility(View.GONE);
         } else {
             root.findViewById(R.id.order_button).setVisibility(View.VISIBLE);
+        }
+
+        // edit buyOrder Table
+        if (buyOrder != null) {
+            root.findViewById(R.id.buy_order_table_layout).setVisibility(View.VISIBLE);
+//            ((TextView) root.findViewById(R.id.buy_number_field)).setText(buyOrder.getNumber());
+//            ((TextView) root.findViewById(R.id.buy_limit_field)).setText((new Anzeige()).makeItBeautifulEuro(buyOrder.getLimit()));
+        } else {
+            root.findViewById(R.id.buy_order_table_layout).setVisibility(View.VISIBLE);
+        }
+
+        // edit sellOrder Table
+        if (sellOrder != null) {
+            TableLayout sellOrderTableLayout = root.findViewById(R.id.sell_order_table_layout);
+            sellOrderTableLayout.setVisibility(View.VISIBLE);
+//            TextView sellNumberView = root.findViewById(R.id.sell_number_field);
+//            sellNumberView.setText(sellOrder.getNumber());
+//            TextView sellLimitView = root.findViewById(R.id.sell_limit_field);
+//            sellLimitView.setText((new Anzeige()).makeItBeautifulEuro(sellOrder.getLimit()));
+        } else {
+            root.findViewById(R.id.sell_order_table_layout).setVisibility(View.VISIBLE);
         }
     }
 
@@ -492,17 +508,16 @@ public class AktienDetailsFragment extends Fragment {
         }
     }
 
-    private ArrayList<Order> getAllOrderForCurrentStock(ArrayList<Order> buySellOrderList) {
+    private Order getOrderForCurrentStock(ArrayList<Order> buySellOrderList) {
         Aktie currentStock = model.getData().getCurrentStock();
-        ArrayList<Order> orderList = new ArrayList<>();
         if (buySellOrderList != null) {
             for (Order order : buySellOrderList) {
                 if (order.getSymbol().equals(currentStock.getSymbol())) {
-                    orderList.add(order);
+                    return order;
                 }
             }
         }
-        return orderList;
+        return null;
     }
 
     private void checkVerkaufMenge(int anzahl) {
@@ -588,10 +603,12 @@ public class AktienDetailsFragment extends Fragment {
             TextView typeTV = root.findViewById(R.id.type_field);
             typeTV.setText(stock.getType());
 
-            // make buttons visible
+            // configure order information
+            showHideEditOrderViews();
+
+            // make buy sell portfolio button visible
             root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
             root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
-            showHideDeleteOrderButton();
             int numberInDepot = getFoundInDepot();
             if (numberInDepot == 0) {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
@@ -711,6 +728,6 @@ public class AktienDetailsFragment extends Fragment {
             }
         };
 
-        limit.setFilters(new InputFilter[] { filter });
+        limit.setFilters(new InputFilter[]{filter});
     }
 }

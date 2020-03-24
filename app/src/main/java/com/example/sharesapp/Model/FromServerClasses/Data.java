@@ -219,6 +219,8 @@ public class Data {
         increaseResetValue();
         categoryScrollPositions = null;
         searchScrollPosition = 0;
+        previouslySelectedDepotTabIndex = 0;
+        previouslySelectedOrderTabIndex = 0;
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 

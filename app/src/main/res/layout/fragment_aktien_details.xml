@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/row_stock_item_padding">
 
             <TextView
                 android:id="@+id/name_big"
@@ -26,12 +27,13 @@
             <com.anychart.AnyChartView
                 android:id="@+id/any_chart_view"
                 android:layout_width="match_parent"
-                android:layout_height="164dp"
+                android:layout_height="500dp"
                 android:visibility="gone" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overview_margin"
                 android:stretchColumns="*">
 
                 <TableRow
@@ -126,6 +128,8 @@
                 android:id="@+id/order_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/l_sche_alle_auftr_ge"
                 android:visibility="gone" />
 
@@ -133,6 +137,8 @@
                 android:id="@+id/kaufen_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/kaufen"
                 android:visibility="gone" />
 
@@ -140,6 +146,8 @@
                 android:id="@+id/verkaufen_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/verkaufen"
                 android:visibility="gone" />
 
@@ -147,6 +155,8 @@
                 android:id="@+id/portfolio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:text="@string/add_to_portfolio"
                 android:visibility="gone" />
 

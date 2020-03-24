@@ -176,16 +176,13 @@ public class AktienDetailsFragment extends Fragment {
                                                     Toast.makeText(AktienDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                                 } else {
                                                     a.setAnzahl(number);
-                                                    boolean depotLimitReached = model.getData().getDepot().kaufeAktie(a);
-                                                    if (depotLimitReached) {
-                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Depotlimit von " + Constants.NUMBER_DEPOT_STOCKS + " wurde erreicht.", Toast.LENGTH_LONG).show();
-                                                    } else {
-                                                        // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
-                                                        MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+                                                    model.getData().getDepot().kaufeAktie(a);
 
-                                                        sellButton.setVisibility(View.VISIBLE);
-                                                        Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
-                                                    }
+                                                    // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
+                                                    MediaPlayer.create(buyButton.getContext(), R.raw.poker_chips).start();
+
+                                                    sellButton.setVisibility(View.VISIBLE);
+                                                    Toast.makeText(AktienDetailsFragment.this.getContext(), "Habe Aktien gekauft.", Toast.LENGTH_LONG).show();
                                                 }
                                             } else {
                                                 handleBuyOrder(buyDialogView);
@@ -378,11 +375,9 @@ public class AktienDetailsFragment extends Fragment {
 
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
                 Requests requests = new Requests();
                 try {
                     requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
@@ -711,6 +706,6 @@ public class AktienDetailsFragment extends Fragment {
             }
         };
 
-        limit.setFilters(new InputFilter[] { filter });
+        limit.setFilters(new InputFilter[]{filter});
     }
 }

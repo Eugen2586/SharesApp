@@ -19,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.sharesapp.BackgroundHandler.RequestDataService;
+import com.example.sharesapp.BackgroundHandler.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
@@ -50,7 +51,7 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         // TODO: intent persistent
-        Intent intent = new Intent(this, RequestDataService.class);
+        Intent intent = new Intent(this, StickyNotificationService.class);
         startService(intent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
@@ -397,6 +398,8 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        Intent intent = new Intent(this, StickyNotificationService.class);
+        stopService(intent);
         super.onResume();
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();

@@ -26,8 +26,9 @@
             </intent-filter>
         </activity>
         <service android:name=".BackgroundHandler.RequestDataService"/>
+        <service android:name=".BackgroundHandler.StickyNotificationService" />
 
-<!--        <receiver android:name=".BackgroundHandler.BootReceiver">-->
+        <!--        <receiver android:name=".BackgroundHandler.BootReceiver">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
 <!--                <action android:name="android.intent.action.QUICKBOOT_POWERON" />-->

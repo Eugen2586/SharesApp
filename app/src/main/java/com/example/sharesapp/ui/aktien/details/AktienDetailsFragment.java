@@ -459,22 +459,19 @@ public class AktienDetailsFragment extends Fragment {
         // edit buyOrder Table
         if (buyOrder != null) {
             root.findViewById(R.id.buy_order_table_layout).setVisibility(View.VISIBLE);
-//            ((TextView) root.findViewById(R.id.buy_number_field)).setText(buyOrder.getNumber());
-//            ((TextView) root.findViewById(R.id.buy_limit_field)).setText((new Anzeige()).makeItBeautifulEuro(buyOrder.getLimit()));
+            ((TextView) root.findViewById(R.id.buy_number_field)).setText(String.valueOf(buyOrder.getNumber()));
+            ((TextView) root.findViewById(R.id.buy_limit_field)).setText((new Anzeige()).makeItBeautifulEuro(buyOrder.getLimit()));
         } else {
-            root.findViewById(R.id.buy_order_table_layout).setVisibility(View.VISIBLE);
+            root.findViewById(R.id.buy_order_table_layout).setVisibility(View.GONE);
         }
 
         // edit sellOrder Table
         if (sellOrder != null) {
-            TableLayout sellOrderTableLayout = root.findViewById(R.id.sell_order_table_layout);
-            sellOrderTableLayout.setVisibility(View.VISIBLE);
-//            TextView sellNumberView = root.findViewById(R.id.sell_number_field);
-//            sellNumberView.setText(sellOrder.getNumber());
-//            TextView sellLimitView = root.findViewById(R.id.sell_limit_field);
-//            sellLimitView.setText((new Anzeige()).makeItBeautifulEuro(sellOrder.getLimit()));
-        } else {
             root.findViewById(R.id.sell_order_table_layout).setVisibility(View.VISIBLE);
+            ((TextView) root.findViewById(R.id.sell_number_field)).setText(String.valueOf(sellOrder.getNumber()));
+            ((TextView) root.findViewById(R.id.sell_limit_field)).setText((new Anzeige()).makeItBeautifulEuro(sellOrder.getLimit()));
+        } else {
+            root.findViewById(R.id.sell_order_table_layout).setVisibility(View.GONE);
         }
     }
 

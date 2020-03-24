@@ -78,7 +78,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sendRequestsForDepot();
         // TODO: stop Service with saved intent
 //        stopService();
         super.onCreate(savedInstanceState);
@@ -171,20 +170,6 @@ public class DrawerActivity extends AppCompatActivity {
         backgroundMediaPlayer = MediaPlayer.create(this, R.raw.background_music);
         backgroundMediaPlayer.setLooping(true);
         backgroundMediaPlayer.start();
-    }
-
-    private void sendRequestsForDepot() {
-        ArrayList<Aktie> stockList = model.getData().getDepot().getAktienImDepot().getValue();
-        Requests requests = new Requests();
-        if (stockList != null) {
-            for (Aktie stock: stockList) {
-                try {
-                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     private ArrayList<Trade> getTradeListe(String st) throws ParseException {

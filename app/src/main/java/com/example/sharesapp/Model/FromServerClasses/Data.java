@@ -280,6 +280,14 @@ public class Data {
         buyOrderList.postValue(orderList);
     }
 
+    public void removeBuyOrder(Order buyOrder) {
+        ArrayList<Order> orderList = buyOrderList.getValue();
+        if (orderList != null) {
+            orderList.remove(buyOrder);
+            buyOrderList.postValue(orderList);
+        }
+    }
+
     public void removeBuyOrderList(ArrayList<Order> removeOrderList) {
         ArrayList<Order> orderList = buyOrderList.getValue();
         if (orderList != null) {
@@ -311,6 +319,14 @@ public class Data {
         }
         orderList.add(sellOrder);
         sellOrderList.postValue(orderList);
+    }
+
+    public void removeSellOrder(Order sellOrder) {
+        ArrayList<Order> orderList = sellOrderList.getValue();
+        if (orderList != null) {
+            orderList.remove(sellOrder);
+            sellOrderList.postValue(orderList);
+        }
     }
 
     public void removeSellOrderList(ArrayList<Order> removeOrderList) {

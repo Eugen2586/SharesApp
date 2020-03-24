@@ -13,16 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.sharesapp.BackgroundHandler.RequestDataService;
+import com.example.sharesapp.BackgroundHandler.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.DataPoint;
+import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
@@ -49,9 +53,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        // TODO: intent persistent
-        Intent intent = new Intent(this, RequestDataService.class);
-        startService(intent);
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
@@ -78,8 +83,9 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: stop Service with saved intent
-//        stopService();
+        // observer for buy and sell order
+        initializeObserverForOrderLists();
+
         super.onCreate(savedInstanceState);
         /* Do persistance Stuff.
 
@@ -397,9 +403,87 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        super.onResume();
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        stopService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        startService(requestIntent);
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();
         }
+        super.onResume();
+    }
+
+    private void initializeObserverForOrderLists() {
+        // Observer for stockList
+        final Observer<ArrayList<Aktie>> stockObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> stockList) {
+                handleChangedStockList(stockList);
+            }
+        };
+        model.getData().getAktienList().observe(this, stockObserver);
+    }
+
+    private void handleChangedStockList(ArrayList<Aktie> stockList) {
+        System.out.println("...............................................................................Handle Stocklist Change");
+        if (stockList != null) {
+            // try to buy stock
+            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
+            if (buyOrderList != null) {
+                ArrayList<Order> buyOrderListToRemove = new ArrayList<>();
+                for (Order buyOrder : buyOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (buyOrderRequirement(stock, buyOrder)) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = buyOrder.getStock().getClone();
+                            stockClone.setAnzahl(buyOrder.getNumber());
+                            model.getData().getDepot().kaufeAktie(stockClone);
+                            buyOrderListToRemove.add(buyOrder);
+                            System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
+                        }
+                        break;
+                    }
+                }
+                model.getData().removeBuyOrderList(buyOrderListToRemove);
+            }
+            // try to sell stock
+            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
+            if (sellOrderList != null) {
+                ArrayList<Order> sellOrderListToRemove = new ArrayList<>();
+                for (Order sellOrder : sellOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (sellOrderRequirement(stock, sellOrder)) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = sellOrder.getStock().getClone();
+                            stockClone.setAnzahl(sellOrder.getNumber());
+                            model.getData().getDepot().verkaufeAktie(stockClone);
+                            sellOrderListToRemove.add(sellOrder);
+                            System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
+                        }
+                        break;
+                    }
+                }
+                model.getData().removeSellOrderList(sellOrderListToRemove);
+            }
+        }
+    }
+
+    private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
+        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
+    }
+
+    private boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
+        // checks if minimum in intervall from last checked time to now is under the limit of the order
+        if (stock.getSymbol().equals(buyOrder.getSymbol())) {
+            ArrayList<DataPoint> dataPointList = stock.getChart();
+            for (DataPoint dataPoint : dataPointList) {
+                System.out.println(dataPoint.getLow());
+            }
+        }
+        return false;
+    }
+
+    private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
+        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 }

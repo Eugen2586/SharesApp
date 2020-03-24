@@ -570,10 +570,8 @@ public class AktienDetailsFragment extends Fragment {
         }
 
         float number = 0;
-        System.out.println(number);
         if (!kaufMenge.getText().toString().isEmpty()) {
             number = Float.valueOf(kaufMenge.getText().toString());
-            System.out.println(number);
         }
 
         float price = limit * number * model.getData().getDepot().getProzent();

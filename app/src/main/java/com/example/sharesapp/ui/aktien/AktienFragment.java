@@ -126,7 +126,6 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
                     for (int i = 0; i < previousAvailableTypes.size(); i++) {
                         System.out.println(previousAvailableTypes.get(i));
                     }
-                    System.out.println(str);
                     differentCategories = true;
                 }
             }

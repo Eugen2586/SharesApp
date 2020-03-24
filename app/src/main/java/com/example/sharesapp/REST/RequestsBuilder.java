@@ -23,11 +23,10 @@ public class RequestsBuilder {
     }
 
     public static String getQuote(String symbol) {
-        System.out.println("getQuote called.........................................................");
         return "stock/" + symbol + "/quote";
     }
 
     public static String getHistoricalQuotePrices(String symbol, String range) {
-        return "stock/" + symbol + "/chart/" + range.toString();
+        return "stock/" + symbol + "/chart/" + range;
     }
 }

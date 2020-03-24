@@ -27,6 +27,7 @@ public class Data {
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
     private int previouslySelectedOrderTabIndex = 0;
+    private int previouslySelectedDepotTabIndex = 0;
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -82,6 +83,8 @@ public class Data {
         if(tradesMutable == null){
             tradesMutable  = new MutableLiveData<>();
         }
+        tradelist.add(trade);
+        tradesMutable.setValue(tradelist);
     }
 
     public void setTradelist(ArrayList<Trade> trades) {
@@ -218,6 +221,8 @@ public class Data {
         increaseResetValue();
         categoryScrollPositions = null;
         searchScrollPosition = 0;
+        previouslySelectedDepotTabIndex = 0;
+        previouslySelectedOrderTabIndex = 0;
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
@@ -260,6 +265,14 @@ public class Data {
         this.previouslySelectedOrderTabIndex = previouslySelectedOrderTabIndex;
     }
 
+    public int getPreviouslySelectedDepotTabIndex() {
+        return previouslySelectedDepotTabIndex;
+    }
+
+    public void setPreviouslySelectedDepotTabIndex(int previouslySelectedDepotTabIndex) {
+        this.previouslySelectedDepotTabIndex = previouslySelectedDepotTabIndex;
+    }
+
     public void addBuyOrder(Order buyOrder) {
         ArrayList<Order> orderList = buyOrderList.getValue();
         if (orderList == null) {
@@ -267,6 +280,14 @@ public class Data {
         }
         orderList.add(buyOrder);
         buyOrderList.postValue(orderList);
+    }
+
+    public void removeBuyOrder(Order buyOrder) {
+        ArrayList<Order> orderList = buyOrderList.getValue();
+        if (orderList != null) {
+            orderList.remove(buyOrder);
+            buyOrderList.postValue(orderList);
+        }
     }
 
     public void removeBuyOrderList(ArrayList<Order> removeOrderList) {
@@ -300,6 +321,14 @@ public class Data {
         }
         orderList.add(sellOrder);
         sellOrderList.postValue(orderList);
+    }
+
+    public void removeSellOrder(Order sellOrder) {
+        ArrayList<Order> orderList = sellOrderList.getValue();
+        if (orderList != null) {
+            orderList.remove(sellOrder);
+            sellOrderList.postValue(orderList);
+        }
     }
 
     public void removeSellOrderList(ArrayList<Order> removeOrderList) {

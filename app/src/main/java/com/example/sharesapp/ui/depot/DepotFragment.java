@@ -12,30 +12,40 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.depot.statistik.StatistikFragment;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class DepotFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
+    private TabLayout tabLayout = null;
+    private Model model = new Model();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_depot, container, false);
 
         fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        if (model.getData().getPreviouslySelectedDepotTabIndex() == 0) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new UebersichtFragment()).commit();
+        }
 
-        fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new UebersichtFragment()).commit();
-        TabLayout tabs = root.findViewById(R.id.depot_tab_layout);
+        tabLayout = root.findViewById(R.id.depot_tab_layout);
 
-        if (tabs != null) {
-            tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     changeFragment(tab.getPosition());
@@ -65,5 +75,19 @@ public class DepotFragment extends Fragment {
         }
 
         fragmentTransaction.commitNow();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (tabLayout != null) {
+            tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedDepotTabIndex()));
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.getData().setPreviouslySelectedDepotTabIndex(tabLayout.getSelectedTabPosition());
     }
 }

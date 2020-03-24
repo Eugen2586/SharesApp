@@ -87,8 +87,6 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-            System.out.println(mData.get(getAdapterPosition()));
-
         }
     }
 

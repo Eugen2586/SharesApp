@@ -52,8 +52,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        Intent intent = new Intent(this, StickyNotificationService.class);
-        startService(intent);
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
@@ -403,7 +405,7 @@ public class DrawerActivity extends AppCompatActivity {
         Intent notificationIntent = new Intent(this, StickyNotificationService.class);
         stopService(notificationIntent);
         Intent requestIntent = new Intent(this, RequestDataService.class);
-        stopService(requestIntent);
+        startService(requestIntent);
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();
         }
@@ -411,59 +413,65 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     private void initializeObserverForOrderLists() {
-        // Listener for buyOrderList and sellOrderList
-        final Observer<ArrayList<Order>> buyOrderObserver = new Observer<ArrayList<Order>>() {
+        // Observer for stockList
+        final Observer<ArrayList<Aktie>> stockObserver = new Observer<ArrayList<Aktie>>() {
             @Override
-            public void onChanged(ArrayList<Order> orderList) {
-                handleChangedBuyOrderList(orderList);
+            public void onChanged(ArrayList<Aktie> stockList) {
+                handleChangedStockList(stockList);
             }
         };
-        model.getData().getBuyOrderList().observe(this, buyOrderObserver);
-
-        final Observer<ArrayList<Order>> sellOrderObserver = new Observer<ArrayList<Order>>() {
-            @Override
-            public void onChanged(ArrayList<Order> orderList) {
-                handleChangedSellOrderList(orderList);
-            }
-        };
-        model.getData().getSellOrderList().observe(this, sellOrderObserver);
+        model.getData().getAktienList().observe(this, stockObserver);
     }
 
-    private void handleChangedBuyOrderList(ArrayList<Order> buyOrderList) {
-        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+    private void handleChangedStockList(ArrayList<Aktie> stockList) {
+        System.out.println("...............................................................................Handle Stocklist Change");
         if (stockList != null) {
             // try to buy stock
+            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
             if (buyOrderList != null) {
+                ArrayList<Order> buyOrderListToRemove = new ArrayList<>();
                 for (Order buyOrder : buyOrderList) {
                     for (Aktie stock : stockList) {
-                        if (stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit()) {
+                        if (buyOrderRequirement(stock, buyOrder)) {
                             // buy stock to currentPrice
-                            Aktie stockClone = stock.getClone();
+                            Aktie stockClone = buyOrder.getStock().getClone();
                             stockClone.setAnzahl(buyOrder.getNumber());
                             model.getData().getDepot().kaufeAktie(stockClone);
+                            buyOrderListToRemove.add(buyOrder);
+                            System.out.println("...............................................................................Kaufe Aktie" + stockClone.getSymbol());
                         }
+                        break;
                     }
                 }
+                model.getData().removeBuyOrderList(buyOrderListToRemove);
+            }
+            // try to sell stock
+            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
+            if (sellOrderList != null) {
+                ArrayList<Order> sellOrderListToRemove = new ArrayList<>();
+                for (Order sellOrder : sellOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (sellOrderRequirement(stock, sellOrder)) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = sellOrder.getStock().getClone();
+                            stockClone.setAnzahl(sellOrder.getNumber());
+                            model.getData().getDepot().verkaufeAktie(stockClone);
+                            sellOrderListToRemove.add(sellOrder);
+                            System.out.println("...............................................................................Verkaufe Aktie" + stockClone.getSymbol());
+                        }
+                        break;
+                    }
+                }
+                model.getData().removeSellOrderList(sellOrderListToRemove);
             }
         }
     }
 
-    private void handleChangedSellOrderList(ArrayList<Order> sellOrderList) {
-        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-        if (stockList != null) {
-            // try to sell stock
-            if (sellOrderList != null) {
-                for (Order sellOrder : sellOrderList) {
-                    for (Aktie stock : stockList) {
-                        if (stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit()) {
-                            // buy stock to currentPrice
-                            Aktie stockClone = stock.getClone();
-                            stockClone.setAnzahl(sellOrder.getNumber());
-                            model.getData().getDepot().verkaufeAktie(stockClone);
-                        }
-                    }
-                }
-            }
-        }
+    private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
+        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
+    }
+
+    private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
+        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 }

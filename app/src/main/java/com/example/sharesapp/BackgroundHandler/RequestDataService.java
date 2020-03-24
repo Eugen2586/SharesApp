@@ -1,25 +1,13 @@
 package com.example.sharesapp.BackgroundHandler;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
-
-import com.example.sharesapp.DrawerActivity;
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 
@@ -65,18 +53,17 @@ public class RequestDataService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                int timeInterval = 1 * 10 * 1000; // TODO: set to 1 min
+                int timeInterval = 1 * 10 * 1000; // 1 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-                        if (stockList != null) {
-                            // get all symbols for requests
-                            Set<String> symbolSet = getSymbolSet();
+                        // get all symbols for requests
+                        Set<String> symbolSet = getSymbolSet();
 
-                            // requests for all stocks with symbols in symbolSet
-                            asyncRequestsForStocks(symbolSet);
-                        }
+                        // requests for all stocks with symbols in symbolSet
+                        asyncRequestsForStocks(symbolSet);
+
+                        System.out.println("...............................................................................Request");
                     }
                 }, 0, timeInterval);
             }
@@ -115,6 +102,4 @@ public class RequestDataService extends Service {
             }
         }
     }
-
-
 }

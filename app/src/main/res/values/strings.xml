@@ -79,5 +79,7 @@
     <string name="verkaufauftrag">Verkaufaufträge</string>
     <string name="kaufauftrag">Kaufaufträge</string>
     <string name="l_sche_alle_auftr_ge">Lösche alle Aufträge</string>
+    <string name="aktueller_preis">Aktueller Preis</string>
+    <string name="kategorie">Kategorie</string>
 
 </resources>

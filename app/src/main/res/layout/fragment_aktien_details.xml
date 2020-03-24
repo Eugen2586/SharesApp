@@ -20,7 +20,6 @@
                 android:id="@+id/name_big"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
                 android:text="@string/lade_inhalte"
                 android:textAlignment="center" />
 
@@ -38,42 +37,36 @@
 
                 <TableRow
                     android:layout_width="0dp"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        android:id="@+id/editText2"
-                        android:layout_width="142dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="@string/name" />
-
-                    <TextView
-                        android:id="@+id/name_field"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="0dp"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/editText4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName"
                         android:text="@string/symbol" />
 
                     <TextView
                         android:id="@+id/symbol_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="142dp"
+                        android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:text="@string/name" />
+
+                    <TextView
+                        android:id="@+id/name_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"/>
                 </TableRow>
 
                 <TableRow
@@ -81,19 +74,33 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/editText6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="@string/aktueller_kurs" />
+                        android:text="@string/kategorie" />
+
+                    <TextView
+                        android:id="@+id/type_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/aktueller_preis" />
 
                     <TextView
                         android:id="@+id/latest_price_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:ems="10" />
                 </TableRow>
 
                 <TableRow
@@ -101,41 +108,19 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/editText8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName"
                         android:text="@string/zuletzt_aktualisiert" />
 
                     <TextView
                         android:id="@+id/date_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:ems="10" />
 
                 </TableRow>
 
-                <TableRow
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/editText10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="@string/type" />
-
-                    <TextView
-                        android:id="@+id/type_field"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
-                </TableRow>
             </TableLayout>
 
             <Button

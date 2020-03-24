@@ -48,12 +48,9 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         stockValueTextView = root.findViewById(R.id.stock_value_text);
         overallValueTextView = root.findViewById(R.id.overall_value_text);
 
-        Data data = new Model().getData();
-        String cashValue = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
+        String cashValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().getGeldwert());
         TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
         cashValueTextView.setText((cashValue + "€"));
-
-        setStockAndOverallValue();
 
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -62,9 +59,12 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                 setAdapter(depotList);
             }
         };
+        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
 
-        data.getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
-        setAdapter(data.getDepot().getAktienImDepot().getValue());
+        setStockAndOverallValue();
+        setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
+
+        sendRequestsForDepot();
 
         return root;
     }
@@ -76,20 +76,25 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
             @Override
             public void onRefresh()
             {
-                ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-                if (depotList != null) {
-                    Requests requests = new Requests();
-                    for (Aktie stock : depotList) {
-                        try {
-                            requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                sendRequestsForDepot();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    private void sendRequestsForDepot() {
+        Model model = new Model();
+        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+        Requests requests = new Requests();
+        if (depotList != null) {
+            for (Aktie stock: depotList) {
+                try {
+                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override

@@ -35,10 +35,12 @@ import java.util.ArrayList;
 
             }
             s = null;
+            Float f = 5000.0f;
             try{
-                editor.putFloat("Geldwert", new Model().getData().getDepot().getGeldwert());
+                f = new Model().getData().getDepot().getGeldwert();
+                editor.putFloat("Geldwert",f);
             }catch(Exception e){
-
+                System.out.println(f);
             }
 
 

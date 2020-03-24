@@ -86,13 +86,11 @@ public class DrawerActivity extends AppCompatActivity {
             }
             s = null;
             try {
-                Float f = Float.parseFloat(prefs.getString("Geldwert", null));
-                if( f == 0.0f ){
-                    f = Float.parseFloat(String.valueOf(Constants.MONEY));
+                Float f = prefs.getFloat("Geldwert", (float) -10000000.0);
+                if( f < -10000000.0+1 ){
+                    f = (float) Constants.MONEY;
                 }
-                if (s != null && !s.isEmpty()) {
-                    new Model().getData().getDepot().setGeldwert(f);
-                }
+                new Model().getData().getDepot().setGeldwert(f);
             }catch(Exception e){
                 String t = e.getMessage();
             }

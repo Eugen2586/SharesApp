@@ -38,25 +38,26 @@ public class Depot {
             Model m = new Model();
             ArrayList<Aktie> stocks = aktienImDepot.getValue();
 
-            for (Object t : stocks) {
-                Aktie ak = (Aktie) t;
-                if (ak.getSymbol().equals(a.getSymbol())) {
-                    in = true;
+            if (stocks != null) {
+                for (Aktie ak : stocks) {
+                    if (ak.getSymbol().equals(a.getSymbol())) {
+                        in = true;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                        ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        m.getData().addTrade(trade);
+                    }
+                }
+
+                if (!in) {
+                    stocks.add(a);
                     geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                    ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
                     Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                     m.getData().addTrade(trade);
                 }
-            }
 
-            if (!in) {
-                stocks.add(a);
-                geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
-                m.getData().addTrade(trade);
+                aktienImDepot.postValue(stocks);
             }
-
-            aktienImDepot.postValue(stocks);
         }
     }
 
@@ -64,6 +65,7 @@ public class Depot {
         in = false;
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
         Aktie toRemove = null;
+
         if (stocks != null) {
             for (Aktie ak : stocks) {
                 if (ak.getSymbol().equals(a.getSymbol())) {
@@ -77,15 +79,16 @@ public class Depot {
                         }
                     }
                 }
-                if (!in) {
-//                    stocks.add(a);
-                    Model m = new Model();
-                    Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
-                    m.getData().addTrade(trade);
-                }
-                geldwert = geldwert - a.getPreis();
-                aktienImDepot.postValue(stocks);
             }
+
+            if (!in) {
+//                    stocks.add(a);
+                Model m = new Model();
+                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                m.getData().addTrade(trade);
+            }
+            geldwert = geldwert - a.getPreis();
+            aktienImDepot.postValue(stocks);
 
             stocks.remove(toRemove);
         }

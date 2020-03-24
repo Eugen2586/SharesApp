@@ -83,6 +83,8 @@ public class Data {
         if(tradesMutable == null){
             tradesMutable  = new MutableLiveData<>();
         }
+        tradelist.add(trade);
+        tradesMutable.setValue(tradelist);
     }
 
     public void setTradelist(ArrayList<Trade> trades) {

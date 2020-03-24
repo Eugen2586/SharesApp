@@ -90,7 +90,7 @@ public class Data {
     }
 
     public ArrayList<Trade> getTrades() {
-        return tradelist;
+        return tradesMutable.getValue();
     }
 
     public float getGewinn() {

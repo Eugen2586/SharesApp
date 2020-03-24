@@ -20,7 +20,8 @@ import java.util.ArrayList;
 
             //Trades
             try {
-                editor.putString("Tr", tradesToString());
+                s = tradesToString();
+                editor.putString("Tr", s );
             }catch(Exception e) {
                 System.out.print(e.getMessage());
             }

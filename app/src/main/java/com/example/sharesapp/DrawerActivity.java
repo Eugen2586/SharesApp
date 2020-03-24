@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,6 +25,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.REST.Requests;
@@ -50,7 +52,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        // TODO: intent persistent
         Intent intent = new Intent(this, StickyNotificationService.class);
         startService(intent);
         try {
@@ -79,8 +80,9 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: stop Service with saved intent
-//        stopService();
+        // observer for buy and sell order
+        initializeObserverForOrderLists();
+
         super.onCreate(savedInstanceState);
         /* Do persistance Stuff.
 
@@ -398,11 +400,70 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        Intent intent = new Intent(this, StickyNotificationService.class);
-        stopService(intent);
-        super.onResume();
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        stopService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();
+        }
+        super.onResume();
+    }
+
+    private void initializeObserverForOrderLists() {
+        // Listener for buyOrderList and sellOrderList
+        final Observer<ArrayList<Order>> buyOrderObserver = new Observer<ArrayList<Order>>() {
+            @Override
+            public void onChanged(ArrayList<Order> orderList) {
+                handleChangedBuyOrderList(orderList);
+            }
+        };
+        model.getData().getBuyOrderList().observe(this, buyOrderObserver);
+
+        final Observer<ArrayList<Order>> sellOrderObserver = new Observer<ArrayList<Order>>() {
+            @Override
+            public void onChanged(ArrayList<Order> orderList) {
+                handleChangedSellOrderList(orderList);
+            }
+        };
+        model.getData().getSellOrderList().observe(this, sellOrderObserver);
+    }
+
+    private void handleChangedBuyOrderList(ArrayList<Order> buyOrderList) {
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        if (stockList != null) {
+            // try to buy stock
+            if (buyOrderList != null) {
+                for (Order buyOrder : buyOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit()) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = stock.getClone();
+                            stockClone.setAnzahl(buyOrder.getNumber());
+                            model.getData().getDepot().kaufeAktie(stockClone);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleChangedSellOrderList(ArrayList<Order> sellOrderList) {
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        if (stockList != null) {
+            // try to sell stock
+            if (sellOrderList != null) {
+                for (Order sellOrder : sellOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit()) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = stock.getClone();
+                            stockClone.setAnzahl(sellOrder.getNumber());
+                            model.getData().getDepot().verkaufeAktie(stockClone);
+                        }
+                    }
+                }
+            }
         }
     }
 }

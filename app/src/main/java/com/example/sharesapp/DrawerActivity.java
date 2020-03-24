@@ -25,6 +25,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
@@ -438,7 +439,7 @@ public class DrawerActivity extends AppCompatActivity {
                             stockClone.setAnzahl(buyOrder.getNumber());
                             model.getData().getDepot().kaufeAktie(stockClone);
                             buyOrderListToRemove.add(buyOrder);
-                            System.out.println("...............................................................................Kaufe Aktie" + stockClone.getSymbol());
+                            System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
                         }
                         break;
                     }
@@ -457,7 +458,7 @@ public class DrawerActivity extends AppCompatActivity {
                             stockClone.setAnzahl(sellOrder.getNumber());
                             model.getData().getDepot().verkaufeAktie(stockClone);
                             sellOrderListToRemove.add(sellOrder);
-                            System.out.println("...............................................................................Verkaufe Aktie" + stockClone.getSymbol());
+                            System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
                         }
                         break;
                     }
@@ -469,6 +470,17 @@ public class DrawerActivity extends AppCompatActivity {
 
     private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
         return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
+    }
+
+    private boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
+        // checks if minimum in intervall from last checked time to now is under the limit of the order
+        if (stock.getSymbol().equals(buyOrder.getSymbol())) {
+            ArrayList<DataPoint> dataPointList = stock.getChart();
+            for (DataPoint dataPoint : dataPointList) {
+                System.out.println(dataPoint.getLow());
+            }
+        }
+        return false;
     }
 
     private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {

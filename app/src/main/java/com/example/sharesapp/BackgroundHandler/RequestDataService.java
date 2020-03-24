@@ -8,6 +8,7 @@ import android.os.IBinder;
 
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 
@@ -53,7 +54,7 @@ public class RequestDataService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                int timeInterval = 1 * 10 * 1000; // 1 min
+                int timeInterval = 1 * 20 * 1000; // 1 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -97,6 +98,7 @@ public class RequestDataService extends Service {
             Requests requests = new Requests();
             try {
                 requests.asyncRun(RequestsBuilder.getQuote(symbol));
+//                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
             } catch (IOException e) {
                 e.printStackTrace();
             }

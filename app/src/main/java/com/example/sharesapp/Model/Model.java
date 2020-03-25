@@ -20,7 +20,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 
 public class Model  extends AppCompatActivity {
-
+    private Context context = this.getBaseContext();
     //Hierdrin werden alle Daten gestored.
     static Data data;
 
@@ -34,7 +34,7 @@ public class Model  extends AppCompatActivity {
     }
 
     //ToDo Levin
-    public void doPersistanceFBackground(Context context){
+    public void doPersistanceFBackground(){
         SharedPreferences prefs;
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
@@ -48,7 +48,7 @@ public class Model  extends AppCompatActivity {
 
     }
     //ToDo Levin
-    public void getPersistanceFBackground(Context context){
+    public void getPersistanceFBackground(){
         SharedPreferences prefs;
         try{
             String s = null;

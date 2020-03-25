@@ -33,12 +33,14 @@ public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
     private final Timer timer = new Timer();
+    Model model = new Model();
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
             return StickyNotificationService.this;
         }
     }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -66,8 +68,9 @@ public class StickyNotificationService extends Service {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+
                         //Todo Persisenz laden
-                        Model model = new Model();
+                        model.getPersistanceFBackground();
 
 //                        showComeBackNotification(new Random().nextInt() % 4);
                         System.out.println("...............................................................................Request Sticky");

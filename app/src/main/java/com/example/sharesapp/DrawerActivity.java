@@ -519,73 +519,9 @@ public class DrawerActivity extends AppCompatActivity {
         final Observer<ArrayList<Aktie>> stockObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> stockList) {
-                handleChangedStockList(stockList);
+                model.getData().checkOrderListsForBuyingSelling(stockList);
             }
         };
         model.getData().getAktienList().observe(this, stockObserver);
-    }
-
-    public static void handleChangedStockList(ArrayList<Aktie> stockList) {
-        Model model = new Model();
-        System.out.println("...............................................................................Handle Stocklist Change");
-        if (stockList != null) {
-            // try to buy stock
-            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
-            if (buyOrderList != null) {
-                ArrayList<Order> buyOrderListToRemove = new ArrayList<>();
-                for (Order buyOrder : buyOrderList) {
-                    for (Aktie stock : stockList) {
-                        if (buyOrderRequirement(stock, buyOrder)) {
-                            // buy stock to currentPrice
-                            Aktie stockClone = buyOrder.getStock().getClone();
-                            stockClone.setAnzahl(buyOrder.getNumber());
-                            model.getData().getDepot().kaufeAktie(stockClone);
-                            buyOrderListToRemove.add(buyOrder);
-                            System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
-                            break;
-                        }
-                    }
-                }
-                model.getData().removeBuyOrderList(buyOrderListToRemove);
-            }
-            // try to sell stock
-            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
-            if (sellOrderList != null) {
-                ArrayList<Order> sellOrderListToRemove = new ArrayList<>();
-                for (Order sellOrder : sellOrderList) {
-                    for (Aktie stock : stockList) {
-                        if (sellOrderRequirement(stock, sellOrder)) {
-                            // buy stock to currentPrice
-                            Aktie stockClone = sellOrder.getStock().getClone();
-                            stockClone.setAnzahl(sellOrder.getNumber());
-                            model.getData().getDepot().verkaufeAktie(stockClone);
-                            sellOrderListToRemove.add(sellOrder);
-                            System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
-                            break;
-                        }
-                    }
-                }
-                model.getData().removeSellOrderList(sellOrderListToRemove);
-            }
-        }
-    }
-
-    public static boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
-        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
-    }
-
-    public boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
-        // checks if minimum in intervall from last checked time to now is under the limit of the order
-        if (stock.getSymbol().equals(buyOrder.getSymbol())) {
-            ArrayList<DataPoint> dataPointList = stock.getChart();
-            for (DataPoint dataPoint : dataPointList) {
-                System.out.println(dataPoint.getLow());
-            }
-        }
-        return false;
-    }
-
-    public static boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
-        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 }

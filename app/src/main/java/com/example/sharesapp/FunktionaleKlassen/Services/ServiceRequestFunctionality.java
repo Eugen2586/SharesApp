@@ -2,7 +2,10 @@ package com.example.sharesapp.FunktionaleKlassen.Services;
 
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.REST.Requests;
+import com.example.sharesapp.REST.RequestsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,5 +30,16 @@ class ServiceRequestFunctionality {
         }
 
         return symbolSet;
+    }
+
+    static void asyncRequestsForStocks(Set<String> symbolSet) {
+        Requests requests = new Requests();
+        for (String symbol : symbolSet) {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(symbol));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

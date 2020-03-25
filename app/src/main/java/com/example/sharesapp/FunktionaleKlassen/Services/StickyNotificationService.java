@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
@@ -31,8 +32,7 @@ import java.util.TimerTask;
 public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    private final Timer timer = new Timer();;
-    private ServiceModel serviceModel = new ServiceModel();
+    private final Timer timer = new Timer();
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
@@ -62,18 +62,20 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // 30 min
+                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         //Todo Persisenz laden
+                        Model model = new Model();
+
 //                        showComeBackNotification(new Random().nextInt() % 4);
                         System.out.println("...............................................................................Request Sticky");
                         // get all symbols for requests
                         Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
 
                         // serviceRequests for all stocks with symbols in symbolSet
-                        asyncRequestsForStocks(symbolSet);
+                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
 
                     }
                 }, timeInterval, timeInterval);
@@ -81,13 +83,6 @@ public class StickyNotificationService extends Service {
         });
 
         return Service.START_STICKY;
-    }
-
-    private void asyncRequestsForStocks(Set<String> symbolSet) {
-        Requests requests = new Requests();
-        for (String symbol : symbolSet) {
-            requests.serviceAsyncRun(RequestsBuilder.getQuote(symbol));
-        }
     }
 
     private void showComeBackNotification(int messageIndex) {

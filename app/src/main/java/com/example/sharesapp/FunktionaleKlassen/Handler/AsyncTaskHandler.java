@@ -5,7 +5,6 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuote;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToServiceModel.ServiceRequestQuotePrices;
 
 import org.json.simple.parser.ParseException;
 
@@ -54,19 +53,6 @@ public class AsyncTaskHandler {
             try {
                 new RequestQuote(s);
             }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void serviceHandle(Response response) throws IOException {
-        String url = response.request().url().toString();
-        final String s = Objects.requireNonNull(response.body()).string();
-
-        if (url.contains("stock")) {
-            try {
-                new ServiceRequestQuotePrices(s);
-            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

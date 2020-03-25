@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
@@ -19,8 +20,8 @@ import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 
-public class Model  extends AppCompatActivity {
-    private Context context = this.getBaseContext();
+public class Model{
+    private Context context;
     //Hierdrin werden alle Daten gestored.
     static Data data;
 
@@ -35,9 +36,10 @@ public class Model  extends AppCompatActivity {
 
     //ToDo Levin
     public void doPersistanceFBackground(){
+        context = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
         try {
-            prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
+            prefs = new DrawerActivity().getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
             SharedPreferences.Editor editor = prefs.edit();
             doPersistanceforSellLists(editor);
@@ -49,10 +51,11 @@ public class Model  extends AppCompatActivity {
     }
     //ToDo Levin
     public void getPersistanceFBackground(){
+        context  = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
         try{
             String s = null;
-            prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
+            prefs = new DrawerActivity().getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             JSONParser parser = new JSONParser();
             try{
                 s = prefs.getString("AktienSymbole", null);

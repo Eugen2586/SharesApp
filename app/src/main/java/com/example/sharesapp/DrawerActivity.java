@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +18,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.sharesapp.BackgroundHandler.RequestDataService;
-import com.example.sharesapp.BackgroundHandler.StickyNotificationService;
+import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
+import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.navigation.NavigationView;
@@ -53,8 +54,17 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        // stop RequestService
         Intent requestIntent = new Intent(this, RequestDataService.class);
         stopService(requestIntent);
+
+        // set serviceData for serviceModel
+        Data data = model.getData();
+        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
+                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
+                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
+
+        // start StickyService
         Intent notificationIntent = new Intent(this, StickyNotificationService.class);
         startService(notificationIntent);
         try {
@@ -424,7 +434,8 @@ public class DrawerActivity extends AppCompatActivity {
         model.getData().getAktienList().observe(this, stockObserver);
     }
 
-    private void handleChangedStockList(ArrayList<Aktie> stockList) {
+    public static void handleChangedStockList(ArrayList<Aktie> stockList) {
+        Model model = new Model();
         System.out.println("...............................................................................Handle Stocklist Change");
         if (stockList != null) {
             // try to buy stock
@@ -440,8 +451,8 @@ public class DrawerActivity extends AppCompatActivity {
                             model.getData().getDepot().kaufeAktie(stockClone);
                             buyOrderListToRemove.add(buyOrder);
                             System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
+                            break;
                         }
-                        break;
                     }
                 }
                 model.getData().removeBuyOrderList(buyOrderListToRemove);
@@ -459,8 +470,8 @@ public class DrawerActivity extends AppCompatActivity {
                             model.getData().getDepot().verkaufeAktie(stockClone);
                             sellOrderListToRemove.add(sellOrder);
                             System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
+                            break;
                         }
-                        break;
                     }
                 }
                 model.getData().removeSellOrderList(sellOrderListToRemove);
@@ -468,11 +479,11 @@ public class DrawerActivity extends AppCompatActivity {
         }
     }
 
-    private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
+    public static boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
         return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
     }
 
-    private boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
+    public boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
         // checks if minimum in intervall from last checked time to now is under the limit of the order
         if (stock.getSymbol().equals(buyOrder.getSymbol())) {
             ArrayList<DataPoint> dataPointList = stock.getChart();
@@ -483,7 +494,7 @@ public class DrawerActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
+    public static boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
         return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 }

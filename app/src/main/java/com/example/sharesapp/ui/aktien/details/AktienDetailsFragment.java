@@ -32,6 +32,7 @@ import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Order;
@@ -159,7 +160,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number * model.getData().getDepot().getProzent();
+                                        float price = limit * number * Constants.PROZENT;
                                         if (price > model.getData().getDepot().getGeldwert()) {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
@@ -315,7 +316,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number * (2f - model.getData().getDepot().getProzent());
+                                        float price = limit * number * Constants.V_PROZENT;
                                         if (Integer.parseInt(kaufMenge.getText().toString()) > getFoundInDepot()) {
                                             // falls will mehr verakufen als habe
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Aktien zu verkaufen!", Toast.LENGTH_LONG).show();
@@ -564,7 +565,8 @@ public class AktienDetailsFragment extends Fragment {
         if (!Limit.getText().toString().isEmpty()) {
             limit = Float.parseFloat(Limit.getText().toString());
         } else {
-            limit = Float.parseFloat(kaufMenge.getText().toString());
+            limit = model.getData().getCurrentStock().getPreis();
+            price.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis())));
         }
         if (kaufMenge.getText().toString().isEmpty()) {
             return;
@@ -576,7 +578,7 @@ public class AktienDetailsFragment extends Fragment {
         }
 
         if (kaufen) {
-            float price = limit * number * model.getData().getDepot().getProzent();
+            float price = limit * number * Constants.PROZENT;
             totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
             if (price > model.getData().getDepot().getGeldwert()) {
                 totalPrice.setTextColor(Color.RED);
@@ -584,7 +586,7 @@ public class AktienDetailsFragment extends Fragment {
                 totalPrice.setTextColor(Color.DKGRAY);
             }
         } else {
-            float price = limit * number * (2.0f - model.getData().getDepot().getProzent());
+            float price = limit * number * Constants.V_PROZENT;
             totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
         }
     }

@@ -4,6 +4,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQu
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToServiceModel.ServiceRequestQuotePrices;
 
 import org.json.simple.parser.ParseException;
 
@@ -19,12 +20,11 @@ public class AsyncTaskHandler {
         String url = response.request().url().toString();
         final String s = Objects.requireNonNull(response.body()).string();
 
-
         if (url.contains("ref-data")) {
 
             try {
                 new RequestSymbol(s);
-             } catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -38,7 +38,6 @@ public class AsyncTaskHandler {
 
             try {
                 new RequestQuotePrices(s);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,6 +46,19 @@ public class AsyncTaskHandler {
             try {
                 new RequestSearch(s);
             } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void serviceHandle(Response response) throws IOException {
+        String url = response.request().url().toString();
+        final String s = Objects.requireNonNull(response.body()).string();
+
+        if (url.contains("stock")) {
+            try {
+                new ServiceRequestQuotePrices(s);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

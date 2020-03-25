@@ -18,8 +18,6 @@ public class Depot {
 
     private float geldwert;
     private boolean in;
-    private float prozent = 1.01f;
-    private float vProzent = 0.99f;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -42,7 +40,7 @@ public class Depot {
                 for (Aktie ak : stocks) {
                     if (ak.getSymbol().equals(a.getSymbol())) {
                         in = true;
-                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                        geldwert = geldwert - a.getPreis() * a.getAnzahl() * Constants.PROZENT;
                         ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
                         Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                         m.getData().addTrade(trade);
@@ -51,7 +49,7 @@ public class Depot {
 
                 if (!in) {
                     stocks.add(a);
-                    geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
+                    geldwert = geldwert - a.getPreis() * a.getAnzahl() * Constants.PROZENT;
                     Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
                     m.getData().addTrade(trade);
                 }
@@ -73,7 +71,7 @@ public class Depot {
                     if (a.getSymbol().equals(ak.getSymbol()) && a.getAnzahl() <= ak.getAnzahl()) {
                         in = false;
                         ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
-                        geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
+                        geldwert = geldwert + a.getAnzahl() * a.getPreis() * Constants.V_PROZENT;
                         if (ak.getAnzahl() == 0) {
                             toRemove = ak;
                         }
@@ -100,10 +98,6 @@ public class Depot {
 
     public void setGeldwert(float geldwert) {
         this.geldwert = geldwert;
-    }
-
-    public float getProzent() {
-        return this.prozent;
     }
 
     public MutableLiveData<ArrayList<Aktie>> getAktienImDepot() {

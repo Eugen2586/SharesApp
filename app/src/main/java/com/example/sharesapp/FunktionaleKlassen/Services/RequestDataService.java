@@ -1,4 +1,4 @@
-package com.example.sharesapp.BackgroundHandler;
+package com.example.sharesapp.FunktionaleKlassen.Services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,15 +6,10 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.example.sharesapp.Model.FromServerClasses.Order;
-import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,8 +17,6 @@ import java.util.TimerTask;
 public class RequestDataService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    private Requests requests = new Requests();
-    private Model model = new Model();
     final Timer timer = new Timer();
 
     public class LocalBinder extends Binder {
@@ -58,13 +51,12 @@ public class RequestDataService extends Service {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        System.out.println("...............................................................................Request Not Sticky");
                         // get all symbols for requests
-                        Set<String> symbolSet = getSymbolSet();
+                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
 
                         // requests for all stocks with symbols in symbolSet
                         asyncRequestsForStocks(symbolSet);
-
-                        System.out.println("...............................................................................Request");
                     }
                 }, 0, timeInterval);
             }
@@ -73,31 +65,11 @@ public class RequestDataService extends Service {
         return Service.START_NOT_STICKY;
     }
 
-    private Set<String> getSymbolSet() {
-        ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
-        ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
-        Set<String> symbolSet = new HashSet<>();
-
-        // get all symbols for requests
-        if (buyOrderList != null) {
-            for (Order buyOrder : buyOrderList) {
-                symbolSet.add(buyOrder.getSymbol());
-            }
-        }
-        if (sellOrderList != null) {
-            for (Order sellOrder : sellOrderList) {
-                symbolSet.add(sellOrder.getSymbol());
-            }
-        }
-
-        return symbolSet;
-    }
-
     private void asyncRequestsForStocks(Set<String> symbolSet) {
+        Requests requests = new Requests();
         for (String symbol : symbolSet) {
             try {
                 requests.asyncRun(RequestsBuilder.getQuote(symbol));
-//                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
             } catch (IOException e) {
                 e.printStackTrace();
             }

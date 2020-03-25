@@ -18,6 +18,7 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
@@ -108,6 +109,7 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         Requests requests = new Requests();
         try {
             requests.asyncRun(RequestsBuilder.getQuote(symbol));
+            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -50,6 +50,7 @@ public class AktienDetailsFragment extends Fragment {
     private EditText kaufMenge;
     private EditText Limit;
     private TextView totalPrice;
+    private TextView price;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -104,7 +105,7 @@ public class AktienDetailsFragment extends Fragment {
                     TextView cash = buyDialogView.findViewById(R.id.geldwert);
                     cash.setText((wert + "€"));
                     if (model.getData().getCurrentStock().getPreis() != 0) {
-                        TextView price = buyDialogView.findViewById(R.id.price_one);
+                        price = buyDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
                     }
 
@@ -561,9 +562,9 @@ public class AktienDetailsFragment extends Fragment {
 
         float limit;
         if (!Limit.getText().toString().isEmpty()) {
-            limit = Float.valueOf(Limit.getText().toString());
+            limit = Float.parseFloat(Limit.getText().toString());
         } else {
-            limit = model.getData().getCurrentStock().getPreis();
+            limit = Float.parseFloat(kaufMenge.getText().toString());
         }
         if (kaufMenge.getText().toString().isEmpty()) {
             return;
@@ -571,21 +572,21 @@ public class AktienDetailsFragment extends Fragment {
 
         float number = 0;
         if (!kaufMenge.getText().toString().isEmpty()) {
-            number = Float.valueOf(kaufMenge.getText().toString());
+            number = Float.parseFloat(kaufMenge.getText().toString());
         }
 
-        float price = limit * number * model.getData().getDepot().getProzent();
-        totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
-
         if (kaufen) {
+            float price = limit * number * model.getData().getDepot().getProzent();
+            totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
             if (price > model.getData().getDepot().getGeldwert()) {
                 totalPrice.setTextColor(Color.RED);
             } else {
                 totalPrice.setTextColor(Color.DKGRAY);
             }
+        } else {
+            float price = limit * number * (2.0f - model.getData().getDepot().getProzent());
+            totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
         }
-
-
     }
 
     private void setStockDetails() {

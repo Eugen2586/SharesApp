@@ -64,19 +64,19 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // 30 min
+                final int timeInterval = 1 * 20 * 1000; // 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-//                        showComeBackNotification(new Random().nextInt() % 4);
-                        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-                        if (stockList == null) {
-                            showComeBackNotification(0);
-                        } else if (stockList.size() == 0) {
-                            showComeBackNotification(1);
-                        } else {
-                            showComeBackNotification(2);
-                        }
+                        showComeBackNotification(new Random().nextInt() % 4);
+//                        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+//                        if (stockList == null) {
+//                            showComeBackNotification(0);
+//                        } else if (stockList.size() == 0) {
+//                            showComeBackNotification(1);
+//                        } else {
+//                            showComeBackNotification(2);
+//                        }
                     }
                 }, timeInterval, timeInterval);
             }

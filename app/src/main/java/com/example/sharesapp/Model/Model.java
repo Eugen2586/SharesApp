@@ -9,6 +9,7 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Data;
+import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 
 import org.json.simple.JSONArray;
@@ -32,19 +33,21 @@ public class Model  extends AppCompatActivity {
         return data;
     }
 
+    //ToDo Levin
     public void doPersistanceFBackground(Context context){
         SharedPreferences prefs;
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
             SharedPreferences.Editor editor = prefs.edit();
+            doPersistanceforSellLists(editor);
             new SaveToJSON( editor);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
+    //ToDo Levin
     public void getPersistanceFBackground(Context context){
         SharedPreferences prefs;
         try{
@@ -90,14 +93,24 @@ public class Model  extends AppCompatActivity {
             s = null;
             try {
                 s = prefs.getString("Tr", null);
-                String p = s;
                 if(s != null && s.length() > 2) {
-                    new Model().getData().setTradelist(getTradeListe(p));
+                    new Model().getData().setTradelist(getTradeListe(s));
                 }
             }catch(Exception e){
-                System.out.print(e.getMessage());
-                String g = new String();
-                System.out.print(s.charAt(265));
+
+            }
+            try {
+                s = prefs.getString("gBOSL", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData().getBuyOrderStockList().clear();
+                    new Model().getData().getBuyOrderStockList().addAll(orderListFromJson( s ));
+                }
+            }catch(Exception e){
+                s = prefs.getString("gSOSL", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData().getSellOrderStockList().clear();
+                    new Model().getData().getSellOrderStockList().addAll(orderListFromJson( s ));
+                }
             }
 
         }
@@ -105,6 +118,248 @@ public class Model  extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+    private void doPersistanceforSellLists(SharedPreferences.Editor editor) {
+        editor.commit();
+        org.json.JSONArray jsonArray1 = new org.json.JSONArray();
+        org.json.JSONArray jsonArray2 = new org.json.JSONArray();
+        ArrayList ar1 = new Model().getData().getBuyOrderStockList();
+        ArrayList ar2 = new Model().getData().getSellOrderStockList();
+        for (Object t: ar1) {
+            JSONObject json = new JSONObject();
+            Order or  = (Order) t;
+            try {
+                //Aktie:
+                json.put("menge", or.getStock().getAnzahl());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("exchange",  or.getStock().getExchange());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("symbol", or.getStock().getSymbol());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("name", or.getStock().getName());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("date", or.getStock().getDate());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("type", or.getStock().getType());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("region", or.getStock().getRegion());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("currency", or.getStock().getCurrency());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("enabled", or.getStock().getEnabled());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("preis", or.getStock().getPreis());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("symbol", or.getSymbol());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("number", or.getNumber());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("limit", or.getLimit());
+            }catch(Exception e){
+
+            }
+            ar1.add(json);
+        }
+        editor.putString("gBOSL", ar1.toString());
+        editor.commit();
+        editor.apply();
+        for (Object t: ar2) {
+            JSONObject json = new JSONObject();
+            Order or  = (Order) t;
+            try {
+                //Aktie:
+                json.put("menge", or.getStock().getAnzahl());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("exchange",  or.getStock().getExchange());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("symbol", or.getStock().getSymbol());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("name", or.getStock().getName());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("date", or.getStock().getDate());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("type", or.getStock().getType());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("region", or.getStock().getRegion());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("currency", or.getStock().getCurrency());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("enabled", or.getStock().getEnabled());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("preis", or.getStock().getPreis());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("symbol", or.getSymbol());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("number", or.getNumber());
+            }catch(Exception e){
+
+            }
+            try {
+                json.put("limit", or.getLimit());
+            }catch(Exception e){
+
+            }
+            ar2.add(json);
+        }
+        editor.putString("gSOSL", ar2.toString());
+        editor.commit();
+        editor.apply();
+
+    }
+
+
+    private ArrayList orderListFromJson(String s) throws ParseException {
+        ArrayList ar = new ArrayList();
+        JSONParser parse = new JSONParser();
+        JSONArray jsonar = (JSONArray) parse.parse(s);
+        for (Object t:jsonar) {
+            JSONObject json = new JSONObject();
+            Aktie ak = new Aktie();
+            try {
+                //Aktie:
+                ak.setAnzahl((Integer) json.get("menge"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setExchange((String) json.get("exchange"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setSymbol((String) json.get("symbol"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setName((String) json.get("name"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setDate((String) json.get("date"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setType((String) json.get("type"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setRegion((String) json.get("region"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setCurrency((String) json.get("currency"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setEnabled((String) json.get("enabled"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setPreis(Float.parseFloat((String) json.get("preis")));
+            }catch(Exception e){
+
+            }
+            String symbol = null;
+            int number = 0;
+            float limit = 0;
+            try {
+                symbol = (String) json.get("symbol");
+            }catch(Exception e){
+
+            }
+            try {
+                number = Integer.parseInt((String) json.get("number"));
+            }catch(Exception e){
+
+            }
+            try {
+                limit = Float.parseFloat((String) json.get("limit"));
+            }catch(Exception e){
+
+            }
+            Order or = new Order( ak, symbol, number, limit );
+            ar.add(or);
+        }
+        return ar;
+    }
+
     private ArrayList<Trade> getTradeListe(String st) throws ParseException {
         Trade tr = null;
         Aktie ak = null;

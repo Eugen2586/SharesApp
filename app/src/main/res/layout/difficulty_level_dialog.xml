@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Schwierigkeitsgrad"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/b_einfach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Einfach" />
+
+    <Button
+        android:id="@+id/b_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Normal" />
+
+    <Button
+        android:id="@+id/b_schwer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Schwer" />
+
+    <Button
+        android:id="@+id/b_challenge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Herausforderung" />
+
+    <TextView
+        android:id="@+id/t_beschreibung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/b_accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fortfahren" />
+</LinearLayout>

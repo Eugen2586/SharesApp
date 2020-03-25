@@ -124,6 +124,19 @@ public class DrawerActivity extends AppCompatActivity {
             }
             s = null;
             try {
+                int schwierigkeitsgrad = prefs.getInt("Schwierigkeitsgrad", 0);
+                if( schwierigkeitsgrad != 0 ){
+                    new Model().getData().getDepot().setSchwierigkeitsgrad(schwierigkeitsgrad);
+                    new Model().getData().getDepot().applySchwierigkeitsgrad(false);
+                } else {
+                    //todo fragen nach schwierigkeitsgrad
+                }
+
+            }catch(Exception e){
+                String t = e.getMessage();
+            }
+            s = null;
+            try {
                 s = prefs.getString("Portfolioliste", null);
                 if (s != null && !s.isEmpty()) {
                     new Model().getData().setPortfolioList(aktienList(s));

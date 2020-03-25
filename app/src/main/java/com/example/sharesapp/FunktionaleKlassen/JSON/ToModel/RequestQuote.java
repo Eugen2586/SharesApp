@@ -151,7 +151,7 @@ public class RequestQuote {
             if (aktie.getSymbol().equals(jsonObject.get("symbol"))) {
                 Aktie ak = aktie;
                 arrl.remove(aktie);
-                ak.setadditionalData(company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
+                ak.setadditionalData(company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
                 arrl.add(ak);
             }
         }

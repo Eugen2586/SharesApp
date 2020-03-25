@@ -174,6 +174,9 @@ public class Depot {
     }
 
     public int getSchwierigkeitsgrad() {
+        if (this.schwierigkeitsgrad != 1 && this.schwierigkeitsgrad != 2 && this.schwierigkeitsgrad != 3 && this.schwierigkeitsgrad != 4 && this.schwierigkeitsgrad != -1) {
+            return 0;
+        }
         return this.schwierigkeitsgrad;
     }
 

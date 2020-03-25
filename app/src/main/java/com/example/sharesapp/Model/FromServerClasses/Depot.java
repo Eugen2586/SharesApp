@@ -19,7 +19,7 @@ public class Depot {
     private float geldwert;
     private boolean in;
     private float prozent = 1.01f;
-    private float vProzent = 0.99f;
+    private boolean schwierigkeitsgrad;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -73,7 +73,7 @@ public class Depot {
                     if (a.getSymbol().equals(ak.getSymbol()) && a.getAnzahl() <= ak.getAnzahl()) {
                         in = false;
                         ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
-                        geldwert = geldwert + a.getAnzahl() * a.getPreis() * vProzent;
+                        geldwert = geldwert + a.getAnzahl() * a.getPreis() * (2f - this.prozent);
                         if (ak.getAnzahl() == 0) {
                             toRemove = ak;
                         }
@@ -140,5 +140,13 @@ public class Depot {
             }
             return sum;
         }
+    }
+
+    public boolean getSchwierigkeitsgrad() {
+        return this.schwierigkeitsgrad;
+    }
+
+    public void setSchwierigkeitsgrad() {
+        this.schwierigkeitsgrad = true;
     }
 }

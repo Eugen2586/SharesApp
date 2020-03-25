@@ -19,7 +19,9 @@ public class RequestQuotePrices {
 
         Model model = new Model();
         if (model.getData().getAktienList().getValue() != null) {
-            model.getData().getAktienList().postValue(actualizeArrayList(jsonar, model.getData().getAktienList().getValue()));
+            ArrayList<Aktie> newStockList = actualizeArrayList(jsonar, model.getData().getAktienList().getValue());
+            model.getData().getAktienList().postValue(newStockList);
+            model.getData().checkOrderListsForBuyingSelling(newStockList);
         }
         if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
             model.getData().getDepot().getAktienImDepot().postValue(actualizeArrayList(jsonar, model.getData().getDepot().getAktienImDepot().getValue()));

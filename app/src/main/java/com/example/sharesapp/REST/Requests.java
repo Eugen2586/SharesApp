@@ -76,4 +76,23 @@ public class Requests {
 
         });
     }
+
+    public void serviceAsyncRun(String url) {
+        Request request = new Request.Builder()
+                .url(baseURL + url + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                AsyncTaskHandler.serviceHandle(response);
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
 }

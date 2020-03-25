@@ -1,4 +1,4 @@
-package com.example.sharesapp.BackgroundHandler;
+package com.example.sharesapp.FunktionaleKlassen.Services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,22 +9,20 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Order;
-import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.Timer;
@@ -33,7 +31,8 @@ import java.util.TimerTask;
 public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    final Timer timer = new Timer();;
+    private final Timer timer = new Timer();;
+    private ServiceModel serviceModel = new ServiceModel();
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
@@ -63,16 +62,30 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 30 * 60 * 1000; // 30 min
+                final int timeInterval = 1 * 10 * 1000; // 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        showComeBackNotification(new Random().nextInt() % 4);
+//                        showComeBackNotification(new Random().nextInt() % 4);
+                        System.out.println("...............................................................................Request Sticky");
+                        // get all symbols for requests
+                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
+
+                        // serviceRequests for all stocks with symbols in symbolSet
+                        asyncRequestsForStocks(symbolSet);
                     }
                 }, timeInterval, timeInterval);
             }
         });
+
         return Service.START_STICKY;
+    }
+
+    private void asyncRequestsForStocks(Set<String> symbolSet) {
+        Requests requests = new Requests();
+        for (String symbol : symbolSet) {
+            requests.serviceAsyncRun(RequestsBuilder.getQuote(symbol));
+        }
     }
 
     private void showComeBackNotification(int messageIndex) {

@@ -55,13 +55,11 @@ public class NewgameFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    showDifficultyDialog(inflater);
-
                                     // Bomb Sound http://soundbible.com/1234-Bomb.html
                                     MediaPlayer.create(reset_button.getContext(), R.raw.bomb).start();
 
                                     Toast.makeText(NewgameFragment.this.getContext(), "Betrag, alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
-
+                                    showDifficultyDialog(inflater);
 
                                 }
                             });
@@ -95,22 +93,11 @@ public class NewgameFragment extends Fragment {
 
                             View view = getView();
                             if (view != null) {
-                                Navigation.findNavController(view).navigateUp();
-                            }
-
-                        }
-
-                    });
-
+                                Navigation.findNavController(view).navigateUp(); } }});
             builder.setCancelable(false);
             builder.setView(diffLevelDialog);
-
-
             final AlertDialog dialog = builder.create();
             dialog.show();
-
-
-            System.out.println(dialog.getButton(AlertDialog.BUTTON_POSITIVE));
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
             Button einfach = diffLevelDialog.findViewById(R.id.b_einfach);
@@ -157,10 +144,6 @@ public class NewgameFragment extends Fragment {
                     b.setText(new Model().getData().getDepot().getSchwierigkeitsgrad(4)[1]);
                 }
             });
-
-            dialog.show();
-
         }
-
     }
 }

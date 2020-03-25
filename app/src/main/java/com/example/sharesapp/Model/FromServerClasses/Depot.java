@@ -147,7 +147,7 @@ public class Depot {
     }
 
     public String[] getSchwierigkeitsgrad(int i) {
-        if (i != 0) {
+        if (i == 0) {
             i = this.schwierigkeitsgrad;
         }
         String[] s = new String[2];
@@ -177,22 +177,29 @@ public class Depot {
         return this.schwierigkeitsgrad;
     }
 
-    public boolean applySchwierigkeitsgrad() {
+    public boolean applySchwierigkeitsgrad(boolean neu) {
+        // wenn das Spiel geladen wird, muss das Geldwert nicht neu gesetzt werden, sonst wird es
+        //überschrieben sein. Deswegen wird das Geldwert nur dann neu gesetzt, wenn das Spiel
+        //neu gestartet wird.
         switch(this.schwierigkeitsgrad) {
             case 1:
-                setGeldwert(150000f);
+                if (neu)
+                    {setGeldwert(150000f);}
                 setProzent(1.00035f);
                 return true;
             case 2:
-                setGeldwert(50000f);
+                if (neu)
+                    {setGeldwert(50000f);}
                 setProzent(1.00125f);
                 return true;
             case 3:
-                setGeldwert(50000f);
+                if (neu)
+                    {setGeldwert(50000f);}
                 setProzent(1.005f);
                 return true;
             case 4:
-                setGeldwert(1000f);
+                if (neu)
+                    {setGeldwert(1000f);}
                 setProzent(1.05f);
                 return true;
         }

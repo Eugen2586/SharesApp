@@ -226,7 +226,7 @@ public class Data {
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
         depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
-        depot.applySchwierigkeitsgrad();
+        depot.applySchwierigkeitsgrad(true);
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 

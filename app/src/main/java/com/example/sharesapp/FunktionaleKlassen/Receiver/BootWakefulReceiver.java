@@ -1,4 +1,4 @@
-package com.example.sharesapp.BackgroundHandler;
+package com.example.sharesapp.FunktionaleKlassen.Receiver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ public class BootWakefulReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())
         || "android.permission.WAKE_LOCK".equals(intent.getAction())) {
-            Intent serviceIntent = new Intent(context, RequestDataWakefulService.class);
-            startWakefulService(context, serviceIntent);
+//            Intent serviceIntent = new Intent(context, RequestDataWakefulService.class);
+//            startWakefulService(context, serviceIntent);
         }
     }
 }

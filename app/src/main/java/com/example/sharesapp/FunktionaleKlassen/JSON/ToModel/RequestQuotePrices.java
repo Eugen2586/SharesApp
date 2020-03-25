@@ -14,11 +14,18 @@ public class RequestQuotePrices {
 
     public RequestQuotePrices(String s) throws ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonar = (JSONObject) parser.parse(s);
+        JSONObject jsonar = null;
+        try {
+            jsonar = (JSONObject) parser.parse(s);
+        }catch(Exception e){
+            System.out.print(e.getMessage());
+        }
 
         Model model = new Model();
         if (model.getData().getAktienList().getValue() != null) {
-            model.getData().getAktienList().postValue(actualizeArrayList(jsonar, model.getData().getAktienList().getValue()));
+            ArrayList<Aktie> newStockList = actualizeArrayList(jsonar, model.getData().getAktienList().getValue());
+            model.getData().getAktienList().postValue(newStockList);
+            model.getData().checkOrderListsForBuyingSelling(newStockList);
         }
         if (model.getData().getDepot().getAktienImDepot().getValue() != null) {
             model.getData().getDepot().getAktienImDepot().postValue(actualizeArrayList(jsonar, model.getData().getDepot().getAktienImDepot().getValue()));

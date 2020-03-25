@@ -37,7 +37,8 @@ public class Aktie implements Comparator {
     private int lastTradeTime;
     private boolean isUSMarketOpen;
 
-    public void setadditionalData( String companyName,
+    public void setadditionalData(
+             String companyName,
              String primaryExchange,
              String calculationPrice,
              String open,

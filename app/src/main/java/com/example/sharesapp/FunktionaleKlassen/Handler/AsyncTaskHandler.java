@@ -1,6 +1,7 @@
 package com.example.sharesapp.FunktionaleKlassen.Handler;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuote;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
@@ -19,16 +20,21 @@ public class AsyncTaskHandler {
         String url = response.request().url().toString();
         final String s = Objects.requireNonNull(response.body()).string();
 
-
         if (url.contains("ref-data")) {
 
             try {
                 new RequestSymbol(s);
-             } catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        } else if (url.contains("chart")) {
+        }else if (url.contains("quote")) {
+            try {
+                new RequestQuote(s);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else if (url.contains("chart")) {
             try {
                 new RequestHistoricalQuotePrices(s);
             } catch (ParseException e) {
@@ -38,7 +44,6 @@ public class AsyncTaskHandler {
 
             try {
                 new RequestQuotePrices(s);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,5 +55,6 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
         }
+
     }
 }

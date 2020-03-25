@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,16 +18,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.sharesapp.BackgroundHandler.RequestDataService;
-import com.example.sharesapp.BackgroundHandler.StickyNotificationService;
+import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
+import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
+import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.navigation.NavigationView;
@@ -53,10 +54,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
-        Intent requestIntent = new Intent(this, RequestDataService.class);
-        stopService(requestIntent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
@@ -65,6 +62,20 @@ public class DrawerActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // stop RequestService
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
+
+        // set serviceData for serviceModel
+//        Data data = model.getData();
+//        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
+//                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
+//                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
+
+        // start StickyService
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
 
         super.onStop();
         //If the App Stopps we store the Data!
@@ -147,16 +158,31 @@ public class DrawerActivity extends AppCompatActivity {
             s = null;
             try {
                 s = prefs.getString("Tr", null);
-                String p = s;
                 if(s != null && s.length() > 2) {
-                    new Model().getData().setTradelist(getTradeListe(p));
+                    new Model().getData().setTradelist(getTradeListe(s));
                 }
             }catch(Exception e){
-                System.out.print(e.getMessage());
-                String g = new String();
-                System.out.print(s.charAt(265));
-            }
 
+            }
+            s = null;
+            try{
+                s = prefs.getString("BuyList", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData();
+                }
+            }catch(Exception e){
+
+
+            }
+            s = null;
+            try{
+                s = prefs.getString("SellList", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData();
+                }
+            }catch(Exception e){
+
+            }
         }
         catch(Exception e){
             e.printStackTrace();
@@ -506,72 +532,9 @@ public class DrawerActivity extends AppCompatActivity {
         final Observer<ArrayList<Aktie>> stockObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> stockList) {
-                handleChangedStockList(stockList);
+                model.getData().checkOrderListsForBuyingSelling(stockList);
             }
         };
         model.getData().getAktienList().observe(this, stockObserver);
-    }
-
-    private void handleChangedStockList(ArrayList<Aktie> stockList) {
-        System.out.println("...............................................................................Handle Stocklist Change");
-        if (stockList != null) {
-            // try to buy stock
-            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
-            if (buyOrderList != null) {
-                ArrayList<Order> buyOrderListToRemove = new ArrayList<>();
-                for (Order buyOrder : buyOrderList) {
-                    for (Aktie stock : stockList) {
-                        if (buyOrderRequirement(stock, buyOrder)) {
-                            // buy stock to currentPrice
-                            Aktie stockClone = buyOrder.getStock().getClone();
-                            stockClone.setAnzahl(buyOrder.getNumber());
-                            model.getData().getDepot().kaufeAktie(stockClone);
-                            buyOrderListToRemove.add(buyOrder);
-                            System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
-                        }
-                        break;
-                    }
-                }
-                model.getData().removeBuyOrderList(buyOrderListToRemove);
-            }
-            // try to sell stock
-            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
-            if (sellOrderList != null) {
-                ArrayList<Order> sellOrderListToRemove = new ArrayList<>();
-                for (Order sellOrder : sellOrderList) {
-                    for (Aktie stock : stockList) {
-                        if (sellOrderRequirement(stock, sellOrder)) {
-                            // buy stock to currentPrice
-                            Aktie stockClone = sellOrder.getStock().getClone();
-                            stockClone.setAnzahl(sellOrder.getNumber());
-                            model.getData().getDepot().verkaufeAktie(stockClone);
-                            sellOrderListToRemove.add(sellOrder);
-                            System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
-                        }
-                        break;
-                    }
-                }
-                model.getData().removeSellOrderList(sellOrderListToRemove);
-            }
-        }
-    }
-
-    private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
-        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
-    }
-
-    private boolean newBuyOrderRequirement(Aktie stock, Order buyOrder) {
-        // checks if minimum in intervall from last checked time to now is under the limit of the order
-        if (stock.getSymbol().equals(buyOrder.getSymbol())) {
-            ArrayList<DataPoint> dataPointList = stock.getChart();
-            for (DataPoint dataPoint : dataPointList) {
-                System.out.println(dataPoint.getLow());
-            }
-        }
-        return false;
-    }
-
-    private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
-        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 }

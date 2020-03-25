@@ -1,6 +1,7 @@
 package com.example.sharesapp.FunktionaleKlassen.Handler;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuote;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSearch;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
@@ -47,6 +48,13 @@ public class AsyncTaskHandler {
             try {
                 new RequestSearch(s);
             } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (url.contains("quote")) {
+            try {
+                new RequestQuote(s);
+            }catch(Exception e){
                 e.printStackTrace();
             }
         }

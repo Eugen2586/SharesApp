@@ -37,6 +37,8 @@ public class NewgameFragment extends Fragment {
         cash = root.findViewById(R.id.betrag_text);
         String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
         cash.setText((wert + "€"));
+        TextView schwierigkeitsgrad = root.findViewById(R.id.schwierigkeitsgrad);
+        schwierigkeitsgrad.setText("Schwierigkeitsgrad: " + data.getDepot().getSchwierigkeitsgrad(0)[0]);
 
         final Button reset_button = root.findViewById(R.id.reset_button);
         reset_button.setOnClickListener(new View.OnClickListener() {

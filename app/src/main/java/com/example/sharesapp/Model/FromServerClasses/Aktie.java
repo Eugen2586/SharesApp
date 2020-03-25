@@ -11,6 +11,90 @@ public class Aktie implements Comparator {
 
 
     int menge;
+    //new for StockQuantities
+    private String companyName;
+    private String primaryExchange;
+    private String calculationPrice;
+    private String open;
+    private String openTime;
+    private String close;
+    private String closeTime;
+    private String high;
+    private String highTime;
+    private String low;
+    private String lowTime;
+    private float latestPrice;
+    private String latestSource;
+    private String latestUpdate;
+    private int latestVolume;
+    private float previousClose;
+    private int previousVolume;
+    private float change1;
+    private float changePercent;
+    private int avgTotalVolume;
+    private float week52High;
+    private float week52Low;
+    private int lastTradeTime;
+    private boolean isUSMarketOpen;
+
+    public void setadditionalData( String companyName,
+             String primaryExchange,
+             String calculationPrice,
+             String open,
+             String openTime,
+             String close,
+             String closeTime,
+             String high,
+             String highTime,
+             String low,
+             String lowTime,
+             float latestPrice,
+             String latestSource,
+             String latestUpdate,
+             int latestVolume,
+             float previousClose,
+             int previousVolume,
+             float change1,
+             float changePercent,
+             int avgTotalVolume,
+             float week52High,
+             float week52Low,
+             int lastTradeTime,
+             boolean isUSMarketOpen){
+        this.companyName = companyName;
+        this.primaryExchange = primaryExchange;
+        this.calculationPrice = calculationPrice;
+        this.open = open;
+        this.openTime = openTime;
+        this.close = close;
+        this.closeTime = closeTime;
+        this.high = high;
+        this.highTime = highTime;
+        this.low = low;
+        this.lowTime = lowTime;
+        this.latestPrice = latestPrice;
+        this.latestSource = latestSource;
+        this.latestUpdate = latestUpdate;
+        this.latestVolume = latestVolume;
+        this.previousClose = previousClose;
+        this.previousVolume = previousVolume;
+        this.change1 = change1;
+        this.changePercent = changePercent;
+        this.avgTotalVolume = avgTotalVolume;
+        this.week52High = week52High;
+        this.week52Low = week52Low;
+        this.lastTradeTime = lastTradeTime;
+        this.isUSMarketOpen = isUSMarketOpen;
+    }
+
+
+
+
+
+
+
+
+    //new for stockQuantitie
     private String exchange;
     private String symbol;
     private String name;

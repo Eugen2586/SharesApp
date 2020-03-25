@@ -64,7 +64,7 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
+                final int timeInterval = 1 * 20 * 1000; // TODO: set to 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {

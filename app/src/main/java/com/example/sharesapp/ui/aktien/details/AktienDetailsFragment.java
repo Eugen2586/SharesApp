@@ -598,7 +598,7 @@ public class AktienDetailsFragment extends Fragment {
         Aktie stock = model.getData().getCurrentStock();
         // dont show if lastPrice == 0.0f
         float lastPrice = stock.getPreis();
-        if (lastPrice != 0.0f) {
+        if (lastPrice == 0.0f) {
             // fill information fields
             TextView titleView = root.findViewById(R.id.name_big);
             titleView.setText(stock.getCompanyName());
@@ -635,12 +635,13 @@ public class AktienDetailsFragment extends Fragment {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
             }
         } else {
-            Requests requests = new Requests();
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // TODO: insert again
+//            Requests requests = new Requests();
+//            try {
+//                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 

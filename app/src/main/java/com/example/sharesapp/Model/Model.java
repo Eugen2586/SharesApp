@@ -19,6 +19,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 
 public class Model  extends AppCompatActivity {
+
     //Hierdrin werden alle Daten gestored.
     static Data data;
 
@@ -30,6 +31,7 @@ public class Model  extends AppCompatActivity {
         }
         return data;
     }
+
     public void doPersistanceFBackground(Context context){
         SharedPreferences prefs;
         try {

@@ -145,16 +145,31 @@ public class DrawerActivity extends AppCompatActivity {
             s = null;
             try {
                 s = prefs.getString("Tr", null);
-                String p = s;
                 if(s != null && s.length() > 2) {
-                    new Model().getData().setTradelist(getTradeListe(p));
+                    new Model().getData().setTradelist(getTradeListe(s));
                 }
             }catch(Exception e){
-                System.out.print(e.getMessage());
-                String g = new String();
-                System.out.print(s.charAt(265));
-            }
 
+            }
+            s = null;
+            try{
+                s = prefs.getString("BuyList", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData();
+                }
+            }catch(Exception e){
+
+
+            }
+            s = null;
+            try{
+                s = prefs.getString("SellList", null);
+                if(s != null && s.length() > 2) {
+                    new Model().getData();
+                }
+            }catch(Exception e){
+
+            }
         }
         catch(Exception e){
             e.printStackTrace();

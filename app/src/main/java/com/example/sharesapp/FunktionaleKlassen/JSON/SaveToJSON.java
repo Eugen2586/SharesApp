@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
     public class SaveToJSON {
+
         private Model model = new Model();
+
         public SaveToJSON(SharedPreferences.Editor editor){
             String s = null;
             //Here it should all Data from the Model get putted!

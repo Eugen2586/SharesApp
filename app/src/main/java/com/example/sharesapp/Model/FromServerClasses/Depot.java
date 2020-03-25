@@ -42,7 +42,7 @@ public class Depot {
                         in = true;
                         geldwert = geldwert - a.getPreis() * a.getAnzahl() * Constants.PROZENT;
                         ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
-                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
                         m.getData().addTrade(trade);
                     }
                 }
@@ -50,7 +50,7 @@ public class Depot {
                 if (!in) {
                     stocks.add(a);
                     geldwert = geldwert - a.getPreis() * a.getAnzahl() * Constants.PROZENT;
-                    Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                    Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
                     m.getData().addTrade(trade);
                 }
 
@@ -82,7 +82,7 @@ public class Depot {
             if (!in) {
 //                    stocks.add(a);
                 Model m = new Model();
-                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime());
+                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
                 m.getData().addTrade(trade);
             }
             geldwert = geldwert - a.getPreis();

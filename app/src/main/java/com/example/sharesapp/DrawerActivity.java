@@ -144,8 +144,9 @@ public class DrawerActivity extends AppCompatActivity {
             s = null;
             try {
                 s = prefs.getString("Tr", null);
+                String p = s;
                 if(s != null && s.length() > 2) {
-                    new Model().getData().setTradelist(getTradeListe(s));
+                    new Model().getData().setTradelist(getTradeListe(p));
                 }
             }catch(Exception e){
                 System.out.print(e.getMessage());
@@ -191,7 +192,7 @@ public class DrawerActivity extends AppCompatActivity {
     private ArrayList<Trade> getTradeListe(String st) throws ParseException {
         Trade tr = null;
         Aktie ak = null;
-        ArrayList<Trade> akl = null;
+        ArrayList<Trade> akl = new ArrayList<>();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(st);
         //TODO pflege hier die Daten, die hier eingelesen werden.
@@ -199,14 +200,84 @@ public class DrawerActivity extends AppCompatActivity {
             //ToDo hier wird die Zerlegung der Nachrichtenvorgenommen.
             ak = new Aktie();
             org.json.simple.JSONObject json = (JSONObject) t;
-            ak = getAktie(json.get("aktie").toString());
             try {
-                ak.setType(json.get("date").toString());
-            } catch (Exception e) {
+                //Aktie:
+                ak.setAnzahl((Integer) json.get("menge"));
+            }catch(Exception e){
 
             }
             try {
-                ak.setRegion(json.get("preis").toString());
+                ak.setExchange((String) json.get("exchange"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setSymbol((String) json.get("symbol"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setName((String) json.get("name"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setDate((String) json.get("date"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setType((String) json.get("type"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setRegion((String) json.get("region"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setCurrency((String) json.get("currency"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setEnabled((String) json.get("enabled"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setPreis(Float.parseFloat((String) json.get("preis")));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setAnzahl(Integer.parseInt((String) json.get("anzahlak")));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setChange(Float.parseFloat((String) json.get("change")));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setAnzahl(Integer.parseInt((String) json.get("anzahl")));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setDate((String) json.get("date"));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setPreis(Float.parseFloat((String) json.get("preisi")));
+            }catch(Exception e){
+
+            }
+            try {
+                ak.setRegion(json.get("region").toString());
             } catch (Exception e) {
 
             }
@@ -216,7 +287,11 @@ public class DrawerActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-            tr = new Trade(ak, Integer.parseInt(json.get("anzahl").toString()), isKauf ,Float.parseFloat(json.get("Preis").toString()), Date.valueOf(json.get("Date").toString()));
+            int anzahlImTrade = Integer.parseInt((String) json.get("anzahl"));
+            float ft = Float.parseFloat(json.get("preis").toString());
+            String date = json.get("date").toString();
+           // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
+            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date );
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }

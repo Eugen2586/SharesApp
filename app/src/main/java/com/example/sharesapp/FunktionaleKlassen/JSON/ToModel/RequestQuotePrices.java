@@ -16,6 +16,7 @@ public class RequestQuotePrices {
         JSONParser parser = new JSONParser();
         JSONObject jsonar = (JSONObject) parser.parse(s);
 
+
         Model model = new Model();
         if (model.getData().getAktienList().getValue() != null) {
             model.getData().getAktienList().postValue(actualizeArrayList(jsonar, model.getData().getAktienList().getValue()));

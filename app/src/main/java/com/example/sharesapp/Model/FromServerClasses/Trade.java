@@ -12,9 +12,9 @@ public class Trade {
     private int anzahl;
     private boolean kauf;
     private float preis;
-    private Date date;
+    private String date;
 
-    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, Date date) {
+    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, String date) {
         this.aktie = aktie;
         this.anzahl = anzahl;
         this.kauf = kauf;
@@ -38,7 +38,7 @@ public class Trade {
         return preis;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

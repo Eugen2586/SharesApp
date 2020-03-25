@@ -129,7 +129,7 @@ public class DrawerActivity extends AppCompatActivity {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(schwierigkeitsgrad);
                     new Model().getData().getDepot().applySchwierigkeitsgrad(false);
                 } else {
-                    //todo fragen nach schwierigkeitsgrad
+                    new Model().getData().getDepot().setSchwierigkeitsgrad(schwierigkeitsgrad);
                 }
 
             }catch(Exception e){

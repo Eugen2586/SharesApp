@@ -93,7 +93,7 @@ public class ServiceData {
             addOrderToDepot(buyOrder);
 
             // add respective trade
-            Trade trade = new Trade(buyOrder.getStock(), buyOrder.getNumber(), true, totalValue, GregorianCalendar.getInstance().getTime());
+            Trade trade = new Trade(buyOrder.getStock(), buyOrder.getNumber(), true, totalValue, GregorianCalendar.getInstance().getTime().toString());
             tradeList.add(trade);
 
             // remove stock from stockList if not needed anymore
@@ -139,7 +139,7 @@ public class ServiceData {
                 depotStock.setAnzahl(depotStock.getAnzahl() - sellOrder.getNumber());
 
                 // add respective trade
-                Trade trade = new Trade(sellOrder.getStock(), sellOrder.getNumber(), false, totalValue, GregorianCalendar.getInstance().getTime());
+                Trade trade = new Trade(sellOrder.getStock(), sellOrder.getNumber(), false, totalValue, GregorianCalendar.getInstance().getTime().toString());
                 tradeList.add(trade);
 
                 // remove stock from stockList if not needed anymore

@@ -566,6 +566,7 @@ public class AktienDetailsFragment extends Fragment {
             limit = Float.parseFloat(Limit.getText().toString());
         } else {
             limit = model.getData().getCurrentStock().getPreis();
+            // TODO: setting Text not working
             price.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis())));
         }
         if (kaufMenge.getText().toString().isEmpty()) {

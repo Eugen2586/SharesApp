@@ -19,7 +19,7 @@ public class Depot {
     private float geldwert;
     private boolean in;
     private float prozent = 1.01f;
-    private boolean schwierigkeitsgrad;
+    private int schwierigkeitsgrad;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -102,6 +102,10 @@ public class Depot {
         this.geldwert = geldwert;
     }
 
+    private void setProzent(float q) {
+        this.prozent = q;
+    }
+
     public float getProzent() {
         return this.prozent;
     }
@@ -142,11 +146,53 @@ public class Depot {
         }
     }
 
-    public boolean getSchwierigkeitsgrad() {
-        return this.schwierigkeitsgrad;
+    public String[] getSchwierigkeitsgrad() {
+        String[] s = new String[2];
+        switch(this.schwierigkeitsgrad) {
+            case 1:
+                s[0] = "Einfach";
+                s[1] = "150000€ auf dem Konto und 0,035% Gebühren für ein Kauf und Verkauf. Ziemlich einfach, oder? ";
+                return s;
+            case 2:
+                s[0] = "Normal";
+                s[1] = "50000€ auf dem Konto und 0,125% Gebühren für ein Kauf und Verkauf. Hier hat man einen sicheren Start.";
+                return s;
+            case 3:
+                s[0] = "Schwer";
+                s[1] = "50000€ auf dem Konto und 0,5% Gebühren für ein Kauf und Verkauf. Was erlauben sich diese Banken?!";
+                return s;
+            case 4:
+                s[0] = "Herausforderung";
+                s[1] = "1000€ auf dem Konto und 0,5% Gebühren für ein Kauf und ein Verkauf. Kann man damit reich werden?";
+                return s;
+            default:
+                return s;
+        }
     }
 
-    public void setSchwierigkeitsgrad() {
-        this.schwierigkeitsgrad = true;
+    public boolean applySchwierigkeitsgrad() {
+        switch(this.schwierigkeitsgrad) {
+            case 1:
+                setGeldwert(150000f);
+                setProzent(1.00035f);
+                return true;
+            case 2:
+                setGeldwert(50000f);
+                setProzent(1.00125f);
+                return true;
+            case 3:
+                setGeldwert(50000f);
+                setProzent(1.005f);
+                return true;
+            case 4:
+                setGeldwert(1000f);
+                setProzent(1.05f);
+                return true;
+        }
+        return false;
+    }
+
+    public void setSchwierigkeitsgrad(int i) {
+        this.schwierigkeitsgrad = i;
     }
 }

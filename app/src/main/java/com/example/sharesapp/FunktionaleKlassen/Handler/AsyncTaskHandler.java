@@ -28,7 +28,14 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
 
-        } else if (url.contains("chart")) {
+        }else if (url.contains("quote")) {
+            try {
+                new RequestQuotePrices(s);
+                new RequestQuote(s);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else if (url.contains("chart")) {
             try {
                 new RequestHistoricalQuotePrices(s);
             } catch (ParseException e) {
@@ -38,6 +45,7 @@ public class AsyncTaskHandler {
 
             try {
                 new RequestQuotePrices(s);
+                new RequestQuote(s);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -49,12 +57,6 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
         }
-        else if (url.contains("quote")) {
-            try {
-                new RequestQuote(s);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
+
     }
 }

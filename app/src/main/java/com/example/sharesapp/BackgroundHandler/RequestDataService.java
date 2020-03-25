@@ -54,7 +54,7 @@ public class RequestDataService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                int timeInterval = 1 * 20 * 1000; // 1 min
+                int timeInterval = 1 * 20 * 1000; // 20sec
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -95,7 +95,6 @@ public class RequestDataService extends Service {
 
     private void asyncRequestsForStocks(Set<String> symbolSet) {
         for (String symbol : symbolSet) {
-            Requests requests = new Requests();
             try {
                 requests.asyncRun(RequestsBuilder.getQuote(symbol));
 //                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));

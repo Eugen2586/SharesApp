@@ -53,10 +53,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
         Intent requestIntent = new Intent(this, RequestDataService.class);
         stopService(requestIntent);
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();

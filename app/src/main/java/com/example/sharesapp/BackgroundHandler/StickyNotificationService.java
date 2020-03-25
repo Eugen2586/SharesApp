@@ -34,6 +34,7 @@ public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
     final Timer timer = new Timer();;
+    Model model = new Model();
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
@@ -63,11 +64,19 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 30 * 60 * 1000; // 30 min
+                final int timeInterval = 1 * 10 * 1000; // 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        showComeBackNotification(new Random().nextInt() % 4);
+//                        showComeBackNotification(new Random().nextInt() % 4);
+                        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+                        if (stockList == null) {
+                            showComeBackNotification(0);
+                        } else if (stockList.size() == 0) {
+                            showComeBackNotification(1);
+                        } else {
+                            showComeBackNotification(2);
+                        }
                     }
                 }, timeInterval, timeInterval);
             }

@@ -56,23 +56,12 @@ public class RequestDataService extends Service {
                         Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
 
                         // requests for all stocks with symbols in symbolSet
-                        asyncRequestsForStocks(symbolSet);
+                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
                     }
                 }, 0, timeInterval);
             }
         });
 
         return Service.START_NOT_STICKY;
-    }
-
-    private void asyncRequestsForStocks(Set<String> symbolSet) {
-        Requests requests = new Requests();
-        for (String symbol : symbolSet) {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

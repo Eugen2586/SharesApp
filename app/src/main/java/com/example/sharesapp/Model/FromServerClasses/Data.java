@@ -4,10 +4,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.Constants;
+import com.example.sharesapp.Model.Model;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -354,4 +356,138 @@ public class Data {
     public MutableLiveData<ArrayList<Order>> getSellOrderList() {
         return sellOrderList;
     }
+
+    public void checkOrderListsForBuyingSelling(ArrayList<Aktie> stockList) {
+        Model model = new Model();
+        System.out.println("...............................................................................Handle Stocklist Change");
+        if (stockList != null) {
+            // try to buy stock
+            ArrayList<Order> buyOrderList = model.getData().getBuyOrderList().getValue();
+            if (buyOrderList != null) {
+                ArrayList<Order> buyOrderListToRemove = new ArrayList<>();
+                for (Order buyOrder : buyOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (buyOrderRequirement(stock, buyOrder)) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = buyOrder.getStock().getClone();
+                            stockClone.setAnzahl(buyOrder.getNumber());
+                            model.getData().getDepot().kaufeAktie(stockClone);
+                            buyOrderListToRemove.add(buyOrder);
+                            System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
+                            break;
+                        }
+                    }
+                }
+                model.getData().removeBuyOrderList(buyOrderListToRemove);
+            }
+            // try to sell stock
+            ArrayList<Order> sellOrderList = model.getData().getSellOrderList().getValue();
+            if (sellOrderList != null) {
+                ArrayList<Order> sellOrderListToRemove = new ArrayList<>();
+                for (Order sellOrder : sellOrderList) {
+                    for (Aktie stock : stockList) {
+                        if (sellOrderRequirement(stock, sellOrder)) {
+                            // buy stock to currentPrice
+                            Aktie stockClone = sellOrder.getStock().getClone();
+                            stockClone.setAnzahl(sellOrder.getNumber());
+                            model.getData().getDepot().verkaufeAktie(stockClone);
+                            sellOrderListToRemove.add(sellOrder);
+                            System.out.println("...............................................................................Verkaufe Aktie " + stockClone.getSymbol());
+                            break;
+                        }
+                    }
+                }
+                model.getData().removeSellOrderList(sellOrderListToRemove);
+            }
+        }
+    }
+
+    private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
+        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
+    }
+
+    private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
+        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
+    }
+
+//    public void buyStockOfOrder(Order buyOrder) {
+//        float totalValue = buyOrder.getNumber() * buyOrder.getLimit() * Constants.PROZENT;
+//        if (depot.getGeldwert() - totalValue >= 0) {
+//            // change amount of money
+//            depot.setGeldwert(depot.getGeldwert() - totalValue);
+//
+//            // remove buyOrder
+//            removeBuyOrder(buyOrder);
+//
+//            // add new stock to depotList
+//            addOrderToDepot(buyOrder);
+//
+//            // add respective trade
+//            ArrayList<Trade> tradeList = tradesMutable.getValue();
+//            Trade trade = new Trade(buyOrder.getStock(), buyOrder.getNumber(), true, totalValue, GregorianCalendar.getInstance().getTime().toString());
+//            if (tradeList == null) {
+//                tradeList = new ArrayList<>();
+//            }
+//            tradeList.add(trade);
+//
+//            // save changes
+//
+//        }
+//    }
+//
+//    private void addOrderToDepot(Order buyOrder) {
+//        boolean notFoundInDepot = true;
+//        ArrayList<Aktie> depotList = depot.getAktienImDepot().getValue();
+//        if (depotList != null) {
+//            for (Aktie depotStock : depotList) {
+//                if (depotStock.getSymbol().equals(buyOrder.getSymbol())) {
+//                    depotStock.setAnzahl(depotStock.getAnzahl() + buyOrder.getNumber());
+//                    notFoundInDepot = false;
+//                    break;
+//                }
+//            }
+//        } else {
+//            depotList = new ArrayList<>();
+//        }
+//        if (notFoundInDepot) {
+//            buyOrder.getStock().setAnzahl(buyOrder.getNumber());
+//            depotList.add(buyOrder.getStock());
+//        }
+//        depot.setAktienImDepot(depotList);
+//    }
+//
+//    public void sellStockOfOrder(Order sellOrder) {
+//        float totalValue = sellOrder.getNumber() * sellOrder.getLimit() * Constants.V_PROZENT;
+//        ArrayList<Aktie> depotList = depot.getAktienImDepot().getValue();
+//        if (depotList != null) {
+//            for (Aktie depotStock : depotList) {
+//                if (depotStock.getSymbol().equals(sellOrder.getSymbol()) && depotStock.getAnzahl() >= sellOrder.getNumber()) {
+//                    // change amount of money
+//                    depot.setGeldwert(depot.getGeldwert() + totalValue);
+//
+//                    // remove buyOrder
+//                    removeSellOrder(sellOrder);
+//
+//                    // add new stock to depotList
+//                    depotStock.setAnzahl(depotStock.getAnzahl() - sellOrder.getNumber());
+//                    if (depotStock.getAnzahl() == 0) {
+//                        depotList.remove(depotStock);
+//                    }
+//                    depot.setAktienImDepot(depotList);
+//
+//                    // add respective trade
+//                    ArrayList<Trade> tradeList = tradesMutable.getValue();
+//                    Trade trade = new Trade(sellOrder.getStock(), sellOrder.getNumber(), false, totalValue, GregorianCalendar.getInstance().getTime().toString());
+//                    if (tradeList == null) {
+//                        tradeList = new ArrayList<>();
+//                    }
+//                    tradeList.add(trade);
+//
+//                    // save changes
+//
+//                    break;
+//                }
+//            }
+//        }
+//    }
 }

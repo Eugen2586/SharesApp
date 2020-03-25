@@ -14,8 +14,12 @@ public class RequestQuotePrices {
 
     public RequestQuotePrices(String s) throws ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonar = (JSONObject) parser.parse(s);
-
+        JSONObject jsonar = null;
+        try {
+            jsonar = (JSONObject) parser.parse(s);
+        }catch(Exception e){
+            System.out.print(e.getMessage());
+        }
 
         Model model = new Model();
         if (model.getData().getAktienList().getValue() != null) {

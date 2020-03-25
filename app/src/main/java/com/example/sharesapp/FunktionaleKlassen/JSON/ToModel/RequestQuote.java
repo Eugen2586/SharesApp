@@ -156,6 +156,6 @@ public class RequestQuote {
             }
         }
         new Model().getData().getAktienList().getValue().clear();
-        new Model().getData().getAktienList().setValue(arrl);
+        new Model().getData().getAktienList().postValue(arrl);
     }
 }

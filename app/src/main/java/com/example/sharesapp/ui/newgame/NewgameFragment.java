@@ -56,6 +56,8 @@ public class NewgameFragment extends Fragment {
 
                                     Toast.makeText(NewgameFragment.this.getContext(), "Betrag, alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
 
+                                    showDifficultyDialog();
+
                                     model.getData().resetData();
 
                                     View view = getView();
@@ -77,5 +79,10 @@ public class NewgameFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    private void showDifficultyDialog() {
+
+        
     }
 }

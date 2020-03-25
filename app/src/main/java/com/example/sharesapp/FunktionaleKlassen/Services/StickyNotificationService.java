@@ -68,17 +68,24 @@ public class StickyNotificationService extends Service {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-
-                        //Todo Persisenz laden
+                        // model loading with persistence
                         model.getPersistanceFBackground();
+                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+                        if (depotList == null) {
+                            showComeBackNotification(0);
+                        } else if (depotList.size() == 0) {
+                            showComeBackNotification(1);
+                        } else {
+                            showComeBackNotification(2);
+                        }
 
-//                        showComeBackNotification(new Random().nextInt() % 4);
-                        System.out.println("...............................................................................Request Sticky");
-                        // get all symbols for requests
-                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
-
-                        // serviceRequests for all stocks with symbols in symbolSet
-                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
+////                        showComeBackNotification(new Random().nextInt() % 4);
+//                        System.out.println("...............................................................................Request Sticky");
+//                        // get all symbols for requests
+//                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
+//
+//                        // serviceRequests for all stocks with symbols in symbolSet
+//                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
 
                     }
                 }, timeInterval, timeInterval);

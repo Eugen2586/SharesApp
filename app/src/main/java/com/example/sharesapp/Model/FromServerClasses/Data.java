@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.Constants;
+import com.example.sharesapp.Model.Model;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,6 +215,7 @@ public class Data {
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
+        int schwierigkeitsgrad = depot.getSchwierigkeitsgrad();
         depot = new Depot();
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
@@ -223,6 +225,8 @@ public class Data {
         searchScrollPosition = 0;
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
+        depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
+        depot.applySchwierigkeitsgrad();
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 

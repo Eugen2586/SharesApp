@@ -146,9 +146,12 @@ public class Depot {
         }
     }
 
-    public String[] getSchwierigkeitsgrad() {
+    public String[] getSchwierigkeitsgrad(int i) {
+        if (i != 0) {
+            i = this.schwierigkeitsgrad;
+        }
         String[] s = new String[2];
-        switch(this.schwierigkeitsgrad) {
+        switch(i) {
             case 1:
                 s[0] = "Einfach";
                 s[1] = "150000€ auf dem Konto und 0,035% Gebühren für ein Kauf und Verkauf. Ziemlich einfach, oder? ";
@@ -168,6 +171,10 @@ public class Depot {
             default:
                 return s;
         }
+    }
+
+    public int getSchwierigkeitsgrad() {
+        return this.schwierigkeitsgrad;
     }
 
     public boolean applySchwierigkeitsgrad() {

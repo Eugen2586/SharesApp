@@ -14,4 +14,11 @@ public class Model {
         }
         return data;
     }
+    public void doPersistanceFBackground(){
+
+
+    }
+    public void getPersistanceFBackground(){
+
+    }
 }

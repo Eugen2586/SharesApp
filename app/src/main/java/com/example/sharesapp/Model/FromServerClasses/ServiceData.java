@@ -171,6 +171,7 @@ public class ServiceData {
     }
 
     private void saveChangesToPersistence() {
-        // TODO: save money, stockList, buyOrderList, sellOrderList, depotList, tradeList
+        //ToDO persistenz
+        // TODO: save money,  buyOrderList, sellOrderList, depotList, tradeList
     }
 }

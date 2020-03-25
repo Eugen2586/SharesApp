@@ -54,19 +54,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        // stop RequestService
-        Intent requestIntent = new Intent(this, RequestDataService.class);
-        stopService(requestIntent);
-
-        // set serviceData for serviceModel
-        Data data = model.getData();
-        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
-                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
-                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
-
-        // start StickyService
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
         try {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
@@ -75,6 +62,20 @@ public class DrawerActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // stop RequestService
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
+
+        // set serviceData for serviceModel
+//        Data data = model.getData();
+//        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
+//                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
+//                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
+
+        // start StickyService
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
 
         super.onStop();
         //If the App Stopps we store the Data!

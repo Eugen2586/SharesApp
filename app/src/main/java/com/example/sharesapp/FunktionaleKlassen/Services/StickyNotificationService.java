@@ -66,6 +66,7 @@ public class StickyNotificationService extends Service {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        //Todo Persisenz laden
 //                        showComeBackNotification(new Random().nextInt() % 4);
                         System.out.println("...............................................................................Request Sticky");
                         // get all symbols for requests
@@ -73,6 +74,7 @@ public class StickyNotificationService extends Service {
 
                         // serviceRequests for all stocks with symbols in symbolSet
                         asyncRequestsForStocks(symbolSet);
+
                     }
                 }, timeInterval, timeInterval);
             }

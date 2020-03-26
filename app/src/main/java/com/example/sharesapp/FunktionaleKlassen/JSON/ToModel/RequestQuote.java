@@ -94,7 +94,8 @@ public class RequestQuote {
         }catch(Exception e){
             e.printStackTrace();
         }try{
-            latestPrice = Float.parseFloat(jsonObject.get("latestPrice").toString());
+            Object h = jsonObject.get("latestPrice");
+            latestPrice = Float.parseFloat(h.toString());
         }catch(Exception e){
             e.printStackTrace();
         }try{
@@ -156,8 +157,8 @@ public class RequestQuote {
         }catch(Exception e){
             e.printStackTrace();
         }
-        try{
-            price = Float.parseFloat((String)jsonObject.get("price"));
+        try{Object h = jsonObject.get("price");
+            price = Float.parseFloat(h.toString());
         }catch(Exception e){
 
         }
@@ -167,8 +168,9 @@ public class RequestQuote {
      //   if (arrl != null) { Ist immer ungleich null!
             for (Aktie c: arrl) {
                 if (c.getSymbol().equals(jsonObject.get("symbol"))) {
-                    c.setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
-                    new Model().getData().getCurrentStock().setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b );
+                    c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b );
+                    new Model().getData().getCurrentStock().setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b );
+                    new Model().getData().getAktienList().postValue(arrl);
                     break;
                 }
 			}

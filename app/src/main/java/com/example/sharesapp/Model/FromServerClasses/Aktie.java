@@ -73,6 +73,7 @@ public class Aktie implements Comparator {
         this.highTime = highTime;
         this.low = low;
         this.lowTime = lowTime;
+        this.preis = latestPrice;
         this.latestPrice = latestPrice;
         this.latestSource = latestSource;
         this.latestUpdate = latestUpdate;

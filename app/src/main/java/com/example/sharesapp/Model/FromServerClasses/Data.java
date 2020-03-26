@@ -31,6 +31,8 @@ public class Data {
     private int previouslySelectedOrderTabIndex = 0;
     private int previouslySelectedDepotTabIndex = 0;
 
+    private MutableLiveData fortexList = new MutableLiveData();
+
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
     public ArrayList<Aktie> getSearches() {
@@ -408,6 +410,13 @@ public class Data {
 
     private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
         return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
+    }
+
+    public void setForex(ArrayList arl) {
+        fortexList.postValue(arl);
+    }
+    public MutableLiveData getFortexList() {
+        return fortexList;
     }
 
 //    public void buyStockOfOrder(Order buyOrder) {

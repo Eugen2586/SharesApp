@@ -253,7 +253,7 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setCurrency((String) json.get("currency"));
+                ak.setCurrency((String) json.get("RequestCurrency"));
             }catch(Exception e){
 
             }
@@ -352,7 +352,7 @@ public class DrawerActivity extends AppCompatActivity {
 
         }
         try {
-            ak.setCurrency(json.get("currency").toString());
+            ak.setCurrency(json.get("RequestCurrency").toString());
         } catch (Exception e) {
 
         }
@@ -423,7 +423,7 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setCurrency(json.get("currency").toString());
+                ak.setCurrency(json.get("RequestCurrency").toString());
             } catch (Exception e) {
 
             }

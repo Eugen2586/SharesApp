@@ -169,7 +169,7 @@ public class Model{
 
             }
             try {
-                json.put("currency", or.getStock().getCurrency());
+                json.put("RequestCurrency", or.getStock().getCurrency());
             }catch(Exception e){
 
             }
@@ -243,7 +243,7 @@ public class Model{
 
             }
             try {
-                json.put("currency", or.getStock().getCurrency());
+                json.put("RequestCurrency", or.getStock().getCurrency());
             }catch(Exception e){
 
             }
@@ -325,7 +325,7 @@ public class Model{
 
             }
             try {
-                ak.setCurrency((String) json.get("currency"));
+                ak.setCurrency((String) json.get("RequestCurrency"));
             }catch(Exception e){
 
             }
@@ -411,7 +411,7 @@ public class Model{
 
             }
             try {
-                ak.setCurrency((String) json.get("currency"));
+                ak.setCurrency((String) json.get("RequestCurrency"));
             }catch(Exception e){
 
             }
@@ -510,7 +510,7 @@ public class Model{
 
         }
         try {
-            ak.setCurrency(json.get("currency").toString());
+            ak.setCurrency(json.get("RequestCurrency").toString());
         } catch (Exception e) {
 
         }
@@ -581,7 +581,7 @@ public class Model{
 
             }
             try {
-                ak.setCurrency(json.get("currency").toString());
+                ak.setCurrency(json.get("RequestCurrency").toString());
             } catch (Exception e) {
 
             }

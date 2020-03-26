@@ -1,5 +1,7 @@
 package com.example.sharesapp.REST;
 
+import java.util.List;
+
 /**
  * Klase, in der die Urls gebaut werden.
  */
@@ -8,11 +10,11 @@ public class RequestsBuilder {
 
     /**
      * Baut aus Symbol die url für Time series Anfragen.
-     * @param key Das Symbol.
+     * @param symbol Das Symbol.
      * @return Die Time Series URL.
      */
-    public static String getTimeSeriesURL(String key) {
-        return "time-series/REPORTED_FINANCIALS/" + key;
+    public static String getTimeSeriesURL(String symbol) {
+        return "time-series/REPORTED_FINANCIALS/" + symbol + "?";
     }
 
     /**
@@ -21,7 +23,7 @@ public class RequestsBuilder {
      */
 
     public static String getAllSymbolsURL() {
-        return "ref-data/symbols";
+        return "ref-data/symbols" + "?";
     }
 
     /**
@@ -31,7 +33,7 @@ public class RequestsBuilder {
      */
 
     public static String getSearchURL(String fragment) {
-            return "search/{" + fragment + "}";
+            return "search/{" + fragment + "}" + "?";
     }
 
     /**
@@ -41,7 +43,7 @@ public class RequestsBuilder {
      */
 
     public static String getQuoteData(String symbol) {
-        return "data-points/" + symbol;
+        return "data-points/" + symbol + "?";
     }
 
     /**
@@ -51,7 +53,7 @@ public class RequestsBuilder {
      */
 
     public static String getQuote(String symbol) {
-        return "stock/" + symbol + "/quote";
+        return "stock/" + symbol + "/quote" + "?";
     }
 
     /**
@@ -62,26 +64,30 @@ public class RequestsBuilder {
      */
 
     public static String getHistoricalQuotePrices(String symbol, String range) {
-        return "stock/" + symbol + "/chart/" + range;
+        return "stock/" + symbol + "/chart/" + range + "?";
     }
 
     public static String getCryptoSymbolsUrl(){
-        return "ref-data/crypto/symbols";
+        return "ref-data/crypto/symbols" + "?";
     }
 
     public static String getCryptoQuoteUrl(String symbol){
-        return "crypto/" + symbol + "/quote";
+        return "crypto/" + symbol + "/quote" + "?";
     }
 
-    public static String getCurrencyRatesUrl() {
-        return "fx/latest";
+    public static String getCurrencyRatesUrl(List<String> symbols) {
+        StringBuilder s = new StringBuilder();
+        for (String symbol : symbols) {
+            s.append(symbol).append(",");
+        }
+        return "fx/latest?symbol=" + s + "&&";
     }
 
     public static String getCurrencyConversionsUrl(String symbol) {
-        return "fx/convert?symbol=" + symbol;
+        return "fx/convert?symbol=" + symbol + "&&";
     }
 
     public static String getCurrencyHistoricalUrl(String symbol) {
-        return "fx/historical?symbol=" + symbol;
+        return "fx/historical?symbol=" + symbol + "&&";
     }
 }

@@ -24,7 +24,7 @@ public class Requests {
             = MediaType.get("application/json; charset=utf-8");
     private static OkHttpClient client = null;
     private final String baseURL = "https://sandbox.iexapis.com/stable/";
-    private String token = "?token=Tpk_f26c06bf165b426eb0adb59f1f1d9ee4";
+    private String token = "token=Tpk_f26c06bf165b426eb0adb59f1f1d9ee4";
 
     /**
      * Standart Konstruktor, erstellt OkHttpClient

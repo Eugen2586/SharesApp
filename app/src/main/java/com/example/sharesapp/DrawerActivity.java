@@ -212,7 +212,9 @@ public class DrawerActivity extends AppCompatActivity {
         Requests req = new Requests();
         try {
             req.asyncRun(RequestsBuilder.getAllSymbolsURL());
-        } catch (Exception e) {
+            req.asyncRun(RequestsBuilder.getCryptoSymbolsUrl());
+            req.asyncRun(RequestsBuilder.getCurrencyRatesUrl());
+        } catch (Exception ignored) {
 
         }
 

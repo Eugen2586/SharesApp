@@ -68,7 +68,7 @@ public class NotificationOnlyStickyService extends Service {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
+                final int timeInterval = 30 * 60 * 1000; // TODO: set to 30 min
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override

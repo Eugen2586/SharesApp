@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 public class DrawerActivity extends AppCompatActivity {
     SharedPreferences prefs;
-    private Context context = this.getBaseContext();
+    public Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
     private Requests requests = new Requests();
@@ -62,22 +62,16 @@ public class DrawerActivity extends AppCompatActivity {
         Intent requestIntent = new Intent(this, RequestDataService.class);
         stopService(requestIntent);
 
-        // set serviceData for serviceModel
-//        Data data = model.getData();
-//        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
-//                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
-//                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
-
-        // start StickyService
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
-
         super.onStop();
         //If the App Stopps we store the Data!
     }
 
     @Override
     protected void onDestroy() {
+        // start StickyService
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        startService(notificationIntent);
+
         // remove MediaPlayer
         if (backgroundMediaPlayer != null) {
             backgroundMediaPlayer.stop();

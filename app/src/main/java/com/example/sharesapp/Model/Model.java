@@ -21,7 +21,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 
 public class Model{
-    private Context context;
+    public Context context;
     //Hierdrin werden alle Daten gestored.
     static Data data;
 

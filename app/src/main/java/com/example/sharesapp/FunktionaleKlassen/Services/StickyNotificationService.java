@@ -10,6 +10,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -63,8 +64,9 @@ public class StickyNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        Looper.prepare();
         handler = new Handler();
-        handler.post(new TimerTask() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
@@ -73,15 +75,15 @@ public class StickyNotificationService extends Service {
                     @Override
                     public void run() {
                         // model loading with persistence
-//                        model.getPersistanceFBackground();
-//                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-//                        if (depotList == null) {
-//                            showComeBackNotification(0);
-//                        } else if (depotList.size() == 0) {
-//                            showComeBackNotification(1);
-//                        } else {
-//                            showComeBackNotification(2);
-//                        }
+                        model.getPersistanceFBackground();
+                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+                        if (depotList == null) {
+                            showComeBackNotification(0);
+                        } else if (depotList.size() == 0) {
+                            showComeBackNotification(1);
+                        } else {
+                            showComeBackNotification(2);
+                        }
 
 ////                        showComeBackNotification(new Random().nextInt() % 4);
 //                        System.out.println("...............................................................................Request Sticky");
@@ -95,6 +97,7 @@ public class StickyNotificationService extends Service {
                 }, 0, timeInterval);
             }
         });
+        Looper.loop();
 
         return Service.START_STICKY;
     }

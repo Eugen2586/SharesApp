@@ -34,10 +34,6 @@ dependencies {
     // für searchviews usw (Teil der Navigation?)
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
-    // lifecycle extensions, evtl überschneidung mit android x?
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
-
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -51,6 +47,12 @@ dependencies {
 
     // für stockcharts
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    // alles ab hier könnte wahrscheinlich raus
+
+    // lifecycle extensions, evtl überschneidung mit android x?
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     // für levins charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

@@ -488,7 +488,15 @@ public class Aktie implements Comparator {
     private String askPrice = null;
     private String askSize = null;
     private boolean isEnabled = false;
-    private boolean cryptoFlag = false;
+
+    public void setCryptoData(String sector, String bidPrice, String bidSize, String askPrice, String askSize, boolean isEnabled) {
+        this.sector = sector;
+        this.bidPrice = bidPrice;
+        this.bidSize = bidSize;
+        this.askPrice = askPrice;
+        this.askSize = askSize;
+        this.isEnabled = isEnabled;
+    }
 
     public String getBidPrice() {
         return bidPrice;

@@ -3,6 +3,7 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
+import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -37,6 +38,13 @@ public class RequestQuote {
         float week52Low = 0;
         int avgVol = 0;
         float week52High = 0;
+
+        String sector = null;
+        String bidPrice = null;
+        String bidSize = null;
+        String askPrice = null;
+        String askSize = null;
+        boolean isEnabled = false;
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = null;
         try {
@@ -166,14 +174,42 @@ public class RequestQuote {
             price = Float.parseFloat(h.toString());
         } catch (Exception e) {
         }
+        try {
+            sector = jsonObject.get("sector").toString();
+        } catch (Exception e) {
+        }
+        try {
+            bidPrice = jsonObject.get("bidPrice").toString();
+        } catch (Exception e) {
+        }
+        try {
+            bidSize = jsonObject.get("bidSize").toString();
+        } catch (Exception e) {
+        }
+        try {
+            askPrice = jsonObject.get("askPrice").toString();
+        } catch (Exception e) {
+        }
+        try {
+            askSize = jsonObject.get("askSize").toString();
+        } catch (Exception e) {
+        }
+        try {
+            isEnabled = Boolean.parseBoolean(jsonObject.get("IsEnabled").toString());
+        } catch (Exception e) {
+
+        }
+
         //order to data sheet
         ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
         int i = 0;
         for (Aktie c : arrl) {
             if (c.getSymbol().equals(jsonObject.get("symbol"))) {
                 c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                c.setCryptoData(sector, bidPrice, bidSize, askPrice, askSize, isEnabled);
                 if (new Model().getData().getCurrentStock() != null) {
                     new Model().getData().getCurrentStock().setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                    new Model().getData().getCurrentStock().setCryptoData(sector, bidPrice, bidSize, askPrice, askSize, isEnabled);
                 }
                 new Model().getData().getAktienList().postValue(arrl);
                 break;

@@ -77,8 +77,11 @@ public class RequestsBuilder {
         return "fx/latest";
     }
 
-    public static String getCurrencyConversionsUrl() {
-        return "fx/convert";
+    public static String getCurrencyConversionsUrl(String symbol) {
+        return "fx/convert?symbol=" + symbol;
     }
 
+    public static String getCurrencyHistoricalUrl(String symbol) {
+        return "fx/historical?symbol=" + symbol;
+    }
 }

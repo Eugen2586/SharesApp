@@ -56,7 +56,7 @@ public class StatistikFragment extends Fragment {
 
     private void showLineChart(ArrayList<Trade> tradeList) {
         // https://github.com/AnyChart/AnyChart-Android/blob/master/sample/src/main/java/com/anychart/sample/charts/LineChartActivity.java
-        if (tradeList != null) {
+        if (tradeList != null && tradeList.size() != 0) {
             // Build the stockdatachart
             Cartesian cartesian = AnyChart.line();
             cartesian.animation(true);
@@ -85,15 +85,14 @@ public class StatistikFragment extends Fragment {
     private ArrayList<DataEntry> generateDataFromTradeList(ArrayList<Trade> tradeList) {
         ArrayList<DataEntry> dataList = new ArrayList<>();
         float currentMoney = model.getData().getDepot().getStartMoney();
-        int counter = 0;
+        long firstMillis = tradeList.get(0).getMillis();
         for (Trade trade : tradeList) {
             if(trade.isKauf()) {
                 currentMoney -= trade.getPreis();
             } else {
                 currentMoney += trade.getPreis();
             }
-            dataList.add(createDataEntry(String.valueOf(counter), currentMoney));
-            counter++;
+            dataList.add(createDataEntry(String.valueOf((trade.getMillis() - firstMillis) / 1000), currentMoney));
         }
 
         return dataList;

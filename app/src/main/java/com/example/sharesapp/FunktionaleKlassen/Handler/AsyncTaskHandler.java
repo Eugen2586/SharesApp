@@ -21,6 +21,7 @@ public class AsyncTaskHandler {
 
     /**
      * Verarbeitet die Antwort des Servers.
+     *
      * @param response Die Antwort des Servers.
      * @throws IOException Wirft Exception, falls etwas schief läuft.
      */
@@ -31,33 +32,29 @@ public class AsyncTaskHandler {
         final String s = Objects.requireNonNull(response.body()).string();
 
         if (url.contains("ref-data")) {
-
             try {
                 new RequestSymbol(s);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-        }else if (url.contains("quote")) {
+        } else if (url.contains("quote")) {
             try {
                 new RequestQuote(s);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else if (url.contains("chart")) {
+        } else if (url.contains("chart")) {
             try {
                 new RequestHistoricalQuotePrices(s);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         } else if (url.contains("stock")) {
-
             try {
                 new RequestQuotePrices(s);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         } else if (url.contains("search")) {
             try {
                 new RequestSearch(s);

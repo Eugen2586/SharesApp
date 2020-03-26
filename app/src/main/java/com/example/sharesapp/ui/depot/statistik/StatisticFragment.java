@@ -32,8 +32,8 @@ public class StatisticFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_statistik, container, false);
 
-        // set trade observer and show chart
         initializeTradeObserver();
+
         showLineChart(model.getData().getTrades());
 
         return root;

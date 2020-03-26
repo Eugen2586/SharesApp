@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/uebersichtFragment"
-        android:name="com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment"
+        android:name="com.example.sharesapp.ui.depot.uebersicht.OverviewFragment"
         android:label="fragment_depot_uebersicht"
         tools:layout="@layout/fragment_depot_uebersicht" >
         <action

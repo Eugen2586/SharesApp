@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/buyorder_fragment"
-        android:name="com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment"
+        android:name="com.example.sharesapp.ui.depot.uebersicht.OverviewFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2" />

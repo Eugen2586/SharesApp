@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
@@ -40,18 +41,17 @@ public class HistorieFragment extends Fragment {
         final TextView umsatz = root.findViewById(R.id.sum);
         final TextView aktienwert = root.findViewById(R.id.aktienwert);
         //Fill the Cash you have at the Moment.
-        cash.setText(String.valueOf(new Model().getData().getDepot().getGeldwert()));
+        cash.setText(String.valueOf(new Anzeige().makeItBeautifulEuro(new Model().getData().getDepot().getGeldwert())));
 
-        Float stockValue = model.getData().getDepot().calculateStockValue();
-        aktienwert.setText(String.valueOf(stockValue));
-        String l_s = String.valueOf(stockValue + new Model().getData().getDepot().getGeldwert());
-        umsatz.setText( l_s );
+        float stockValue = model.getData().getDepot().calculateStockValue();
+        aktienwert.setText(new Anzeige().makeItBeautifulEuro(stockValue));
+        umsatz.setText(new Anzeige().makeItBeautifulEuro(stockValue + new Model().getData().getDepot().getGeldwert()));
 
 
         historieViewModel.mTrades.observe(getViewLifecycleOwner(), new Observer<ArrayList<Trade>>() {
             @Override
             public void onChanged(ArrayList<Trade> trades) {
-
+                setAdapter(trades);
             }
         });
 

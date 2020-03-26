@@ -63,7 +63,7 @@ public class StickyNotificationService extends Service {
                     @Override
                     public void run() {
                         // model loading with persistence
-                        model.getPersistanceFBackground();
+//                        model.getPersistanceFBackground();
                         ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
                         if (depotList == null) {
                             showComeBackNotification(0);

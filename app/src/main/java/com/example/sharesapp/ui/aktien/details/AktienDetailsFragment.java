@@ -31,6 +31,7 @@ import com.anychart.core.stock.Plot;
 import com.anychart.core.stock.series.Hilo;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
+import com.anychart.scales.DateTime;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.Constants;
@@ -39,11 +40,19 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
+import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class AktienDetailsFragment extends Fragment {
 
@@ -53,7 +62,6 @@ public class AktienDetailsFragment extends Fragment {
     private EditText Limit;
     private TextView totalPrice;
     private TextView price;
-    private int hideRowCounter = 0;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -386,6 +394,7 @@ public class AktienDetailsFragment extends Fragment {
                 Requests requests = new Requests();
                 try {
                     requests.asyncRun(RequestsBuilder.getQuote(model.getData().getCurrentStock().getSymbol()));
+                    requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(model.getData().getCurrentStock().getSymbol(), Range.oneMonth));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -599,17 +608,15 @@ public class AktienDetailsFragment extends Fragment {
         Aktie stock = model.getData().getCurrentStock();
         // dont show if lastPrice == 0.0f
         float lastPrice = stock.getPreis();
-        if (lastPrice == 0.0f) {
+        if (lastPrice != 0.0f) {
             // fill information fields
             TextView titleView = root.findViewById(R.id.name_big);
             titleView.setText(stock.getCompanyName());
 
-            hideRowCounter = 0;
-
             setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
             setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
             setTextFieldIdWithString(R.id.type_field, stock.getType());
-            setTextFieldIdWithString(R.id.date_field, stock.getLatestUpdate());
+            setTextFieldIdWithTime(R.id.date_field, stock.getLatestUpdate());
             setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
             setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
             setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
@@ -617,9 +624,9 @@ public class AktienDetailsFragment extends Fragment {
 
             setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
             setTextFieldIdWithString(R.id.high_field, stock.getHigh());
-            setTextFieldIdWithString(R.id.high_time_field, stock.getHighTime());
+            setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
             setTextFieldIdWithString(R.id.low_field, stock.getLow());
-            setTextFieldIdWithString(R.id.low_time_field, stock.getLowTime());
+            setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
             setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
             setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
 
@@ -636,13 +643,12 @@ public class AktienDetailsFragment extends Fragment {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
             }
         } else {
-            // TODO: insert again
-//            Requests requests = new Requests();
-//            try {
-//                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            Requests requests = new Requests();
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -654,19 +660,37 @@ public class AktienDetailsFragment extends Fragment {
             ((TableRow) textView.getParent()).setVisibility(View.VISIBLE);
             textView.setText(str);
         }
-        hideRowCounter++;
     }
 
     private void setTextFieldIdWithPrice(int id, float price) {
         TextView textView = root.findViewById(id);
         textView.setText((new Anzeige()).makeItBeautifulEuro(price));
-        hideRowCounter++;
     }
 
     private void setTextFieldIdWithInt(int id, int number) {
         TextView textView = root.findViewById(id);
-        textView.setText(String.valueOf(number));
-        hideRowCounter++;
+        if (number < 0) {
+            ((TableRow) textView.getParent()).setVisibility(View.GONE);
+        } else {
+            ((TableRow) textView.getParent()).setVisibility(View.VISIBLE);
+            textView.setText(String.valueOf(number));
+        }
+    }
+
+    private void setTextFieldIdWithTime(int id, String time) {
+        TextView textView = root.findViewById(id);
+        if (time != null) {
+            ((TableRow) textView.getParent()).setVisibility(View.VISIBLE);
+            String formatString = "dd-MM-yyyy HH:mm:ss,SSS";
+            SimpleDateFormat sdf = new SimpleDateFormat(formatString, Locale.GERMANY);
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(Long.parseLong(time));
+
+            textView.setText(sdf.format(calendar.getTime()));
+        } else {
+            ((TableRow) textView.getParent()).setVisibility(View.GONE);
+        }
+
     }
 
     private void makeChart() {

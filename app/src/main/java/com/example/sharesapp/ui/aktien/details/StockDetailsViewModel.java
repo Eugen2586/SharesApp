@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AktienDetailsViewModel extends ViewModel {
+public class StockDetailsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public AktienDetailsViewModel() {
+    public StockDetailsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is aktien details fragment");
     }

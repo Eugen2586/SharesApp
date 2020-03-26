@@ -10,17 +10,13 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.sharesapp.DrawerActivity;
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,7 +33,6 @@ public class NotificationOnlyStickyService extends Service {
         }
     }
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -50,30 +45,33 @@ public class NotificationOnlyStickyService extends Service {
 
     @Override
     public void onDestroy() {
+        // cancel the timer
         timer.cancel();
-        // remove Notification channel
+
+        // remove Notification channel if possible
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             assert notificationManager != null;
             notificationManager.deleteNotificationChannel(channelId);
         }
+
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-
+        // send Notification with random Message every 30 min
         handler = new Handler();
         handler.post(new Runnable() {
             @Override
             public void run() {
-                final int timeInterval = 30 * 60 * 1000; // TODO: set to 30 min
+                final int timeInterval = 30 * 60 * 1000;
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                    showComeBackNotification(new Random().nextInt() % 4);
+                        showComeBackNotification(new Random().nextInt() % 4);
                     }
                 }, timeInterval, timeInterval);
             }
@@ -83,6 +81,7 @@ public class NotificationOnlyStickyService extends Service {
     }
 
     private void showComeBackNotification(int messageIndex) {
+        // defines random message from messageIndex
         String message;
         switch (messageIndex) {
             case 0:
@@ -100,6 +99,7 @@ public class NotificationOnlyStickyService extends Service {
             default:
                 message = "Geld verdient sich nicht von alleine!";
         }
+
         showNotificationWithMessage(message);
     }
 
@@ -128,18 +128,18 @@ public class NotificationOnlyStickyService extends Service {
     }
 
     private String buildNotificationChannel() {
+        // if version compatible -> build Notification Channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channel_name = "bbb_channel_name";
             int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
             String description = "channel for bbb";
             NotificationChannel channel = new NotificationChannel(channelId, channel_name, channel_importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
+
         return channelId;
     }
 }

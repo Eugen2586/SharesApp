@@ -25,6 +25,7 @@ import androidx.work.WorkManager;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
 import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.Worker.NotificationWorker;
 import com.example.sharesapp.Model.Constants;
@@ -42,6 +43,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
@@ -65,10 +67,10 @@ public class DrawerActivity extends AppCompatActivity {
         }
 
         // stop RequestService
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        stopService(notificationIntent);
-//        Intent requestIntent = new Intent(this, RequestDataService.class);
-//        stopService(requestIntent);
+//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+//        stopService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
 
         super.onStop();
         //If the App Stopps we store the Data!
@@ -314,9 +316,9 @@ public class DrawerActivity extends AppCompatActivity {
             }
             int anzahlImTrade = Integer.parseInt((String) json.get("anzahl"));
             float ft = Float.parseFloat(json.get("preis").toString());
-            String date = json.get("date").toString();
+            long millis = Long.parseLong(Objects.requireNonNull(json.get("date")).toString());
             // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf, ft, date, ak.getCompanyName());
+            tr = new Trade(ak, anzahlImTrade, isKauf, ft, millis, ak.getCompanyName());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }
@@ -512,10 +514,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
-//        Intent requestIntent = new Intent(this, RequestDataService.class);
-//        startService(requestIntent);
+//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+//        startService(notificationIntent);
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        startService(requestIntent);
 
 //        createWorker();
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {

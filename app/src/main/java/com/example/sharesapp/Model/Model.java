@@ -462,11 +462,11 @@ public class Model{
             } catch (Exception e) {
 
             }
-            int anzahlImTrade = Integer.parseInt((String) json.get("anzahl"));
+            int anzahlImTrade = Integer.parseInt(json.get("anzahl").toString());
             float ft = Float.parseFloat(json.get("preis").toString());
-            String date = json.get("date").toString();
+            long millis = Long.parseLong(json.get("date").toString());
             // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date , ak.getCompanyName());
+            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , millis , ak.getCompanyName());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }

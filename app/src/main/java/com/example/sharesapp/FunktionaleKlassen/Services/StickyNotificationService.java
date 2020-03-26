@@ -74,6 +74,7 @@ public class StickyNotificationService extends Service {
                     @Override
                     public void run() {
                         // model loading with persistence
+                        System.out.println("...............................................................................Request Sticky");
                         model.getPersistanceFBackground();
                         ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
                         if (depotList == null) {

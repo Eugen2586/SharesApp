@@ -11,7 +11,7 @@ class KotlinNotificationWorker(var context: Context, var workerParameters: Worke
         CoroutineWorker(context, workerParameters){
 
     override suspend fun doWork(): Result {
-        showNotification()
+//        showNotification()
 
         return Result.retry()
     }

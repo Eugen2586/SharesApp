@@ -41,13 +41,13 @@ public class StatistikFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_statistik, container, false);
 
-        final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
-            @Override
-            public void onChanged(ArrayList<Trade> tradeList) {
-                showLineChart(tradeList);
-            }
-        };
-        model.getData().getTradesMutable().observe(getViewLifecycleOwner(), tradesObserver);
+//        final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
+//            @Override
+//            public void onChanged(ArrayList<Trade> tradeList) {
+//                showLineChart(tradeList);
+//            }
+//        };
+//        model.getData().getTradesMutable().observe(getViewLifecycleOwner(), tradesObserver);
 
         showLineChart(model.getData().getTrades());
 
@@ -84,14 +84,16 @@ public class StatistikFragment extends Fragment {
 
     private ArrayList<DataEntry> generateDataFromTradeList(ArrayList<Trade> tradeList) {
         ArrayList<DataEntry> dataList = new ArrayList<>();
-        float currentMoney = Constants.MONEY;
+        float currentMoney = model.getData().getDepot().getStartMoney();
+        int counter = 0;
         for (Trade trade : tradeList) {
             if(trade.isKauf()) {
                 currentMoney -= trade.getPreis();
             } else {
                 currentMoney += trade.getPreis();
             }
-            dataList.add(createDataEntry(trade.getDate(), currentMoney));
+            dataList.add(createDataEntry(String.valueOf(counter), currentMoney));
+            counter++;
         }
 
         return dataList;

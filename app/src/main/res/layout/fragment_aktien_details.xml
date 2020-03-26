@@ -33,7 +33,9 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/overview_margin"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginTop="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
                 android:stretchColumns="*">
 
                 <TableRow
@@ -61,7 +63,7 @@
                         android:layout_width="142dp"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:text="@string/name" />
+                        android:text="@string/firmenname" />
 
                     <TextView
                         android:id="@+id/name_field"
@@ -95,6 +97,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:text="@string/zuletzt_aktualisiert" />
+
+                    <TextView
+                        android:id="@+id/date_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
                         android:text="@string/aktueller_preis" />
 
                     <TextView
@@ -112,10 +132,182 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:text="@string/zuletzt_aktualisiert" />
+                        android:text="@string/aktuelles_volumen" />
 
                     <TextView
-                        android:id="@+id/date_field"
+                        android:id="@+id/volume_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/ffnungszeit" />
+
+                    <TextView
+                        android:id="@+id/open_time_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/schlie_zeit" />
+
+                    <TextView
+                        android:id="@+id/close_time_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/overview_margin"
+                android:layout_marginTop="@dimen/overview_margin"
+                android:layout_marginEnd="@dimen/overview_margin"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/letzter_schlie_preis" />
+
+                    <TextView
+                        android:id="@+id/previous_close_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/h_chstpreis_heute" />
+
+                    <TextView
+                        android:id="@+id/high_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/zeit_h_chstpreis" />
+
+                    <TextView
+                        android:id="@+id/high_time_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/tiefstpreis_heute" />
+
+                    <TextView
+                        android:id="@+id/low_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/zeit_tiefstpreis" />
+
+                    <TextView
+                        android:id="@+id/low_time_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/_52_wochen_h_chstpreis" />
+
+                    <TextView
+                        android:id="@+id/week_high_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:text="@string/_52_wochen_tiefpreis" />
+
+                    <TextView
+                        android:id="@+id/week_low_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10" />
@@ -189,7 +381,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
                     </TableRow>
 
                     <TableRow
@@ -201,14 +393,14 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:text="@string/limit"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/buy_limit_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
                     </TableRow>
                 </TableLayout>
 
@@ -236,14 +428,14 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:text="@string/menge"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/sell_number_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
                     </TableRow>
 
                     <TableRow
@@ -255,14 +447,14 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:text="@string/limit"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
 
                         <TextView
                             android:id="@+id/sell_limit_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center" />
                     </TableRow>
                 </TableLayout>
 

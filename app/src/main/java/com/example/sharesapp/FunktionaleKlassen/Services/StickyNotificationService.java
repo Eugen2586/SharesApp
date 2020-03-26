@@ -33,12 +33,14 @@ public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
     private final Timer timer = new Timer();
+    Model model = new Model();
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
             return StickyNotificationService.this;
         }
     }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -62,20 +64,28 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
+                final int timeInterval = 1 * 20 * 1000; // TODO: set to 30 min
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        //Todo Persisenz laden
-                        Model model = new Model();
+                        // model loading with persistence
+                        model.getPersistanceFBackground();
+                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+                        if (depotList == null) {
+                            showComeBackNotification(0);
+                        } else if (depotList.size() == 0) {
+                            showComeBackNotification(1);
+                        } else {
+                            showComeBackNotification(2);
+                        }
 
-//                        showComeBackNotification(new Random().nextInt() % 4);
-                        System.out.println("...............................................................................Request Sticky");
-                        // get all symbols for requests
-                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
-
-                        // serviceRequests for all stocks with symbols in symbolSet
-                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
+////                        showComeBackNotification(new Random().nextInt() % 4);
+//                        System.out.println("...............................................................................Request Sticky");
+//                        // get all symbols for requests
+//                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
+//
+//                        // serviceRequests for all stocks with symbols in symbolSet
+//                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
 
                     }
                 }, timeInterval, timeInterval);

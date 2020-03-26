@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Data {
+    private MutableLiveData<ArrayList<DataPoint>> personalChart = new MutableLiveData<>();
     private ArrayList<Trade> tradelist = new ArrayList<>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot = null;
@@ -216,6 +217,7 @@ public class Data {
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
+        int schwierigkeitsgrad = depot.getSchwierigkeitsgrad();
         depot = new Depot();
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
@@ -225,6 +227,8 @@ public class Data {
         searchScrollPosition = 0;
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
+        depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
+        depot.applySchwierigkeitsgrad(true);
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
@@ -409,6 +413,7 @@ public class Data {
     private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
         return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
+
 
 //    public void buyStockOfOrder(Order buyOrder) {
 //        float totalValue = buyOrder.getNumber() * buyOrder.getLimit() * Constants.PROZENT;

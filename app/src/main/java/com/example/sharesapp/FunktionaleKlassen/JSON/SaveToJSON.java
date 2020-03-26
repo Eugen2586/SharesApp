@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
     public class SaveToJSON {
+
         private Model model = new Model();
+
         public SaveToJSON(SharedPreferences.Editor editor){
             String s = null;
             //Here it should all Data from the Model get putted!
@@ -63,7 +65,16 @@ import java.util.ArrayList;
                 editor.putString("AktienSymbole", s);
                 editor.commit();
             }catch(Exception e){
-                
+
+            }
+            s = null;
+
+            //Schwierigkeitsgrad
+            try {
+                editor.putInt("Schwierigkeitsgrad", model.getData().getDepot().getSchwierigkeitsgrad());
+                editor.commit();
+            }catch(Exception e){
+
             }
             s = null;
 

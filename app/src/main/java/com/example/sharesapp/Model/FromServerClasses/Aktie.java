@@ -38,30 +38,32 @@ public class Aktie implements Comparator {
     private boolean isUSMarketOpen;
 
     public void setadditionalData(
-             String companyName,
-             String primaryExchange,
-             String calculationPrice,
-             String open,
-             String openTime,
-             String close,
-             String closeTime,
-             String high,
-             String highTime,
-             String low,
-             String lowTime,
-             float latestPrice,
-             String latestSource,
-             String latestUpdate,
-             int latestVolume,
-             float previousClose,
-             int previousVolume,
-             float change1,
-             float changePercent,
-             int avgTotalVolume,
-             float week52High,
-             float week52Low,
-             int lastTradeTime,
-             boolean isUSMarketOpen){
+            float price,
+            float latestPrice1,
+            String companyName,
+            String primaryExchange,
+            String calculationPrice,
+            String open,
+            String openTime,
+            String close,
+            String closeTime,
+            String high,
+            String highTime,
+            String low,
+            String lowTime,
+            float latestPrice,
+            String latestSource,
+            String latestUpdate,
+            int latestVolume,
+            float previousClose,
+            int previousVolume,
+            float change1,
+            float changePercent,
+            int avgTotalVolume,
+            float week52High,
+            float week52Low,
+            int lastTradeTime,
+            boolean isUSMarketOpen){
         this.companyName = companyName;
         this.primaryExchange = primaryExchange;
         this.calculationPrice = calculationPrice;
@@ -73,6 +75,7 @@ public class Aktie implements Comparator {
         this.highTime = highTime;
         this.low = low;
         this.lowTime = lowTime;
+        this.preis = latestPrice;
         this.latestPrice = latestPrice;
         this.latestSource = latestSource;
         this.latestUpdate = latestUpdate;
@@ -229,6 +232,102 @@ public class Aktie implements Comparator {
 
     public void setChart(ArrayList<DataPoint> chart) {
         this.chart = chart;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
+    }
+
+    public String getClose() {
+        return close;
+    }
+
+    public void setClose(String close) {
+        this.close = close;
+    }
+
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
+        this.high = high;
+    }
+
+    public String getHighTime() {
+        return highTime;
+    }
+
+    public void setHighTime(String highTime) {
+        this.highTime = highTime;
+    }
+
+    public String getLow() {
+        return low;
+    }
+
+    public void setLow(String low) {
+        this.low = low;
+    }
+
+    public String getLowTime() {
+        return lowTime;
+    }
+
+    public void setLowTime(String lowTime) {
+        this.lowTime = lowTime;
+    }
+
+    public String getLatestUpdate() {
+        return latestUpdate;
+    }
+
+    public void setLatestUpdate(String latestUpdate) {
+        this.latestUpdate = latestUpdate;
+    }
+
+    public int getLatestVolume() {
+        return latestVolume;
+    }
+
+    public void setLatestVolume(int latestVolume) {
+        this.latestVolume = latestVolume;
+    }
+
+    public float getPreviousClose() {
+        return previousClose;
+    }
+
+    public void setPreviousClose(float previousClose) {
+        this.previousClose = previousClose;
+    }
+
+    public float getWeek52High() {
+        return week52High;
+    }
+
+    public void setWeek52High(float week52High) {
+        this.week52High = week52High;
+    }
+
+    public float getWeek52Low() {
+        return week52Low;
+    }
+
+    public void setWeek52Low(float week52Low) {
+        this.week52Low = week52Low;
     }
 
     @Override

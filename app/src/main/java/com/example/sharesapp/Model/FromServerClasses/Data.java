@@ -216,6 +216,7 @@ public class Data {
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
+        int schwierigkeitsgrad = depot.getSchwierigkeitsgrad();
         depot = new Depot();
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
@@ -225,6 +226,8 @@ public class Data {
         searchScrollPosition = 0;
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
+        depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
+        depot.applySchwierigkeitsgrad(true);
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 

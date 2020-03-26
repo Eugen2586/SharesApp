@@ -41,6 +41,13 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/schwierigkeitsgrad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schwierigkeitsgrad: "
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <LinearLayout

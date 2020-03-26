@@ -21,7 +21,6 @@ import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.utils.CryptoRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -29,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener, CryptoRecyclerViewAdapter.ItemClickListener {
+public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView = null;
@@ -151,7 +150,6 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
             // add Portfolio and Aktien Tab
             addTabWithString(tabLayout, "portfolio");
             addTabWithString(tabLayout, "Kryptowährungen");
-            addTabWithString(tabLayout, "Fremdwährungen");
             addTabWithString(tabLayout, "Aktien");
 
             // add Tabs for existing StockTypes
@@ -159,7 +157,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabWithString(tabLayout, category);
             }
 
-            numberOfTabs = availableTypes.length + 4;
+            numberOfTabs = availableTypes.length + 3;
         }
     }
 
@@ -180,18 +178,6 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 setAdapter(portfolioList);
             }
         } else if( position == 1) {
-//            setCryptoAdapter(model.getData().getMutableCryptoList().getValue());
-            if (stockList != null) {
-                String type = "crypto";
-                ArrayList<Aktie> filtered_aktien = new ArrayList<>();
-                for (Aktie stock : stockList) {
-                    if (stock.getType().equals(type)) {
-                        filtered_aktien.add(stock);
-                    }
-                }
-                setAdapter(filtered_aktien);
-            }
-        } else if(position == 2) {
             if (stockList != null) {
                 String type = "crypto";
                 ArrayList<Aktie> filteredStockList = new ArrayList<>();
@@ -202,7 +188,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 }
                 setAdapter(filteredStockList);
             }
-        } else if (position == 3) {
+        } else if(position == 2) {
             if (stockList != null) {
                 String type = "crypto";
                 ArrayList<Aktie> filteredStockList = new ArrayList<>();
@@ -214,7 +200,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 setAdapter(filteredStockList);
             }
         } else {
-            position -= 4;
+            position -= 3;
             if (position < 0) {
                 position = 0;
             }
@@ -237,34 +223,48 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         // opens stock details
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
+
+
+        // find Type
+        String type = "";
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (stock.getSymbol().equals(symbol)) {
+                    type = stock.getType();
+                }
+            }
+        }
+
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
+        stock.setType(type);
+
         model.getData().setCurrentStock(stock);
-        Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        quoteAndPriceRequest();
+
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
-    @Override
-    public void onCryptoItemClick(View view, int position) {
-        // opens crypto details
-        TextView symbolView = view.findViewById(R.id.crypto_symbol_text);
-        String symbol = (String) symbolView.getText();
-        Crypto crypto = new Crypto();
-        crypto.setSymbol(symbol);
-        model.getData().setCurrentCrypto(crypto);
+    private void quoteAndPriceRequest() {
         Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(crypto.getSymbol()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        Aktie currentStock = model.getData().getCurrentStock();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
     private void initRecyclerView() {
@@ -282,18 +282,6 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(StockFragment.this.getContext(), aktienList);
         adapter.setClickListener(StockFragment.this);
         adapter.setAktien(aktienList);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void setCryptoAdapter(ArrayList<Crypto> cryptoList) {
-        emptyPortfolioTextView.setVisibility(View.GONE);
-        if (cryptoList == null) {
-            cryptoList = new ArrayList<>();
-        }
-        initRecyclerView();
-        CryptoRecyclerViewAdapter adapter = new CryptoRecyclerViewAdapter(StockFragment.this.getContext(), cryptoList);
-        adapter.setClickListener(StockFragment.this);
-        adapter.setCrypto(cryptoList);
         recyclerView.setAdapter(adapter);
     }
 

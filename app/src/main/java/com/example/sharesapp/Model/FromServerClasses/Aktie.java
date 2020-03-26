@@ -475,6 +475,7 @@ public class Aktie implements Comparator {
     private String askPrice = null;
     private String askSize = null;
     private boolean isEnabled = false;
+    private boolean cryptoFlag = false;
 
     public String getBidPrice() {
         return bidPrice;
@@ -514,5 +515,13 @@ public class Aktie implements Comparator {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public boolean isCrypto() {
+        if (type != null && type.equals("crypto")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

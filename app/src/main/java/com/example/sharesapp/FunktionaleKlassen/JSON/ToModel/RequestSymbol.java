@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class RequestSymbol {
 
-
     ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
     ArrayList<Aktie> akl = new ArrayList<>();
@@ -130,13 +129,6 @@ public class RequestSymbol {
 
                 }
             }
-//            Model m = new Model();
-//            if(m.getData().getAktienList().getValue() != null) {
-//                m.getData().getAktienList().postValue(akl);
-//            }
-//            else{
-//                m.getData().getAktienList().postValue(akl);
-//            }
             Model model = new Model();
             ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
             if (stockList == null) {

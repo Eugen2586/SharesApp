@@ -377,7 +377,12 @@ public class StockDetailsFragment extends Fragment {
 
     private void setTextFieldIdWithPrice(int id, float price) {
         TextView textView = root.findViewById(id);
-        textView.setText((new Anzeige()).makeItBeautifulEuro(price));
+        if (price <= 0.0f) {
+            ((TableRow) textView.getParent()).setVisibility(View.GONE);
+        } else {
+            textView.setText((new Anzeige()).makeItBeautifulEuro(price));
+            ((TableRow) textView.getParent()).setVisibility(View.VISIBLE);
+        }
     }
 
     private void setTextFieldIdWithInt(int id, int number) {

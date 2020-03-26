@@ -164,12 +164,14 @@ public class RequestQuote {
             Object h = jsonObject.get("week52High");
             week52High = Float.parseFloat(h.toString());
         } catch (Exception e) {
+            week52High = -1;
             e.printStackTrace();
         }
         try {
             Object h = jsonObject.get("week52Low");
             week52Low = Float.parseFloat(h.toString());
         } catch (Exception e) {
+            week52Low = -1;
             e.printStackTrace();
         }
         try {

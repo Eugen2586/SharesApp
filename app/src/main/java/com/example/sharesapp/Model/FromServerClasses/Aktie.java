@@ -38,30 +38,31 @@ public class Aktie implements Comparator {
     private boolean isUSMarketOpen;
 
     public void setadditionalData(
-             String companyName,
-             String primaryExchange,
-             String calculationPrice,
-             String open,
-             String openTime,
-             String close,
-             String closeTime,
-             String high,
-             String highTime,
-             String low,
-             String lowTime,
-             float latestPrice,
-             String latestSource,
-             String latestUpdate,
-             int latestVolume,
-             float previousClose,
-             int previousVolume,
-             float change1,
-             float changePercent,
-             int avgTotalVolume,
-             float week52High,
-             float week52Low,
-             int lastTradeTime,
-             boolean isUSMarketOpen){
+            float price,
+            String companyName,
+            String primaryExchange,
+            String calculationPrice,
+            String open,
+            String openTime,
+            String close,
+            String closeTime,
+            String high,
+            String highTime,
+            String low,
+            String lowTime,
+            float latestPrice,
+            String latestSource,
+            String latestUpdate,
+            int latestVolume,
+            float previousClose,
+            int previousVolume,
+            float change1,
+            float changePercent,
+            int avgTotalVolume,
+            float week52High,
+            float week52Low,
+            int lastTradeTime,
+            boolean isUSMarketOpen){
         this.companyName = companyName;
         this.primaryExchange = primaryExchange;
         this.calculationPrice = calculationPrice;
@@ -87,6 +88,7 @@ public class Aktie implements Comparator {
         this.week52Low = week52Low;
         this.lastTradeTime = lastTradeTime;
         this.isUSMarketOpen = isUSMarketOpen;
+        this.preis = price;
     }
 
 

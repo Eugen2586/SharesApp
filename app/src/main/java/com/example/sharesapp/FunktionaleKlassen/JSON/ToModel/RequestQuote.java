@@ -27,6 +27,7 @@ public class RequestQuote {
         String latestS = null;
         Float latestPrice = null;
         String latestU = null;
+        float price = 0.0f;
         int latestVol = 0;
         float prevCl = 0;
         float chpercent = 0;
@@ -155,6 +156,11 @@ public class RequestQuote {
         }catch(Exception e){
             e.printStackTrace();
         }
+        try{
+            price = Float.parseFloat((String)jsonObject.get("price"));
+        }catch(Exception e){
+
+        }
         //order to data sheet
         ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
         if (arrl != null) {
@@ -163,8 +169,8 @@ public class RequestQuote {
                     c.setadditionalData( company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
                     break;
                 }
-            }
-        }
+			}
+		}
         new Model().getData().getAktienList().getValue().clear();
         new Model().getData().getAktienList().postValue(arrl);
     }

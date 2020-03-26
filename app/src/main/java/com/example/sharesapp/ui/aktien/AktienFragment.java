@@ -139,14 +139,17 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
 
             // add Portfolio and Alles Tab
             addTabWithString(tabLayout, "portfolio");
-            addTabWithString(tabLayout, "alles");
+            addTabWithString(tabLayout, "Aktien");
 
             // add Tabs for existing StockTypes
             for (String category : availableTypes) {
                 addTabWithString(tabLayout, category);
             }
 
-            numberOfTabs = availableTypes.length + 2;
+            addTabWithString(tabLayout, "Fremdwährungen");
+            addTabWithString(tabLayout, "Kryptowährungen");
+
+            numberOfTabs = availableTypes.length + 4;
         }
     }
 

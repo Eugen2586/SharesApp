@@ -25,6 +25,7 @@ import androidx.work.WorkManager;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.Services.NotificationOnlyStickyService;
 import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
 import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.Worker.NotificationWorker;
@@ -66,21 +67,19 @@ public class DrawerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // stop RequestService
-//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-//        stopService(notificationIntent);
+        // stop RequestDataService
         Intent requestIntent = new Intent(this, RequestDataService.class);
         stopService(requestIntent);
 
         super.onStop();
-        //If the App Stopps we store the Data!
+        //If the App Stops we store the Data!
     }
 
     @Override
     protected void onDestroy() {
-        // start StickyService
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        stopService(notificationIntent);
+        // start NotificationOnlyStickyService
+        Intent notificationOnlyIntent = new Intent(this, NotificationOnlyStickyService.class);
+        startService(notificationOnlyIntent);
 
         // remove MediaPlayer
         if (backgroundMediaPlayer != null) {
@@ -514,12 +513,14 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-//        startService(notificationIntent);
+        // stop NotificationOnlyStickyService
+        Intent notificationOnlyIntent = new Intent(this, NotificationOnlyStickyService.class);
+        stopService(notificationOnlyIntent);
+
+        // start RequestDataService
         Intent requestIntent = new Intent(this, RequestDataService.class);
         startService(requestIntent);
 
-//        createWorker();
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();
         }

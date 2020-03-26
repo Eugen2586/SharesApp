@@ -29,6 +29,103 @@ public class Aktie implements Comparator {
     private int latestVolume;
     private float previousClose;
     private int previousVolume;
+
+    public String getPrimaryExchange() {
+        return primaryExchange;
+    }
+
+    public void setPrimaryExchange(String primaryExchange) {
+        this.primaryExchange = primaryExchange;
+    }
+
+    public String getCalculationPrice() {
+        return calculationPrice;
+    }
+
+    public void setCalculationPrice(String calculationPrice) {
+        this.calculationPrice = calculationPrice;
+    }
+
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public float getLatestPrice() {
+        return latestPrice;
+    }
+
+    public void setLatestPrice(float latestPrice) {
+        this.latestPrice = latestPrice;
+    }
+
+    public String getLatestSource() {
+        return latestSource;
+    }
+
+    public void setLatestSource(String latestSource) {
+        this.latestSource = latestSource;
+    }
+
+    public int getPreviousVolume() {
+        return previousVolume;
+    }
+
+    public void setPreviousVolume(int previousVolume) {
+        this.previousVolume = previousVolume;
+    }
+
+    public float getChange1() {
+        return change1;
+    }
+
+    public void setChange1(float change1) {
+        this.change1 = change1;
+    }
+
+    public float getChangePercent() {
+        return changePercent;
+    }
+
+    public void setChangePercent(float changePercent) {
+        this.changePercent = changePercent;
+    }
+
+    public int getAvgTotalVolume() {
+        return avgTotalVolume;
+    }
+
+    public void setAvgTotalVolume(int avgTotalVolume) {
+        this.avgTotalVolume = avgTotalVolume;
+    }
+
+    public int getLastTradeTime() {
+        return lastTradeTime;
+    }
+
+    public void setLastTradeTime(int lastTradeTime) {
+        this.lastTradeTime = lastTradeTime;
+    }
+
+    public boolean isUSMarketOpen() {
+        return isUSMarketOpen;
+    }
+
+    public void setUSMarketOpen(boolean USMarketOpen) {
+        isUSMarketOpen = USMarketOpen;
+    }
+
     private float change1;
     private float changePercent;
     private int avgTotalVolume;
@@ -36,6 +133,7 @@ public class Aktie implements Comparator {
     private float week52Low;
     private int lastTradeTime;
     private boolean isUSMarketOpen;
+    private String sector;
 
     public void setadditionalData(
             float price,
@@ -354,12 +452,20 @@ public class Aktie implements Comparator {
         obj.put("date", date);
         obj.put("type", type);
         obj.put("region", region);
-        obj.put("currency", currency);
+        obj.put("RequestCurrency", currency);
         obj.put("enabled", enabled);
         obj.put("preis", String.valueOf(preis));
         obj.put("anzahl", String.valueOf(anzahl));
         obj.put("change", String.valueOf(change));
 
         return obj;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 }

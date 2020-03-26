@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class UebersichtViewModel extends ViewModel {
+public class OverviewViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public UebersichtViewModel() {
+    public OverviewViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is übersicht fragment");
     }

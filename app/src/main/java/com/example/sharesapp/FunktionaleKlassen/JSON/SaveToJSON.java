@@ -190,7 +190,7 @@ import java.util.ArrayList;
 
                 }
                 try {
-                    obj.put("currency", ak.getAktie().getCurrency());
+                    obj.put("RequestCurrency", ak.getAktie().getCurrency());
                 }catch(Exception e){
 
                 }

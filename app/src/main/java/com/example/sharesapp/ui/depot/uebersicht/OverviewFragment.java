@@ -19,19 +19,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.newgame.NewgameFragment;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UebersichtFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
+public class OverviewFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private View root;
     private StockRecyclerViewAdapter adapter = null;
@@ -47,27 +45,17 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_uebersicht, container, false);
 
-        initializeSwipeRefresh();
-
+        // initialize components
         notEmptyTextView = root.findViewById(R.id.not_empty_depot_text_view);
         emptyTextView = root.findViewById(R.id.empty_depot_text_view);
         stockValueTextView = root.findViewById(R.id.stock_value_text);
         overallValueTextView = root.findViewById(R.id.overall_value_text);
 
-        String cashValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().getGeldwert());
-        TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
-        cashValueTextView.setText((cashValue + "€"));
+        initializeSwipeRefresh();
 
-        final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
-            @Override
-            public void onChanged(ArrayList<Aktie> depotList) {
-                setStockAndOverallValue();
-                setAdapter(depotList);
-            }
-        };
-        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
+        initializeDepotObserver();
 
-        setStockAndOverallValue();
+        setValueFields();
         setAdapter(model.getData().getDepot().getAktienImDepot().getValue());
 
         sendRequestsForDepot();
@@ -93,6 +81,29 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    private void initializeDepotObserver() {
+        final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> depotList) {
+                setValueFields();
+                setAdapter(depotList);
+            }
+        };
+        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
+    }
+
+    private void setValueFields() {
+        String cashValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().getGeldwert());
+        TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
+        cashValueTextView.setText((cashValue + "€"));
+
+        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue()) + "€";
+        stockValueTextView.setText(stockValue);
+
+        String overallValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue() + model.getData().getDepot().getGeldwert()) + "€";
+        overallValueTextView.setText(overallValue);
     }
 
     private void sendRequestsForDepot() {
@@ -139,8 +150,8 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         initRecyclerView();
         if (depotList != null) {
             if (adapter == null) {
-                adapter = new StockRecyclerViewAdapter(UebersichtFragment.this.getContext(), depotList);
-                adapter.setClickListener(UebersichtFragment.this);
+                adapter = new StockRecyclerViewAdapter(OverviewFragment.this.getContext(), depotList);
+                adapter.setClickListener(OverviewFragment.this);
                 recyclerView.setAdapter(adapter);
             } else {
                 adapter.setAktien(depotList);
@@ -157,17 +168,11 @@ public class UebersichtFragment extends Fragment implements StockRecyclerViewAda
         }
     }
 
-    private void setStockAndOverallValue() {
-        String stockValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue()) + "€";
-        stockValueTextView.setText(stockValue);
 
-        String overallValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().calculateStockValue() + model.getData().getDepot().getGeldwert()) + "€";
-        overallValueTextView.setText(overallValue);
-    }
 
     private void showDifficultyDialog(LayoutInflater inflater) {
 
-        final Context context = UebersichtFragment.this.getContext();
+        final Context context = OverviewFragment.this.getContext();
         if (context != null) {
             final View diffLevelDialog = inflater.inflate(R.layout.difficulty_level_dialog, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(context);

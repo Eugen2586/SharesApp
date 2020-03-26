@@ -18,8 +18,6 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
-import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.TradeRecyleViewAdapter;
 
 import java.util.ArrayList;

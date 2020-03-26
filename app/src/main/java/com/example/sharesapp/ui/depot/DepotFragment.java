@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.ui.depot.statistik.StatistikFragment;
-import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
+import com.example.sharesapp.ui.depot.statistik.StatisticFragment;
+import com.example.sharesapp.ui.depot.uebersicht.OverviewFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -32,7 +32,7 @@ public class DepotFragment extends Fragment {
         fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
         if (model.getData().getPreviouslySelectedDepotTabIndex() == 0) {
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new UebersichtFragment()).commit();
+            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new OverviewFragment()).commit();
         }
 
         tabLayout = root.findViewById(R.id.depot_tab_layout);
@@ -62,9 +62,9 @@ public class DepotFragment extends Fragment {
     private void changeFragment(int position) {
         fragmentTransaction = fragmentManager.beginTransaction();
         if (position == 0) {
-            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new UebersichtFragment());
+            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new OverviewFragment());
         } else if (position == 1) {
-            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new StatistikFragment());
+            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new StatisticFragment());
         }
 
         fragmentTransaction.commitNow();

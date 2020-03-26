@@ -67,7 +67,7 @@ public class RequestSymbol {
 
                 }
                 try {
-                    ak.setCurrency(json.getString("currency").toString());
+                    ak.setCurrency(json.getString("RequestCurrency").toString());
                 } catch (Exception e) {
 
                 }

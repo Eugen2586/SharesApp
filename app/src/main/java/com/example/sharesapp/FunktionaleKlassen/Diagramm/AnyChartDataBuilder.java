@@ -3,7 +3,10 @@ package com.example.sharesapp.FunktionaleKlassen.Diagramm;
 
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HighLowDataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
+import com.example.sharesapp.Model.FromServerClasses.Trade;
+import com.example.sharesapp.Model.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +31,22 @@ public class AnyChartDataBuilder {
             );
         }
         return anyChartData;
+    }
+
+    public static ArrayList<DataEntry> getTradeChartData(ArrayList<Trade> tradeList) {
+        ArrayList<DataEntry> dataList = new ArrayList<>();
+        Model model = new Model();
+        float currentMoney = model.getData().getDepot().getStartMoney();
+        long firstMillis = tradeList.get(0).getMillis();
+        for (Trade trade : tradeList) {
+            if(trade.isKauf()) {
+                currentMoney -= trade.getPreis();
+            } else {
+                currentMoney += trade.getPreis();
+            }
+            dataList.add(new ValueDataEntry(String.valueOf((trade.getMillis() - firstMillis) / 1000), currentMoney));
+        }
+
+        return dataList;
     }
 }

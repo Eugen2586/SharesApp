@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_aktien"
-        android:name="com.example.sharesapp.ui.aktien.AktienFragment"
+        android:name="com.example.sharesapp.ui.aktien.StockFragment"
         android:label="@string/menu_aktien"
         tools:layout="@layout/fragment_aktien" >
         <action

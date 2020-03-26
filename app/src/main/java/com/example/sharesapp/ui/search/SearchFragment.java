@@ -97,7 +97,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             // not yet available -> set Alles as default value
             String[] availableTypes = new String[3];
             availableTypes[0] = Constants.TYPES[0];
-            availableTypes[1] = "Währungen";
+            availableTypes[1] = "Fremdwährungen";
             availableTypes[2] = "Kryptowährungen";
 //            } else {
 //                // available -> set Alles as first value
@@ -106,8 +106,6 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 //                for (int i = 0; i < availableTypes.length; i++) {
 //                    types[i + 1] = availableTypes[i];
 //                }
-//                availableTypes[1] = "Währungen";
-//                availableTypes[2] = "Kryptowährungen";
 //                availableTypes = types.clone();
 //            }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),

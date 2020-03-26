@@ -65,7 +65,16 @@ import java.util.ArrayList;
                 editor.putString("AktienSymbole", s);
                 editor.commit();
             }catch(Exception e){
-                
+
+            }
+            s = null;
+
+            //Schwierigkeitsgrad
+            try {
+                editor.putInt("Schwierigkeitsgrad", model.getData().getDepot().getSchwierigkeitsgrad());
+                editor.commit();
+            }catch(Exception e){
+
             }
             s = null;
 

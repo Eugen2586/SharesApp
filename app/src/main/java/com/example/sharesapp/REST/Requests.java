@@ -16,6 +16,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
+
 public class Requests {
 
     private static final MediaType JSON
@@ -24,12 +25,21 @@ public class Requests {
     private final String baseURL = "https://sandbox.iexapis.com/stable/";
     private String token = "?token=Tpk_f26c06bf165b426eb0adb59f1f1d9ee4";
 
+    /**
+     * Standart Konstruktor, erstellt OkHttpClient
+     */
     public Requests() {
         if (client == null) {
             client = new OkHttpClient();
         }
     }
 
+    /**
+     * Synchrone Anfrage an den Server mit der gegebenen url.
+     * @param url Die url.
+     * @return Die Antwort des Servers.
+     * @throws IOException Falls etewas schief geht.
+     */
 
     public String run(String url) throws IOException {
         Request request = new Request.Builder()
@@ -45,6 +55,13 @@ public class Requests {
         }
     }
 
+    /**
+     * Schickt synchron den String json an die url und gibt die Antwort zurück
+     * @param url Die url.
+     * @param json Der String der gesendet wird.
+     * @return Die Antwort des Servers
+     * @throws IOException Falls etwas schief läuft.
+     */
 
     String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(json, JSON);
@@ -57,6 +74,12 @@ public class Requests {
             return Objects.requireNonNull(response.body()).string();
         }
     }
+
+    /**
+     * Sendet eine asynchrone Anfrage an die gegebene url und gibt die Antwort weiter an den Handler.
+     * @param url Die Url.
+     * @throws IOException Wirft IOException, wenn etwas schief läuft.
+     */
 
     public void asyncRun(String url) throws IOException {
         Request request = new Request.Builder()

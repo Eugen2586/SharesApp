@@ -52,8 +52,6 @@ public class Model{
     //ToDo Levin
     public void getPersistanceFBackground(){
 
-
-
         context  = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
         try{
@@ -612,5 +610,9 @@ public class Model{
             akl.add(ak);
         }
         return akl;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

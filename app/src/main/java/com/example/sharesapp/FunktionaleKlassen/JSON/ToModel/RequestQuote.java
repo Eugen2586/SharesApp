@@ -12,20 +12,20 @@ import java.util.ArrayList;
 public class RequestQuote {
     public RequestQuote(String s) {
         boolean b =false;
-        String closet = null;
+        String closet = new String();
         String symbol;
-        String company = null;
-        String primaryEx = null;
-        String calcPrice = null;
-        String open = null;
-        String opent = null;
-        String close = null;
-        String high = null;
-        String highT = null;
-        String low = null;
-        String lowT = null;
-        String latestS = null;
-        Float latestPrice = null;
+        String company = new String();
+        String primaryEx = new String();
+        String calcPrice = new String();
+        String open = new String();
+        String opent = new String();
+        String close = new String();
+        String high = new String();
+        String highT = new String();
+        String low = new String();
+        String lowT = new String();
+        String latestS = new String();
+        float latestPrice = 0.0f;
         String latestU = null;
         float price = 0.0f;
         int latestVol = 0;
@@ -163,15 +163,15 @@ public class RequestQuote {
         }
         //order to data sheet
         ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
-        if (arrl != null) {
+        int i = 0;
+     //   if (arrl != null) { Ist immer ungleich null!
             for (Aktie c: arrl) {
                 if (c.getSymbol().equals(jsonObject.get("symbol"))) {
                     c.setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
+                    new Model().getData().getCurrentStock().setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b );
                     break;
                 }
 			}
-		}
-        new Model().getData().getAktienList().getValue().clear();
-        new Model().getData().getAktienList().postValue(arrl);
+	//	}
     }
 }

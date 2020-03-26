@@ -218,7 +218,11 @@ public class Data {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
         int schwierigkeitsgrad = depot.getSchwierigkeitsgrad();
+        int k = depot.getKaufCounter();
+        int v = depot.getVerkaufCounter();
         depot = new Depot();
+        depot.setKaufCounter(k);
+        depot.setVerkaufCounter(v);
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
         depot.setGeldwert(Constants.MONEY);

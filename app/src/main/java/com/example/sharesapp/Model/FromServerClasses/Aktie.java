@@ -137,6 +137,7 @@ public class Aktie implements Comparator {
 
     public void setadditionalData(
             float price,
+            float latestPrice1,
             String companyName,
             String primaryExchange,
             String calculationPrice,
@@ -186,7 +187,6 @@ public class Aktie implements Comparator {
         this.week52Low = week52Low;
         this.lastTradeTime = lastTradeTime;
         this.isUSMarketOpen = isUSMarketOpen;
-        this.preis = price;
     }
 
 

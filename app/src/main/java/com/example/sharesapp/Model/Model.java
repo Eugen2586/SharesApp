@@ -21,7 +21,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 
 public class Model{
-    private Context context;
+    public Context context;
     //Hierdrin werden alle Daten gestored.
     static Data data;
 
@@ -51,6 +51,7 @@ public class Model{
     }
     //ToDo Levin
     public void getPersistanceFBackground(){
+
         context  = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
         try{
@@ -461,11 +462,11 @@ public class Model{
             } catch (Exception e) {
 
             }
-            int anzahlImTrade = Integer.parseInt((String) json.get("anzahl"));
+            int anzahlImTrade = Integer.parseInt(json.get("anzahl").toString());
             float ft = Float.parseFloat(json.get("preis").toString());
-            String date = json.get("date").toString();
+            long millis = Long.parseLong(json.get("date").toString());
             // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date );
+            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , millis , ak.getCompanyName());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }
@@ -609,5 +610,9 @@ public class Model{
             akl.add(ak);
         }
         return akl;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

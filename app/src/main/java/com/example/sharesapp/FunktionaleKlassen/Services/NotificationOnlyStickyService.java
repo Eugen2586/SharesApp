@@ -10,33 +10,28 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.sharesapp.DrawerActivity;
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class StickyNotificationService extends Service {
+public class NotificationOnlyStickyService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
     private Timer timer = new Timer();
-    Model model = new Model();
     final String channelId = "bbb_channel_id";
 
     public class LocalBinder extends Binder {
-        public StickyNotificationService getService() {
-            return StickyNotificationService.this;
+        public NotificationOnlyStickyService getService() {
+            return NotificationOnlyStickyService.this;
         }
     }
-
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -50,51 +45,35 @@ public class StickyNotificationService extends Service {
 
     @Override
     public void onDestroy() {
+        // cancel the timer
         timer.cancel();
-        // remove Notification channel
+
+        // remove Notification channel if possible
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             assert notificationManager != null;
             notificationManager.deleteNotificationChannel(channelId);
         }
+
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-
+        // send Notification with random Message every 30 min
         handler = new Handler();
         handler.post(new Runnable() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
+                final int timeInterval = 30 * 60 * 1000;
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        // model loading with persistence
-                        System.out.println("...............................................................................Request Sticky");
-                        model.getPersistanceFBackground();
-                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-                        if (depotList == null) {
-                            showComeBackNotification(0);
-                        } else if (depotList.size() == 0) {
-                            showComeBackNotification(1);
-                        } else {
-                            showComeBackNotification(2);
-                        }
-
-////                        showComeBackNotification(new Random().nextInt() % 4);
-//                        System.out.println("...............................................................................Request Sticky");
-//                        // get all symbols for requests
-//                        Set<String> symbolSet = ServiceRequestFunctionality.getSymbolSet();
-//
-//                        // serviceRequests for all stocks with symbols in symbolSet
-//                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
-
+                        showComeBackNotification(new Random().nextInt() % 4);
                     }
-                }, 0, timeInterval);
+                }, timeInterval, timeInterval);
             }
         });
 
@@ -102,6 +81,7 @@ public class StickyNotificationService extends Service {
     }
 
     private void showComeBackNotification(int messageIndex) {
+        // defines random message from messageIndex
         String message;
         switch (messageIndex) {
             case 0:
@@ -119,6 +99,7 @@ public class StickyNotificationService extends Service {
             default:
                 message = "Geld verdient sich nicht von alleine!";
         }
+
         showNotificationWithMessage(message);
     }
 
@@ -147,18 +128,18 @@ public class StickyNotificationService extends Service {
     }
 
     private String buildNotificationChannel() {
+        // if version compatible -> build Notification Channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channel_name = "bbb_channel_name";
             int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
             String description = "channel for bbb";
             NotificationChannel channel = new NotificationChannel(channelId, channel_name, channel_importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
+
         return channelId;
     }
 }

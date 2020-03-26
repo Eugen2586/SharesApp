@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Data {
+    private MutableLiveData<ArrayList<DataPoint>> personalChart = new MutableLiveData<>();
     private ArrayList<Trade> tradelist = new ArrayList<>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
     private Depot depot = null;
@@ -218,7 +219,12 @@ public class Data {
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
+        int schwierigkeitsgrad = depot.getSchwierigkeitsgrad();
+        int k = depot.getKaufCounter();
+        int v = depot.getVerkaufCounter();
         depot = new Depot();
+        depot.setKaufCounter(k);
+        depot.setVerkaufCounter(v);
         portfolio = new MutableLiveData<>();
         previouslySelectedTabIndex = 0;
         depot.setGeldwert(Constants.MONEY);
@@ -227,6 +233,8 @@ public class Data {
         searchScrollPosition = 0;
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
+        depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
+        depot.applySchwierigkeitsgrad(true);
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
@@ -417,6 +425,11 @@ public class Data {
     }
     public MutableLiveData getFortexList() {
         return fortexList;
+    }
+
+
+    public void setResetCounter(int resetCounter) {
+        this.resetCounter.setValue(resetCounter);
     }
 
 //    public void buyStockOfOrder(Order buyOrder) {

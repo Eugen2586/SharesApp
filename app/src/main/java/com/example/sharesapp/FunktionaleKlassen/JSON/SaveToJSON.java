@@ -65,7 +65,39 @@ import java.util.ArrayList;
                 editor.putString("AktienSymbole", s);
                 editor.commit();
             }catch(Exception e){
-                
+
+            }
+            s = null;
+
+            //Schwierigkeitsgrad
+            try {
+                editor.putInt("Schwierigkeitsgrad", model.getData().getDepot().getSchwierigkeitsgrad());
+                editor.commit();
+            }catch(Exception e){
+
+            }
+            s = null;
+
+            try {
+                editor.putInt("KaufCounter", model.getData().getDepot().getKaufCounter());
+                editor.commit();
+            }catch(Exception e){
+
+            }
+            s = null;
+            try {
+                editor.putInt("VerkaufCounter", model.getData().getDepot().getVerkaufCounter());
+                editor.commit();
+            }catch(Exception e){
+
+            }
+            s = null;
+            try {
+                editor.putInt("ResetCounter", model.getData().getResetCounter().getValue());
+                editor.commit();
+            }catch(Exception e){
+                editor.putInt("ResetCounter", 0);
+                editor.commit();
             }
             s = null;
 
@@ -188,7 +220,7 @@ import java.util.ArrayList;
 
                 }
                 try {
-                    obj.put("date", String.valueOf(ak.getDate()));
+                    obj.put("date", String.valueOf(ak.getMillis()));
                 }catch(Exception e){
 
                 }

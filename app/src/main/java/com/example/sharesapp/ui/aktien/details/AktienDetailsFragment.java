@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class AktienDetailsFragment extends Fragment {
     private EditText Limit;
     private TextView totalPrice;
     private TextView price;
+    private int hideRowCounter = 0;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -596,23 +598,29 @@ public class AktienDetailsFragment extends Fragment {
         Aktie stock = model.getData().getCurrentStock();
         // dont show if lastPrice == 0.0f
         float lastPrice = stock.getPreis();
-        if (lastPrice != 0.0f) {
-            TextView symbolTV = root.findViewById(R.id.symbol_field);
-            symbolTV.setText(stock.getSymbol());
-            TextView nameTV = root.findViewById(R.id.name_field);
-            nameTV.setText(stock.getName());
-            TextView nameBig = root.findViewById(R.id.name_big);
-            nameBig.setText(stock.getName());
-            TextView priceTV = root.findViewById(R.id.latest_price_field);
-            priceTV.setText((new Anzeige()).makeItBeautifulEuro(stock.getPreis()));
-            TextView dateTV = root.findViewById(R.id.date_field);
-            if (stock.getDate() == null) {
-                dateTV.setText(R.string.unbekannt);
-            } else {
-                dateTV.setText(stock.getDate());
-            }
-            TextView typeTV = root.findViewById(R.id.type_field);
-            typeTV.setText(stock.getType());
+        if (lastPrice == 0.0f) {
+            // fill information fields
+            TextView titleView = root.findViewById(R.id.name_big);
+            titleView.setText(stock.getCompanyName());
+
+            hideRowCounter = 0;
+
+            setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
+            setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
+            setTextFieldIdWithString(R.id.type_field, stock.getType());
+            setTextFieldIdWithString(R.id.date_field, stock.getLatestUpdate());
+            setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
+            setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
+            setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
+            setTextFieldIdWithString(R.id.close_time_field, stock.getClose());
+
+            setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
+            setTextFieldIdWithString(R.id.high_field, stock.getHigh());
+            setTextFieldIdWithString(R.id.high_time_field, stock.getHighTime());
+            setTextFieldIdWithString(R.id.low_field, stock.getLow());
+            setTextFieldIdWithString(R.id.low_time_field, stock.getLowTime());
+            setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
+            setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
 
             // configure order information
             showHideEditOrderViews();
@@ -627,13 +635,37 @@ public class AktienDetailsFragment extends Fragment {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
             }
         } else {
-            Requests requests = new Requests();
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // TODO: insert again
+//            Requests requests = new Requests();
+//            try {
+//                requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
+    }
+
+    private void setTextFieldIdWithString(int id, String str) {
+        TextView textView = root.findViewById(id);
+        if (str == null) {
+            ((TableRow) textView.getParent()).setVisibility(View.GONE);
+        } else {
+            ((TableRow) textView.getParent()).setVisibility(View.VISIBLE);
+            textView.setText(str);
+        }
+        hideRowCounter++;
+    }
+
+    private void setTextFieldIdWithPrice(int id, float price) {
+        TextView textView = root.findViewById(id);
+        textView.setText((new Anzeige()).makeItBeautifulEuro(price));
+        hideRowCounter++;
+    }
+
+    private void setTextFieldIdWithInt(int id, int number) {
+        TextView textView = root.findViewById(id);
+        textView.setText(String.valueOf(number));
+        hideRowCounter++;
     }
 
     private void makeChart() {

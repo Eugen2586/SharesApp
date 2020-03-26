@@ -82,5 +82,19 @@
     <string name="menge">Menge</string>
     <string name="verkaufauftrag">Verkaufauftrag</string>
     <string name="kaufauftrag">Kaufauftrag</string>
+    <string name="firmenname">Firmenname</string>
+    <string name="aktuelles_volumen">Aktuelles Volumen</string>
+    <string name="vorheriger_schlie_preis">Vorheriger Schließpreis</string>
+    <string name="vorheriger_er_ffnungspreis">Vorheriger Eröffnungspreis</string>
+    <string name="h_chstpreis_heute">Höchstpreis (Heute)</string>
+    <string name="zeit_h_chstpreis">Zeit Höchstpreis</string>
+    <string name="tiefstpreis_heute">Tiefstpreis (Heute)</string>
+    <string name="zeit_tiefstpreis">Zeit Tiefstpreis</string>
+    <string name="_52_wochen_h_chstpreis">52 Wochen Höchstpreis</string>
+    <string name="_52_wochen_tiefpreis">52 Wochen Tiefpreis</string>
+    <string name="ffnungszeit">Öffnungszeit</string>
+    <string name="schlie_zeit">Schließzeit</string>
+    <string name="letzter_er_ffnungspreis">Letzter Eröffnungspreis</string>
+    <string name="letzter_schlie_preis">Letzter Schließpreis</string>
 
 </resources>

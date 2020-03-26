@@ -28,6 +28,7 @@
         <service android:name=".FunktionaleKlassen.Services.RequestDataService"/>
         <service android:name=".FunktionaleKlassen.Services.StickyNotificationService"/>
         <service android:name=".FunktionaleKlassen.Services.KotlinNotificationWorker"/>
+        <service android:name=".FunktionaleKlassen.Services.NotificationOnlyStickyService" />
 
         <!--        <receiver android:name=".BackgroundHandler.BootReceiver">-->
 <!--            <intent-filter>-->

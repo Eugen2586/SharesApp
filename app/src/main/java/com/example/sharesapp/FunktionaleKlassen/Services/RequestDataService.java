@@ -47,7 +47,7 @@ public class RequestDataService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                int timeInterval = 1 * 20 * 1000; // 20sec
+                int timeInterval = 1 * 30 * 1000; // 30sec
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override

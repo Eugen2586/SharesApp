@@ -65,7 +65,23 @@ public class RequestsBuilder {
         return "stock/" + symbol + "/chart/" + range;
     }
 
-    public static String getAdditionalData(String symbol){
-        return "";
+    public static String getCryptoSymbolsUrl(){
+        return "ref-data/crypto/symbols";
+    }
+
+    public static String getCryptoQuoteUrl(String symbol){
+        return "crypto/" + symbol + "/quote";
+    }
+
+    public static String getCurrencyRatesUrl() {
+        return "fx/latest";
+    }
+
+    public static String getCurrencyConversionsUrl(String symbol) {
+        return "fx/convert?symbol=" + symbol;
+    }
+
+    public static String getCurrencyHistoricalUrl(String symbol) {
+        return "fx/historical?symbol=" + symbol;
     }
 }

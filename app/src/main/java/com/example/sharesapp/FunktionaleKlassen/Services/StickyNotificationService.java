@@ -10,6 +10,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -54,7 +55,6 @@ public class StickyNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            String id = "my_channel_01";
             assert notificationManager != null;
             notificationManager.deleteNotificationChannel(channelId);
         }
@@ -63,8 +63,9 @@ public class StickyNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+
         handler = new Handler();
-        handler.post(new TimerTask() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
@@ -73,15 +74,16 @@ public class StickyNotificationService extends Service {
                     @Override
                     public void run() {
                         // model loading with persistence
-//                        model.getPersistanceFBackground();
-//                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-//                        if (depotList == null) {
-//                            showComeBackNotification(0);
-//                        } else if (depotList.size() == 0) {
-//                            showComeBackNotification(1);
-//                        } else {
-//                            showComeBackNotification(2);
-//                        }
+                        System.out.println("...............................................................................Request Sticky");
+                        model.getPersistanceFBackground();
+                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+                        if (depotList == null) {
+                            showComeBackNotification(0);
+                        } else if (depotList.size() == 0) {
+                            showComeBackNotification(1);
+                        } else {
+                            showComeBackNotification(2);
+                        }
 
 ////                        showComeBackNotification(new Random().nextInt() % 4);
 //                        System.out.println("...............................................................................Request Sticky");

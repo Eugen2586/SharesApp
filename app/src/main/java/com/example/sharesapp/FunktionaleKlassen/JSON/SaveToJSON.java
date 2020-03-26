@@ -197,7 +197,7 @@ import java.util.ArrayList;
 
                 }
                 try {
-                    obj.put("date", String.valueOf(ak.getDate()));
+                    obj.put("date", String.valueOf(ak.getMillis()));
                 }catch(Exception e){
 
                 }

@@ -4,25 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.depot.statistik.StatistikFragment;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class DepotFragment extends Fragment {

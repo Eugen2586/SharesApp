@@ -194,15 +194,23 @@ public class RequestQuote {
         //order to data sheet
         ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
         int i = 0;
-        //   if (arrl != null) { Ist immer ungleich null!
         for (Aktie c : arrl) {
             if (c.getSymbol().equals(jsonObject.get("symbol"))) {
                 c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
-                new Model().getData().getCurrentStock().setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                if (new Model().getData().getCurrentStock() != null) {
+                    new Model().getData().getCurrentStock().setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                }
                 new Model().getData().getAktienList().postValue(arrl);
                 break;
             }
         }
-        //	}
+        ArrayList<Aktie> depotList = new Model().getData().getDepot().getAktienImDepot().getValue();
+        for (Aktie c : depotList) {
+            if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                new Model().getData().getDepot().getAktienImDepot().postValue(depotList);
+                break;
+            }
+        }
     }
 }

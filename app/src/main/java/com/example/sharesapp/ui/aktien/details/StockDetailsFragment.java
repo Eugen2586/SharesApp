@@ -111,7 +111,7 @@ public class StockDetailsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
         anyChartView.setVisibility(View.VISIBLE);
 
     }
@@ -433,7 +433,7 @@ public class StockDetailsFragment extends Fragment {
             chartStock.tooltip().useHtml(true);
 
             // set the chart and make visible
-            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
             anyChartView.setChart(chartStock);
             anyChartView.setVisibility(View.VISIBLE);
         }

@@ -33,6 +33,12 @@ public class AnyChartDataBuilder {
         return anyChartData;
     }
 
+    /**
+     * Baut aus gegeben Trades einer Aktie die Daten für einen Anychart Graphen.
+     * @param tradeList Die Tradedaten für den Graphen.
+     * @return Die Liste der Daten für den Graphen.
+     */
+
     public static ArrayList<DataEntry> getTradeChartData(ArrayList<Trade> tradeList) {
         ArrayList<DataEntry> dataList = new ArrayList<>();
         Model model = new Model();

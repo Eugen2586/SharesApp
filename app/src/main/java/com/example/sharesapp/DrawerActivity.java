@@ -17,11 +17,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
-import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
-import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
+import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
+import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
+import com.example.sharesapp.FunktionaleKlassen.Worker.NotificationWorker;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
@@ -37,11 +43,13 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 public class DrawerActivity extends AppCompatActivity {
     SharedPreferences prefs;
-    private Context context = this.getBaseContext();
+    public Context context = this.getBaseContext();
     private AppBarConfiguration mAppBarConfiguration;
     private Model model = new Model();
     private Requests requests = new Requests();
@@ -53,24 +61,16 @@ public class DrawerActivity extends AppCompatActivity {
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             prefs.edit().clear();
             SharedPreferences.Editor editor = prefs.edit();
-            new SaveToJSON( editor);
+            new SaveToJSON(editor);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // stop RequestService
+//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+//        stopService(notificationIntent);
         Intent requestIntent = new Intent(this, RequestDataService.class);
         stopService(requestIntent);
-
-        // set serviceData for serviceModel
-//        Data data = model.getData();
-//        (new ServiceModel()).setData(data.getDepot().getGeldwert(), data.getAktienList().getValue(),
-//                data.getBuyOrderList().getValue(), data.getSellOrderList().getValue(),
-//                data.getDepot().getAktienImDepot().getValue(), data.getTrades());
-
-        // start StickyService
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        startService(notificationIntent);
 
         super.onStop();
         //If the App Stopps we store the Data!
@@ -78,6 +78,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        // start StickyService
+        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+        stopService(notificationIntent);
+
         // remove MediaPlayer
         if (backgroundMediaPlayer != null) {
             backgroundMediaPlayer.stop();
@@ -97,16 +101,16 @@ public class DrawerActivity extends AppCompatActivity {
 
 
          */
-        try{
+        try {
             String s = null;
             prefs = getSharedPreferences("SharesApp0815DataContent0815#0518", Context.MODE_PRIVATE);
             JSONParser parser = new JSONParser();
-            try{
-            s = prefs.getString("AktienSymbole", null);
-            if(s != null && !s.isEmpty()) {
-                new RequestSymbol(s);
-            }
-            }catch(Exception e){
+            try {
+                s = prefs.getString("AktienSymbole", null);
+                if (s != null && !s.isEmpty()) {
+                    new RequestSymbol(s);
+                }
+            } catch (Exception e) {
 
             }
             s = null;
@@ -115,30 +119,30 @@ public class DrawerActivity extends AppCompatActivity {
                 if (s != null && !s.isEmpty()) {
                     new Model().getData().getDepot().setAktienImDepot(aktienList(s));
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             s = null;
             try {
                 Float f = prefs.getFloat("Geldwert", (float) -10000000.0);
-                if( f < -10000000.0+1 ){
+                if (f < -10000000.0 + 1) {
                     f = (float) Constants.MONEY;
                 }
                 new Model().getData().getDepot().setGeldwert(f);
-            }catch(Exception e){
+            } catch (Exception e) {
                 String t = e.getMessage();
             }
             s = null;
             try {
                 int schwierigkeitsgrad = prefs.getInt("Schwierigkeitsgrad", 0);
-                if( schwierigkeitsgrad != 0 ){
+                if (schwierigkeitsgrad != 0) {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(schwierigkeitsgrad);
                     new Model().getData().getDepot().applySchwierigkeitsgrad(false);
                 } else {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(schwierigkeitsgrad);
                 }
 
-            }catch(Exception e){
+            } catch (Exception e) {
                 String t = e.getMessage();
             }
             s = null;
@@ -147,39 +151,38 @@ public class DrawerActivity extends AppCompatActivity {
                 if (s != null && !s.isEmpty()) {
                     new Model().getData().setPortfolioList(aktienList(s));
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             s = null;
             try {
                 s = prefs.getString("Tr", null);
-                if(s != null && s.length() > 2) {
+                if (s != null && s.length() > 2) {
                     new Model().getData().setTradelist(getTradeListe(s));
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             s = null;
-            try{
+            try {
                 s = prefs.getString("BuyList", null);
-                if(s != null && s.length() > 2) {
+                if (s != null && s.length() > 2) {
                     new Model().getData();
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
 
 
             }
             s = null;
-            try{
+            try {
                 s = prefs.getString("SellList", null);
-                if(s != null && s.length() > 2) {
+                if (s != null && s.length() > 2) {
                     new Model().getData();
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // Initializes RequestClient and loads all symbols only if the Persisenz doesn't work.
@@ -187,7 +190,7 @@ public class DrawerActivity extends AppCompatActivity {
         Requests req = new Requests();
         try {
             req.asyncRun(RequestsBuilder.getAllSymbolsURL());
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -227,77 +230,77 @@ public class DrawerActivity extends AppCompatActivity {
             try {
                 //Aktie:
                 ak.setAnzahl((Integer) json.get("menge"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setExchange((String) json.get("exchange"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setSymbol((String) json.get("symbol"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setName((String) json.get("name"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setDate((String) json.get("date"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setType((String) json.get("type"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setRegion((String) json.get("region"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setCurrency((String) json.get("currency"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setEnabled((String) json.get("enabled"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setPreis(Float.parseFloat((String) json.get("preis")));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setAnzahl(Integer.parseInt((String) json.get("anzahlak")));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setChange(Float.parseFloat((String) json.get("change")));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setAnzahl(Integer.parseInt((String) json.get("anzahl")));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setDate((String) json.get("date"));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
                 ak.setPreis(Float.parseFloat((String) json.get("preisi")));
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
             try {
@@ -313,9 +316,9 @@ public class DrawerActivity extends AppCompatActivity {
             }
             int anzahlImTrade = Integer.parseInt((String) json.get("anzahl"));
             float ft = Float.parseFloat(json.get("preis").toString());
-            String date = json.get("date").toString();
-           // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date , ak.getCompanyName());
+            long millis = Long.parseLong(Objects.requireNonNull(json.get("date")).toString());
+            // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
+            tr = new Trade(ak, anzahlImTrade, isKauf, ft, millis, ak.getCompanyName());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }
@@ -379,10 +382,9 @@ public class DrawerActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        try{
+        try {
             ak.setPreis(Float.parseFloat((json.get("preis").toString())));
-        }
-        catch(Exception e){
+        } catch (Exception e) {
 
         }
         return ak;
@@ -450,10 +452,9 @@ public class DrawerActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-            try{
+            try {
                 ak.setPreis(Float.parseFloat((json.get("preis").toString())));
-            }
-            catch(Exception e){
+            } catch (Exception e) {
 
             }
             akl.add(ak);
@@ -472,7 +473,7 @@ public class DrawerActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Toast like print
-                if( ! searchView.isIconified()) {
+                if (!searchView.isIconified()) {
                     searchView.setIconified(true);
                 }
                 myActionMenuItem.collapseActionView();
@@ -487,6 +488,7 @@ public class DrawerActivity extends AppCompatActivity {
                         navigate(R.id.nav_search);
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
@@ -512,10 +514,12 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
-        stopService(notificationIntent);
+//        Intent notificationIntent = new Intent(this, StickyNotificationService.class);
+//        startService(notificationIntent);
         Intent requestIntent = new Intent(this, RequestDataService.class);
         startService(requestIntent);
+
+//        createWorker();
         if (backgroundMediaPlayer != null && !backgroundMediaPlayer.isPlaying()) {
             backgroundMediaPlayer.start();
         }
@@ -531,5 +535,16 @@ public class DrawerActivity extends AppCompatActivity {
             }
         };
         model.getData().getAktienList().observe(this, stockObserver);
+    }
+
+    private void createWorker() {
+        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        PeriodicWorkRequest build = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES)
+                .addTag("uniqueWorkName")
+                .setConstraints(constraints)
+                .build();
+
+        WorkManager instance = WorkManager.getInstance(context);
+        instance.enqueueUniquePeriodicWork("uniqueWorkName", ExistingPeriodicWorkPolicy.REPLACE, build);
     }
 }

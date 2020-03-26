@@ -41,13 +41,13 @@ public class StatistikFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_depot_statistik, container, false);
 
-        final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
-            @Override
-            public void onChanged(ArrayList<Trade> tradeList) {
-                showLineChart(tradeList);
-            }
-        };
-        model.getData().getTradesMutable().observe(getViewLifecycleOwner(), tradesObserver);
+//        final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
+//            @Override
+//            public void onChanged(ArrayList<Trade> tradeList) {
+//                showLineChart(tradeList);
+//            }
+//        };
+//        model.getData().getTradesMutable().observe(getViewLifecycleOwner(), tradesObserver);
 
         showLineChart(model.getData().getTrades());
 
@@ -56,7 +56,7 @@ public class StatistikFragment extends Fragment {
 
     private void showLineChart(ArrayList<Trade> tradeList) {
         // https://github.com/AnyChart/AnyChart-Android/blob/master/sample/src/main/java/com/anychart/sample/charts/LineChartActivity.java
-        if (tradeList != null) {
+        if (tradeList != null && tradeList.size() != 0) {
             // Build the stockdatachart
             Cartesian cartesian = AnyChart.line();
             cartesian.animation(true);
@@ -84,14 +84,15 @@ public class StatistikFragment extends Fragment {
 
     private ArrayList<DataEntry> generateDataFromTradeList(ArrayList<Trade> tradeList) {
         ArrayList<DataEntry> dataList = new ArrayList<>();
-        float currentMoney = Constants.MONEY;
+        float currentMoney = model.getData().getDepot().getStartMoney();
+        long firstMillis = tradeList.get(0).getMillis();
         for (Trade trade : tradeList) {
             if(trade.isKauf()) {
                 currentMoney -= trade.getPreis();
             } else {
                 currentMoney += trade.getPreis();
             }
-            dataList.add(createDataEntry(trade.getDate(), currentMoney));
+            dataList.add(createDataEntry(String.valueOf((trade.getMillis() - firstMillis) / 1000), currentMoney));
         }
 
         return dataList;

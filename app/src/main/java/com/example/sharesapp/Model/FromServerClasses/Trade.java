@@ -12,15 +12,15 @@ public class Trade {
     private int anzahl;
     private boolean kauf;
     private float preis;
-    private String date;
+    private long millis;
     private String companyName;
 
-    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, String date, String companyName) {
+    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, long millis, String companyName) {
         this.aktie = aktie;
         this.anzahl = anzahl;
         this.kauf = kauf;
         this.preis = preis;
-        this.date = date;
+        this.millis = millis;
         this.companyName = companyName;
     }
 
@@ -40,8 +40,8 @@ public class Trade {
         return preis;
     }
 
-    public String getDate() {
-        return date;
+    public long getMillis() {
+        return millis;
     }
 
     public String getCompanyName() {

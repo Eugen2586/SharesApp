@@ -92,20 +92,24 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private void initCategorieSpinner(Spinner spinner) {
         Context context = this.getContext();
         if (context != null) {
-            String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
-            if (availableTypes == null || availableTypes.length == 0) {
-                // not yet available -> set Alles as default value
-                availableTypes = new String[1];
-                availableTypes[0] = Constants.TYPES[0];
-            } else {
-                // available -> set Alles as first value
-                String[] types = new String[availableTypes.length + 1];
-                types[0] = Constants.TYPES[0];
-                for (int i = 0; i < availableTypes.length; i++) {
-                    types[i + 1] = availableTypes[i];
-                }
-                availableTypes = types.clone();
-            }
+//            String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
+//            if (availableTypes == null || availableTypes.length == 0) {
+            // not yet available -> set Alles as default value
+            String[] availableTypes = new String[3];
+            availableTypes[0] = Constants.TYPES[0];
+            availableTypes[1] = "Währungen";
+            availableTypes[2] = "Kryptowährungen";
+//            } else {
+//                // available -> set Alles as first value
+//                String[] types = new String[availableTypes.length + 3];
+//                types[0] = Constants.TYPES[0];
+//                for (int i = 0; i < availableTypes.length; i++) {
+//                    types[i + 1] = availableTypes[i];
+//                }
+//                availableTypes[1] = "Währungen";
+//                availableTypes[2] = "Kryptowährungen";
+//                availableTypes = types.clone();
+//            }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                     android.R.layout.simple_spinner_dropdown_item, availableTypes);
             spinner.setAdapter(adapter);
@@ -154,7 +158,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 for (Aktie stock : stockList) {
                     String symbol = stock.getSymbol();
                     boolean found = false;
-                    for (Aktie existingStock: existingStockList) {
+                    for (Aktie existingStock : existingStockList) {
                         if (symbol.equals(existingStock.getSymbol())) {
                             found = true;
                             break;

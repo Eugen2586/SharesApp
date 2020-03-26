@@ -575,7 +575,14 @@ public class AktienDetailsFragment extends Fragment {
 
         float limit;
         if (!Limit.getText().toString().isEmpty()) {
-            limit = Float.parseFloat(Limit.getText().toString());
+            // if starts with . or other characters, remove text
+            try {
+                limit = Float.parseFloat(Limit.getText().toString());
+            } catch (Exception ignored) {
+                Limit.setText("");
+                return;
+            }
+
         } else {
             limit = model.getData().getCurrentStock().getPreis();
             // TODO: setting Text not working

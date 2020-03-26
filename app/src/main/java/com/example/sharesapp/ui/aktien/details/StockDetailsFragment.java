@@ -142,7 +142,7 @@ public class StockDetailsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                stockAndQuoteRequest();
+                quoteAndPriceRequest();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -803,21 +803,41 @@ public class StockDetailsFragment extends Fragment {
     }
 
     private void quoteRequest() {
-        String symbol = model.getData().getCurrentStock().getSymbol();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-        } catch (IOException e) {
-            e.printStackTrace();
+        Requests requests = new Requests();
+        Aktie currentStock = model.getData().getCurrentStock();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void stockAndQuoteRequest() {
-        String symbol = model.getData().getCurrentStock().getSymbol();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
-        } catch (IOException e) {
-            e.printStackTrace();
+    // same method as in StockFragment
+    private void quoteAndPriceRequest() {
+        Requests requests = new Requests();
+        Aktie currentStock = model.getData().getCurrentStock();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

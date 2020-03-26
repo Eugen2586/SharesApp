@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.ui.depot.statistik.StatistikFragment;
+import com.example.sharesapp.ui.depot.statistik.StatisticFragment;
 import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -64,7 +64,7 @@ public class DepotFragment extends Fragment {
         if (position == 0) {
             fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new UebersichtFragment());
         } else if (position == 1) {
-            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new StatistikFragment());
+            fragmentTransaction.replace(R.id.depot_fragment_loader_linear_layout, new StatisticFragment());
         }
 
         fragmentTransaction.commitNow();

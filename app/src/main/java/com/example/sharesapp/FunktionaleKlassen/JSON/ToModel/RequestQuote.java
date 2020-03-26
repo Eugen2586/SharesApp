@@ -166,7 +166,7 @@ public class RequestQuote {
         if (arrl != null) {
             for (Aktie c: arrl) {
                 if (c.getSymbol().equals(jsonObject.get("symbol"))) {
-                    c.setadditionalData( company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
+                    c.setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
                     break;
                 }
 			}

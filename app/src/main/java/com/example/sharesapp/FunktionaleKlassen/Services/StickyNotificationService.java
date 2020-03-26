@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Build;
@@ -27,6 +28,7 @@ public class StickyNotificationService extends Service {
     protected Handler handler;
     private Timer timer = new Timer();
     Model model = new Model();
+    final String channelId = "bbb_channel_id";
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
@@ -48,6 +50,14 @@ public class StickyNotificationService extends Service {
     @Override
     public void onDestroy() {
         timer.cancel();
+        // remove Notification channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String id = "my_channel_01";
+            assert notificationManager != null;
+            notificationManager.deleteNotificationChannel(channelId);
+        }
         super.onDestroy();
     }
 
@@ -57,7 +67,7 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 20 * 1000; // TODO: set to 30 min
+                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
@@ -82,7 +92,7 @@ public class StickyNotificationService extends Service {
 //                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
 
                     }
-                }, timeInterval, timeInterval);
+                }, 0, timeInterval);
             }
         });
 
@@ -135,12 +145,11 @@ public class StickyNotificationService extends Service {
     }
 
     private String buildNotificationChannel() {
-        final String channel_id = "bbb_channel_id";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channel_name = "bbb_channel_name";
             int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
             String description = "channel for bbb";
-            NotificationChannel channel = new NotificationChannel(channel_id, channel_name, channel_importance);
+            NotificationChannel channel = new NotificationChannel(channelId, channel_name, channel_importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -148,6 +157,6 @@ public class StickyNotificationService extends Service {
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
-        return channel_id;
+        return channelId;
     }
 }

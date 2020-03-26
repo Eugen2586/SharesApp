@@ -134,7 +134,7 @@ public class StockDetailsFragment extends Fragment {
                 makeChart();
             }
         };
-        model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
+        model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
     }
 
     private void initializeSwipeRefresh() {
@@ -568,7 +568,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().currentStock.getValue().getPreis();
+                                    limit = model.getData().getCurrentStock().getPreis();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * model.getData().getDepot().getProzent();
@@ -577,7 +577,7 @@ public class StockDetailsFragment extends Fragment {
 
                                 } else {
                                     if (!limit_b) {
-                                        Aktie a = model.getData().currentStock.getValue().getClone();
+                                        Aktie a = model.getData().getCurrentStock().getClone();
                                         // new Request if price == 0.0f
                                         if (a.getPreis() == 0.0f) {
                                             quoteRequest();
@@ -608,7 +608,8 @@ public class StockDetailsFragment extends Fragment {
                 }
             });
 
-            AlertDialog dialog = builder.create();
+            final AlertDialog dialog = builder.create();
+            dialog.show();
 
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
@@ -616,12 +617,12 @@ public class StockDetailsFragment extends Fragment {
                     if (aktie.getPreis() != 0) {
                         TextView price = buyDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                    } else {
+                        dialog.cancel();
                     }
                 }
             };
-
-            model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
-            dialog.show();
+            model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
         }
     }
 
@@ -725,7 +726,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().currentStock.getValue().getPreis();
+                                    limit = model.getData().getCurrentStock().getPreis();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * (2f - model.getData().getDepot().getProzent());
@@ -735,7 +736,7 @@ public class StockDetailsFragment extends Fragment {
 
                                 } else {
                                     if (!limit_b) {
-                                        Aktie a = model.getData().currentStock.getValue().getClone();
+                                        Aktie a = model.getData().getCurrentStock().getClone();
                                         a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
 
                                         // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
@@ -766,18 +767,21 @@ public class StockDetailsFragment extends Fragment {
                 }
             });
 
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
                 public void onChanged(Aktie aktie) {
                     if (aktie.getPreis() != 0) {
                         TextView price = sellDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                    } else {
+                        dialog.cancel();
                     }
                 }
             };
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
         }
     }
 

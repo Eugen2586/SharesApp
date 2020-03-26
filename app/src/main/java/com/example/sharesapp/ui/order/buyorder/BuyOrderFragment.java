@@ -12,7 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
@@ -20,8 +19,6 @@ import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
-import com.example.sharesapp.ui.aktien.AktienFragment;
-import com.example.sharesapp.ui.depot.uebersicht.UebersichtFragment;
 import com.example.sharesapp.ui.utils.OrderRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 

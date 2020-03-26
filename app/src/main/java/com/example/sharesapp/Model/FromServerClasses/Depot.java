@@ -21,6 +21,8 @@ public class Depot {
     private float prozent = 1.01f;
     private int schwierigkeitsgrad;
     private float startMoney = 0;
+    private int kaufCounter;
+    private int verkaufCounter;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -47,6 +49,7 @@ public class Depot {
                         ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
                         Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis() * prozent), GregorianCalendar.getInstance().getTime().getTime(), a.getCompanyName());
                         m.getData().addTrade(trade);
+                        this.increaseKaufCounter();
                     }
                 }
 
@@ -75,6 +78,7 @@ public class Depot {
                         in = false;
                         ak.setAnzahl(ak.getAnzahl() - a.getAnzahl());
                         geldwert = geldwert + a.getAnzahl() * a.getPreis() * (2f - this.prozent);
+                        this.increaseVerkaufCounter();
                         if (ak.getAnzahl() == 0) {
                             toRemove = ak;
                         }
@@ -145,6 +149,30 @@ public class Depot {
             }
             return sum;
         }
+    }
+
+    private void increaseKaufCounter() {
+        this.kaufCounter += 1;
+    }
+
+    public int getKaufCounter() {
+        return this.kaufCounter;
+    }
+
+    public void setKaufCounter(int x) {
+        this.kaufCounter = x;
+    }
+
+    private void increaseVerkaufCounter() {
+        this.verkaufCounter += 1;
+    }
+
+    public int getVerkaufCounter() {
+        return this.verkaufCounter;
+    }
+
+    public void setVerkaufCounter(int x) {
+        this.verkaufCounter = x;
     }
 
     public String[] getSchwierigkeitsgrad(int i) {

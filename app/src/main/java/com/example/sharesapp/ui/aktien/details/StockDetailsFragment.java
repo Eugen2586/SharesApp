@@ -236,46 +236,47 @@ public class StockDetailsFragment extends Fragment {
         // new request if latestPrice == 0
         Aktie stock = model.getData().getCurrentStock();
         float latestPrice = stock.getPreis();
+        // fill information fields
+        TextView titleView = root.findViewById(R.id.name_big);
+        titleView.setText(stock.getCompanyName());
+
+        setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
+        setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
+        setTextFieldIdWithString(R.id.type_field, stock.getType());
+        setTextFieldIdWithTime(R.id.date_field, stock.getLatestUpdate());
+        setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
+        setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
+        setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
+        setTextFieldIdWithString(R.id.close_time_field, stock.getClose());
+
+        setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
+        setTextFieldIdWithString(R.id.high_field, stock.getHigh());
+        setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
+        setTextFieldIdWithString(R.id.low_field, stock.getLow());
+        setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
+        setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
+        setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
+
+        // configure order information and button
+        showHideEditOrderViews();
+        initializeOrderButton();
+
+        // configure the Text for the portfolioButton
+        setTextForPortfolioButton(portfolioButton, getFoundInPortfolio());
+        portfolioButton.setVisibility(View.VISIBLE);
+
+        // only show buttons for buy and sell if price != 0.0f
         if (latestPrice != 0.0f) {
-            // fill information fields
-            TextView titleView = root.findViewById(R.id.name_big);
-            titleView.setText(stock.getCompanyName());
-
-            setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
-            setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
-            setTextFieldIdWithString(R.id.type_field, stock.getType());
-            setTextFieldIdWithTime(R.id.date_field, stock.getLatestUpdate());
-            setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
-            setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
-            setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
-            setTextFieldIdWithString(R.id.close_time_field, stock.getClose());
-
-            setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
-            setTextFieldIdWithString(R.id.high_field, stock.getHigh());
-            setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
-            setTextFieldIdWithString(R.id.low_field, stock.getLow());
-            setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
-            setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
-            setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
-
-            // configure the Text for the portfolioButton
-            setTextForPortfolioButton(portfolioButton, getFoundInPortfolio());
-
-            // make buy sell portfolio button visible
             root.findViewById(R.id.kaufen_button).setVisibility(View.VISIBLE);
-            root.findViewById(R.id.portfolio_button).setVisibility(View.VISIBLE);
             int numberInDepot = getFoundInDepot();
             if (numberInDepot == 0) {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
             } else {
                 root.findViewById(R.id.verkaufen_button).setVisibility(View.VISIBLE);
             }
-
-            // configure order information and button
-            showHideEditOrderViews();
-            initializeOrderButton();
         } else {
-            quoteRequest();
+            root.findViewById(R.id.verkaufen_button).setVisibility(View.GONE);
+            root.findViewById(R.id.kaufen_button).setVisibility(View.GONE);
         }
     }
 

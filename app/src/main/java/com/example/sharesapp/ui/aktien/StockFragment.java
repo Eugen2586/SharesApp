@@ -37,7 +37,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     private ArrayList<String> previousAvailableTypes = null;
     private TabLayout tabLayout;
     private int selectedTabsCounter = 0;
-    private int numberOfTabs = 2;
+    private int numberOfTabs = 3;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

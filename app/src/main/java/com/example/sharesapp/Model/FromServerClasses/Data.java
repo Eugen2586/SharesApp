@@ -27,6 +27,7 @@ public class Data {
     private ArrayList<Integer> categoryScrollPositions = null;
     private int searchScrollPosition = 0;
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+    public MutableLiveData<Crypto> currentCrypto = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
     private int previouslySelectedOrderTabIndex = 0;
@@ -439,5 +440,13 @@ public class Data {
 
     public void setMutableCryptoList(MutableLiveData<ArrayList<Crypto>> mutableCryptoList) {
         this.mutableCryptoList = mutableCryptoList;
+    }
+
+    public MutableLiveData<Crypto> getCurrentCrypto() {
+        return currentCrypto;
+    }
+
+    public void setCurrentCrypto(Crypto currentCrypto) {
+        this.currentCrypto.postValue(currentCrypto);
     }
 }

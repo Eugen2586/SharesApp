@@ -15,11 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Crypto;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
+import com.example.sharesapp.ui.utils.CryptoRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
+public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener, CryptoRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView = null;
@@ -52,6 +54,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
             }
         };
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
         final Observer<Integer> resetObserver = new Observer<Integer>() {
             @Override
@@ -59,6 +62,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
             }
         };
+        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
 
         final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -66,10 +70,17 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 setCategory(0);
             }
         };
-
-        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
-        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
         model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
+
+        final Observer<ArrayList<Crypto>> cryptoObserver = new Observer<ArrayList<Crypto>>() {
+            @Override
+            public void onChanged(ArrayList<Crypto> cryptoList) {
+                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+            }
+        };
+        model.getData().getMutableCryptoList().observe(getViewLifecycleOwner(), cryptoObserver);
+
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -139,15 +150,14 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
             // add Portfolio and Aktien Tab
             addTabWithString(tabLayout, "portfolio");
+            addTabWithString(tabLayout, "Kryptowährungen");
+            addTabWithString(tabLayout, "Fremdwährungen");
             addTabWithString(tabLayout, "Aktien");
 
             // add Tabs for existing StockTypes
             for (String category : availableTypes) {
                 addTabWithString(tabLayout, category);
             }
-
-            addTabWithString(tabLayout, "Fremdwährungen");
-            addTabWithString(tabLayout, "Kryptowährungen");
 
             numberOfTabs = availableTypes.length + 4;
         }
@@ -169,10 +179,14 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
             } else {
                 setAdapter(portfolioList);
             }
-        } else if (position == 1) {
+        } else if( position == 1) {
+            setCryptoAdapter(model.getData().getMutableCryptoList().getValue());
+        } else if(position == 2) {
+
+        } else if (position == 3) {
             setAdapter(stockList);
         } else {
-            position -= 2;
+            position -= 4;
             if (position < 0) {
                 position = 0;
             }
@@ -208,6 +222,23 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    @Override
+    public void onCryptoItemClick(View view, int position) {
+        // opens crypto details
+        TextView symbolView = view.findViewById(R.id.crypto_symbol_text);
+        String symbol = (String) symbolView.getText();
+        Crypto crypto = new Crypto();
+        crypto.setSymbol(symbol);
+        model.getData().setCurrentCrypto(crypto);
+        Requests requests = new Requests();
+        try {
+            requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(crypto.getSymbol()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.aktien_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
@@ -223,6 +254,18 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(StockFragment.this.getContext(), aktienList);
         adapter.setClickListener(StockFragment.this);
         adapter.setAktien(aktienList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void setCryptoAdapter(ArrayList<Crypto> cryptoList) {
+        emptyPortfolioTextView.setVisibility(View.GONE);
+        if (cryptoList == null) {
+            cryptoList = new ArrayList<>();
+        }
+        initRecyclerView();
+        CryptoRecyclerViewAdapter adapter = new CryptoRecyclerViewAdapter(StockFragment.this.getContext(), cryptoList);
+        adapter.setClickListener(StockFragment.this);
+        adapter.setCrypto(cryptoList);
         recyclerView.setAdapter(adapter);
     }
 

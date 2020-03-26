@@ -13,13 +13,15 @@ public class Trade {
     private boolean kauf;
     private float preis;
     private String date;
+    private String companyName;
 
-    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, String date) {
+    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, String date, String companyName) {
         this.aktie = aktie;
         this.anzahl = anzahl;
         this.kauf = kauf;
         this.preis = preis;
         this.date = date;
+        this.companyName = companyName;
     }
 
     public Aktie getAktie() {
@@ -40,6 +42,10 @@ public class Trade {
 
     public String getDate() {
         return date;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
 }

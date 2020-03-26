@@ -49,7 +49,7 @@ public class NewgameFragment extends Fragment {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setCancelable(true);
                     builder.setTitle("Achtung!");
-                    builder.setMessage("Alle gekauften Aktien und Favoriten werden ebenfalls gelöscht?");
+                    builder.setMessage("Alle gekauften Aktien und Favoriten werden ebenfalls gelöscht");
                     builder.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
                                 @Override

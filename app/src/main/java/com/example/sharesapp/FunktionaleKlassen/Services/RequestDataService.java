@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class RequestDataService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    final Timer timer = new Timer();
+    Timer timer = new Timer();
 
     public class LocalBinder extends Binder {
         public RequestDataService getService() {
@@ -48,6 +48,7 @@ public class RequestDataService extends Service {
             @Override
             public void run() {
                 int timeInterval = 1 * 20 * 1000; // 20sec
+                timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {

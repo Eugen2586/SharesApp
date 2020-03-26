@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Build;
@@ -12,28 +13,22 @@ import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    private final Timer timer = new Timer();
+    private Timer timer = new Timer();
     Model model = new Model();
+    final String channelId = "bbb_channel_id";
 
     public class LocalBinder extends Binder {
         public StickyNotificationService getService() {
@@ -55,6 +50,14 @@ public class StickyNotificationService extends Service {
     @Override
     public void onDestroy() {
         timer.cancel();
+        // remove Notification channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String id = "my_channel_01";
+            assert notificationManager != null;
+            notificationManager.deleteNotificationChannel(channelId);
+        }
         super.onDestroy();
     }
 
@@ -64,20 +67,21 @@ public class StickyNotificationService extends Service {
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                final int timeInterval = 1 * 20 * 1000; // TODO: set to 30 min
+                final int timeInterval = 1 * 10 * 1000; // TODO: set to 30 min
+                timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         // model loading with persistence
-                        model.getPersistanceFBackground();
-                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-                        if (depotList == null) {
-                            showComeBackNotification(0);
-                        } else if (depotList.size() == 0) {
-                            showComeBackNotification(1);
-                        } else {
-                            showComeBackNotification(2);
-                        }
+//                        model.getPersistanceFBackground();
+//                        ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
+//                        if (depotList == null) {
+//                            showComeBackNotification(0);
+//                        } else if (depotList.size() == 0) {
+//                            showComeBackNotification(1);
+//                        } else {
+//                            showComeBackNotification(2);
+//                        }
 
 ////                        showComeBackNotification(new Random().nextInt() % 4);
 //                        System.out.println("...............................................................................Request Sticky");
@@ -88,7 +92,7 @@ public class StickyNotificationService extends Service {
 //                        ServiceRequestFunctionality.asyncRequestsForStocks(symbolSet);
 
                     }
-                }, timeInterval, timeInterval);
+                }, 0, timeInterval);
             }
         });
 
@@ -141,12 +145,11 @@ public class StickyNotificationService extends Service {
     }
 
     private String buildNotificationChannel() {
-        final String channel_id = "bbb_channel_id";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channel_name = "bbb_channel_name";
             int channel_importance = NotificationManager.IMPORTANCE_DEFAULT;
             String description = "channel for bbb";
-            NotificationChannel channel = new NotificationChannel(channel_id, channel_name, channel_importance);
+            NotificationChannel channel = new NotificationChannel(channelId, channel_name, channel_importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -154,6 +157,6 @@ public class StickyNotificationService extends Service {
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
-        return channel_id;
+        return channelId;
     }
 }

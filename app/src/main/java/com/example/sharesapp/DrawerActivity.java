@@ -24,12 +24,8 @@ import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Data;
-import com.example.sharesapp.Model.FromServerClasses.DataPoint;
-import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.REST.Requests;
 import com.example.sharesapp.REST.RequestsBuilder;
 import com.google.android.material.navigation.NavigationView;
@@ -40,7 +36,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 
 
@@ -320,7 +315,7 @@ public class DrawerActivity extends AppCompatActivity {
             float ft = Float.parseFloat(json.get("preis").toString());
             String date = json.get("date").toString();
            // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date );
+            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , date , ak.getCompanyName());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }

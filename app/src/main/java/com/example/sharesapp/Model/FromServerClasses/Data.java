@@ -418,6 +418,10 @@ public class Data {
         return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
     }
 
+    public void setResetCounter(int resetCounter) {
+        this.resetCounter.setValue(resetCounter);
+    }
+
 
 //    public void buyStockOfOrder(Order buyOrder) {
 //        float totalValue = buyOrder.getNumber() * buyOrder.getLimit() * Constants.PROZENT;

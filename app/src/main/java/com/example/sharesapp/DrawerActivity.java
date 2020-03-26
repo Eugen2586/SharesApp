@@ -143,6 +143,29 @@ public class DrawerActivity extends AppCompatActivity {
             }
             s = null;
             try {
+                int kaufCounter = prefs.getInt("KaufCounter", 0);
+                new Model().getData().getDepot().setKaufCounter(kaufCounter);
+            }catch(Exception e){
+                String t = e.getMessage();
+            }
+            s = null;
+            try {
+                int verkaufCounter = prefs.getInt("VerkaufCounter", 0);
+                new Model().getData().getDepot().setVerkaufCounter(verkaufCounter);
+
+            }catch(Exception e){
+                String t = e.getMessage();
+            }
+            s = null;
+            try {
+                int resetCounter = prefs.getInt("ResetCounter", 0);
+                new Model().getData().setResetCounter(resetCounter);
+
+            }catch(Exception e){
+                String t = e.getMessage();
+            }
+            s = null;
+            try {
                 s = prefs.getString("Portfolioliste", null);
                 if (s != null && !s.isEmpty()) {
                     new Model().getData().setPortfolioList(aktienList(s));

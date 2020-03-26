@@ -653,6 +653,7 @@ public class AktienDetailsFragment extends Fragment {
             Requests requests = new Requests();
             try {
                 requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(stock.getSymbol(), Range.oneMonth));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -55,7 +55,6 @@ public class StickyNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            String id = "my_channel_01";
             assert notificationManager != null;
             notificationManager.deleteNotificationChannel(channelId);
         }
@@ -64,7 +63,7 @@ public class StickyNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
-        Looper.prepare();
+
         handler = new Handler();
         handler.post(new Runnable() {
             @Override
@@ -97,7 +96,6 @@ public class StickyNotificationService extends Service {
                 }, 0, timeInterval);
             }
         });
-        Looper.loop();
 
         return Service.START_STICKY;
     }

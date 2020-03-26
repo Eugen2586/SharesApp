@@ -224,47 +224,15 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
 
-
-        // find Type
-        String type = "";
-        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
-        if (stockList != null) {
-            for (Aktie stock : stockList) {
-                if (stock.getSymbol().equals(symbol)) {
-                    type = stock.getType();
-                }
-            }
-        }
-
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
-        stock.setType(type);
+        stock.setType(model.getData().findTypeOfSymbol(symbol));
 
         model.getData().setCurrentStock(stock);
 
-        quoteAndPriceRequest();
+        Requests.quoteAndPriceRequest(stock);
 
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
-    }
-
-    private void quoteAndPriceRequest() {
-        Requests requests = new Requests();
-        Aktie currentStock = model.getData().getCurrentStock();
-        if (currentStock.isCrypto()) {
-            try {
-                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void initRecyclerView() {

@@ -112,11 +112,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         Requests requests = new Requests();
         if (depotList != null) {
             for (Aktie stock: depotList) {
-                try {
-                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Requests.quoteRequest(stock);
             }
         }
     }
@@ -128,14 +124,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
+        stock.setType(model.getData().findTypeOfSymbol(symbol));
         model.getData().setCurrentStock(stock);
-        Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Requests.quoteAndPriceRequest(stock);
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 

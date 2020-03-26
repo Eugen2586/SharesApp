@@ -453,4 +453,17 @@ public class Data {
     public MutableLiveData<Aktie> getMutableCurrentStock() {
         return currentStock;
     }
+
+    public String findTypeOfSymbol(String symbol) {
+        String type = "";
+        ArrayList<Aktie> stockList = aktien.getValue();
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (stock.getSymbol().equals(symbol)) {
+                    type = stock.getType();
+                }
+            }
+        }
+        return type;
+    }
 }

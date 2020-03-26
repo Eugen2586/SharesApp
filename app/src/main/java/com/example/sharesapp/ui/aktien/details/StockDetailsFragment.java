@@ -83,7 +83,7 @@ public class StockDetailsFragment extends Fragment {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quoteRequest();
+                Requests.quoteRequest(model.getData().getCurrentStock());
                 openBuyDialog(inflater);
             }
         });
@@ -100,7 +100,7 @@ public class StockDetailsFragment extends Fragment {
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quoteRequest();
+                Requests.quoteRequest(model.getData().getCurrentStock());
                 openSellDialog(inflater);
             }
         });
@@ -142,7 +142,7 @@ public class StockDetailsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                quoteAndPriceRequest();
+                Requests.quoteAndPriceRequest(model.getData().getCurrentStock());
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -580,7 +580,7 @@ public class StockDetailsFragment extends Fragment {
                                         Aktie a = model.getData().getCurrentStock().getClone();
                                         // new Request if price == 0.0f
                                         if (a.getPreis() == 0.0f) {
-                                            quoteRequest();
+                                            Requests.quoteRequest(a);
                                             Toast.makeText(StockDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                         } else {
                                             a.setAnzahl(number);
@@ -803,45 +803,6 @@ public class StockDetailsFragment extends Fragment {
             Toast.makeText(StockDetailsFragment.this.getContext(), "Verkaufauftrag wurde erstellt.", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(StockDetailsFragment.this.getContext(), "Angegebenes Limit befindet sich nicht über dem Einzelwert der Aktie.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void quoteRequest() {
-        Requests requests = new Requests();
-        Aktie currentStock = model.getData().getCurrentStock();
-        if (currentStock.isCrypto()) {
-            try {
-                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // same method as in StockFragment
-    private void quoteAndPriceRequest() {
-        Requests requests = new Requests();
-        Aktie currentStock = model.getData().getCurrentStock();
-        if (currentStock.isCrypto()) {
-            try {
-                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

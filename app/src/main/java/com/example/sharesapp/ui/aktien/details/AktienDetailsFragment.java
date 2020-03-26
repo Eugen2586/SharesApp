@@ -260,6 +260,7 @@ public class AktienDetailsFragment extends Fragment {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     TextView meine_anzahl = sellDialogView.findViewById(R.id.anzahl_aktien);
                     meine_anzahl.setText(String.valueOf(getFoundInDepot()));
+                    price = sellDialogView.findViewById(R.id.price_one);
                     if (model.getData().getCurrentStock().getPreis() != 0) {
                         TextView price = sellDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));

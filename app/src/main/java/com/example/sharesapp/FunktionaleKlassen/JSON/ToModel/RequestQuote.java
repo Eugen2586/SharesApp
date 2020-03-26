@@ -47,103 +47,114 @@ public class RequestQuote {
         try {
             symbol = (String) jsonObject.get("symbol");
         }catch(Exception e){
-            
+            e.printStackTrace();
         }try{
             company = (String) jsonObject.get("companyName");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             primaryEx = (String) jsonObject.get("primaryExchange");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             calcPrice = (String) jsonObject.get("calculationPrice");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
              open = (String) jsonObject.get("open");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
              opent = (String) jsonObject.get("openTime");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
               close = (String) jsonObject.get("close");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{ 
             closet = (String) jsonObject.get("closeTime");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             high = (String) jsonObject.get("high");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-             highT = (String) jsonObject.get("highTime");
+            Object h = jsonObject.get("highTime");
+            highT = h.toString();
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
              low = (String) jsonObject.get("low");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             lowT = (String) jsonObject.get("lowTime");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             latestPrice = Float.parseFloat((String)jsonObject.get("latestPrice"));
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             latestS = (String) jsonObject.get("latestSource");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
             latestU = (String) jsonObject.get("latestUpdate");
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            latestVol = Integer.parseInt((String)jsonObject.get("latestVolume"));
+            Object h = jsonObject.get("latestVolume");
+            latestVol = Integer.parseInt(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            prevCl = Float.parseFloat((String)jsonObject.get("previousClose"));
+            Object h = jsonObject.get("previousClose");
+            prevCl = Float.parseFloat(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            prevVol = Integer.parseInt((String)jsonObject.get(jsonObject.get("previousVolume")));
+            Object h = jsonObject.get("previousVolume");
+            prevVol = Integer.parseInt(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            change = Float.parseFloat((String)jsonObject.get("change"));
+            Object h = jsonObject.get("change");
+            change = Float.parseFloat(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            chpercent = Float.parseFloat((String)jsonObject.get("changePercent"));
+            Object h = jsonObject.get("changePercent");
+            chpercent = Float.parseFloat(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            avgVol = Integer.parseInt((String)jsonObject.get("avgTotalVolume"));
+            Object h = jsonObject.get("avgTotalVolume");
+            avgVol = Integer.parseInt(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            week52High = Float.parseFloat((String)jsonObject.get("week52High"));
+            Object h = jsonObject.get("week52High");
+            week52High = Float.parseFloat(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            week52Low = Float.parseFloat((String)jsonObject.get("week52Low"));
+            Object h = jsonObject.get("week52Low");
+            week52Low = Float.parseFloat(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try{
-            lastTradeT = Integer.parseInt((String)jsonObject.get("lastTradeTime"));
+            Object h = jsonObject.get("lastTradeTime");
+            lastTradeT = Integer.parseInt(h.toString());
         }catch(Exception e){
-
+            e.printStackTrace();
         }try {
-            b = Boolean.parseBoolean((String) jsonObject.get("isUSMarketOpen"));
+            Object h = jsonObject.get("isUSMarketOpen");
+            b = Boolean.parseBoolean(h.toString());
         }catch(Exception e){
-            
+            e.printStackTrace();
         }
         try{
             price = Float.parseFloat((String)jsonObject.get("price"));
@@ -151,16 +162,15 @@ public class RequestQuote {
 
         }
         //order to data sheet
-        ArrayList arrl = new Model().getData().getAktienList().getValue();
-        for (Object c: arrl) {
-            Aktie aktie = (Aktie) c;
-            if (aktie.getSymbol().equals(jsonObject.get("symbol"))) {
-                Aktie ak = aktie;
-                arrl.remove(aktie);
-                ak.setadditionalData(price, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
-                arrl.add(ak);
-            }
-        }
+        ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
+        if (arrl != null) {
+            for (Aktie c: arrl) {
+                if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                    c.setadditionalData(latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT , latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b  );
+                    break;
+                }
+			}
+		}
         new Model().getData().getAktienList().getValue().clear();
         new Model().getData().getAktienList().postValue(arrl);
     }

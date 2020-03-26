@@ -58,6 +58,9 @@ public class RequestSymbol {
                 }
                 try {
                     ak.setType(json.getString("type").toString());
+                    if (ak.getType().equals("temp")) {
+                        continue;
+                    }
                 } catch (Exception e) {
 
                 }

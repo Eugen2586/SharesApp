@@ -1,5 +1,7 @@
 package com.example.sharesapp.ui.erfolge;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,9 +23,6 @@ public class ErfolgeFragment extends Fragment {
 
     private ErfolgeViewModel erfolgeViewModel;
     private Erfolge erfolge;
-    private Button[] kaufen;
-    private Button[] verkaufen;
-    private Button[] spiel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,9 +51,75 @@ public class ErfolgeFragment extends Fragment {
 
         erfolge = new Erfolge();
 
+        this.setButtons(kaufen, verkaufen, spiel);
+
         this.colorButtons(kaufen, verkaufen, spiel);
 
         return root;
+    }
+
+    private void setButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel){
+        String[] k = erfolge.getKaufenText();
+        String[] v = erfolge.getVerkaufenText();
+        String[] r = erfolge.getResetText();
+        String a = erfolge.getAllText();
+        for (int i = 0; i < 4; i++) {
+            final String s = k[i];
+            kaufen[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = ErfolgeFragment.this.getContext();
+                    if (context != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setCancelable(true);
+                        builder.setTitle("Kauferfolg");
+                        builder.setMessage(s);
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+            });
+
+            final String s1 = v[i];
+            verkaufen[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = ErfolgeFragment.this.getContext();
+                    if (context != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setCancelable(true);
+                        builder.setTitle("Verkauferfolg");
+                        builder.setMessage(s1);
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+            });
+
+            final String s3;
+            if (i < 3) {
+                s3 = r[i];
+            } else {
+                s3 = a;
+            }
+            spiel[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = ErfolgeFragment.this.getContext();
+                    if (context != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setCancelable(true);
+                        builder.setTitle("Spielerfolg");
+                        builder.setMessage(s3);
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }
+            });
+        }
     }
 
     private void colorButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel) {
@@ -74,11 +139,13 @@ public class ErfolgeFragment extends Fragment {
             } else {
                 kaufen[i].setBackgroundColor(red);
             }
+
             if (v[i]) {
                 verkaufen[i].setBackgroundColor(green);
             } else {
                 verkaufen[i].setBackgroundColor(red);
             }
+
             if (i < 3) {
                 if (r[i]) {
                     spiel[i].setBackgroundColor(green);

@@ -94,7 +94,7 @@ public class RequestQuote {
         }catch(Exception e){
             e.printStackTrace();
         }try{
-            latestPrice = Float.parseFloat((String)jsonObject.get("latestPrice"));
+            latestPrice = Float.parseFloat(jsonObject.get("latestPrice").toString());
         }catch(Exception e){
             e.printStackTrace();
         }try{

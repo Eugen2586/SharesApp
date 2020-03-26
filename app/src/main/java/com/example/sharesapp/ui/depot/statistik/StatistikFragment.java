@@ -84,7 +84,7 @@ public class StatistikFragment extends Fragment {
 
     private ArrayList<DataEntry> generateDataFromTradeList(ArrayList<Trade> tradeList) {
         ArrayList<DataEntry> dataList = new ArrayList<>();
-        float currentMoney = Constants.MONEY;
+        float currentMoney = model.getData().getDepot().getStartMoney();
         for (Trade trade : tradeList) {
             if(trade.isKauf()) {
                 currentMoney -= trade.getPreis();

@@ -45,11 +45,11 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
         Trade trade = mData.get(position);
         //holder.view.set;
         if (trade.isKauf()) {
-            holder.name.setText(trade.getAktie().getCompanyName());
+            holder.name.setText(trade.getCompanyName());
             holder.anzahl.setText("+ " + trade.getAnzahl() + "x");
             holder.umsatz.setText(new Anzeige().makeItBeautifulEuro(trade.getPreis()));
         } else {
-            holder.name.setText(trade.getAktie().getName());
+            holder.name.setText(trade.getCompanyName());
             holder.anzahl.setText("- " + trade.getAnzahl() + "x");
             holder.umsatz.setText(new Anzeige().makeItBeautifulEuro(trade.getPreis()));
         }

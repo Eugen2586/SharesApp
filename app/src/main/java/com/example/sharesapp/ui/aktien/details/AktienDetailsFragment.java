@@ -162,7 +162,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number * Constants.PROZENT;
+                                        float price = limit * number * model.getData().getDepot().getProzent();
                                         if (price > model.getData().getDepot().getGeldwert()) {
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Geld auf dem Konto!", Toast.LENGTH_LONG).show();
 
@@ -318,7 +318,7 @@ public class AktienDetailsFragment extends Fragment {
                                             limit = model.getData().currentStock.getValue().getPreis();
                                         }
                                         int number = Integer.parseInt(kaufMenge.getText().toString());
-                                        float price = limit * number * Constants.V_PROZENT;
+                                        float price = limit * number * (2f - model.getData().getDepot().getProzent());
                                         if (Integer.parseInt(kaufMenge.getText().toString()) > getFoundInDepot()) {
                                             // falls will mehr verakufen als habe
                                             Toast.makeText(AktienDetailsFragment.this.getContext(), "Nicht genug Aktien zu verkaufen!", Toast.LENGTH_LONG).show();
@@ -581,7 +581,7 @@ public class AktienDetailsFragment extends Fragment {
         }
 
         if (kaufen) {
-            float price = limit * number * Constants.PROZENT;
+            float price = limit * number * model.getData().getDepot().getProzent();
             totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
             if (price > model.getData().getDepot().getGeldwert()) {
                 totalPrice.setTextColor(Color.RED);
@@ -589,7 +589,7 @@ public class AktienDetailsFragment extends Fragment {
                 totalPrice.setTextColor(Color.DKGRAY);
             }
         } else {
-            float price = limit * number * Constants.V_PROZENT;
+            float price = limit * number * (2f - model.getData().getDepot().getProzent());
             totalPrice.setText(String.valueOf((new Anzeige()).makeItBeautifulEuro(price)));
         }
     }

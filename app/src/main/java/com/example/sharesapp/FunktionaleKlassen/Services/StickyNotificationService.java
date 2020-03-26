@@ -12,27 +12,20 @@ import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.Observer;
 
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
-import com.example.sharesapp.Model.ServiceModel;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class StickyNotificationService extends Service {
     private final LocalBinder mBinder = new LocalBinder();
     protected Handler handler;
-    private final Timer timer = new Timer();
+    private Timer timer = new Timer();
     Model model = new Model();
 
     public class LocalBinder extends Binder {
@@ -65,6 +58,7 @@ public class StickyNotificationService extends Service {
             @Override
             public void run() {
                 final int timeInterval = 1 * 20 * 1000; // TODO: set to 30 min
+                timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {

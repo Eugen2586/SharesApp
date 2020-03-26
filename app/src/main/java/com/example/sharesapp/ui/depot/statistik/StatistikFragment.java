@@ -49,6 +49,7 @@ public class StatistikFragment extends Fragment {
         if (tradeList != null && tradeList.size() != 0) {
             // Build the stockdatachart
             Cartesian cartesian = AnyChart.line();
+            cartesian.title("Eigenes Vermögen");
             cartesian.animation(true);
             cartesian.yAxis(0).title("Euro");
             cartesian.xAxis(0).title("Sek. seit erstem Kauf");

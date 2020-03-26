@@ -6,10 +6,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
-
-import java.io.IOException;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,17 +33,20 @@ public class RequestDataService extends Service {
 
     @Override
     public void onDestroy() {
+        // cancel the timer
         timer.cancel();
+
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        // send Requests for all Stocks which have an order every 30 min
         handler = new Handler();
         handler.post(new TimerTask() {
             @Override
             public void run() {
-                int timeInterval = 1 * 20 * 1000; // 20sec
+                int timeInterval = 1 * 30 * 1000; // 30sec
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override

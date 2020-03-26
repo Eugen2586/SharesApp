@@ -13,7 +13,17 @@ import java.util.Objects;
 
 import okhttp3.Response;
 
+/**
+ * Klasse, in der die Antworten des Servers auf asynchrone Anfragen behandelt werden.
+ */
+
 public class AsyncTaskHandler {
+
+    /**
+     * Verarbeitet die Antwort des Servers.
+     * @param response Die Antwort des Servers.
+     * @throws IOException Wirft Exception, falls etwas schief läuft.
+     */
 
     public static void handle(Response response) throws IOException {
 

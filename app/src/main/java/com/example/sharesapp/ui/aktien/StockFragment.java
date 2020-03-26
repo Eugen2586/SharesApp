@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AktienFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
+public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
     private RecyclerView recyclerView = null;
@@ -137,16 +137,19 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             // remove all Tabs
             tabLayout.removeAllTabs();
 
-            // add Portfolio and Alles Tab
+            // add Portfolio and Aktien Tab
             addTabWithString(tabLayout, "portfolio");
-            addTabWithString(tabLayout, "alles");
+            addTabWithString(tabLayout, "Aktien");
 
             // add Tabs for existing StockTypes
             for (String category : availableTypes) {
                 addTabWithString(tabLayout, category);
             }
 
-            numberOfTabs = availableTypes.length + 2;
+            addTabWithString(tabLayout, "Fremdwährungen");
+            addTabWithString(tabLayout, "Kryptowährungen");
+
+            numberOfTabs = availableTypes.length + 4;
         }
     }
 
@@ -217,8 +220,8 @@ public class AktienFragment extends Fragment implements StockRecyclerViewAdapter
             aktienList = new ArrayList<>();
         }
         initRecyclerView();
-        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(AktienFragment.this.getContext(), aktienList);
-        adapter.setClickListener(AktienFragment.this);
+        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(StockFragment.this.getContext(), aktienList);
+        adapter.setClickListener(StockFragment.this);
         adapter.setAktien(aktienList);
         recyclerView.setAdapter(adapter);
     }

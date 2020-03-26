@@ -1,5 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Crypto;
 import com.example.sharesapp.Model.Model;
 
@@ -7,14 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 
-public class RequestCrypto {
+public class RequestCryptoSymbol {
     //deklaration
 
-    public RequestCrypto(String s) throws JSONException {
+    public RequestCryptoSymbol(String s) throws JSONException {
         // {
         //     "symbol": "BTCUSDT",
         //     "sector": "cryptocurrency",
@@ -38,12 +38,12 @@ public class RequestCrypto {
 ////        } catch (ParseException e) {
 ////            e.printStackTrace();
 ////        }
-        ArrayList<Crypto> cryptoList = new ArrayList<>();
+        ArrayList<Aktie> cryptoList = new ArrayList<>();
         JSONParser parser = new JSONParser();
         if (s != null && !s.isEmpty()) {
-            org.json.JSONArray jsonay;
+            JSONArray jsonay;
             try {
-                jsonay = (org.json.JSONArray) parser.parse(s);
+                jsonay = (JSONArray) parser.parse(s);
             } catch (Exception e) {
                 jsonay = new JSONArray(s);
             }
@@ -52,11 +52,12 @@ public class RequestCrypto {
                 jsonar.add(jsonay.get(i));
             }
             for (Object objob : jsonar) {
-                Crypto crypto = new Crypto();
-                org.json.JSONObject obj = null;
+                Aktie crypto = new Aktie();
+                JSONObject obj = null;
                 try {
-                    obj = (org.json.JSONObject) objob;
+                    obj = (JSONObject) objob;
                 }catch(Exception e){
+                    e.printStackTrace();
                 }
                 try {
                     crypto.setSymbol(obj.get("symbol").toString());
@@ -64,73 +65,51 @@ public class RequestCrypto {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setSector(obj.get("sector").toString());
+                    crypto.setName(obj.get("name").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setCalculationPrice(obj.get("calculationPrice").toString());
+                    crypto.setExchange(obj.get("exchange").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setLatestPrice(obj.get("latestPrice").toString());
+                    crypto.setDate(obj.get("date").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setLatestSource(obj.get("latestSource").toString());
+                    crypto.setType(obj.get("type").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setLatestUpdate(Long.parseLong(obj.get("latestUpdate").toString()));
+                    crypto.setRegion(obj.get("region").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setLatestVolume(obj.get("latestVolume").toString());
+                    crypto.setCurrency(obj.get("currency").toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 try {
-                    crypto.setBidPrice(obj.get("bidPrice").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setBidSize(obj.get("bidSize").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setAskPrice(obj.get("askPrice").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setAskSize(obj.get("askSize").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setHigh(obj.get("high").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setLow(obj.get("low").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    crypto.setPreviousClose(obj.get("previousClose").toString());
+                    crypto.setEnabled(Boolean.parseBoolean(obj.get("isEnabled").toString()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 cryptoList.add(crypto);
             }
-            new Model().getData().getMutableCryptoList().postValue(cryptoList);
+
+            Model model = new Model();
+            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+            if (stockList != null && stockList.size() != 0) {
+                stockList.addAll(cryptoList);
+                model.getData().getAktienList().setValue(stockList);
+            } else {
+                model.getData().getAktienList().setValue(cryptoList);
+            }
         }
     }
 }

@@ -42,8 +42,9 @@ public class CryptoRecyclerViewAdapter extends RecyclerView.Adapter<CryptoRecycl
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Crypto crypto = mData.get(position);
+        System.out.println("crypto: " + crypto.getSymbol());
         holder.mySymbolView.setText(crypto.getSymbol());
-        holder.myTypeView.setText(R.string.crypto);
+        holder.myTypeView.setText(crypto.getType());
 
         // set value if stock in depot
 //        ArrayList<Crypto> cryptoDepotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();

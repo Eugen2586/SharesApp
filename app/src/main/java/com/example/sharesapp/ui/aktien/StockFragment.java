@@ -180,11 +180,39 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 setAdapter(portfolioList);
             }
         } else if( position == 1) {
-            setCryptoAdapter(model.getData().getMutableCryptoList().getValue());
+//            setCryptoAdapter(model.getData().getMutableCryptoList().getValue());
+            if (stockList != null) {
+                String type = "crypto";
+                ArrayList<Aktie> filtered_aktien = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(type)) {
+                        filtered_aktien.add(stock);
+                    }
+                }
+                setAdapter(filtered_aktien);
+            }
         } else if(position == 2) {
-
+            if (stockList != null) {
+                String type = "crypto";
+                ArrayList<Aktie> filteredStockList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(type)) {
+                        filteredStockList.add(stock);
+                    }
+                }
+                setAdapter(filteredStockList);
+            }
         } else if (position == 3) {
-            setAdapter(stockList);
+            if (stockList != null) {
+                String type = "crypto";
+                ArrayList<Aktie> filteredStockList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (!stock.getType().equals(type)) {
+                        filteredStockList.add(stock);
+                    }
+                }
+                setAdapter(filteredStockList);
+            }
         } else {
             position -= 4;
             if (position < 0) {

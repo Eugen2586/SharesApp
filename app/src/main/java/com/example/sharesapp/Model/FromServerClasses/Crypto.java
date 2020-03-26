@@ -17,7 +17,15 @@ public class Crypto {
     private String bidSize = null;
     private String askPrice = null;
     private String askSize = null;
-    private long latestUpdate = -1;
+    private long latestUpdate = 0;
+
+    private String name = null;
+    private String exchange = null;
+    private String date = null;
+    private String type = null;
+    private String region = null;
+    private String currency = null;
+    private boolean isEnabled = false;
 
     public Crypto(String symbol,
             String sector,
@@ -163,5 +171,61 @@ public class Crypto {
 
     public void setLatestUpdate(long latestUpdate) {
         this.latestUpdate = latestUpdate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(String exchange) {
+        this.exchange = exchange;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

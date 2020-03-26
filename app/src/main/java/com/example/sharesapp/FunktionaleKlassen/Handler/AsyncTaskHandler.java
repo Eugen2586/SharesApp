@@ -1,6 +1,8 @@
 package com.example.sharesapp.FunktionaleKlassen.Handler;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestCrypto;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestCryptoSymbol;
+import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestForex;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuote;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuotePrices;
@@ -32,7 +34,7 @@ public class AsyncTaskHandler {
         String url = response.request().url().toString();
         final String s = Objects.requireNonNull(response.body()).string();
 
-        if (url.contains("ref-data")) {
+        if (url.contains("ref-data")) { // ref-data/symbols
             try {
                 new RequestSymbol(s);
             } catch (Exception e) {
@@ -62,15 +64,16 @@ public class AsyncTaskHandler {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else if (url.contains("crypto/symbols")) {
+        } else if (url.contains("ref-data/crypto")) {
             try {
-                new RequestCrypto(s);
+                new RequestCryptoSymbol(s);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (url.contains("crypto/symbols")) {
+            // TODO:
             try {
-                new RequestCrypto(s);
+                new RequestForex(s);
             } catch (Exception e) {
                 e.printStackTrace();
             }

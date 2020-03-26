@@ -275,7 +275,7 @@ public class StockDetailsFragment extends Fragment {
             showHideEditOrderViews();
             initializeOrderButton();
         } else {
-            stockAndQuoteRequest();
+            quoteRequest();
         }
     }
 

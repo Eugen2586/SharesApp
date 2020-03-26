@@ -20,6 +20,7 @@ public class Depot {
     private boolean in;
     private float prozent = 1.01f;
     private int schwierigkeitsgrad;
+    private float startMoney = 0;
 
     public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
         this.aktienImDepot.postValue(aktienImDepot);
@@ -44,7 +45,7 @@ public class Depot {
                         in = true;
                         geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
                         ak.setAnzahl(a.getAnzahl() + ak.getAnzahl());
-                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
+                        Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis() * prozent), GregorianCalendar.getInstance().getTime().toString() , a.getCompanyName());
                         m.getData().addTrade(trade);
                     }
                 }
@@ -52,7 +53,7 @@ public class Depot {
                 if (!in) {
                     stocks.add(a);
                     geldwert = geldwert - a.getPreis() * a.getAnzahl() * prozent;
-                    Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
+                    Trade trade = new Trade(a, a.getAnzahl(), true, (a.getAnzahl() * a.getPreis() * prozent), GregorianCalendar.getInstance().getTime().toString(), a.getCompanyName());
                     m.getData().addTrade(trade);
                 }
 
@@ -82,9 +83,8 @@ public class Depot {
             }
 
             if (!in) {
-//                    stocks.add(a);
                 Model m = new Model();
-                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis()), GregorianCalendar.getInstance().getTime().toString());
+                Trade trade = new Trade(a, a.getAnzahl(), false, (a.getAnzahl() * a.getPreis() * (2f - this.prozent)), GregorianCalendar.getInstance().getTime().toString(), a.getCompanyName());
                 m.getData().addTrade(trade);
             }
             geldwert = geldwert - a.getPreis();
@@ -99,6 +99,7 @@ public class Depot {
     }
 
     public void setGeldwert(float geldwert) {
+        this.startMoney = geldwert;
         this.geldwert = geldwert;
     }
 
@@ -211,5 +212,9 @@ public class Depot {
 
     public void setSchwierigkeitsgrad(int i) {
         this.schwierigkeitsgrad = i;
+    }
+
+    public float getStartMoney() {
+        return startMoney;
     }
 }

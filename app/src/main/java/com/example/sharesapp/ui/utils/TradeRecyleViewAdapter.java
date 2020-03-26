@@ -44,14 +44,14 @@ public class TradeRecyleViewAdapter extends RecyclerView.Adapter<TradeRecyleView
     public void onBindViewHolder(@NonNull TradeRecyleViewAdapter.ViewHolder holder, int position) {
         Trade trade = mData.get(position);
         //holder.view.set;
-        if(trade.isKauf()) {
-            holder.name.setText( trade.getAktie().getName());
-            holder.anzahl.setText(" + " +String.valueOf(trade.getAnzahl())+" x");
-            holder.umsatz.setText(new Anzeige().makeItBeautiful(trade.getPreis()));
-        }else{
-            holder.name.setText(trade.getAktie().getName());
-            holder.anzahl.setText(" - " +String.valueOf(trade.getAnzahl())+" x");
-            holder.umsatz.setText(new Anzeige().makeItBeautiful(trade.getPreis()));
+        if (trade.isKauf()) {
+            holder.name.setText(trade.getCompanyName());
+            holder.anzahl.setText("+ " + trade.getAnzahl() + "x");
+            holder.umsatz.setText(new Anzeige().makeItBeautifulEuro(trade.getPreis()));
+        } else {
+            holder.name.setText(trade.getCompanyName());
+            holder.anzahl.setText("- " + trade.getAnzahl() + "x");
+            holder.umsatz.setText(new Anzeige().makeItBeautifulEuro(trade.getPreis()));
         }
     }
 

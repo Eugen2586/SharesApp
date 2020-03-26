@@ -78,6 +78,29 @@ import java.util.ArrayList;
             }
             s = null;
 
+            try {
+                editor.putInt("KaufCounter", model.getData().getDepot().getKaufCounter());
+                editor.commit();
+            }catch(Exception e){
+
+            }
+            s = null;
+            try {
+                editor.putInt("VerkaufCounter", model.getData().getDepot().getVerkaufCounter());
+                editor.commit();
+            }catch(Exception e){
+
+            }
+            s = null;
+            try {
+                editor.putInt("ResetCounter", model.getData().getResetCounter().getValue());
+                editor.commit();
+            }catch(Exception e){
+                editor.putInt("ResetCounter", 0);
+                editor.commit();
+            }
+            s = null;
+
             //This make it in the OS.
             try {
                 editor.apply();
@@ -167,7 +190,7 @@ import java.util.ArrayList;
 
                 }
                 try {
-                    obj.put("currency", ak.getAktie().getCurrency());
+                    obj.put("RequestCurrency", ak.getAktie().getCurrency());
                 }catch(Exception e){
 
                 }

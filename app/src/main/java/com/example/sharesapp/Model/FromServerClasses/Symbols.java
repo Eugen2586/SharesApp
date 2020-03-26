@@ -15,7 +15,7 @@ public class Symbols {
     private final String type = null;
     //private final String iexId;
     //private final String region;
-    //private final String currency;
+    //private final String RequestCurrency;
     //private final Boolean isEnabled;
     //Daten in der ExchangeSymbol
 

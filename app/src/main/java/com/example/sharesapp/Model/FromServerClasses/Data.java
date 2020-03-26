@@ -27,10 +27,12 @@ public class Data {
     private ArrayList<Integer> categoryScrollPositions = null;
     private int searchScrollPosition = 0;
     public MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
+    public MutableLiveData<Crypto> currentCrypto = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
     private int previouslySelectedOrderTabIndex = 0;
     private int previouslySelectedDepotTabIndex = 0;
+    private MutableLiveData<ArrayList<Crypto>> mutableCryptoList = new MutableLiveData<>();
 
     private MutableLiveData fortexList = new MutableLiveData();
 
@@ -432,84 +434,19 @@ public class Data {
         this.resetCounter.setValue(resetCounter);
     }
 
-//    public void buyStockOfOrder(Order buyOrder) {
-//        float totalValue = buyOrder.getNumber() * buyOrder.getLimit() * Constants.PROZENT;
-//        if (depot.getGeldwert() - totalValue >= 0) {
-//            // change amount of money
-//            depot.setGeldwert(depot.getGeldwert() - totalValue);
-//
-//            // remove buyOrder
-//            removeBuyOrder(buyOrder);
-//
-//            // add new stock to depotList
-//            addOrderToDepot(buyOrder);
-//
-//            // add respective trade
-//            ArrayList<Trade> tradeList = tradesMutable.getValue();
-//            Trade trade = new Trade(buyOrder.getStock(), buyOrder.getNumber(), true, totalValue, GregorianCalendar.getInstance().getTime().toString());
-//            if (tradeList == null) {
-//                tradeList = new ArrayList<>();
-//            }
-//            tradeList.add(trade);
-//
-//            // save changes
-//
-//        }
-//    }
-//
-//    private void addOrderToDepot(Order buyOrder) {
-//        boolean notFoundInDepot = true;
-//        ArrayList<Aktie> depotList = depot.getAktienImDepot().getValue();
-//        if (depotList != null) {
-//            for (Aktie depotStock : depotList) {
-//                if (depotStock.getSymbol().equals(buyOrder.getSymbol())) {
-//                    depotStock.setAnzahl(depotStock.getAnzahl() + buyOrder.getNumber());
-//                    notFoundInDepot = false;
-//                    break;
-//                }
-//            }
-//        } else {
-//            depotList = new ArrayList<>();
-//        }
-//        if (notFoundInDepot) {
-//            buyOrder.getStock().setAnzahl(buyOrder.getNumber());
-//            depotList.add(buyOrder.getStock());
-//        }
-//        depot.setAktienImDepot(depotList);
-//    }
-//
-//    public void sellStockOfOrder(Order sellOrder) {
-//        float totalValue = sellOrder.getNumber() * sellOrder.getLimit() * Constants.V_PROZENT;
-//        ArrayList<Aktie> depotList = depot.getAktienImDepot().getValue();
-//        if (depotList != null) {
-//            for (Aktie depotStock : depotList) {
-//                if (depotStock.getSymbol().equals(sellOrder.getSymbol()) && depotStock.getAnzahl() >= sellOrder.getNumber()) {
-//                    // change amount of money
-//                    depot.setGeldwert(depot.getGeldwert() + totalValue);
-//
-//                    // remove buyOrder
-//                    removeSellOrder(sellOrder);
-//
-//                    // add new stock to depotList
-//                    depotStock.setAnzahl(depotStock.getAnzahl() - sellOrder.getNumber());
-//                    if (depotStock.getAnzahl() == 0) {
-//                        depotList.remove(depotStock);
-//                    }
-//                    depot.setAktienImDepot(depotList);
-//
-//                    // add respective trade
-//                    ArrayList<Trade> tradeList = tradesMutable.getValue();
-//                    Trade trade = new Trade(sellOrder.getStock(), sellOrder.getNumber(), false, totalValue, GregorianCalendar.getInstance().getTime().toString());
-//                    if (tradeList == null) {
-//                        tradeList = new ArrayList<>();
-//                    }
-//                    tradeList.add(trade);
-//
-//                    // save changes
-//
-//                    break;
-//                }
-//            }
-//        }
-//    }
+    public MutableLiveData<ArrayList<Crypto>> getMutableCryptoList() {
+        return mutableCryptoList;
+    }
+
+    public void setMutableCryptoList(MutableLiveData<ArrayList<Crypto>> mutableCryptoList) {
+        this.mutableCryptoList = mutableCryptoList;
+    }
+
+    public MutableLiveData<Crypto> getCurrentCrypto() {
+        return currentCrypto;
+    }
+
+    public void setCurrentCrypto(Crypto currentCrypto) {
+        this.currentCrypto.postValue(currentCrypto);
+    }
 }

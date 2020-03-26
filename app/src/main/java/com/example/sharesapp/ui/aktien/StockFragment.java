@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
+import com.example.sharesapp.Model.FromServerClasses.Crypto;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 import com.example.sharesapp.REST.Range;
@@ -36,7 +37,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     private ArrayList<String> previousAvailableTypes = null;
     private TabLayout tabLayout;
     private int selectedTabsCounter = 0;
-    private int numberOfTabs = 2;
+    private int numberOfTabs = 3;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
             }
         };
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
 
         final Observer<Integer> resetObserver = new Observer<Integer>() {
             @Override
@@ -59,6 +61,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
             }
         };
+        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
 
         final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -66,10 +69,17 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 setCategory(0);
             }
         };
-
-        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
-        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
         model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
+
+        final Observer<ArrayList<Crypto>> cryptoObserver = new Observer<ArrayList<Crypto>>() {
+            @Override
+            public void onChanged(ArrayList<Crypto> cryptoList) {
+                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+            }
+        };
+        model.getData().getMutableCryptoList().observe(getViewLifecycleOwner(), cryptoObserver);
+
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -139,6 +149,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
             // add Portfolio and Aktien Tab
             addTabWithString(tabLayout, "portfolio");
+            addTabWithString(tabLayout, "Kryptowährungen");
             addTabWithString(tabLayout, "Aktien");
 
             // add Tabs for existing StockTypes
@@ -146,10 +157,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 addTabWithString(tabLayout, category);
             }
 
-            addTabWithString(tabLayout, "Fremdwährungen");
-            addTabWithString(tabLayout, "Kryptowährungen");
-
-            numberOfTabs = availableTypes.length + 4;
+            numberOfTabs = availableTypes.length + 3;
         }
     }
 
@@ -169,10 +177,30 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
             } else {
                 setAdapter(portfolioList);
             }
-        } else if (position == 1) {
-            setAdapter(stockList);
+        } else if( position == 1) {
+            if (stockList != null) {
+                String type = "crypto";
+                ArrayList<Aktie> filteredStockList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (stock.getType().equals(type)) {
+                        filteredStockList.add(stock);
+                    }
+                }
+                setAdapter(filteredStockList);
+            }
+        } else if(position == 2) {
+            if (stockList != null) {
+                String type = "crypto";
+                ArrayList<Aktie> filteredStockList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (!stock.getType().equals(type)) {
+                        filteredStockList.add(stock);
+                    }
+                }
+                setAdapter(filteredStockList);
+            }
         } else {
-            position -= 2;
+            position -= 3;
             if (position < 0) {
                 position = 0;
             }
@@ -195,17 +223,48 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         // opens stock details
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
         String symbol = (String) symbolView.getText();
+
+
+        // find Type
+        String type = "";
+        ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (stock.getSymbol().equals(symbol)) {
+                    type = stock.getType();
+                }
+            }
+        }
+
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
+        stock.setType(type);
+
         model.getData().setCurrentStock(stock);
-        Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        quoteAndPriceRequest();
+
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
+    }
+
+    private void quoteAndPriceRequest() {
+        Requests requests = new Requests();
+        Aktie currentStock = model.getData().getCurrentStock();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initRecyclerView() {

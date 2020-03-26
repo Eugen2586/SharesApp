@@ -5,12 +5,12 @@ import com.example.sharesapp.Model.Model;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
 
 public class RequestSymbol {
-
 
     ArrayList type = new ArrayList();
     Aktie ak = new Aktie();
@@ -22,11 +22,11 @@ public class RequestSymbol {
             JSONArray jsonay;
             try {
                 jsonay = (JSONArray) parser.parse(st);
-            }catch(Exception e){
+            } catch (Exception e) {
                 jsonay = new JSONArray(st);
             }
             ArrayList jsonar = new ArrayList();
-            for(int i = 0; i < jsonay.length(); i++ ){
+            for (int i = 0; i < jsonay.length(); i++) {
                 jsonar.add(jsonay.get(i));
             }
             for (Object t : jsonar) {
@@ -35,7 +35,7 @@ public class RequestSymbol {
                 org.json.JSONObject json = null;
                 try {
                     json = (org.json.JSONObject) t;
-                }catch(Exception e){
+                } catch (Exception e) {
                 }
                 try {
                     ak.setSymbol(json.getString("symbol").toString());
@@ -82,9 +82,41 @@ public class RequestSymbol {
 
                 }
                 try {
-                    ak.setAnzahl(Integer.getInteger(String.valueOf(json.getInt("Menge"))));
+                    ak.setAnzahl(json.getInt("Menge"));
                 } catch (Exception e) {
 
+                }
+                try {
+                    ak.setSymbol(json.get("symbol").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setName(json.get("name").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setExchange(json.get("exchange").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setDate(json.get("date").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setType(json.get("type").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setRegion(json.get("region").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setCurrency(json.get("currency").toString());
+                } catch (JSONException e) {
+                }
+                try {
+                    ak.setEnabled(json.getBoolean("isEnabled"));
+                } catch (JSONException e) {
                 }
                 if (!akl.contains(ak)) {
                     akl.add(ak);
@@ -93,25 +125,28 @@ public class RequestSymbol {
                     if (((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()))) {
                         type.add(ak.getType());
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
 
                 }
             }
-            Model m = new Model();
-            if(m.getData().getAktienList().getValue() != null) {
-                m.getData().getAktienList().postValue(akl);
+            Model model = new Model();
+            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+            if (stockList == null) {
+                stockList = new ArrayList<>();
             }
-            else{
-                m.getData().getAktienList().postValue(akl);
-            }
+            stockList.addAll(akl);
+            model.getData().getAktienList().postValue(stockList);
+
             Object[] data = type.toArray();
-            String[] sts = new String[data.length];
-            int i = 0;
-            for (Object t : data) {
-                sts[i] = t.toString();
-                i++;
+            if (data.length != 0 && data[0] != "crypto") {
+                String[] sts = new String[data.length];
+                int i = 0;
+                for (Object t : data) {
+                    sts[i] = t.toString();
+                    i++;
+                }
+                model.getData().getAvailType().setType_abbr_list(sts);
             }
-            m.getData().getAvailType().setType_abbr_list(sts);
         }
     }
 

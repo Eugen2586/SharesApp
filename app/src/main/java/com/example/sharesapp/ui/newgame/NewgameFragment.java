@@ -15,20 +15,25 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Data;
-import com.example.sharesapp.Model.FromServerClasses.Depot;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 public class NewgameFragment extends Fragment {
 
     private Model model = new Model();
-    Data data;
-    TextView cash;
+    private Data data;
+    private TextView cash;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_newgame, container, false);
@@ -88,12 +93,14 @@ public class NewgameFragment extends Fragment {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             model.getData().resetData();
 
                             View view = getView();
                             if (view != null) {
-                                Navigation.findNavController(view).navigateUp(); } }});
+                                Navigation.findNavController(view).navigateUp();
+                            }
+                        }
+                    });
             builder.setCancelable(false);
             builder.setView(diffLevelDialog);
             final AlertDialog dialog = builder.create();
@@ -109,7 +116,7 @@ public class NewgameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(1);
-                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                     TextView b = diffLevelDialog.findViewById(R.id.t_beschreibung);
                     b.setText(new Model().getData().getDepot().getSchwierigkeitsgrad(1)[1]);
                 }
@@ -119,7 +126,7 @@ public class NewgameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(2);
-                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                     TextView b = diffLevelDialog.findViewById(R.id.t_beschreibung);
                     b.setText(new Model().getData().getDepot().getSchwierigkeitsgrad(2)[1]);
                 }
@@ -129,7 +136,7 @@ public class NewgameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(3);
-                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                     TextView b = diffLevelDialog.findViewById(R.id.t_beschreibung);
                     b.setText(new Model().getData().getDepot().getSchwierigkeitsgrad(3)[1]);
                 }
@@ -139,7 +146,7 @@ public class NewgameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     new Model().getData().getDepot().setSchwierigkeitsgrad(4);
-                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                     TextView b = diffLevelDialog.findViewById(R.id.t_beschreibung);
                     b.setText(new Model().getData().getDepot().getSchwierigkeitsgrad(4)[1]);
                 }

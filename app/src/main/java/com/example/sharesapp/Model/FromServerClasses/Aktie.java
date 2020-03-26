@@ -468,4 +468,60 @@ public class Aktie implements Comparator {
     public void setSector(String sector) {
         this.sector = sector;
     }
+
+    // new for crypto
+    private String bidPrice = null;
+    private String bidSize = null;
+    private String askPrice = null;
+    private String askSize = null;
+    private boolean isEnabled = false;
+    private boolean cryptoFlag = false;
+
+    public String getBidPrice() {
+        return bidPrice;
+    }
+
+    public void setBidPrice(String bidPrice) {
+        this.bidPrice = bidPrice;
+    }
+
+    public String getBidSize() {
+        return bidSize;
+    }
+
+    public void setBidSize(String bidSize) {
+        this.bidSize = bidSize;
+    }
+
+    public String getAskPrice() {
+        return askPrice;
+    }
+
+    public void setAskPrice(String askPrice) {
+        this.askPrice = askPrice;
+    }
+
+    public String getAskSize() {
+        return askSize;
+    }
+
+    public void setAskSize(String askSize) {
+        this.askSize = askSize;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public boolean isCrypto() {
+        if (type != null && type.equals("crypto")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

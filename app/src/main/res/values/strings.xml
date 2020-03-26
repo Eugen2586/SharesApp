@@ -21,7 +21,6 @@
     <string name="uebersicht">übersicht</string>
     <string name="statistik">statistik</string>
     <string name="portfolio">portfolio</string>
-    <string name="crypto">crypto</string>
     <string name="oil">oil</string>
     <string name="us_market">us-market</string>
     <string name="etfs">etfs</string>
@@ -97,5 +96,6 @@
     <string name="letzter_er_ffnungspreis">Letzter Eröffnungspreis</string>
     <string name="letzter_schlie_preis">Letzter Schließpreis</string>
     <string name="du_hast_noch_keine_aktien_gekauft_oder_verkauft">Du hast noch keine Aktien gekauft oder verkauft.</string>
+    <string name="crypto">crypto</string>
 
 </resources>

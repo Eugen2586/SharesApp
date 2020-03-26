@@ -15,8 +15,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
-
+/**
+ * Klasse, in der Anfragen an Server gesendet werden und die Antworten an einen Handler weitergegeben werden.
+ */
 public class Requests {
 
     private static final MediaType JSON

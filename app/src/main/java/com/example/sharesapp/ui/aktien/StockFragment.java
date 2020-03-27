@@ -1,5 +1,6 @@
 package com.example.sharesapp.ui.aktien;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -239,15 +241,23 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setAdapter(ArrayList<Aktie> aktienList) {
+    private void setAdapter(ArrayList<Aktie> stockList) {
         emptyPortfolioTextView.setVisibility(View.GONE);
-        if (aktienList == null) {
-            aktienList = new ArrayList<>();
+        if (stockList == null) {
+            stockList = new ArrayList<>();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stockList.sort(new Comparator<Aktie>() {
+                @Override
+                public int compare(Aktie o1, Aktie o2) {
+                    return o1.getSymbol().compareTo(o2.getSymbol());
+                }
+            });
         }
         initRecyclerView();
-        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(StockFragment.this.getContext(), aktienList);
+        StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(StockFragment.this.getContext(), stockList);
         adapter.setClickListener(StockFragment.this);
-        adapter.setAktien(aktienList);
+        adapter.setAktien(stockList);
         recyclerView.setAdapter(adapter);
     }
 

@@ -125,6 +125,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     private void setAdapter(ArrayList<Aktie> stockList) {
+        ArrayList<Aktie> exList = model.getData().getAktienList().getValue();
         if (stockList != null) {
             ArrayList<Aktie> filteredStockList;
             if (searchIndex == 0) {

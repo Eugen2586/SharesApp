@@ -42,6 +42,10 @@ public class Data {
         return searches.getValue();
     }
 
+    public MutableLiveData<ArrayList<Aktie>> getMutableSearches() {
+        return searches;
+    }
+
     public void setSearches(ArrayList<Aktie> searches) {
         this.searches.setValue(searches);
     }

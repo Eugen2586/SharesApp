@@ -24,6 +24,6 @@ public class RequestSearch {
             Aktie url = new Aktie(json.get("symbol").toString(),json.get("securityName").toString(), (String) json.get("securityType"),json.get("region").toString() , json.get("exchange").toString() );
             urls.add(url);
         }
-        new Model().getData().searches.postValue(urls);
+        new Model().getData().getMutableSearches().postValue(urls);
     }
 }

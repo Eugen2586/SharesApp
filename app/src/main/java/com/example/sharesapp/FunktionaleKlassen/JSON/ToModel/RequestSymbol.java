@@ -133,6 +133,16 @@ public class RequestSymbol {
             if (stockList == null) {
                 stockList = new ArrayList<>();
             }
+            ArrayList<Aktie> stocksToRemove = new ArrayList<>();
+            for (Aktie existingStock: stockList) {
+                for (Aktie newStock : akl) {
+                    if (newStock.getSymbol().equals(existingStock.getSymbol())) {
+                        stocksToRemove.add(newStock);
+                        break;
+                    }
+                }
+            }
+            akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
             model.getData().getAktienList().postValue(stockList);
 

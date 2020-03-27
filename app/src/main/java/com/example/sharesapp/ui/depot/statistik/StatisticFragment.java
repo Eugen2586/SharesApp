@@ -22,11 +22,22 @@ import com.example.sharesapp.R;
 
 import java.util.ArrayList;
 
+/**
+ * Enables the user to see his own statistic which shows the history of his liquidity
+ */
 public class StatisticFragment extends Fragment {
 
     private View root;
     private Model model = new Model();
 
+    /**
+     * tradeObserver is initialized
+     * lineChart is shown
+     * @param inflater nflates the depot fragment
+     * @param container needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +50,9 @@ public class StatisticFragment extends Fragment {
         return root;
     }
 
+    /**
+     * initialization of observer for tradeList
+     */
     private void initializeTradeObserver() {
         final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
             @Override
@@ -49,6 +63,12 @@ public class StatisticFragment extends Fragment {
         model.getData().getTradesMutable().observe(getViewLifecycleOwner(), tradesObserver);
     }
 
+    /**
+     * cartesian line is configured
+     * the data for the line is calculated through the tradeList
+     * visibility of filler is regulated depending on the length / existence of the tradeList
+     * @param tradeList list of trades which describe the history of the liquidity of the user
+     */
     private void showLineChart(ArrayList<Trade> tradeList) {
         // set visibility of components and set chart if trades available
         if (tradeList != null && tradeList.size() != 0) {

@@ -1,5 +1,7 @@
 package com.example.sharesapp.Model.FromServerClasses;
-
+/**
+ * Datenpunkt für die Diagramme
+ */
 public class DataPoint {
 
 
@@ -23,9 +25,11 @@ public class DataPoint {
     private boolean isDerived;
     private String symbol;
 
+
     public String getDate() {
         return date;
     }
+
 
     public void setDate(String date) {
 
@@ -65,11 +69,13 @@ public class DataPoint {
         this.low = low;
     }
 
+
     public String getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+
+     public void setVolume(String volume) {
 
         this.volume = volume;
     }

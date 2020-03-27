@@ -2,7 +2,9 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import java.util.ArrayList;
 
-
+/**
+ * Klasse zum speichern der Symbole innerhalb der Aktienliste. Hier sind alle Aktien angezeigt, die es gibt.
+ */
 
 public class Symbols {
     //Chris
@@ -22,6 +24,9 @@ public class Symbols {
 
     static ArrayList symbols = null;
 
+    /**
+     *Initialisiert die Klasse mit Name und Symbol
+     */
     Symbols(String symbol, String name){
         this.symbol = symbol;
         this.name = name;
@@ -30,6 +35,10 @@ public class Symbols {
         }
     }
 
+    /**
+     * Gibt das Symbol der Klasse zurück.
+     * @return Symbol der Klasse
+     */
     public ArrayList getSymbols(){
         return symbols;
     }
@@ -57,7 +66,9 @@ public class Symbols {
     }
     */
 
-
+    /**
+     * Setzt das Symbol der Klasse.
+     */
     public void setSymbols(ArrayList sybols){
         this.symbols = symbols;
     }

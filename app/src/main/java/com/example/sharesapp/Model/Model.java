@@ -325,6 +325,12 @@ public class Model{
 
     }
 
+    /**
+     * Befüllt die Orderlisten für den Backgroundverkaufsworker.
+     * @param s Stringparameter befüllt mit Restcall
+     * @return Gibt das Array zusätzlich zurück kann für entsprechende Aktualisierungen benutzt werden.
+     * @throws ParseException JSONParser Exception falls ein falscher Wert eingegeben wird.
+     */
 
     private ArrayList orderListFromJson(String s) throws ParseException {
         ArrayList ar = new ArrayList();
@@ -408,6 +414,12 @@ public class Model{
         return ar;
     }
 
+    /**
+     * Parst die Tadelist aus einer Serverrespronse und füllt das Datenmodell.
+     * @param st Serverresponse
+     * @return Gibt die Tradelist zurück um aktualisierungen durchzuführen.
+     * @throws ParseException Falls kein JSONArray eingegeben wird.
+     */
     private ArrayList<Trade> getTradeListe(String st) throws ParseException {
         Trade tr = null;
         Aktie ak = null;
@@ -517,6 +529,13 @@ public class Model{
         return akl;
     }
 
+    /**
+     * Past die Request zum suchen einer Aktie in das Datenmodell.
+     * @param st Serverresponse
+     * @return Aktie aus dem Serverrequest
+     * @throws ParseException
+     */
+
     private Aktie getAktie(String st) throws ParseException {
         Aktie ak = null;
         ArrayList akl = new ArrayList();
@@ -582,6 +601,13 @@ public class Model{
         }
         return ak;
     }
+
+    /**
+     * Parst aus einer Serverresponse eine Aktienliste.
+     * @param st Serverrepsonse
+     * @return Aktienliste aller eingegebenen Aktien.
+     * @throws ParseException Exception sobald eine falsche String eingegegeben wurde.
+     */
 
     private ArrayList aktienList(String st) throws ParseException {
         Aktie ak = null;

@@ -9,6 +9,10 @@ import java.util.Comparator;
 public class Aktie implements Comparator {
     //ToDo neue Variablen für die Aktie
 
+    /**
+     * Klasse zum Abbilden einer Aktie.
+     */
+
 
     int menge;
     //new for StockQuantities
@@ -139,6 +143,9 @@ public class Aktie implements Comparator {
     private boolean isUSMarketOpen;
     private String sector;
 
+    /**
+        Setzen von erweiterten Attributen innerhalb der Klasse.
+     */
     public void setadditionalData(
             float price,
             float latestPrice1,
@@ -442,6 +449,9 @@ public class Aktie implements Comparator {
     }
 
     @Override
+    /**
+     * Methode zum vergleichen zweiter Objekte
+     */
     public int compare(Object o1, Object o2) {
         Aktie t1, t2;
         t1 = (Aktie) o1;
@@ -456,6 +466,10 @@ public class Aktie implements Comparator {
         return new Aktie(this.menge, this.exchange, this.symbol, this.name, this.date, this.type, this.region, this.currency, this.enabled, this.preis);
     }
 
+    /**
+     * Methode um aus einer Aktie ein JSON Object zu casten.
+     * @return
+     */
     public JSONObject getJsonFromAktie() {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
         obj.put("menge", menge);
@@ -489,6 +503,15 @@ public class Aktie implements Comparator {
     private String askSize = null;
     private boolean isEnabled = false;
 
+
+    /** Flag um eine Aktei als Cryptiowährung zu benutzen!
+     * @param sector
+     * @param bidPrice
+     * @param bidSize
+     * @param askPrice
+     * @param askSize
+     * @param isEnabled
+     */
     public void setCryptoData(String sector, String bidPrice, String bidSize, String askPrice, String askSize, boolean isEnabled) {
         this.sector = sector;
         this.bidPrice = bidPrice;

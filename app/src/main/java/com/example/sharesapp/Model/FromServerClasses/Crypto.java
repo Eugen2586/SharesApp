@@ -1,7 +1,10 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
 public class Crypto {
-
+    /**
+     * Klasse zum beschreiben einer Cryptowährung.
+     *
+     */
     //
     //
     private String symbol = null;

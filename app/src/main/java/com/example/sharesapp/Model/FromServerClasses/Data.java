@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Data {
+
+    /**
+     * Klasse zum Stagen der Daten für die App
+     */
     private MutableLiveData<ArrayList<DataPoint>> personalChart = new MutableLiveData<>();
     private ArrayList<Trade> tradelist = new ArrayList<>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
@@ -105,6 +109,11 @@ public class Data {
     public ArrayList<Trade> getTrades() {
         return tradesMutable.getValue();
     }
+
+    /**
+     * Berechent den Gewinn des Spielers
+     * @return Gewinn der Spielers
+     */
 
     public float getGewinn() {
         float sum = Float.parseFloat("0.0");
@@ -221,6 +230,9 @@ public class Data {
         return previouslySelectedTabIndex;
     }
 
+    /**
+     * Methode zum Neustarten des Spiels
+     */
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
@@ -242,6 +254,10 @@ public class Data {
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
+    /**
+     * Funktion zum erhöhen des Reset Value
+     */
+
     private void increaseResetValue() {
         /**
          * Erhöht ResetCounter um 1
@@ -253,6 +269,10 @@ public class Data {
         }
     }
 
+    /**
+     * Gibt die Anzahl der Resets des Spiels zurück
+     * @return
+     */
     public MutableLiveData<Integer> getResetCounter() {
         /**
          * @return resetCounter
@@ -369,6 +389,11 @@ public class Data {
         return sellOrderList;
     }
 
+
+    /**
+     * Check der Orderlist für das Kaufen und Verkaufen.
+     * @param stockList Orderliste für das Kaufen/Verkaufen.
+     */
     public void checkOrderListsForBuyingSelling(ArrayList<Aktie> stockList) {
         Model model = new Model();
         System.out.println("...............................................................................Handle Stocklist Change");
@@ -455,6 +480,12 @@ public class Data {
         return currentStock;
     }
 
+    /**
+     * Suchen des Typs zum Symbol
+     * @param symbol der zu suchenden Aktie
+     * @return Typ der zu suchenden Aktie
+     */
+
     public String findTypeOfSymbol(String symbol) {
         String type = "";
         ArrayList<Aktie> stockList = aktien.getValue();
@@ -468,6 +499,11 @@ public class Data {
         return type;
     }
 
+    /**
+     * Suchen einer Company nach Ihrem Symbol.
+     * @param symbol Zu suchendes Symbol
+     * @return Gibt den Company Namen zurück
+     */
     public String findCompanyNameBySymbol(String symbol) {
         String company = "";
         ArrayList<Aktie> stockList = aktien.getValue();

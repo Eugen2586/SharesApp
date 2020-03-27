@@ -5,7 +5,7 @@ import com.example.sharesapp.Model.Constants;
 import java.util.ArrayList;
 
 public class AvailType {
-    /*
+    /**
     This Class is for Reorganize the Tabs from Stock-Trading!
      */
     private String[] availableTypes;
@@ -19,6 +19,10 @@ public class AvailType {
         return availableTypes;
     }
 
+    /**
+     * Setzen der aktuellen Liste für die Tabs in der Aktienübersicht
+     * @param type_abbr_list1 Array der Liste für die Aktienübersichttabs
+     */
     public void setType_abbr_list(String[] type_abbr_list1) {
         //ToDo Mapping here!
         ArrayList<String> l_type_list = new ArrayList<String>();

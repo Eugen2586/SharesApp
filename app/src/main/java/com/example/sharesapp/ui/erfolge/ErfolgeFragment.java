@@ -19,19 +19,19 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.sharesapp.Model.Erfolge;
 import com.example.sharesapp.R;
 
+/**
+ Das ist ein ErfolgeFragment um Erfolge Seite anzuzeigen
+ */
 public class ErfolgeFragment extends Fragment {
-    /**
-    Das ist ein ErfolgeFragment um Erfolge Seite anzuzeigen
-     */
 
     private ErfolgeViewModel erfolgeViewModel;
     private Erfolge erfolge;
 
+    /**
+     Diese Methode ruft die Funktionen, um GUI mit Logik zu verbinden
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        /**
-        Diese Methode ruft die Funktionen, um GUI mit Logik zu verbinden
-         */
         View root = inflater.inflate(R.layout.fragment_erfolge, container, false);
 
         erfolge = new Erfolge();
@@ -64,11 +64,11 @@ public class ErfolgeFragment extends Fragment {
         return root;
     }
 
+    /**
+     Diese Funktion bindet jede Taste mit individuulem Dialog, wo es angezeigt wird,
+     was muss man machen um entsprechendes Erfolg zu bekommen
+     */
     private void setButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel){
-        /**
-        Diese Funktion bindet jede Taste mit individuulem Dialog, wo es angezeigt wird,
-        was muss man machen um entsprechendes Erfolg zu bekommen
-         */
         String[] k = erfolge.getKaufenText();
         String[] v = erfolge.getVerkaufenText();
         String[] r = erfolge.getResetText();
@@ -132,12 +132,11 @@ public class ErfolgeFragment extends Fragment {
         }
     }
 
+    /**
+     Diese Funktion färbt die Tasten grün für schon erreichte Erfolge und rot für noch gesperrte
+     Erfolge.
+     */
     private void colorButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel) {
-
-        /**
-        Diese Funktion färbt die Tasten grün für schon erreichte Erfolge und rot für noch gesperrte
-        Erfolge.
-         */
 
         boolean[] k = erfolge.getKaufen();
         boolean[] v = erfolge.getVerkaufen();

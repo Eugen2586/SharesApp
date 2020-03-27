@@ -94,17 +94,17 @@ public class Depot {
         this.geldwert = geldwert;
     }
 
+    /** Setzt das Prozent auf q
+     * @params float q
+     */
     private void setProzent(float q) {
-        /** Setzt das Prozent auf q
-         * @params float q
-         */
         this.prozent = q;
     }
 
+    /**
+     * @return prozent
+     */
     public float getProzent() {
-        /**
-         * @return prozent
-         */
         return this.prozent;
     }
 
@@ -132,57 +132,57 @@ public class Depot {
         }
     }
 
+    /**
+     * erhöht Kaufcounter um 1
+     */
     private void increaseKaufCounter() {
-        /**
-         * erhöht Kaufcounter um 1
-         */
         this.kaufCounter += 1;
     }
 
+    /**
+     * @return kaufCounter
+     */
     public int getKaufCounter() {
-        /**
-         * @return kaufCounter
-         */
         return this.kaufCounter;
     }
 
+    /**
+     * Setzt kaufCounter auf x
+     * @param x
+     */
     public void setKaufCounter(int x) {
-        /**
-         * Setzt kaufCounter auf x
-         * @param int x
-         */
         this.kaufCounter = x;
     }
 
+    /**
+     * erhöht Verkaufcounter um 1
+     */
     private void increaseVerkaufCounter() {
-        /**
-         * erhöht Verkaufcounter um 1
-         */
         this.verkaufCounter += 1;
     }
 
+    /**
+     * @return verkaufCounter
+     */
     public int getVerkaufCounter() {
-        /**
-         * @return verkaufCounter
-         */
         return this.verkaufCounter;
     }
 
+    /**
+     * Setzt verkaufCounter auf x
+     * @param x
+     */
     public void setVerkaufCounter(int x) {
-        /**
-         * Setzt verkaufCounter auf x
-         * @param int x
-         */
         this.verkaufCounter = x;
     }
 
+    /**
+     Diese Methode gibt textuelle Beschreibung für Schwierigkeitsgraden
+     @param i
+     @return wenn i == 0 gibt die Methode die Beschreibung für aktuelles Schwierigkeitsgrad zurück,
+     wenn i != 0 gibt die Methode die Beschreibung für ein ausgewähltes Schwierigkeitsgrad zurück
+     */
     public String[] getSchwierigkeitsgrad(int i) {
-        /**
-        Diese Methode gibt textuelle Beschreibung für Schwierigkeitsgraden
-        @param int i
-        @return wenn i == 0 gibt die Methode die Beschreibung für aktuelles Schwierigkeitsgrad zurück,
-        wenn i != 0 gibt die Methode die Beschreibung für ein ausgewähltes Schwierigkeitsgrad zurück
-         */
         if (i == 0) {
             i = this.schwierigkeitsgrad;
         }
@@ -209,22 +209,22 @@ public class Depot {
         }
     }
 
+    /**
+     @return Schwierigkeitsgrad oder unbestimmtes Schwierigkeitsgrad
+     */
     public int getSchwierigkeitsgrad() {
-        /**
-        @return Schwierigkeitsgrad oder unbestimmtes Schwierigkeitsgrad
-         */
         if (this.schwierigkeitsgrad != 1 && this.schwierigkeitsgrad != 2 && this.schwierigkeitsgrad != 3 && this.schwierigkeitsgrad != 4 && this.schwierigkeitsgrad != -1) {
             return 0;
         }
         return this.schwierigkeitsgrad;
     }
 
+    /**
+     Diese Methode wendet das Schwierigkeitsgrad an. Wenn das Spiel neu gestartet wird (neu == true)
+     wird das Geldwert auch angepasst. Wenn das Spiel aber geladen wird, dann wird nur Prozent angepasst.
+     @params boolean neu
+     */
     public boolean applySchwierigkeitsgrad(boolean neu) {
-        /**
-        Diese Methode wendet das Schwierigkeitsgrad an. Wenn das Spiel neu gestartet wird (neu == true)
-        wird das Geldwert auch angepasst. Wenn das Spiel aber geladen wird, dann wird nur Prozent angepasst.
-        @params boolean neu
-         */
         // wenn das Spiel geladen wird, muss das Geldwert nicht neu gesetzt werden, sonst wird es
         //überschrieben sein. Deswegen wird das Geldwert nur dann neu gesetzt, wenn das Spiel
         //neu gestartet wird.
@@ -253,15 +253,15 @@ public class Depot {
         return false;
     }
 
+    /**
+     * Setzt Schwierigkeitsgrad
+     * @param i
+     *            1 - einfach
+     *            2 - normal
+     *            3 - schwierig
+     *            4 - herausforderung
+     */
     public void setSchwierigkeitsgrad(int i) {
-        /**
-         * Setzt Schwierigkeitsgrad
-         * @param int i
-         *            1 - einfach
-         *            2 - normal
-         *            3 - schwierig
-         *            4 - herausforderung
-         */
         this.schwierigkeitsgrad = i;
     }
 

@@ -188,10 +188,10 @@ public class Data {
         }
     }
 
+    /**
+     * @return resetCounter
+     */
     public MutableLiveData<Integer> getResetCounter() {
-        /**
-         * @return resetCounter
-         */
         return resetCounter;
     }
 

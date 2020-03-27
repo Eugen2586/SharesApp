@@ -22,7 +22,7 @@
 \contentsline {subsubsection}{\numberline {2.3.8}Erfolge}{28}{subsubsection.2.3.8}%
 \contentsline {subsubsection}{\numberline {2.3.9}NewGame}{31}{subsubsection.2.3.9}%
 \contentsline {subsection}{\numberline {2.4}Liste aller Klassen und deren Methoden mit Funktion}{34}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Klassendiagramm}{35}{section.3}%
+\contentsline {section}{\numberline {3}Klassendiagramme}{35}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Anbindung an das Datenmodell der API}{35}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Darstellung des Datenmodells als UML}{35}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Darstellung aller Views und deren Controller als UML}{35}{subsection.3.3}%

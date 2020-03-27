@@ -22,16 +22,26 @@ import com.example.sharesapp.ui.utils.TradeRecyleViewAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * Enables the user to see the history of his sales and purchases
+ */
 public class HistorieFragment extends Fragment {
     private RecyclerView recyclerView;
     private TradeRecyleViewAdapter adapter;
-    private HistorieViewModel historieViewModel;
     private View root = null;
 
+    /**
+     * currentMoney, stockValue and profit is set
+     * observer for tradeList is initialized
+     *
+     * @param inflater           inflates the history_fragment
+     * @param container          needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        historieViewModel =
-                ViewModelProviders.of(this).get(HistorieViewModel.class);
+        HistorieViewModel historieViewModel = ViewModelProviders.of(this).get(HistorieViewModel.class);
         root = inflater.inflate(R.layout.fragment_historie, container, false);
         Model model = new Model();
         setAdapter(new Model().getData().getTrades());
@@ -56,31 +66,35 @@ public class HistorieFragment extends Fragment {
         return root;
     }
 
-    private void initRecyclerView() {
-        recyclerView = root.findViewById(R.id.receiptlist);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-    }
-
-    //to bind the uebersicht und aktien from tradelist
-
+    /**
+     * recyclerView is filled with the tradesList
+     *
+     * @param tradesList list of trades in the past
+     */
     private void setAdapter(ArrayList<Trade> tradesList) {
         if (recyclerView == null) {
             initRecyclerView();
         }
         if (tradesList != null) {
-
             ArrayList<Aktie> trades = new ArrayList<>();
             for (Trade t : tradesList) {
                 trades.add(t.getAktie());
             }
             if (adapter == null) {
                 adapter = new TradeRecyleViewAdapter(HistorieFragment.this.getContext(), trades);
-//                adapter.setClickListener((TradeRecyleViewAdapter.ItemClickListener) HistorieFragment.this);
                 recyclerView.setAdapter(adapter);
             } else {
                 adapter.setTrades(new Model().getData().getTrades());
             }
         }
+    }
+
+    /**
+     * initializes the recyclerView
+     */
+    private void initRecyclerView() {
+        recyclerView = root.findViewById(R.id.receiptlist);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
     }
 }

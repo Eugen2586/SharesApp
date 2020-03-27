@@ -31,9 +31,10 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private Model model = new Model();
     private RecyclerView recyclerView = null;
     private View root;
-    private int searchIndex = 0;
     private TextView noSearchText;
     private TextView searchText;
+    private Spinner spinner;
+    private int changeCounter = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,18 +43,17 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         noSearchText = root.findViewById(R.id.no_search_text);
         searchText = root.findViewById(R.id.search_text);
 
-        final Spinner spinner = root.findViewById(R.id.spinner);
-        initCategorieSpinner(spinner);
+        spinner = root.findViewById(R.id.spinner);
+        initCategorySpinner(spinner);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setSearchIndex(position);
-                setAdapter(model.getData().getSearches());
+                changedSpinnerPosition(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                setSearchIndex(0);
                 setAdapter(model.getData().getSearches());
             }
         });
@@ -64,10 +64,61 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 setAdapter(searchRequests);
             }
         });
-
         setAdapter(model.getData().getSearches());
 
         return root;
+    }
+
+    private void changedSpinnerPosition(int position) {
+        if (position == 0) {
+            ArrayList<Aktie> searchList = model.getData().getSearches();
+            if (searchList != null) {
+                addSearchesToStockList(searchList);
+
+                ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
+                ArrayList<Aktie> referencedStockList = new ArrayList<>();
+                if (existingStockList != null) {
+                    for (Aktie stock : searchList) {
+                        for (Aktie existingStock : existingStockList) {
+                            if (stock.getSymbol().equals(existingStock.getSymbol())) {
+                                referencedStockList.add(existingStock);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                setAdapter(referencedStockList);
+            }
+        } else if (position == 1) {
+            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+            if (stockList != null) {
+                ArrayList<Aktie> cryptoList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (stock.isCrypto()) {
+                        cryptoList.add(stock);
+                    }
+                }
+                setAdapter(getSearchFilteredStockList(cryptoList));
+            }
+        } else {
+            ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
+            if (stockList != null) {
+                ArrayList<Aktie> notCryptoList = new ArrayList<>();
+                for (Aktie stock : stockList) {
+                    if (!stock.isCrypto()) {
+                        notCryptoList.add(stock);
+                    }
+                }
+                setAdapter(getSearchFilteredStockList(notCryptoList));
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeCounter = 0;
     }
 
     @Override
@@ -84,33 +135,18 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
 
-    private void initCategorieSpinner(Spinner spinner) {
+    private void initCategorySpinner(Spinner spinner) {
         Context context = this.getContext();
         if (context != null) {
-//            String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
-//            if (availableTypes == null || availableTypes.length == 0) {
-            // not yet available -> set Alles as default value
             String[] availableTypes = new String[3];
-            availableTypes[0] = Constants.TYPES[0];
-            availableTypes[1] = "Fremdwährungen";
-            availableTypes[2] = "Kryptowährungen";
-//            } else {
-//                // available -> set Alles as first value
-//                String[] types = new String[availableTypes.length + 3];
-//                types[0] = Constants.TYPES[0];
-//                for (int i = 0; i < availableTypes.length; i++) {
-//                    types[i + 1] = availableTypes[i];
-//                }
-//                availableTypes = types.clone();
-//            }
+            availableTypes[0] = "Server";
+            availableTypes[1] = "Kryptowährungen";
+            availableTypes[2] = Constants.TYPES[0];
+
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                     android.R.layout.simple_spinner_dropdown_item, availableTypes);
             spinner.setAdapter(adapter);
         }
-    }
-
-    private void setSearchIndex(int searchIndex) {
-        this.searchIndex = searchIndex;
     }
 
     private void initRecyclerView() {
@@ -119,70 +155,43 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setAdapter(ArrayList<Aktie> searchList) {
-        if (searchList != null) {
-            addSearchesToStockList(searchList);
-
-            ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
-            ArrayList<Aktie> referencedStockList = new ArrayList<>();
-            if (existingStockList != null) {
-                for (Aktie stock : searchList) {
-                    for (Aktie existingStock : existingStockList) {
-                        if (stock.getSymbol().equals(existingStock.getSymbol())) {
-                            referencedStockList.add(existingStock);
-                            break;
-                        }
-                    }
-                }
-            }
-//            ArrayList<Aktie> filteredStockList;
-//            if (searchIndex == 0) {
-//                // do not filter
-//                filteredStockList = stockList;
-//            } else {
-//                // filter for searched type
-//                String searchType = model.getData().getAvailType().getAvailableTypeAbbreviations()[searchIndex - 1];
-//                filteredStockList = new ArrayList<>();
-//                for (Aktie stock : stockList) {
-//                    if (stock.getType().equals(searchType)) {
-//                        filteredStockList.add(stock);
-//                    }
-//                }
-//            }
-
+    private void setAdapter(ArrayList<Aktie> filteredList) {
+        if (filteredList != null) {
             initRecyclerView();
-            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), referencedStockList);
+            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredList);
             adapter.setClickListener(SearchFragment.this);
-            adapter.setAktien(referencedStockList);
+            adapter.setAktien(filteredList);
             recyclerView.setAdapter(adapter);
 
             recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
 
-        showHideComponents(searchList);
+        showHideComponents(filteredList);
     }
 
     private void addSearchesToStockList(ArrayList<Aktie> searchList) {
-        // add stocks to existingStockList if not yet included
-        ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
-        ArrayList<Aktie> stocksToAdd = new ArrayList<>();
-        if (existingStockList != null) {
-            for (Aktie stock : searchList) {
-                String symbol = stock.getSymbol();
-                boolean found = false;
-                for (Aktie existingStock : existingStockList) {
-                    if (symbol.equals(existingStock.getSymbol())) {
-                        found = true;
-                        break;
+        if (searchList != null) {
+            // add stocks to existingStockList if not yet included
+            ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
+            ArrayList<Aktie> stocksToAdd = new ArrayList<>();
+            if (existingStockList != null) {
+                for (Aktie stock : searchList) {
+                    String symbol = stock.getSymbol();
+                    boolean found = false;
+                    for (Aktie existingStock : existingStockList) {
+                        if (symbol.equals(existingStock.getSymbol())) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        stocksToAdd.add(stock);
                     }
                 }
-                if (!found) {
-                    stocksToAdd.add(stock);
-                }
+                model.getData().addAktienList(stocksToAdd);
+            } else {
+                model.getData().addAktienList(searchList);
             }
-            model.getData().addAktienList(stocksToAdd);
-        } else {
-            model.getData().addAktienList(searchList);
         }
     }
 
@@ -218,5 +227,19 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
                 recyclerView.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private ArrayList<Aktie> getSearchFilteredStockList(ArrayList<Aktie> stockList) {
+        String searchString = model.getData().getCurrentSearchString();
+        ArrayList<Aktie> filteredList = new ArrayList<>();
+        if (searchString != null) {
+            searchString = searchString.toLowerCase();
+            for (Aktie stock : stockList) {
+                if (stock.getSymbol().toLowerCase().contains(searchString)) {
+                    filteredList.add(stock);
+                }
+            }
+        }
+        return filteredList;
     }
 }

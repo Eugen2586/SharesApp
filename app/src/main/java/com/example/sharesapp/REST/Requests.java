@@ -107,7 +107,7 @@ public class Requests {
         if (currentStock.isCrypto()) {
             try {
                 requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+                requests.asyncRun(RequestsBuilder.getCurrencyHistoricalUrl(currentStock.getSymbol()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

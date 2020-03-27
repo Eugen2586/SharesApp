@@ -63,7 +63,7 @@ public class AsyncTaskHandler {
                 e.printStackTrace();
             }
         } else if (url.contains("crypto/symbols")) {
-            // TODO:
+            // TODO: "fx"
             try {
                 new RequestForex(s);
             } catch (Exception e) {

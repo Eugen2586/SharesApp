@@ -80,14 +80,14 @@ public class RequestsBuilder {
         for (String symbol : symbols) {
             s.append(symbol).append(",");
         }
-        return "fx/latest?symbol=" + s + "&&";
+        return "fx/latest?symbols=" + s + "&&";
     }
 
     public static String getCurrencyConversionsUrl(String symbol) {
-        return "fx/convert?symbol=" + symbol + "&&";
+        return "fx/convert?symbols=" + symbol + "&&";
     }
 
     public static String getCurrencyHistoricalUrl(String symbol) {
-        return "fx/historical?symbol=" + symbol + "&last=30&";
+        return "fx/historical?symbols=" + symbol + "&last=30&";
     }
 }

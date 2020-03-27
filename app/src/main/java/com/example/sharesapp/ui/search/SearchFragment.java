@@ -26,6 +26,12 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * Responsible for the Search Fragment.
+ * Enables the user to search in the categories Server, Kryptowährungen and Aktien
+ * For the Server a Request is send
+ * Kryptowährungen and Aktien are shown, if their symbol contains the searchString
+ */
 public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
@@ -33,9 +39,16 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private View root;
     private TextView noSearchText;
     private TextView searchText;
-    private Spinner spinner;
-    private int changeCounter = 0;
 
+    /**
+     * initializes Spinner with categoryChanged functionality
+     * sets observer for searchesFromServer
+     * sets adapter for the Recyclerview
+     * @param inflater for the inflation of the layout
+     * @param container as container for the inflation
+     * @param savedInstanceState not used
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_search, container, false);
@@ -43,7 +56,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         noSearchText = root.findViewById(R.id.no_search_text);
         searchText = root.findViewById(R.id.search_text);
 
-        spinner = root.findViewById(R.id.spinner);
+        Spinner spinner = root.findViewById(R.id.spinner);
         initCategorySpinner(spinner);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -69,6 +82,12 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         return root;
     }
 
+    /**
+     * if Server (0) was selected setAdapter with serverSearchList
+     * if Kryptowährungen (1) was selected setAdapter with symbol filtered list of cryptoStocks
+     * if Aktien (2) was selected setAdapter with symbol filtered list of nonCryptoStocks
+     * @param position the position the spinner changed to
+     */
     private void changedSpinnerPosition(int position) {
         if (position == 0) {
             ArrayList<Aktie> searchList = model.getData().getSearches();
@@ -115,26 +134,10 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        changeCounter = 0;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (recyclerView != null) {
-            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int scrollState = 0;
-            if (linearLayoutManager != null) {
-                scrollState = linearLayoutManager.findFirstVisibleItemPosition();
-            }
-            model.getData().setSearchScrollPosition(scrollState);
-        }
-    }
-
-
+    /**
+     * Server, Kryptowährungen and Aktien are chosen as the components of the Spinner
+     * @param spinner spinner to initialize
+     */
     private void initCategorySpinner(Spinner spinner) {
         Context context = this.getContext();
         if (context != null) {
@@ -149,12 +152,20 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         }
     }
 
+    /**
+     * initialization of the Recyclerview
+     */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.search_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
+    /**
+     * recyclerview is filled with filteredList
+     * calls the showHideComponents function
+     * @param filteredList the list of stocks which should fill the Recyclerview
+     */
     private void setAdapter(ArrayList<Aktie> filteredList) {
         if (filteredList != null) {
             initRecyclerView();
@@ -162,13 +173,15 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
             adapter.setClickListener(SearchFragment.this);
             adapter.setAktien(filteredList);
             recyclerView.setAdapter(adapter);
-
-            recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
 
         showHideComponents(filteredList);
     }
 
+    /**
+     * searchlist is integrated into stocklist if not yet included
+     * @param searchList from server
+     */
     private void addSearchesToStockList(ArrayList<Aktie> searchList) {
         if (searchList != null) {
             // add stocks to existingStockList if not yet included
@@ -195,6 +208,12 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         }
     }
 
+    /**
+     * from TradeRecycleViewAdapter implemented
+     * opens StockDetailview and sets currentStock
+     * @param view view of one row_stock_item
+     * @param position not needed
+     */
     @Override
     public void onItemClick(View view, int position) {
         TextView symbolView = view.findViewById(R.id.stock_symbol_text);
@@ -208,6 +227,11 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    /**
+     * shows or hides the components to tell the user if there are search results or not
+     * depends on the length / existence of stockList
+     * @param stockList stockList which is shown in RecyclerView
+     */
     private void showHideComponents(ArrayList<Aktie> stockList) {
         if (stockList == null || stockList.size() == 0) {
             noSearchText.setVisibility(View.VISIBLE);
@@ -229,6 +253,11 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         }
     }
 
+    /**
+     * removes stocks which do not have the searchString in its symbol
+     * @param stockList the stockList to be filtered
+     * @return the filtered stockList
+     */
     private ArrayList<Aktie> getSearchFilteredStockList(ArrayList<Aktie> stockList) {
         String searchString = model.getData().getCurrentSearchString();
         ArrayList<Aktie> filteredList = new ArrayList<>();

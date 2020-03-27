@@ -25,7 +25,6 @@ public class Data {
     private int previouslySelectedTabIndex = 0;
     private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
     private ArrayList<Integer> categoryScrollPositions = null;
-    private int searchScrollPosition = 0;
     private MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
     private MutableLiveData<Crypto> currentCrypto = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
@@ -236,7 +235,6 @@ public class Data {
         depot.setGeldwert(Constants.MONEY);
         increaseResetValue();
         categoryScrollPositions = null;
-        searchScrollPosition = 0;
         previouslySelectedDepotTabIndex = 0;
         previouslySelectedOrderTabIndex = 0;
         depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
@@ -265,14 +263,6 @@ public class Data {
         for (int i = 0; i < tabCount; i++) {
             categoryScrollPositions.add(0);
         }
-    }
-
-    public int getSearchScrollPosition() {
-        return searchScrollPosition;
-    }
-
-    public void setSearchScrollPosition(int searchScrollPosition) {
-        this.searchScrollPosition = searchScrollPosition;
     }
 
     public int getPreviouslySelectedOrderTabIndex() {

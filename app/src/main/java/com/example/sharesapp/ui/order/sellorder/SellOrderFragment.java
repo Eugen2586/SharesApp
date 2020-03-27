@@ -16,13 +16,10 @@ import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.OrderRecyclerViewAdapter;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

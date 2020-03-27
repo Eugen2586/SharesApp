@@ -4,11 +4,6 @@ import com.example.sharesapp.Model.Constants;
 
 import java.util.ArrayList;
 
-
-/**
- * Diese Klasse ist relevant für die Taborganisation der AktienEinordnung im AktienFragment
- * Hier werden die verfügbaren Kategorien gespeichert
- */
 public class AvailType {
     /*
     This Class is for Reorganize the Tabs from Stock-Trading!
@@ -24,10 +19,6 @@ public class AvailType {
         return availableTypes;
     }
 
-    /**
-     * Setzen der aktuellen Liste für die Tabs in der Aktienübersicht
-     * @param type_abbr_list1 Array der unterschiedlichen Kategorien
-     */
     public void setTypeAbbrList(String[] type_abbr_list1) {
         availableTypeAbbreviations = type_abbr_list1.clone();
         ArrayList<String> l_type_list = new ArrayList<>();

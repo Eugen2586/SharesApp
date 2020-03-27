@@ -1,5 +1,6 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+
 /**
  * Doppelimplementation von SearchRequest.
  * Bitte alle Parameter aus entsprechend der erwähnten Klasse benutzen.

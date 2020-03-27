@@ -23,7 +23,7 @@ import com.example.sharesapp.R;
 import java.util.ArrayList;
 
 /**
- * Enables the user to see his own statistic which shows the history of his liquidity
+ * Die Klasse, mit der die Statistik und Verlauf des Geldflusses des Users angezeigt wird.
  */
 public class StatisticFragment extends Fragment {
 
@@ -31,13 +31,13 @@ public class StatisticFragment extends Fragment {
     private Model model = new Model();
 
     /**
-     * tradeObserver is initialized
-     * lineChart is shown
+     * tradeObserver wird initalisiert.
+     * lineChart wird gezeigt.
      *
-     * @param inflater           nflates the depot fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           nflates das depot Fragment
+     * @param container          wird gebraucht für die inflation
+     * @param savedInstanceState Nicht gebraucht.
+     * @return Root.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class StatisticFragment extends Fragment {
     }
 
     /**
-     * initialization of observer for tradeList
+     * Initalisierung des Oberservers für die tradeList.
      */
     private void initializeTradeObserver() {
         final Observer<ArrayList<Trade>> tradesObserver = new Observer<ArrayList<Trade>>() {
@@ -65,11 +65,11 @@ public class StatisticFragment extends Fragment {
     }
 
     /**
-     * cartesian line is configured
-     * the data for the line is calculated through the tradeList
-     * visibility of filler is regulated depending on the length / existence of the tradeList
+     * Graph wird konfiguriert.
+     * Daten des Graphen wird durch die tradeList berechnet.
+     * Sichtbarkeit des Fillers wird durch die Länge/Existenz der tradeList bestimmt.
      *
-     * @param tradeList list of trades which describe the history of the liquidity of the user
+     * @param tradeList Liste der Handel des Users.
      */
     private void showLineChart(ArrayList<Trade> tradeList) {
         // set visibility of components and set chart if trades available

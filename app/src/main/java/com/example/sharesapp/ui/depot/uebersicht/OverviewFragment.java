@@ -27,7 +27,7 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import java.util.ArrayList;
 
 /**
- * Enables the user to see his stocks, currentMoney, stockValue and overallValue
+ * Klasse, durch die der User seine Aktien, Geld und Aktienwerte angezeigt bekommt.
  */
 public class OverviewFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -41,9 +41,8 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     private TextView overallValueTextView;
 
     /**
-     * initialization of swipeRefresh and depotObserver
-     * value-fields are filled
-     * difficultyDialog is opened if the difficulty is -1
+     * Initalisierung des swipeRefresh and depotObservers
+     * Schwierigkeitsdialog wird geöffnet, wenn der Schwierigkeitsgrad -1 ist.
      *
      * @param inflater           nflates the depot fragment
      * @param container          needed for the inflation
@@ -81,7 +80,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * initialized the functionality of the swipe refresh
+     * Initalisiert die Funktion des swipe refresh
      */
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
@@ -95,7 +94,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * initializes observer for depotList
+     * Initalisiert Observer für Depotaktien.
      */
     private void initializeDepotObserver() {
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
@@ -109,7 +108,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * fields for currentMoney, stockValue and overallValue is set
+     * Felder für currentMoney, stockValue and overallValue werden gesetzt.
      */
     private void setValueFields() {
         String cashValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().getGeldwert());
@@ -124,7 +123,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * sends requests for all stocks in the depot
+     * Schickt Anfragen für alle Aktien im Depot.
      */
     private void sendRequestsForDepot() {
         Model model = new Model();
@@ -138,12 +137,11 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * from StockRecyclerViewAdapter implemented
-     * sends Quote and chart Requests
-     * opens StockDetailView and sets currentStock
+     * Schickt Quote and chart Anfragen.
+     * Öffnet StockDetailView and setzt currentStock.
      *
-     * @param view     view of one row_stock_item
-     * @param position not needed
+     * @param view     View eines row_stock_item.
+     * @param position Wird nicht genutzt.
      */
     @Override
     public void onItemClick(View view, int position) {
@@ -159,7 +157,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * initializes the recyclerView
+     * Initalisiert den recyclerView.
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
@@ -168,10 +166,10 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * fills the recyclerView with depotList
-     * calls showHideComponents
+     * Füllt den recyclerView mit der depotList
+     * Ruft showHideComponents auf.
      *
-     * @param depotList stockList of owned stocks
+     * @param depotList Aktien im Besitz.
      */
     private void setAdapter(ArrayList<Aktie> depotList) {
         initRecyclerView();
@@ -188,9 +186,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * shows / hides the filler depending of length / existence of depotList
+     * Zeigt oder versteckt Filler, abhängig von der Länge.
      *
-     * @param depotList stockList of owned stocks
+     * @param depotList Aktien im Besitz.
      */
     private void showHideComponents(ArrayList<Aktie> depotList) {
         if (depotList == null || depotList.size() == 0) {
@@ -205,9 +203,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     }
 
     /**
-     * TODO
+     * Zeigt Schwierigkeitsdialog an.
      *
-     * @param inflater
+     * @param inflater der Layoutinflater.
      */
     private void showDifficultyDialog(LayoutInflater inflater) {
 

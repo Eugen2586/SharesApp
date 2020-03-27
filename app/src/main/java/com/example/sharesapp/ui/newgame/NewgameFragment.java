@@ -22,8 +22,8 @@ import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 /**
- * responsible for the NewGame Fragment
- * Enables the user to reset the game and delete user specific data
+ * Klasse, die für das NewGame Fragment verantwortlich ist.
+ * Lässt den User das Spiel zurücksetzen.
  */
 public class NewgameFragment extends Fragment {
 
@@ -32,12 +32,12 @@ public class NewgameFragment extends Fragment {
     private TextView cash;
 
     /**
-     * TODO
+     * Erzeugt die Anzeige.
      *
-     * @param inflater           to inflate the newgame_fragment
-     * @param container          used for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           Der inflater der newgame_Fragments
+     * @param container          Der Container.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

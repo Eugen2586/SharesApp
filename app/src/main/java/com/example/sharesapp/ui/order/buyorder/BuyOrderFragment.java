@@ -23,7 +23,7 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import java.util.ArrayList;
 
 /**
- * handles the listing of buy orders
+ * Klasse, mit der Aufträge angezeigt werden.
  */
 public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapter.ItemClickListener {
 
@@ -33,13 +33,13 @@ public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapt
     private StockRecyclerViewAdapter adapter = null;
 
     /**
-     * observer for buyOrderList initialized
-     * setAdapter called
+     * Observer für buyOrderList initalisiert.
+     * setAdapter aufgerufen.
      *
-     * @param inflater           inflates the fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           Der Inflater des fragments.
+     * @param container          Der Container.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,12 +60,11 @@ public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapt
     }
 
     /**
-     * from OrderRecyclerViewAdapter implemented
-     * sends Quote and chart Requests
-     * opens StockDetailView and sets currentStock
+     * Sendet Quote and chart Requests.
+     * Öffnet StockDetailView und setzt currentStock.
      *
-     * @param view     view of the row_stock_item
-     * @param position not needed
+     * @param view     View des row_stock_item
+     * @param position Position des Items.
      */
     @Override
     public void onItemClick(View view, int position) {
@@ -81,7 +80,7 @@ public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapt
     }
 
     /**
-     * initializes recyclerView
+     * Initialisiert recyclerView.
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
@@ -90,10 +89,10 @@ public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapt
     }
 
     /**
-     * fills the recyclerView with buyOrders
-     * calls showHideComponents
+     * Füllt den recyclerView mit aufträgen.
+     * Ruft showHideComponents auf.
      *
-     * @param orderList buyOrderList which has to be shown
+     * @param orderList Liste mit Aufträgen.
      */
     private void setAdapter(ArrayList<Order> orderList) {
         if (orderList != null) {
@@ -107,9 +106,9 @@ public class BuyOrderFragment extends Fragment implements OrderRecyclerViewAdapt
     }
 
     /**
-     * shows / hides the filler depending of length / existence of orderList
+     * Zeigt oder versteckt Filler anahnd der Länge der Liste.
      *
-     * @param orderList buyOrderList which has to be shown
+     * @param orderList Die Liste mit den Aufträgen.
      */
     private void showHideComponents(ArrayList<Order> orderList) {
         if (orderList == null || orderList.size() == 0) {

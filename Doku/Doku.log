@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7350 64-bit) (preloaded format=pdflatex 2020.3.24)  27 MAR 2020 20:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7350 64-bit) (preloaded format=pdflatex 2020.3.24)  27 MAR 2020 20:52
 entering extended mode
 **./Doku.tex
 (Doku.tex
@@ -1117,104 +1117,104 @@ Package pdftex.def Info: Bilder/Applikation/schwierigkeitsgrad.png  used on inp
 ut line 370.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
 
-[33 <./Bilder/Applikation/NewGameBestaetigung.png>]
-<Bilder/Diagramme/Klassendiagramm.jpg, id=365, 1661.20625pt x 1149.29375pt>
+[33 <./Bilder/Applikation/NewGameBestaetigung.png>] [34 <./Bilder/Applikation/s
+chwierigkeitsgrad.png>]
+<Bilder/Diagramme/Klassendiagramm.jpg, id=372, 1661.20625pt x 1149.29375pt>
 File: Bilder/Diagramme/Klassendiagramm.jpg Graphic file (type jpg)
 <use Bilder/Diagramme/Klassendiagramm.jpg>
 Package pdftex.def Info: Bilder/Diagramme/Klassendiagramm.jpg  used on input li
-ne 380.
+ne 387.
 (pdftex.def)             Requested size: 373.44246pt x 258.35196pt.
- [34 <./Bilder/Applikation/schwierigkeitsgrad.png>] [35 <./Bilder/Diagramme/Kla
-ssendiagramm.jpg>]
-<Bilder/Prsi/StartenDerApp.png, id=381, 241.90375pt x 428.60126pt>
+ [35 <./Bilder/Diagramme/Klassendiagramm.jpg>]
+<Bilder/Prsi/StartenDerApp.png, id=380, 241.90375pt x 428.60126pt>
 File: Bilder/Prsi/StartenDerApp.png Graphic file (type png)
 <use Bilder/Prsi/StartenDerApp.png>
-Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 428.
+Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 429.
 
 (pdftex.def)             Requested size: 224.06775pt x 397.01892pt.
  [36]
 [37 <./Bilder/Prsi/StartenDerApp.png>]
-<Bilder/Prsi/einstieg.png, id=407, 230.66174pt x 410.13225pt>
+<Bilder/Prsi/einstieg.png, id=406, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 439.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 440.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
  [38 <./Bilder/Prsi/einstieg.png>]
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 451.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 452.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
 
 [39]
-<Bilder/Prsi/Portfolio.png, id=418, 230.66174pt x 410.13225pt>
+<Bilder/Prsi/Portfolio.png, id=417, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/Portfolio.png Graphic file (type png)
 <use Bilder/Prsi/Portfolio.png>
-Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 463.
+Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 464.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
  [40]
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 476.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 477.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [41 <./Bilder/Prsi/Portfolio.png>] [42]
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 490.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 491.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
 File: Bilder/Prsi/verlauf.png Graphic file (type png)
 <use Bilder/Prsi/verlauf.png>
-Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 496.
+Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 497.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
  [43] [44]
-<Bilder/Prsi/detailansicht.png, id=444, 92.14426pt x 163.812pt>
+<Bilder/Prsi/detailansicht.png, id=443, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 513.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 514.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [45]
-<Bilder/Prsi/Kaufdialog.png, id=449, 92.14426pt x 163.812pt>
+<Bilder/Prsi/Kaufdialog.png, id=448, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/Kaufdialog.png Graphic file (type png)
 <use Bilder/Prsi/Kaufdialog.png>
-Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 519.
+Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 520.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [46 <./Bilder/Prsi/detailansicht.png>]
-<Bilder/Prsi/kassenzettel.png, id=455, 92.14426pt x 163.812pt>
+<Bilder/Prsi/kassenzettel.png, id=454, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/kassenzettel.png Graphic file (type png)
 <use Bilder/Prsi/kassenzettel.png>
-Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 531.
+Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 532.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [47 <./Bilder/Prsi/Kaufdialog.png>] [48 <./Bilder/Prsi/kassenzettel.png>]
-<Bilder/Prsi/newGame.png, id=466, 92.14426pt x 163.812pt>
+<Bilder/Prsi/newGame.png, id=465, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/newGame.png Graphic file (type png)
 <use Bilder/Prsi/newGame.png>
-Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 544.
+Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 545.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [49]
-<Bilder/Prsi/diff.png, id=472, 92.14426pt x 163.812pt>
+<Bilder/Prsi/diff.png, id=471, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/diff.png Graphic file (type png)
 <use Bilder/Prsi/diff.png>
-Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 556.
+Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 557.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [50 <./Bilder/Prsi/newGame.png>]
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 565.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 566.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [51 <./Bilder/Prsi/diff.png>] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 570--572
+Underfull \hbox (badness 10000) in paragraph at lines 571--573
 
  []
 
 [53]
-Overfull \hbox (12.79808pt too wide) in paragraph at lines 587--588
+Overfull \hbox (12.79808pt too wide) in paragraph at lines 588--589
 \T1/lmr/m/it/10 "Roy-alty Free Mu-sic from Ben-sound" \T1/lmr/m/n/10 ([]$\T1/lm
 tt/m/n/10 www . bensound . com / royalty-[]free-[]music/$[]\T1/lmr/m/n/10 ). 
  []
 
 
-Overfull \hbox (13.05692pt too wide) in paragraph at lines 590--591
+Overfull \hbox (13.05692pt too wide) in paragraph at lines 591--592
 []\T1/lmr/m/n/10 Zu Port-fo-lio hinzufü-gen - Sta-pling Pa-per Sound, von Web-s
 eite []$\T1/lmtt/m/n/10 http : / / soundbible .
  []
@@ -1230,20 +1230,20 @@ Overfull \hbox (12.39091pt too wide) in paragraph at lines 28--28
 \openout6 = `Doku.lof'.
 
  [56]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 600.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 600.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 601.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 601.
  (Doku.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 600.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 600.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 601.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 601.
 Package rerunfilecheck Info: File `Doku.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 600.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 601.
  ) 
 Here is how much of TeX's memory you used:
- 21791 strings out of 480932
- 420501 string characters out of 2909676
- 772963 words of memory out of 3000000
- 36989 multiletter control sequences out of 15000+200000
+ 21782 strings out of 480932
+ 420306 string characters out of 2909676
+ 771963 words of memory out of 3000000
+ 36981 multiletter control sequences out of 15000+200000
  585235 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,9n,90p,10122b,1042s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1255,9 +1255,9 @@ ic/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/public/lm/lmtt8.pfb>
-Output written on Doku.pdf (56 pages, 3473610 bytes).
+Output written on Doku.pdf (56 pages, 3473545 bytes).
 PDF statistics:
- 780 PDF objects out of 1000 (max. 8388607)
- 182 named destinations out of 1000 (max. 500000)
+ 779 PDF objects out of 1000 (max. 8388607)
+ 181 named destinations out of 1000 (max. 500000)
  655 words of extra memory for PDF output out of 10000 (max. 10000000)
 

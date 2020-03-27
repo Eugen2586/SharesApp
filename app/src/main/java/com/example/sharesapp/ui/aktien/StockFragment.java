@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * Enables the user to switch between his portfolio, Kryptowährungen, Aktien
- * Aktien is also divided into smaller categories
- * lists of stocks for the respective category are shown
+ * Diese Klasse ermöglicht es dem Benutzer zwischen seinem Portfolio, Kryptowährungen und verschiedenen Aktien zu wechseln.
+ * Hierbei sind die Aktien auch noch weiter unterteilt in die Typen der einzelnen Aktien.
+ * Für die Wahl werden dem Benutzer die Aktien dieses Typs aufgelistet.
  */
 public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -43,12 +43,11 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     private int numberOfTabs = 3;
 
     /**
-     * observerInitialization is called
-     * the tabLayout is initialized
-     * @param inflater           inflates the history_fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * Observer und das tabLayout werden initialisiert.
+     * @param inflater Layoutinflater
+     * @param container der Container
+     * @param savedInstanceState wird nicht benötigt
+     * @return nicht benötigt
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,7 +81,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * initializes observers for stockList, resetCounter and depotStocks
+     * initialisiert Observer für aktienListe, resetCounter and depotAktien
      */
     private void initializeAllObservers() {
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
@@ -111,8 +110,8 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * reinitialize tabs if needed
-     * scroll to saved tab and position
+     * Tabs werden bei Bedarf neu initialisiert.
+     * Es wird zu den abgespeicherten Scroll und Tabpositionen gescrollt.
      */
     @Override
     public void onResume() {
@@ -124,7 +123,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * save current tab and scrollPosition
+     * Speichert die derzeitige Tabposition und Scrollposition des currentTabs
      */
     @Override
     public void onPause() {
@@ -133,9 +132,9 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * reinitialize tabs if needed
-     * select saved tab and fill the recyclerView
-     * @param tabLayout tabLayout for categories
+     * Tabs werden bei Bedarf neu initialisiert.
+     * Selektiere abgespeicherten Tab und fülle die RecyclerView.
+     * @param tabLayout tabLayout für Kategorien
      */
     private void addTabsAndStocksToCurrentlySelectedCategory(TabLayout tabLayout) {
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
@@ -147,10 +146,10 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * refills tabLayout with tabs if the availableTypes have changed
-     * first three tabs: portfolio, Kryptowährungen, Aktien
-     * @param tabLayout tabLayout for categories
-     * @param availableTypes new availableTypes
+     * Setzt die Tabs des tabLayouts wenn neue verfügbare Typen hinzugekommen sind.
+     * Die ersten drei Tabs sind portfolio, Kryptowährungen und Aktien.
+     * @param tabLayout tabLayout für Kategorien
+     * @param availableTypes neue verfügbar Kategorien
      */
     private void addTabs(TabLayout tabLayout, String[] availableTypes) {
         boolean differentCategories = false;
@@ -183,9 +182,9 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * adds a tab with text text to tabLayout
-     * @param tabLayout tabLayout which is to be filled with tabs
-     * @param text text for the tab
+     * Fügt einen Tab mit dem String text zum tabLayout hinzu.
+     * @param tabLayout tabLayout für Kategorien
+     * @param text text für den Tab
      */
     private void addTabWithString(TabLayout tabLayout, String text) {
         TabLayout.Tab tab = tabLayout.newTab();
@@ -194,12 +193,12 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * calls setAdapter with different stockLists depending on the selected tabPosition position
-     * if portfolio (0) was selected : setAdapter with portfolioList
-     * if Kryptowährungen (1) was selected : setAdapter with stockList without type != crypto
-     * if Aktien (2) was selected : setAdapter with stockList without type == crypto
-     * if specificCategory (>=3) was selected : setAdapter with stockList with specificCategory only
-     * @param position the selected tabPosition
+     * Ruft setAdapter mit unterschiedlichen Aktienlisten auf, abhängig vom selektierten Tab.
+     * wenn portfolio (0) ausgewählt wurde : setAdapter mit portfolioList
+     * wenn Kryptowährungen (1) ausgewählt wurde : setAdapter mit stockList welche den Typ crypto haben
+     * wenn Aktien (2) ausgewählt wurde : setAdapter mit stockList welche nicht den Typ crypto haben
+     * wenn specificCategory (>=3) ausgewählt wurde : setAdapter mit stockList mit der spezifischen Kategorie als Typ
+     * @param position selektierte Tabposition
      */
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
@@ -253,11 +252,10 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * from StockRecycleViewAdapter implemented
-     * sends Quote and chart Requests
-     * opens StockDetailView and sets currentStock
-     * @param view view of one row_stock_item
-     * @param position not needed
+     * Vom StockRecycleViewAdapter implementiert
+     * Sendet Quote und Chart Requests, setzt den currentStock und öffnet die AktienDetailansicht
+     * @param view View eines row_stock_items
+     * @param position position des row_stock_items
      */
     @Override
     public void onItemClick(View view, int position) {
@@ -277,7 +275,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * initialize the recyclerView
+     * Initialisiert den recyclerView.
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.aktien_recycler_view);
@@ -286,9 +284,9 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * fills the recyclerView with the filtered stockList
-     * if the SDK is high enough : sort the stockList
-     * @param stockList stockList which is to be shown in the recyclerView
+     * Füllt den RecyclerView mit den gefilterten Aktien.
+     * Wenn die SDK hoch genug ist, sortiere zusätzlich die Aktienliste.
+     * @param stockList gefilterte Aktienliste
      */
     private void setAdapter(ArrayList<Aktie> stockList) {
         emptyPortfolioTextView.setVisibility(View.GONE);
@@ -311,8 +309,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * scrolls to the selectedTab after the layout is finished, so that the animation can be seen
-     * the user is also scrolled on the tabLayout
+     * Scrollt zu dem selektierten Tab wenn das Layout geladen wurde.
      */
     private void scrollToSelectedTabAfterLayout() {
         if (getView() != null) {
@@ -332,16 +329,16 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * select on tabLayout the saved tabPosition
-     * @param tabLayout tabLayout for categories
+     * Selektiere auf dem tabLayout den abgespeicherten Tab.
+     * @param tabLayout tabLayout für Kategorien
      */
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
         tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
     }
 
     /**
-     * saves the scrollState for the currentTabPosition tabPosition
-     * @param tabPosition position for which the current scrollState needs to be saved
+     * Speichert die Scrollstelle für die derzeitig selektierte tabPosition
+     * @param tabPosition position des selektierten Tabs
      */
     private void saveCategoryScrollState(int tabPosition) {
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -359,8 +356,8 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     }
 
     /**
-     * scroll on recyclerView to loaded scrollPosition of tabPosition
-     * @param tabPosition currently selected tab
+     * Scrolle auf der RecyclerView zu der gespeicherten ScrollPosition.
+     * @param tabPosition position des derzeitig selektierten Tabs
      */
     private void scrollToCategoryScrollState(int tabPosition) {
         int scrollState = 0;

@@ -102,6 +102,10 @@ public class Requests {
         });
     }
 
+    /**
+     * Sendet abhängig vom Typ der Aktie entweder für Aktien oder für Crypto jeweils eine Anfrage für den Quote, sowie die Historie.
+     * @param currentStock derzeitig betrachtete Aktie
+     */
     public static void quoteAndPriceRequest(Aktie currentStock) {
         Requests requests = new Requests();
         if (currentStock.isCrypto()) {
@@ -121,6 +125,10 @@ public class Requests {
         }
     }
 
+    /**
+     * Sendet abhängig vom Typ der Aktie entweder für Aktien oder für Crypto eine Anfrage für den Quote.
+     * @param currentStock derzeitig betrachtete Aktie
+     */
     public static void quoteRequest(Aktie currentStock) {
         Requests requests = new Requests();
         if (currentStock.isCrypto()) {

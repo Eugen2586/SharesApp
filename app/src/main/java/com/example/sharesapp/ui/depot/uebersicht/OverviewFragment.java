@@ -129,7 +129,6 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     private void sendRequestsForDepot() {
         Model model = new Model();
         ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
-        Requests requests = new Requests();
         if (depotList != null) {
             for (Aktie stock : depotList) {
                 Requests.quoteRequest(stock);

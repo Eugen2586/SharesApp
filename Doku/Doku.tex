@@ -35,13 +35,13 @@
 \section{Überblick}
 %In diesem Abschnitt bitte nur einen Überblick über die Ziele dieses Projekts geben!
 
-In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nachzuvollziehen und das Gesamprodukt richtig einordnen zu können.
+In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nach zu vollziehen und das Gesamprodukt richtig einordnen zu können.
 
 \subsection{Worum geht es in der App Broken Broke Broker}
-In der App "Broken Broke Broker" geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen \todo{haben wir währungen?} oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
+In der App "Broken Broke Broker" geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
 
 \subsubsection{Anforderungen}
-Folgende Features sollen mir \todo{mir? tippfehler?} der oben gewählten Technologie umgesetzt werden:
+Folgende Features sollen mir der oben gewählten Technologie umgesetzt werden:
 
 Bei der oben gewählten Technologie sollen die im Folgenden vorgestellten Hauptfunktionen zur Verfügung gestellt werden.
 
@@ -75,7 +75,7 @@ Zu den Hauptfunktionen wurde die Forderung gestellt, dass alle funktionieren mü
 
 \subsection{Motivation}
 %In diesem Abschnitt bitte nur beschreiben, wie die Zielvorstellung aussieht.
-Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt Broken Broke Borker um die Tatsache zu verdeutlichen, dass es um \todo{nicht vollständig}
+Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt Broken Broke Borker um die Tatsache zu verdeutlichen, dass es um 
 
 \subsection{Herangehensweise}
 %Wir die einzelnen Ziele erreicht werden sollten werden wir in diesem Abschnitt hinterlegen!
@@ -200,6 +200,11 @@ Die Übersicht beinhaltet als erstes den aktuellen Kontostand, sowie den gesamte
 Jede anklickbare Aktie in allen Menüs hat immer die gleiche rechteckige Form. Auch die Anordnung der Daten ist immer gleich. Links oben steht das Symbol(Abkürzung) der Aktie. Darunter ist dann der Name der Firma, wenn man die Aktie vorher einmal geladen hat. Rechts unten steht die Abkürzung des Types, wie zum Beispiel "cs" für "Common Stock" Darüber steht, falls man solche Aktien besitzt, die Anzahl und der aktuelle Preis.
 Kryptowährungen haben die gleiche Form wie Aktien in der Anzeige. Sie unterscheiden sich nur in der Detailansicht, wenn man darauf klickt.
 
+	
+\todo{Bilder von Depot(Übersicht) einfügen}
+
+
+\todo{Statistik, wenn fertig}
 
 Aktiendetailansicht:
 Die Aktiendetailansicht lässt sich von überall erreichen, wo sich Aktien in einer Liste befinden. Diese kann man anklicken und wird zu ihrer Detailansicht weitergeleitet. In dieser Detailansicht werden genauere Informationen über die Aktie dargestellt. Man kommt zurück zur letzten Stelle, indem man oben links auf den Pfeil klickt.
@@ -209,36 +214,81 @@ Dann folgen zwei Knöpfe mit den Optionen Kaufen und die Aktie zum Portfolio hin
 Durch Druck auf den unteren Knopf fügt man die Aktie zum Portfolio hinzu und der Knopf ändert seine Schrift zu "Aus dem Portfolio entfernen". Der Knopf bekommt dann auch die gleiche Funktion.
 Drückt man auf den vorderen Knopf, öffnet sich ein "Aktie kaufen" Popover, in dem zu erst das eigene Vermögen und der Stückpreis der Aktie stehen. Es folgen zwei Nummernfelder für die Kaufmenge und das Limit, dann der Gesamtwert der Stückzahl, gefolgt von einem "Verwerfen" und einem "Kaufen" Knopf. Mit "Verwerfen" schließt sich das Popover und es wird keine weitere Aktien ausgeführt. Durch "Kaufen" kauft man die Aktien, vorausgesetzt, man hat die Stückzahl angegeben und genug Geld. Bei Limit kann man den Preis angeben, den man bereit wäre für diese Aktie zu bezahlen. Tut man dies, und bestätigt man, indem man auf "Kaufen" klickt, so wird ein Kaufauftrag erstellt und die Applikation kauft für den Nutzer automatisch die gewünschte Anzahl der Aktie, wenn das Limit unterschritten wird. Der Kaufauftrag wird danach in der dazugehörigen Hauptseite aufgelistet. Hat man einen Kaufauftrag erstellt, wird dieser unter dem Portfolio Knopf aufgelistet und ein weiterer Knopf erscheint, mit dem man alle Aufträge löschen kann.
 Besitzt man Teile der ausgewählten Aktie, taucht der Knopf "Verkaufen" zwischen den beiden ursprünglichen auf. Drückt man darauf, öffnet sich ein Popover, genau wie bei "Kaufen". Der Inhalt ist auch gleich, nur jedes "Kaufen" ist durch "Verkaufen" ersetzt. In dem Fenster kann man seine Aktien verkaufen oder einen Verkaufsauftrag erstellen, der vom Prinzip wie der Kaufauftrag funktioniert. Wird das Limit in dem Fall überschritten, verkauft die Applikation automatisch die gewünscht Stückzahl der ausgewählten Aktie und listet den Auftrag in der Detailansicht und auf der Hauptseite Aufträge auf.
-	
-\todo{Bilder von Depot(Übersicht) einfügen}
-	
-	
-\todo{Statistik, wenn fertig}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/AktienDetails.png}
+\end{figure}
+Aktiendetailansicht ohne Einflüsse.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/AktienDetailsAufträge.png}
+\end{figure}
+Aktiendetailansicht mit Aufträgen und Aktien im Besitz.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/AktieKaufen.png}
+\end{figure}
+Aktie kaufen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/AktieVerkaufen.png}
+\end{figure}
+Aktie verkaufen.
 
 Hauptseite: Aktien
 Wenn man das erste mal zu dieser Seite navigiert wird, gelangt man zu seinem Portfolio. Darin sind alle Aktien zu sehen, die man vorher zu dem Portfolio hinzugefügt hat. Es dient als eine Übersicht für die besonders interessanten Aktien, die man im Auge behalten möchte. Ähnlich wie bei Übersicht und Statistik im Depot befindet sich direkt unter der Navigationsleiste Wahlmöglichkeiten, die die Seite darunter verändern. Neben dem Portfolio gibt es dort die Möglichkeit auf "Kryptowährungen" zu klicken, doch werden alle Kryptowährungen angezeigt. Direkt daneben steht "Aktien" die eine Übersicht über alle verfügbaren Aktion liefert. Die Leiste mit diesen Wahlmöglichkeiten lässt sich nach rechts scrollen, indem man die Leiste nach links zieht. Die weiteren Sektionen enthalten Teile von allen verfügbaren Aktien, die kategorisch zusammengefasst sind. Die Leiste enthält jedoch nicht alle möglichen Kategorien sondern nur diese, die auch Aktien enthalten. Die Liste wird regelmäßig geupdated, also ist es möglich, dass einige Kategorien aus der Leiste verschwinden oder hinzugefügt werden.
 Durch klick auf eine bestimmte Aktie gelangt man zu der dazugehörigen Aktiendetailansicht. Der Knopf, der zur Navigation führt wird dann durch einen Pfeil ersetzt, der zurück zu der vorherigen Stelle in der Liste der Aktien führt.
 
-Kryptowährungendetailansicht:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/Aktien.png}
+\end{figure}
 
+Kryptowährungendetailansicht:
 
 
 Hauptseite: Aufträge
 Aufträge sind auch wieder in zwei Sektionen aufgeteilt. In Kaufaufträge und Verkaufsaufträge. Unter jeder Sektion befindet sich eine Liste mit den Aktien, für die die Aufträge bestehen. Dort wo sonst der aktuelle Preis der Aktie steht, befindet sich nun die Anzahl des Auftrags und dahinter der Preis, für den die Aktien gekauft werden sollen. Bei den Verkaufsaufträgen sieht es ähnlich aus, nur das hier die Preis, für den die Aktien verkauft werden sollen, steht.
 Klickt man auf die Aktie in der Liste gelangt man in ihre Detailansicht.
 
-\todo{Aufträge Screenshots}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/Kaufauftrag.png}
+\end{figure}
+Kaufaufträge
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/Verkaufauftrag.png}
+\end{figure}
+Verkaufsaufträge
 
 Hauptseite: Suche
-Die Suche ist von Überall erreichbar, nicht nur, wenn man in der Navigation darauf klickt. Auf jeder Seite bindet sich am oberen Ende des Bildschirms eine Leiste, die zur Navigation gehört. Der rechte Teil enthält ein Suchsymbol, dass ein Textfeld in seine Leiste und eine Tastatur öffnet, wenn man darauf klickt. Mit der Tastatur kann man in das Textfeld schreiben und mit Enter seine Suche bestätigen. Durch diesen Prozess gelangt man zu der Hauptseite der Suche und die Aktien, die mit der Eingabe in Verbindung stehen, werden aufgelistet. Jeder Teil der aufgelisteten Aktien führt wieder zu der dazugehörigen Aktiendetailansicht. Über der Liste der Suchergebnisse steht unter anderem "Suchkategorie:". Rechts davon steht vom Anfang "ALLES" und noch weiter rechts davon ein kleines Dreieck mit der Spitze nach unten. Durch drücken auf den Teil zwischen dem Anfang von "ALLES" und dem Dreieck, fährt ein Menü aus, dass alle Kategorien der Suchergebnisse beinhaltet und die man durch Klick wählen kann. Die Liste wird daraufhin auf die Ergebnisse mit der gewählten Kategorie reduziert. Der Text "ALLES" wird durch den Namen der gewählten Kategorie ersetzt. 
-Gelangt man durch den Eintrag in der Navigation zur Suche, so ist die Seite leer, wenn man vorher nichts gesucht hat. Hat man vorher allerdings schon mal etwas gesucht, so findet man die Seite in dem Zustand vor, wie man sie vorher verlassen hat.
+Die Suche ist von Überall erreichbar, nicht nur, wenn man in der Navigation darauf klickt. Auf jeder Seite bindet sich am oberen Ende des Bildschirms eine Leiste, die zur Navigation gehört. Der rechte Teil enthält ein Suchsymbol, dass ein Textfeld in seine Leiste und eine Tastatur öffnet, wenn man darauf klickt. Mit der Tastatur kann man in das Textfeld schreiben und mit Enter seine Suche bestätigen. Durch diesen Prozess gelangt man zu der Hauptseite der Suche und die Aktien, die mit der Eingabe in Verbindung stehen, werden aufgelistet. Jeder Teil der aufgelisteten Aktien führt wieder zu der dazugehörigen Aktiendetailansicht. Über der Liste der Suchergebnisse steht unter anderem "Suchkategorie:". Rechts davon steht am Anfang "Server" und noch weiter rechts davon ein kleines Dreieck mit der Spitze nach unten. Durch drücken auf den Teil zwischen dem Anfang von "Server" und dem Dreieck, fährt ein Menü aus, dass die Kategorien "Kryptowährungen" und "Aktien" beinhaltet, die man durch Klick wählen kann. Die Liste past sich daraufhin auf die Ergebnisse mit der gewählten Kategorie an. Der Text "Server" wird durch den Namen der gewählten Kategorie ersetzt. 
+"Server" beinhaltet die zehn relevantesten Aktien, "Kryptowährungen" und "Aktien" alle zu ihrer Kategorie gehörenden Ergebnisse.
+Gelangt man durch den Eintrag in der Navigation zur Suche, so ist die Seite leer, wenn man vorher nichts gesucht hat. Hat man allerdings schon mal etwas gesucht, so findet man die Seite in dem Zustand, wie sie zuletzt verlassen wurde.
 
-\todo{Bilder von leerer und erfolgreicher Suche einfügen}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/Suche.png}
+\end{figure}
+Erfolgreiche Suche, oben Suchfeld und Tastatur. Suchkategorien ausgeklappt.
 
 Hauptseite: Historie
 
 Die Historie gibt einen Überblick über alle Käufe und Verkäufe von Aktien, sowie die Bilanz und aktuellen Besitz. Zu beginn des Spiels, bevor man irgendwelche Käufe oder Verkäufe durchgeführt hat, ist die Historie hoch leer und nur am unteren Ende des Bildschirms stehen Werte für Cash, Wertpapieren und die Bilanzsumme. Kauft oder Verkauft man nun jedoch Aktien, tauchen diese Aktionen von oben nach unten in der Reihenfolge der Ausführung auf. Die Einträge bestehen zu Erst aus entweder Plus oder Minus. Plus für Kauf, Minus für Verkauf der Aktien. Dahinter die Anzahl und ein "x" für Mal, und dann den Namen der Aktie. Darauf folgt dann eine freie Stelle, hinter der die Summe des Kauf- oder Verkaufspreises der einzelnen Aktien steht. Ganz rechts vom Eintrag befindet sich noch ein Dollarzeichen, dass zu dem Preis gehört.
 Jeder Eintrag beeinflusst die darunterliegenden Werte von Cash, Wertpapieren und Bilanzsumme und diese passen sich entsprechend an.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/Historie.png}
+\end{figure}
+Historie
+
 
 Hauptseite: Erfolge
 
@@ -248,6 +298,18 @@ Hauptseite: NewGame
 
 Die letzte Hauptseite "NewGame" gibt die Möglichkeit den Spielstand zurückzusetzen und von vorne zu beginnen. 
 Auf der Seite steht nur die Frage, ob man sein Spiel wirklich neu beginnen möchte, der aktuelle Kontostand, den man damit zurücksetzt und ein roter Knopf mit dem Schriftzug "Zurücksetzen" darauf. Drückt man den Knopf, öffnet sich ein Popover, in dem man darauf hingewiesen wird, dass man damit auch alle Aktien im Besitz und die Favoriten löscht. Hier besteht noch die Möglichkeit auf "Abbruch" zu klicken. Drückt man nun jedoch auf "Ok", löschen sich alle spielstandrelevanten Daten. Man landet in einem leeren Depot aber kann direkt mit dem neuen Spielstand weiter spielen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/NewGame.png}
+\end{figure}
+Die Seite NewGame.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Applikation/NewGameBestaetigung.png}
+\end{figure}
+NewGame Bestätigung
 
 \subsection{Liste aller Klassen und deren Methoden mit Funktion}
 

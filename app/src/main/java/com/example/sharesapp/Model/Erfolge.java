@@ -1,15 +1,15 @@
 package com.example.sharesapp.Model;
 
+/**
+ * Das ist eine Klasse, um die Erfolge zu speichern. Erfolge werden nie zurückgesetzt.
+ * Die Klasse enthält binäre Masken um die Erfolge zu speichern, wenn bestimmte Parametern
+ * Schwellwerte erreicht haben. So werden die Kauf- und Verkauferfolge eingeschaltet, wenn
+ * die die Werte in tradesA Maske erreicht haben und Reseterfolge wenn dementsprechend
+ * die Anzahl der Resets die Schwellwerte in resetA erreicht wurden.
+ * Eine getrennte Erfolg All ist erst dann eingeschaltet, wenn man alle Kauf-, Verkauf- und Reseterfolge
+ * erreicht hat.
+ * */
 public class Erfolge {
-    /**
-    * Das ist eine Klasse, um die Erfolge zu speichern. Erfolge werden nie zurückgesetzt.
-    * Die Klasse enthält binäre Masken um die Erfolge zu speichern, wenn bestimmte Parametern
-    * Schwellwerte erreicht haben. So werden die Kauf- und Verkauferfolge eingeschaltet, wenn
-    * die die Werte in tradesA Maske erreicht haben und Reseterfolge wenn dementsprechend
-    * die Anzahl der Resets die Schwellwerte in resetA erreicht wurden.
-    * Eine getrennte Erfolg All ist erst dann eingeschaltet, wenn man alle Kauf-, Verkauf- und Reseterfolge
-    * erreicht hat.
-    * */
 
     private static boolean[] kaufen = new boolean[4];
     private static boolean[] verkaufen = new boolean[4];
@@ -18,25 +18,25 @@ public class Erfolge {
     private final int[] tradesA = {1, 10, 100, 1000};
     private final int[] resetA = {1, 5, 10};
 
+    /**
+     Leere Konstruktor
+     */
     public Erfolge() {
-        /**
-        Leere Konstruktor
-         */
 
     }
 
+    /**
+     @return Maske mit erreichten Kauferfolgen zurück
+     */
     public boolean[] getKaufen() {
-        /**
-        @return Maske mit erreichten Kauferfolgen zurück
-         */
         this.checkKaufen();
         return kaufen;
     }
 
+    /**
+     Diese Methode füllt die Maske für Kauferfolge
+     */
     private void checkKaufen() {
-        /**
-        Diese Methode füllt die Maske für Kauferfolge
-         */
         int k = new Model().getData().getDepot().getKaufCounter();
         for (int i = 0; i < 4; i++) {
             if (k >= tradesA[i]) {
@@ -47,10 +47,10 @@ public class Erfolge {
         }
     }
 
+    /**
+     @return Bedingungen, die nötig sind, um Kauferfolge zu bekommen
+     */
     public String[] getKaufenText() {
-        /**
-        @return Bedingungen, die nötig sind, um Kauferfolge zu bekommen
-         */
         String[] s = {"Kaufe erste Aktie",
         "Kaufe erste 10 Aktien",
         "Kaufe erste 100 Aktien",
@@ -58,18 +58,18 @@ public class Erfolge {
         return s;
     }
 
+    /**
+     @return Maske mit erreichten Verkauferfolgen zurück
+     */
     public boolean[] getVerkaufen() {
-        /**
-        @return Maske mit erreichten Verkauferfolgen zurück
-         */
         this.checkVerkaufen();
         return verkaufen;
     }
 
+    /**
+     Diese Methode füllt die Maske für Verkauferfolge
+     */
     private void checkVerkaufen() {
-        /**
-        Diese Methode füllt die Maske für Verkauferfolge
-         */
         int k = new Model().getData().getDepot().getVerkaufCounter();
         for (int i = 0; i < 4; i++) {
             if (k >= tradesA[i]) {
@@ -80,10 +80,10 @@ public class Erfolge {
         }
     }
 
+    /**
+     @return Bedingungen, die nötig sind, um Verkauferfolge zu bekommen
+     */
     public String[] getVerkaufenText() {
-        /**
-        @return Bedingungen, die nötig sind, um Verkauferfolge zu bekommen
-         */
         String[] s = {"Verkaufe erste Aktie",
                 "Verkaufe erste 10 Aktien",
                 "Verkaufe erste 100 Aktien",
@@ -91,18 +91,18 @@ public class Erfolge {
         return s;
     }
 
+    /**
+     @return Maske mit erreichten Reseterfolgen zurück
+     */
     public boolean[] getReset() {
-        /**
-        @return Maske mit erreichten Reseterfolgen zurück
-         */
         this.checkReset();
         return reset;
     }
 
+    /**
+     Diese Methode füllt die Maske für Reseterfolge
+     */
     private void checkReset() {
-        /**
-        Diese Methode füllt die Maske für Reseterfolge
-         */
         int k;
 
         try {
@@ -119,20 +119,20 @@ public class Erfolge {
         }
     }
 
+    /**
+     @return Bedingungen, die nötig sind, um Reseterfolge zu bekommen
+     */
     public String[] getResetText() {
-        /**
-        @return Bedingungen, die nötig sind, um Reseterfolge zu bekommen
-         */
         String[] s = {"Starte ein neues Spiel",
                 "Fange neues ein Spiel 5 mal",
                 "Fange neues ein Spiel 10 mal"};
         return s;
     }
 
+    /**
+     @return ob alle Kauf-, Verkauf- und Reseterfolg gesammelt wurde
+     */
     public boolean getAll() {
-        /**
-        @return ob alle Kauf-, Verkauf- und Reseterfolg gesammelt wurde
-         */
         for (boolean b: kaufen) {
             if (!b) {
                 return false;
@@ -154,10 +154,10 @@ public class Erfolge {
         return true;
     }
 
+    /**
+     * @return Textuelle Beschreibung für Sammlung von alle andere Erfolge
+     */
     public String getAllText() {
-        /**
-         * @return Textuelle Beschreibung für Sammlung von alle andere Erfolge
-         */
         return "Bekomme alle Erfolge!";
     }
 

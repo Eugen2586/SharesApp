@@ -242,10 +242,10 @@ public class Data {
         // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
+    /**
+     * Erhöht ResetCounter um 1
+     */
     private void increaseResetValue() {
-        /**
-         * Erhöht ResetCounter um 1
-         */
         if (resetCounter.getValue() == null) {
             resetCounter.setValue(1);
         } else {
@@ -253,10 +253,10 @@ public class Data {
         }
     }
 
+    /**
+     * @return resetCounter
+     */
     public MutableLiveData<Integer> getResetCounter() {
-        /**
-         * @return resetCounter
-         */
         return resetCounter;
     }
 

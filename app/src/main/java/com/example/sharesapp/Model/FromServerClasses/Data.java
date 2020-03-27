@@ -237,6 +237,9 @@ public class Data {
     }
 
     private void increaseResetValue() {
+        /**
+         * Erhöht ResetCounter um 1
+         */
         if (resetCounter.getValue() == null) {
             resetCounter.setValue(1);
         } else {
@@ -245,6 +248,9 @@ public class Data {
     }
 
     public MutableLiveData<Integer> getResetCounter() {
+        /**
+         * @return resetCounter
+         */
         return resetCounter;
     }
 

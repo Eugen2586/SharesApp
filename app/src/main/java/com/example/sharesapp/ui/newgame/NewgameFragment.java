@@ -91,6 +91,9 @@ public class NewgameFragment extends Fragment {
     }
 
     private void showDifficultyDialog(LayoutInflater inflater) {
+        /**
+        Zeigt Dialog um Schwierigkeitsgrad auszuwählen
+         */
 
         final Context context = NewgameFragment.this.getContext();
         if (context != null) {

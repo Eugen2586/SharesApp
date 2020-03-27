@@ -21,7 +21,7 @@
 
 \title{Dokumentation zum Java Code Camp 21.02.2020}
 
-\author{Christian Küllmer, Gianluca Voss, Anna Tsarenko}
+\author{Christian Küllmer, Gianluca Voss, Anna Tsarenko, Levin Schubotz}
 \date{\today{}, Kassel}
 \maketitle
 \begin{figure}[H]
@@ -29,7 +29,6 @@
 	\includegraphics[width=0.6\textwidth]{Bilder/Titelblatt/big_logo.png}
 	\caption{Logo \textit{Broken Broke Broker}}
 \end{figure}
-\todo{Bitte pflegt eure Namen auf dieser Seite!}
 \newpage
 %Inhaltsverzeichnis
 \renewcommand{\contentsname}{Inhaltsverzeichnis}
@@ -45,7 +44,7 @@ In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getä
 \subsection{Worum geht es in der App Broken Broke Broker?}
 In der App \textit{Broken Broke Broker} geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
 
-In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nachzuvollziehen und das Gesamprodukt richtig einordnen zu können.
+In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nachzuvollziehen und das Gesamtprodukt richtig einordnen zu können.
 
 \subsubsection{Anforderungen}
 Folgende Features sollen mit der oben gewählten Technologie umgesetzt werden:
@@ -167,7 +166,7 @@ Artefakte im Androidx-Namespace umfassen die Android Jetpack-Bibliotheken. Wie d
 AndroidX ist eine wesentliche Verbesserung gegenüber der ursprünglichen Android-Support-Bibliothek, die nicht mehr gepflegt wird. AndroidX-Pakete ersetzen die Support-Bibliothek vollständig, indem sie Feature-Parität und neue Bibliotheken bereitstellen.
 
 
-\subsection{Navigationsschema zwischen den Bildschirmen}
+\subsection{Navigation und Funktionen}
 
 Alle Hauptseiten sind durch die Navigation verbunden. Bei jeder Hauptseite befindet sich am Oberen Ende des Bildschirms eine Leiste, in der sich der Name der aktuellen Seite, sowie rechts ein Suchsymbol und  links ein Menüzeichen, mit der sich die Navigation öffnen lässt, befindet. Durch Öffnen der Navigation verlässt man nicht seine aktuelle Seite, sondern sie legt sich von der linken Seite des Geräts über zwei Drittel des Bildschirms und verdunkelt das restliche Drittel leicht. 
 
@@ -210,7 +209,7 @@ Kryptowährungen haben die gleiche Form wie Aktien in der Anzeige. Sie untersche
 \end{figure}
 
 
-\subsubsection{Aktien}
+\subsubsection{Aktiendetailansicht}
 Die Aktiendetailansicht lässt sich von überall erreichen, wo sich Aktien in einer Liste befinden. Diese kann man anklicken und wird zu ihrer Detailansicht weitergeleitet. In dieser Detailansicht werden genauere Informationen über die Aktie dargestellt. Man kommt zurück zur letzten Stelle, indem man oben links auf den Pfeil klickt.
 
 Ganz oben in der Ansicht steht der Firmennahme der Aktie. Direkt darunter wird ein Graph geladen, der die Range des Preises für jeden Tag des letzten Monats anzeigt. Über dem Graphen steht das aktuelle Datum (Amerikanisch) und der Titel des Graphen mit den höchsten und niedrigsten dargestellten Werten dahinter. 
@@ -263,7 +262,7 @@ Durch klick auf eine bestimmte Aktie gelangt man zu der dazugehörigen Aktiendet
 
 Kryptowährungen sehen in den Listen genau aus wie Aktien. Als Kategorie steht dort "crypto". Klickt man auf sie, wird man jedoch nicht zu der Üblichen Aktiendetailansicht weitergeleitet, sondern zu einer etwas anders aussehenden Kryptowährungendetailansicht.
 
-In dieser Detailansicht ist oben ein Graph, der den Preisverlauf der Währung darstellt- Dieser Graph wird allerdings nur bei Kryptowährungen angezeigt, die mehr als ein Cent wert sind. Unter dem Graphen befindet sich ein Informationblock mit dem Symbol, der Kategorie, dem Zeitpunkt der letzten Aktualisierung und dem aktuellen Preis.
+In dieser Detailansicht ist oben ein Graph, der den Preisverlauf der Währung darstellt- Dieser Graph wird allerdings nur bei Kryptowährungen angezeigt, die mehr als ein Cent wert sind. Unter dem Graphen befindet sich ein Informationsblock mit dem Symbol, der Kategorie, dem Zeitpunkt der letzten Aktualisierung und dem aktuellen Preis.
 
 Darunter befinden sich noch Knöpfe mit den gleichen Funktionen wie in der Aktiendetailansicht. Auch Kaufen und Verkaufen ist genau gleich.
 
@@ -331,7 +330,7 @@ Im Fig.~\ref{erfolge1} kann man das Erfolge Screen sehen. Da sind alle Erfolge a
  	\item Verkauferfolge
  	\item Spielerfolge
  \end{enumerate}
-Kauf- und Verkauferfolge basieren sich auf der Anzahl von durchgeführten Kauf- und Verkaufsoperationen. Es gibt jeweils 4 Stufen, um die zu bekommen muss man dementsprechend 1, 10, 100 und 1000 Kauf- und Verkaufsoperationen durchführen.
+Kauf- und Verkaufserfolge basieren sich auf der Anzahl von durchgeführten Kauf- und Verkaufsoperationen. Es gibt jeweils 4 Stufen, um die zu bekommen muss man dementsprechend 1, 10, 100 und 1000 Kauf- und Verkaufsoperationen durchführen.
 
 Erste drei Spielerfolge basieren sich auf die Anzahl von Neustarts, dafür muss man entsprechend 1, 5 und 10 das Spiel neu starten. Das Erfolg "Spielfan" bekommt man nur dann, wenn man alle andere Erfolge schon bekommen hat.
 
@@ -386,7 +385,7 @@ Nach dem man sich endgültig entschieden hat, ein neues Spiel zu starten, öffne
 \subsection{Darstellung aller Views und deren Controller als UML}
 \todo{füllen}
 
-\section{Vorstellung der Application}
+\section{Vorstellung der Applikation}
 %Hier ist wichtig zu schreiben, was wir meinen Gut gemacht ist und wie dies mit den App zielen conquentiert.
 Diese Sektion konzentriert sich auf der funktionale Seite der App. Hier wird diskutiert, welche Funktionen wie implementiert wurden.
 \subsection{Vorstellung der Grundfunktionen}
@@ -415,7 +414,7 @@ Folgende Zusatzfunktionen wurden implementiert:
 	\item Persistenz
 \end{enumerate}
 
-Dies ist die Java Code Camp präsentation von \todo{Bitte pflegt hier eure Namen!!!} Christian Küllmer, Anna Tsarenko und [].
+Dies ist die Java Code Camp Präsentation von Christian Küllmer, Anna Tsarenko, Gianluca Voss und Levin Schubotz.
 
 Die Anforderungen des Java Code Camps wurden von uns im Android Studio Projekt Shares App umgesetzt. Die entstandene App heißt \textit{Broken Broke Broker} und ist auf auf dem Smartphone unter BBB zu finden.
 
@@ -473,11 +472,11 @@ Innerhalb der Depotübersicht wird die Komplettzahl der gekauften Aktien angezei
 	\caption{Anzeige der Aktiensuche mit gefüllten Daten}
 \end{figure}
  
-Die Übersicht ist so strukturiert, dass die eigenen Aktien einfach im Überblick gehalten werden können. Weiter ist das Anzeigen der Aktien mit einer einfachten Kastenlogik klassisch nach dem Material Design.
+Die Übersicht ist so strukturiert, dass die eigenen Aktien einfach im Überblick gehalten werden können. Weiter ist das Anzeigen der Aktien mit einer einfachen Kastenlogik klassisch nach dem Material Design.
 
 \subsubsection{Kontostand + Verlauf}
 
-Den Kontostand und den Verlauf des eigenen Geldes gibt es in der Application \textit{Broken Broke Broker} in zwei verschiedenen Ansichten. Das Feature Kontostand ist bei uns in der Ansicht des Depos und der Historie zu sehen. Das hat den Grund, dass ein Spieler direkt bei seinen Handlungen und bei seinen Erfolgen sehen soll, wie sein Kontostand aktuell ist. Die eigenen Verläufe sind unter dem Menüeintrag Statistik im Reiter Depot zu finden. Hier wird der Verlauf der bisherigen Transaktionen angezeigt und die entsprechenden Vermögenszuwächse und Verluste. 
+Den Kontostand und den Verlauf des eigenen Geldes gibt es in der Applikation \textit{Broken Broke Broker} in zwei verschiedenen Ansichten. Das Feature Kontostand ist bei uns in der Ansicht des Depos und der Historie zu sehen. Das hat den Grund, dass ein Spieler direkt bei seinen Handlungen und bei seinen Erfolgen sehen soll, wie sein Kontostand aktuell ist. Die eigenen Verläufe sind unter dem Menüeintrag Statistik im Reiter Depot zu finden. Hier wird der Verlauf der bisherigen Transaktionen angezeigt und die entsprechenden Vermögenszuwächse und Verluste. 
 
 Im Folgenden sind die beiden Features Bildlich dargestellt.
 
@@ -496,11 +495,11 @@ Im Folgenden sind die beiden Features Bildlich dargestellt.
 
 \subsubsection{Transaktionskosten}
 
-Die Transaktionskosten sind in der Application im Punkt Schwierigkeitsgerade aufgegangen. Dabei wird jetzt nicht nur ein Betrag bei jeder Transaktion der einem Prozentwert des Handels Volumen von dem Geld des Spielers abgezogen, sondern diese Höhe kann auch noch verändert werden. Daher findet sich dieser Eintrag in dem Bereich Zusatzfeatures ebenfalls wieder und zeigt dort sein volles Potential.
+Die Transaktionskosten sind in der Applikation im Punkt Schwierigkeitsgerade aufgegangen. Dabei wird jetzt nicht nur ein Betrag bei jeder Transaktion der einem Prozentwert des Handels Volumen von dem Geld des Spielers abgezogen, sondern diese Höhe kann auch noch verändert werden. Daher findet sich dieser Eintrag in dem Bereich Zusatzfeatures ebenfalls wieder und zeigt dort sein volles Potential.
 
 \subsubsection{Aktien kaufen/verkaufen(Live Trading)}
 
-Das Kauf System der App \textit{Broken Broke Broker} kann von jeder Aktienübersicht direkt angesteuert werden. Dadurch wird gezielt eine Aktie gekauft und der Marketineffekt des berührten Produkts genutzt. Der Spieler drückt auf eine Aktie und kann sie erst jetzt kaufen. Im Moment des Tippens baut der Kunde eine taktile Bildung zum Produkt auf und verleitet daher eher zum kaufen. Der Verkauf einer Aktie erfolgt ebenfalls über die Detailsicht der Aktie und kann damit sowohl vom Depot, wie auch von Suche, Historie oder anderen Punkten im Menü aufgerufen zu werden. Dadurch wird die Produktbindung des Spielers gestärkt und ein bewusstes und einfaches Handeln ermöglicht. Der eingeblendete Preis direkt unter dem Chart der Aktie sorft für Übersichtlichkeit des Handeln und schafft Umsicht.
+Das Kauf System der App \textit{Broken Broke Broker} kann von jeder Aktienübersicht direkt angesteuert werden. Dadurch wird gezielt eine Aktie gekauft und der Marketingeffekt des berührten Produkts genutzt. Der Spieler drückt auf eine Aktie und kann sie erst jetzt kaufen. Im Moment des Tippens baut der Kunde eine taktile Bildung zum Produkt auf und verleitet daher eher zum kaufen. Der Verkauf einer Aktie erfolgt ebenfalls über die Detailsicht der Aktie und kann damit sowohl vom Depot, wie auch von Suche, Historie oder anderen Punkten im Menü aufgerufen zu werden. Dadurch wird die Produktbindung des Spielers gestärkt und ein bewusstes und einfaches Handeln ermöglicht. Der eingeblendete Preis direkt unter dem Chart der Aktie sorgt für Übersichtlichkeit des Handeln und schafft Umsicht.
 
 Ansicht von Kaufen und Verkaufen:
 
@@ -520,7 +519,7 @@ Ansicht von Kaufen und Verkaufen:
 
 \subsubsection{Historie über Käufe und Verkäufe}
 
-In dem Reiter History werden alle vergangenen Traksaktionen anzeigt. Dies schafft einen Überblick darüber welcher Handel in der Vergangenheit gut und welcher schlecht gelaufen ist. Dabei ist hier am wichtigsten, dass die Daten persistent und frei von jeglichen bewertenden Details sind. Grundlage für diese Funktion ist ein Virtueller Kassenzettel, der die einzelnen Positionen darstellt und am Ende das entscheidende Ergebnis an den Spieler vermittelt.
+In dem Reiter Historie werden alle vergangenen Transaktionen anzeigt. Dies schafft einen Überblick darüber welcher Handel in der Vergangenheit gut und  schlecht gelaufen ist. Dabei ist hier am wichtigsten, dass die Daten persistent und frei von jeglichen bewertenden Details sind. Grundlage für diese Funktion ist ein Virtueller Kassenzettel, der die einzelnen Positionen darstellt und am Ende das entscheidende Ergebnis an den Spieler vermittelt.
 
 \begin{figure}[H]
 	\centering
@@ -530,10 +529,10 @@ In dem Reiter History werden alle vergangenen Traksaktionen anzeigt. Dies schaff
 
 \subsubsection{Automatischer Handel im Hintergrund}
 
-Der Automatisierte Handel im Hintergrund erfolgt in der Application Über einen Worker abgearbeitet. Dieser wird erst mit dem ersten Starten der App gestartet um die Kunden nicht mit Werbemeldungen zu erregen und den Fokus des Spiels auf die Zeit im Spiel zu lenken. Sobald die App einmal gestartet ist, arbeitet sie jedoch nach bekannten Mustern um den Kunden am Spiel zu halten. Pushnachrichten und automatisierter Handel sind von diesem Zeitpunkt aus verfügbar. Die Automatischen Handelspositionen werden nach Los und Call abgearbeitet, wobei beide nach der gleichen Priorität abgearbeitet werden, jedoch Verkäufe vor Verkäufen zeitlich abgearbeitet werden um Verluste zu vermeiden.
+Der Automatisierte Handel im Hintergrund erfolgt in der Applikation Über einen Worker abgearbeitet. Dieser wird erst mit dem ersten Starten der App gestartet um die Kunden nicht mit Werbemeldungen zu erregen und den Fokus des Spiels auf die Zeit im Spiel zu lenken. Sobald die App einmal gestartet ist, arbeitet sie jedoch nach bekannten Mustern um den Kunden am Spiel zu halten. Pushbenachrichtigungen und automatisierter Handel sind von diesem Zeitpunkt aus verfügbar. Die Automatischen Handelspositionen werden nach Los und Call abgearbeitet, wobei beide nach der gleichen Priorität abgearbeitet werden, jedoch Verkäufe vor Verkäufen zeitlich abgearbeitet werden um Verluste zu vermeiden.
 
 \subsubsection{Spiel zurücksetzen / Neustarten}
-Der Button um das Spiel zurück zu setzen wirdunter dem Button NewGame gebaut und zeigt dort den aktuellen Kontostand an. Das soll den Nutzer Motivieren das erreichte nicht einfach aufzugeben und sich das zurücksetzen des Spiels gut zu überlegen. Sollte der Spieler doch darauf klicken wird die App zurück auf den Initialen Startwert gesetzt.
+Der Button um das Spiel zurück zu setzen wird unter dem Button NewGame gebaut und zeigt dort den aktuellen Kontostand an. Das soll den Nutzer Motivieren das erreichte nicht einfach aufzugeben und sich das zurücksetzen des Spiels gut zu überlegen. Sollte der Spieler doch darauf klicken wird die App zurück auf den Initialen Startwert gesetzt.
 
 \begin{figure}[H]
 	\centering
@@ -573,7 +572,7 @@ In diesem Abschnitt werden die geforderten Zusatzfunktionen dargestellt. In des 
 \section{Fazit}
 %Hier ist wichtig, dass wir es schaffen können zu zeigen, ob wir mit den erreichten Zielen zufrieden sind.
 
-Am Ende eines Projekts wie dem Java Code Camp schaut man zurück und überlegt, was man selbst für die Zukunft aus der Projektarbeit lernen kann. Die App \textit{Broken Broke Broker} halten wir als Team für eine gelungene Anwendung. Die Zeit, die wir mit dem Code verbringen mussten war immens hoch, da wir Anfangs die Technologie-entscheidung für Java getroffen hatten. Diese hat uns im folgenden viel Kraft gekostet. Letztlich haben wir aber eine App auf den Markt gebracht, die den Kriterien der Anforderungen entspricht. Wir würden uns für das nächste Projekt dieser Art im Fachbereich wünschen, dass wir die Technologie vielleicht etwas enger vorgegeben bekommen, damit uns eine strategische Fehlentscheidung nicht mehr in dieser Art beschneidet.
+Am Ende eines Projekts wie dem Java Code Camp schaut man zurück und überlegt, was man selbst für die Zukunft aus der Projektarbeit lernen kann. Die App \textit{Broken Broke Broker} halten wir als Team für eine gelungene Anwendung. Die Zeit, die wir mit dem Code verbringen mussten war immens hoch, da wir Anfangs die Technologie-Entscheidung für Java getroffen hatten. Diese hat uns im folgenden viel Kraft gekostet. Letztlich haben wir aber eine App auf den Markt gebracht, die den Kriterien der Anforderungen entspricht. Wir würden uns für das nächste Projekt dieser Art im Fachbereich wünschen, dass wir die Technologie vielleicht etwas enger vorgegeben bekommen, damit uns eine strategische Fehlentscheidung nicht mehr in dieser Art beschneidet.
 
 \newpage
 \appendix

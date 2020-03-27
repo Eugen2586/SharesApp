@@ -45,12 +45,10 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         tabLayout = root.findViewById(R.id.category_tab_layout);
         emptyPortfolioTextView = root.findViewById(R.id.empty_portfolio_text);
 
-        final TabLayout finalTabLayout = tabLayout;
-
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> aktienList) {
-                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
             }
         };
         model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
@@ -58,7 +56,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         final Observer<Integer> resetObserver = new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
             }
         };
         model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
@@ -66,7 +64,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
             @Override
             public void onChanged(ArrayList<Aktie> depotList) {
-                setCategory(0);
+                setCategory(tabLayout.getSelectedTabPosition());
             }
         };
         model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
@@ -74,7 +72,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         final Observer<ArrayList<Crypto>> cryptoObserver = new Observer<ArrayList<Crypto>>() {
             @Override
             public void onChanged(ArrayList<Crypto> cryptoList) {
-                addTabsAndStocksToCurrentlySelectedCategory(finalTabLayout);
+                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
             }
         };
         model.getData().getMutableCryptoList().observe(getViewLifecycleOwner(), cryptoObserver);

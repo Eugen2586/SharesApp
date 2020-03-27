@@ -22,17 +22,18 @@ public class OrderFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
-    Model model = new Model();
-    TabLayout tabLayout;
+    private Model model = new Model();
+    private TabLayout tabLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_order, container, false);
 
         fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.order_fragment_loader_linear_layout, new BuyOrderFragment()).commit();
+        if (model.getData().getPreviouslySelectedOrderTabIndex() == 0) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.order_fragment_loader_linear_layout, new BuyOrderFragment()).commit();
+        }
         tabLayout = root.findViewById(R.id.order_tab_layout);
 
         if (tabLayout != null) {
@@ -71,7 +72,9 @@ public class OrderFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedOrderTabIndex()));
+        if (tabLayout != null) {
+            tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedOrderTabIndex()));
+        }
     }
 
     @Override

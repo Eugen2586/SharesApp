@@ -223,5 +223,19 @@ public class RequestQuote {
                 }
             }
         }
+
+        ArrayList<Aktie> depotList = new Model().getData().getDepot().getAktienImDepot().getValue();
+        if (depotList != null) {
+            for (Aktie c : depotList) {
+                if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                    c.setAdditionalData(company, open, close, high, highT,
+                            low, lowT, latestPrice, latestUpdate, latestVol, prevCl, change,
+                            week52High, week52Low);
+
+                    new Model().getData().getDepot().getAktienImDepot().postValue(depotList);
+                    break;
+                }
+            }
+        }
     }
 }

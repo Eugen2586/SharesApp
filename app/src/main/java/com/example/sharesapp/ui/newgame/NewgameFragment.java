@@ -57,7 +57,35 @@ public class NewgameFragment extends Fragment {
                 reserButtonClickHandler(inflater, reset_button);
             }
         });
+
+        Button licence = root.findViewById(R.id.licence);
+        licence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                licenceButtonClickHandler(inflater, reset_button);
+            }
+        });
         return root;
+    }
+
+    private void licenceButtonClickHandler(LayoutInflater inflater, Button reset_button) {
+        Context context = NewgameFragment.this.getContext();
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Licence Note");
+            builder.setMessage("Im Programm wird auch folgende Musik benutzt: Creative Minds, " +
+                    "Composer: Benjamin Tissot, von Webseite \"RoyaltyFreeMusicfromBensound\" " +
+                    "(www.bensound.com/royalty-free-music/), Bomb Sound, von Webseite http://soundbible.com/ " +
+                    "- unter Attribution 3.0 Lizenz https://creativecommons.org/licenses/by/3.0/, " +
+                    "PokerChips,von Webseite http://soundbible. com/-unterAttribution 3.0 Lizenz " +
+                    "https://creativecommons.org/licenses/ by/3.0/, StaplingPaperSound,von Webseite " +
+                    "http://soundbible. com/ -unterPublicDomainLizenz https://creativecommons.org/licenses/ publicdomain/deed.de\n");
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private void reserButtonClickHandler(final LayoutInflater inflater, final Button reset_button) {

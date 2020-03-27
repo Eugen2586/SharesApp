@@ -33,13 +33,13 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     private StockRecyclerViewAdapter adapter = null;
 
     /**
-     * observer for sellOrderList initialized
-     * setAdapter called
+     * Observer für buyOrderList initalisiert.
+     * setAdapter aufgerufen.
      *
-     * @param inflater           inflates the fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           Der Inflater des fragments.
+     * @param container          Der Container.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,12 +60,11 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     }
 
     /**
-     * from OrderRecyclerViewAdapter implemented
-     * sends Quote and chart Requests
-     * opens StockDetailView and sets currentStock
+     * Sendet Quote and chart Requests.
+     * Öffnet StockDetailView und setzt currentStock.
      *
-     * @param view     view of the row_stock_item
-     * @param position not needed
+     * @param view     View des row_stock_item
+     * @param position Position des Items.
      */
     @Override
     public void onItemClick(View view, int position) {
@@ -81,7 +80,7 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     }
 
     /**
-     * initializes recyclerView
+     * Initialisiert recyclerView.
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
@@ -90,10 +89,9 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     }
 
     /**
-     * fills the recyclerView with sellOrders
-     * calls showHideComponents
+     * Zeigt oder versteckt Filler anahnd der Länge der Liste.
      *
-     * @param orderList sellOrderList which has to be shown
+     * @param orderList Die Liste mit den Aufträgen.
      */
     private void setAdapter(ArrayList<Order> orderList) {
         if (orderList != null) {

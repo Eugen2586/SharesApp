@@ -27,10 +27,8 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import java.util.ArrayList;
 
 /**
- * Responsible for the Search Fragment.
- * Enables the user to search in the categories Server, Kryptowährungen and Aktien
- * For the Server a Request is send
- * Kryptowährungen and Aktien are shown, if their symbol contains the searchString
+ * Klasse, die das Search Fragment verwaltet.
+ * Lässt den User die Suchfunktion benutzen.
  */
 public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
@@ -41,14 +39,14 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     private TextView searchText;
 
     /**
-     * initializes Spinner with categoryChanged functionality
-     * sets observer for searchesFromServer
-     * sets adapter for the Recyclerview
+     * Initalisiert Spinner mit categoryChanged Funktion.
+     * Setzt observer für searchesFromServer
+     * Setzt adapter für Recyclerview.
      *
-     * @param inflater           for the inflation of the layout
-     * @param container          as container for the inflation
-     * @param savedInstanceState not used
-     * @return
+     * @param inflater           Der Inflater.
+     * @param container          Der Container.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,11 +82,11 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * if Server (0) was selected : setAdapter with serverSearchList
-     * if Kryptowährungen (1) was selected : setAdapter with symbol filtered list of cryptoStocks
-     * if Aktien (2) was selected : setAdapter with symbol filtered list of nonCryptoStocks
+     * Wenn Server (0) ausgewählt : setAdapter mit serverSearchList.
+     * Wenn Kryptowährungen (1) ausgewählt : setAdapter mit symbol filtered list der cryptoStocks.
+     * Wenn Aktien (2) ausgewählt : setAdapter mit symbol filtered list der nonCryptoStocks.
      *
-     * @param position the position the spinner changed to
+     * @param position Die Position zu dem der spinner gewechselt wird.
      */
     private void changedSpinnerPosition(int position) {
         if (position == 0) {
@@ -137,9 +135,9 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * Server, Kryptowährungen and Aktien are chosen as the components of the Spinner
+     * Server, Kryptowährungen and Aktien werden als Komponenten des Spinners gesetzt.
      *
-     * @param spinner spinner to initialize
+     * @param spinner spinner der initalisiert werden soll.
      */
     private void initCategorySpinner(Spinner spinner) {
         Context context = this.getContext();
@@ -156,7 +154,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * initialization of the Recyclerview
+     * Initalisiert Recyclerview.
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.search_recycler_view);
@@ -165,10 +163,10 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * recyclerview is filled with filteredList
-     * calls the showHideComponents function
+     * recyclerview wird gefüllt mit filteredList
+     * Ruft die showHideComponents Funktion auf.
      *
-     * @param filteredList the list of stocks which should fill the Recyclerview
+     * @param filteredList Liste mit aktien, die Recyclerview befüllen soll.
      */
     private void setAdapter(ArrayList<Aktie> filteredList) {
         if (filteredList != null) {
@@ -183,9 +181,9 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * searchlist is integrated into stocklist if not yet included
+     * searchlist wird in stocklist integriert.
      *
-     * @param searchList from server
+     * @param searchList Suchergebnisse, die integriert werden sollen.
      */
     private void addSearchesToStockList(ArrayList<Aktie> searchList) {
         if (searchList != null) {
@@ -214,12 +212,11 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * from StockRecycleViewAdapter implemented
-     * sends Quote and chart Requests
-     * opens StockDetailView and sets currentStock
+     * Sendet Quote and chart Requests.
+     * Öffnet StockDetailView und setzt currentStock.
      *
-     * @param view     view of one row_stock_item
-     * @param position not needed
+     * @param view     View eines row_stock_item.
+     * @param position Die Position.
      */
     @Override
     public void onItemClick(View view, int position) {
@@ -235,10 +232,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * shows or hides the components to tell the user if there are search results or not
-     * depends on the length / existence of stockList
-     *
-     * @param stockList stockList which is shown in RecyclerView
+     * Zeigt oder versteckt die Komponenten.
+     * @param stockList Aktienliste, die im RecyclerView angezeigt werden soll.
      */
     private void showHideComponents(ArrayList<Aktie> stockList) {
         if (stockList == null || stockList.size() == 0) {
@@ -262,10 +257,10 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * removes stocks which do not have the searchString in its symbol
+     * Entfernt Aktien, die nicht den gesuchten Strig haben.
      *
-     * @param stockList the stockList to be filtered
-     * @return the filtered stockList
+     * @param stockList Die stockList, die gefiltert werden soll.
+     * @return Die filtered stockList.
      */
     private ArrayList<Aktie> getSearchFilteredStockList(ArrayList<Aktie> stockList) {
         String searchString = model.getData().getCurrentSearchString();

@@ -88,6 +88,6 @@ public class RequestsBuilder {
     }
 
     public static String getCurrencyHistoricalUrl(String symbol) {
-        return "fx/historical?symbol=" + symbol + "&&";
+        return "fx/historical?symbol=" + symbol + "&last=30&";
     }
 }

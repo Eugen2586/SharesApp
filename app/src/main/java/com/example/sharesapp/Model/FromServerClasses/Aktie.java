@@ -25,7 +25,7 @@ public class Aktie implements Comparator {
     private String lowTime;
     private float latestPrice;
     private String latestSource;
-    private String latestUpdate;
+    private long latestUpdate;
     private int latestVolume;
     private float previousClose;
     private int previousVolume;
@@ -155,7 +155,7 @@ public class Aktie implements Comparator {
             String lowTime,
             float latestPrice,
             String latestSource,
-            String latestUpdate,
+            long latestUpdate,
             int latestVolume,
             float previousClose,
             int previousVolume,
@@ -401,11 +401,11 @@ public class Aktie implements Comparator {
         this.lowTime = lowTime;
     }
 
-    public String getLatestUpdate() {
+    public long getLatestUpdate() {
         return latestUpdate;
     }
 
-    public void setLatestUpdate(String latestUpdate) {
+    public void setLatestUpdate(long latestUpdate) {
         this.latestUpdate = latestUpdate;
     }
 

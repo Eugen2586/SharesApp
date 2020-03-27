@@ -243,7 +243,7 @@ public class StockDetailsFragment extends Fragment {
         setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
         setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
         setTextFieldIdWithString(R.id.type_field, stock.getType());
-        setTextFieldIdWithTime(R.id.date_field, stock.getLatestUpdate());
+        setTextFieldIdWithLongTime(R.id.date_field, stock.getLatestUpdate());
         setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
         setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
         setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
@@ -251,9 +251,17 @@ public class StockDetailsFragment extends Fragment {
 
         setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
         setTextFieldIdWithString(R.id.high_field, stock.getHigh());
-        setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
+        if (stock.getHigh() != null) {
+            setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
+        } else {
+            ((TableRow) root.findViewById(R.id.high_time_field).getParent()).setVisibility(View.GONE);
+        }
         setTextFieldIdWithString(R.id.low_field, stock.getLow());
-        setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
+        if (stock.getLow() != null) {
+            setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
+        } else {
+            ((TableRow) root.findViewById(R.id.low_time_field).getParent()).setVisibility(View.GONE);
+        }
         setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
         setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
 
@@ -396,6 +404,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    private void setTextFieldIdWithLongTime(int id, long time) {
+        setTextFieldIdWithTime(id, String.valueOf(time));
+    }
+
     private void setTextFieldIdWithTime(int id, String time) {
         TextView textView = root.findViewById(id);
         if (time != null) {
@@ -409,7 +421,6 @@ public class StockDetailsFragment extends Fragment {
         } else {
             ((TableRow) textView.getParent()).setVisibility(View.GONE);
         }
-
     }
 
     private void makeChart() {

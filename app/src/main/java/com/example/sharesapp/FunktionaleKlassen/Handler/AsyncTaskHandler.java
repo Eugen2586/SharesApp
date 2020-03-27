@@ -44,7 +44,7 @@ public class AsyncTaskHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (url.contains("chart")) {
+        } else if (url.contains("chart") || url.contains("fx/historical")) {
             try {
                 new RequestHistoricalQuotePrices(s);
             } catch (ParseException e) {

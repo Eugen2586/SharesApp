@@ -11,20 +11,23 @@
 \usepackage{epstopdf}
 \usepackage[shadow]{todonotes}
 \usepackage[official]{eurosym}
+\usepackage{hyperref}
+\newcommand*{\quelle}{%
+	\footnotesize Quelle:
+}
 
  
 \begin{document}
 
 \title{Dokumentation zum Java Code Camp 21.02.2020}
 
-%Bitte hier Namen Pflegen!
 \author{Christian Küllmer, Gianluca Voss, Anna Tsarenko}
 \date{\today{}, Kassel}
 \maketitle
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/Titelblatt/big_logo.png}
-	\caption{Logo}
+	\caption{Logo \textit{Broken Broke Broker}}
 \end{figure}
 \todo{Bitte pflegt eure Namen auf dieser Seite!}
 \newpage
@@ -40,7 +43,7 @@
 In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nach zu vollziehen und das Gesamtprodukt richtig einordnen zu können.
 
 \subsection{Worum geht es in der App Broken Broke Broker?}
-In der App "Broken Broke Broker" geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
+In der App \textit{Broken Broke Broker} geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
 
 In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nachzuvollziehen und das Gesamprodukt richtig einordnen zu können.
 
@@ -76,46 +79,43 @@ Zu den Hauptfunktionen wurde die Forderung gestellt, dass alle funktionieren mü
 
 \subsection{Motivation}
 %In diesem Abschnitt bitte nur beschreiben, wie die Zielvorstellung aussieht.
-Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt Broken Broke Borker um die Tatsache zu verdeutlichen, dass es um \todo{nicht vollständig}
+Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt \textit{Broken Broke Broker} um die Tatsache zu verdeutlichen, dass es um spielerische Welt der Aktien geht.
 
 \subsection{Herangehensweise}
 %Wir die einzelnen Ziele erreicht werden sollten werden wir in diesem Abschnitt hinterlegen!
+\todo{füllen}
 
 \section{Funktionalität der Applikation}
-%Beschreiben der einzelnen GUI Oberflächen und deren Funktion. 
-%Bitte selbstständig die einzlenen Abschnitte mit den Screens ergänzen!
+In diesem Kapitel wird besprochen, wie \textit{Broken Broke Broker} funktioniert: welche Mittel wurden benutzt und was die App kann.
 
 
 \subsection{Technische Details}
+\todo{füllen}
 
 \subsection{Verwendete Programmierbibliotheken}
 
-\begin{enumerate}
-	
-	\item 
-	AnyChart Android
+In diesem Bereich wird die Übersicht von verwendenden Bibliotheken gegeben.
+
+\subsubsection{AnyChart Android}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/BibliothekenLogos/Anychart.png}
 	\caption{AnyChart ist eine leichte und robuste JavaScript-Diagrammbibliothek mit hervorragender API, Dokumentation und Unterstützung für Unternehmen.}
+	\quelle\url{https://www.anychart.com/blog/wp-content/uploads/2016/05/AnyChart_JS_HTML5_Charts_Maps_Stock_Graphs_Dashboards_logo_300x92.png}
 \end{figure}
-
-% link: https://www.anychart.com/blog/wp-content/uploads/2016/05/AnyChart_JS_HTML5_Charts_Maps_Stock_Graphs_Dashboards_logo_300x92.png
 
 Es wurde seit 2003 mit einer Hauptidee entwickelt: Es sollte für jeden Entwickler einfach sein, schöne Diagramme in jedes mobile, Desktop- oder Webprodukt zu integrieren. Daher ist AnyChart heute eine Datenvisualisierungsschicht für Tausende großartiger Produkte. Unseres gehört nun auch dazu, wenn auch nur mit der Trial Version.
 
 
-	\item 
-	OkHttpClient
+\subsubsection{OkHttpClient}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/BibliothekenLogos/OKHTTP.jpg}
 	\caption{HTTP ist das moderne Anwendungsnetzwerk. So tauschen wir Daten und Medien aus. Durch effizientes Ausführen von HTTP werden Inhalte schneller geladen und Bandbreite gespart.}
+	\quelle\url{https://duckduckgo.com/?q=okhttpclient+logo&iax=images&ia=images&iai=https%3A%2F%2Fwww.mkyong.com%2Fwp-content%2Fuploads%2F2019%2F10%2FOkHttp-logo.png}
 \end{figure}
-
-% link: https://duckduckgo.com/?q=okhttpclient+logo&iax=images&ia=images&iai=https%3A%2F%2Fwww.mkyong.com%2Fwp-content%2Fuploads%2F2019%2F10%2FOkHttp-logo.png
 
 OkHttp ist ein HTTP-Client, der standardmäßig effizient ist:
 
@@ -128,57 +128,50 @@ OkHttp bleibt bestehen, wenn das Netzwerk Probleme hat: Es wird stillschweigend 
 
 Die Verwendung von OkHttp ist einfach. Die Anforderungs- / Antwort-API wurde mit fließenden Buildern und Unveränderlichkeit entwickelt. Es unterstützt sowohl synchron blockierende calls als auch asynchrone calls mit callback.
 
-
-	\item
-	JSON.simple
+\subsubsection{JSON.simple}
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/BibliothekenLogos/JSONLogo.png}
-	\caption{JSON.simple ist ein einfaches Java-basiertes Toolkit für JSON. Mit JSON.simple kann man JSON-Daten codieren oder decodieren.}
+	\caption{JSON.simple logo}
+	\quelle\url{http://aommaster.com/blog/wp-content/uploads/2015/10/JSONLogo.png}
 \end{figure}
 
-% link: http://aommaster.com/blog/wp-content/uploads/2015/10/JSONLogo.png
-	
-	\item
-	Android Material Components
+JSON.simple ist ein einfaches Java-basiertes Toolkit für JSON. Mit JSON.simple kann man JSON-Daten codieren oder decodieren.
+
+\subsubsection{Android Material Components}
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png}
 	\caption{Android Material Components}
+	\quelle\url{https://material.io/develop/assets/1kvhm0FosmH_nzjOHdtnFX3dQObsxnjv_/android-documents-how-to-components-2x1-large.png}
 \end{figure}
 
-
-% link: https://material.io/develop/assets/1kvhm0FosmH_nzjOHdtnFX3dQObsxnjv_/android-documents-how-to-components-2x1-large.png
 
 Material Components für Android (MDC-Android) unterstützt Entwickler bei der Ausführung von Material Design. Diese Komponenten wurden von einem Kernteam aus Ingenieuren und UX-Designern bei Google entwickelt und ermöglichen einen zuverlässigen Entwicklungsworkflow zum Erstellen schöner und funktionaler Android-Apps.
 
 Material Components für Android ist ein Ersatz für die Design Support Library von Android.
 
-	\item
-	Androidx
+\subsubsection{Androidx}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Bilder/BibliothekenLogos/AndroidLogo.png}
 	\caption{Androidx Logo}
+	\quelle\url{https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/1200px-Android_robot.svg.png}
 \end{figure}
-	
-% link: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/1200px-Android_robot.svg.png
 
 Artefakte im Androidx-Namespace umfassen die Android Jetpack-Bibliotheken. Wie die Support-Bibliothek werden Bibliotheken im theandroidx namespace separat von der Android-Plattform geliefert und bieten Abwärtskompatibilität für alle Android-Versionen.
 
 AndroidX ist eine wesentliche Verbesserung gegenüber der ursprünglichen Android-Support-Bibliothek, die nicht mehr gepflegt wird. AndroidX-Pakete ersetzen die Support-Bibliothek vollständig, indem sie Feature-Parität und neue Bibliotheken bereitstellen.
-
-\end{enumerate}
 
 
 \subsection{Navigationsschema zwischen den Bildschirmen}
 
 Alle Hauptseiten sind durch die Navigation verbunden. Bei jeder Hauptseite befindet sich am Oberen Ende des Bildschirms eine Leiste, in der sich der Name der aktuellen Seite, sowie rechts ein Suchsymbol und  links ein Menüzeichen, mit der sich die Navigation öffnen lässt, befindet. Durch Öffnen der Navigation verlässt man nicht seine aktuelle Seite, sondern sie legt sich von der linken Seite des Geräts über zwei Drittel des Bildschirms und verdunkelt das restliche Drittel leicht. 
 
-Oben in der Navigation ist das Logo der Applikation, ein buntes "Broken Broke Broker", zu sehen. Darunter sind nacheinander die Hauptseiten aufgelistet. Jede Seite hat in seiner Reihe ein zu der Funktion passendes Symbol erhalten und ist erreichbar, indem man auf die genante Reihe drückt. Die Navigation schließt sich, wenn man entweder auf eine der aufgelisteten Seiten oder in das rechte Drittel klickt. Bei ersterem wird zu der Seite navigiert und bei späterem bleibt man einfach auf der aktuellen Seite.
+Oben in der Navigation ist das Logo der Applikation, ein buntes \textit{Broken Broke Broker}, zu sehen. Darunter sind nacheinander die Hauptseiten aufgelistet. Jede Seite hat in seiner Reihe ein zu der Funktion passendes Symbol erhalten und ist erreichbar, indem man auf die genante Reihe drückt. Die Navigation schließt sich, wenn man entweder auf eine der aufgelisteten Seiten oder in das rechte Drittel klickt. Bei ersterem wird zu der Seite navigiert und bei späterem bleibt man einfach auf der aktuellen Seite.
 
 \begin{figure}[H]
 	\centering
@@ -205,10 +198,17 @@ Jede anklickbare Aktie in allen Menüs hat immer die gleiche rechteckige Form. A
 Kryptowährungen haben die gleiche Form wie Aktien in der Anzeige. Sie unterscheiden sich nur in der Detailansicht, wenn man darauf klickt.
 
 	
-\todo{Bilder von Depot(Übersicht) einfügen}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Prsi/depot.png}
+	\caption{Depot Übersicht}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Bilder/Prsi/verlauf.png}
+	\caption{Depot Statistik}
+\end{figure}
 
-
-\todo{Statistik, wenn fertig}
 
 \subsubsection{Aktien}
 Die Aktiendetailansicht lässt sich von überall erreichen, wo sich Aktien in einer Liste befinden. Diese kann man anklicken und wird zu ihrer Detailansicht weitergeleitet. In dieser Detailansicht werden genauere Informationen über die Aktie dargestellt. Man kommt zurück zur letzten Stelle, indem man oben links auf den Pfeil klickt.
@@ -346,9 +346,9 @@ Die schon erreichte Erfolge sind grün gefärbt und die, die man noch nicht beko
 
 Fig.~\ref{erfolge2} bildet ab, was man sieht, wenn man auf einen bestimmten Erfolg drückt. Dabei kommt ein Dialogfenster, wo die Bedingungen für dieses Erfolg beschrieben sind.
 
-\subsubsection{New Game}
+\subsubsection{NewGame}
 
-Die letzte Hauptseite "NewGame" gibt die Möglichkeit den Spielstand zurückzusetzen und von vorne zu beginnen. 
+"NewGame" gibt die Möglichkeit den Spielstand zurückzusetzen und von vorne zu beginnen. 
 
 Auf der Seite steht nur die Frage, ob man sein Spiel wirklich neu beginnen möchte, der aktuelle Kontostand, den man damit zurücksetzt und ein roter Knopf mit dem Schriftzug "Zurücksetzen" darauf. Drückt man den Knopf, öffnet sich ein Popover, in dem man darauf hingewiesen wird, dass man damit auch alle Aktien im Besitz und die Favoriten löscht. Hier besteht noch die Möglichkeit auf "Abbruch" zu klicken. Drückt man nun jedoch auf "Ok", löschen sich alle spielstandrelevanten Daten. Man landet in einem leeren Depot aber kann direkt mit dem neuen Spielstand weiter spielen.
 
@@ -373,18 +373,22 @@ Nach dem man sich endgültig entschieden hat, ein neues Spiel zu starten, öffne
 \end{figure}
 
 \subsection{Liste aller Klassen und deren Methoden mit Funktion}
-
+\todo{füllen}
 \section{Klassendiagramm}
+\todo{füllen}
 
 \subsection{Anbindung an das Datenmodell der API}
+\todo{füllen}
 
 \subsection{Darstellung des Datenmodells als UML}
+\todo{füllen}
 
 \subsection{Darstellung aller Views und deren Controller als UML}
+\todo{füllen}
 
 \section{Vorstellung der Application}
 %Hier ist wichtig zu schreiben, was wir meinen Gut gemacht ist und wie dies mit den App zielen conquentiert.
-
+Diese Sektion konzentriert sich auf der funktionale Seite der App. Hier wird diskutiert, welche Funktionen wie implementiert wurden.
 \subsection{Vorstellung der Grundfunktionen}
 In diesem Abschnitt werden die geforderten Grundfunktionen dargestellt. In des Rahmen Seminars wurden folgende Anforderungen gestellt:
 \newline
@@ -413,7 +417,7 @@ Folgende Zusatzfunktionen wurden implementiert:
 
 Dies ist die Java Code Camp präsentation von \todo{Bitte pflegt hier eure Namen!!!} Christian Küllmer, Anna Tsarenko und [].
 
-Die Anforderungen des Java Code Camps wurden von uns im Android Studio Projekt Shares App umgesetzt. Die entstandene App heißt Broken Broke Broker und ist auf auf dem Smartphone unter BBB zu finden.
+Die Anforderungen des Java Code Camps wurden von uns im Android Studio Projekt Shares App umgesetzt. Die entstandene App heißt \textit{Broken Broke Broker} und ist auf auf dem Smartphone unter BBB zu finden.
 
 \begin{figure}[H]
 	\centering
@@ -473,7 +477,7 @@ Die Übersicht ist so strukturiert, dass die eigenen Aktien einfach im Überblic
 
 \subsubsection{Kontostand + Verlauf}
 
-Den Kontostand und den Verlauf des eigenen Geldes gibt es in der Application Broken Broke Broker in zwei verschiedenen Ansichten. Das Feature Kontostand ist bei uns in der Ansicht des Depos und der Historie zu sehen. Das hat den Grund, dass ein Spieler direkt bei seinen Handlungen und bei seinen Erfolgen sehen soll, wie sein Kontostand aktuell ist. Die eigenen Verläufe sind unter dem Menüeintrag Statistik im Reiter Depot zu finden. Hier wird der Verlauf der bisherigen Transaktionen angezeigt und die entsprechenden Vermögenszuwächse und Verluste. 
+Den Kontostand und den Verlauf des eigenen Geldes gibt es in der Application \textit{Broken Broke Broker} in zwei verschiedenen Ansichten. Das Feature Kontostand ist bei uns in der Ansicht des Depos und der Historie zu sehen. Das hat den Grund, dass ein Spieler direkt bei seinen Handlungen und bei seinen Erfolgen sehen soll, wie sein Kontostand aktuell ist. Die eigenen Verläufe sind unter dem Menüeintrag Statistik im Reiter Depot zu finden. Hier wird der Verlauf der bisherigen Transaktionen angezeigt und die entsprechenden Vermögenszuwächse und Verluste. 
 
 Im Folgenden sind die beiden Features Bildlich dargestellt.
 
@@ -496,7 +500,7 @@ Die Transaktionskosten sind in der Application im Punkt Schwierigkeitsgerade auf
 
 \subsubsection{Aktien kaufen/verkaufen(Live Trading)}
 
-Das Kauf System der App Broken Broke Broker kann von jeder Aktienübersicht direkt angesteuert werden. Dadurch wird gezielt eine Aktie gekauft und der Marketineffekt des berührten Produkts genutzt. Der Spieler drückt auf eine Aktie und kann sie erst jetzt kaufen. Im Moment des Tippens baut der Kunde eine taktile Bildung zum Produkt auf und verleitet daher eher zum kaufen. Der Verkauf einer Aktie erfolgt ebenfalls über die Detailsicht der Aktie und kann damit sowohl vom Depot, wie auch von Suche, Historie oder anderen Punkten im Menü aufgerufen zu werden. Dadurch wird die Produktbindung des Spielers gestärkt und ein bewusstes und einfaches Handeln ermöglicht. Der eingeblendete Preis direkt unter dem Chart der Aktie sorft für Übersichtlichkeit des Handeln und schafft Umsicht.
+Das Kauf System der App \textit{Broken Broke Broker} kann von jeder Aktienübersicht direkt angesteuert werden. Dadurch wird gezielt eine Aktie gekauft und der Marketineffekt des berührten Produkts genutzt. Der Spieler drückt auf eine Aktie und kann sie erst jetzt kaufen. Im Moment des Tippens baut der Kunde eine taktile Bildung zum Produkt auf und verleitet daher eher zum kaufen. Der Verkauf einer Aktie erfolgt ebenfalls über die Detailsicht der Aktie und kann damit sowohl vom Depot, wie auch von Suche, Historie oder anderen Punkten im Menü aufgerufen zu werden. Dadurch wird die Produktbindung des Spielers gestärkt und ein bewusstes und einfaches Handeln ermöglicht. Der eingeblendete Preis direkt unter dem Chart der Aktie sorft für Übersichtlichkeit des Handeln und schafft Umsicht.
 
 Ansicht von Kaufen und Verkaufen:
 
@@ -542,7 +546,7 @@ In diesem Abschnitt werden die geforderten Zusatzfunktionen dargestellt. In des 
 	
 	
 	\subsubsection{Erfolge}
-	In der App Broken Broke Broker kann die Schwierigkeitseinstellungen vorgewählt werden. Die Einstellung beschreibt die Fällige Tobinsteuer auf jede Transaktion und das gegebene Startkapital. Wird ein neues Spiel gestartet wird der Wert des Schwierigkeitsgrades neu gesetzt. Der Wert in innerhalb der APP Persistent gehalten.
+	In der App \textit{Broken Broke Broker} kann die Schwierigkeitseinstellungen vorgewählt werden. Die Einstellung beschreibt die Fällige Tobinsteuer auf jede Transaktion und das gegebene Startkapital. Wird ein neues Spiel gestartet wird der Wert des Schwierigkeitsgrades neu gesetzt. Der Wert in innerhalb der APP Persistent gehalten.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{Bilder/Prsi/diff.png}
@@ -569,7 +573,7 @@ In diesem Abschnitt werden die geforderten Zusatzfunktionen dargestellt. In des 
 \section{Fazit}
 %Hier ist wichtig, dass wir es schaffen können zu zeigen, ob wir mit den erreichten Zielen zufrieden sind.
 
-Am Ende eines Projekts wie dem Java Code Camp schaut man zurück und überlegt, was man selbst für die Zukunft aus der Projektarbeit lernen kann. Die App Broken Broke Broker halten wir als Team für eine gelungene Anwendung. Die Zeit, die wir mit dem Code verbringen mussten war immens hoch, da wir Anfangs die Technologie-entscheidung für Java getroffen hatten. Diese hat uns im folgenden viel Kraft gekostet. Letztlich haben wir aber eine App auf den Markt gebracht, die den Kriterien der Anforderungen entspricht. Wir würden uns für das nächste Projekt dieser Art im Fachbereich wünschen, dass wir die Technologie vielleicht etwas enger vorgegeben bekommen, damit uns eine strategische Fehlentscheidung nicht mehr in dieser Art beschneidet.
+Am Ende eines Projekts wie dem Java Code Camp schaut man zurück und überlegt, was man selbst für die Zukunft aus der Projektarbeit lernen kann. Die App \textit{Broken Broke Broker} halten wir als Team für eine gelungene Anwendung. Die Zeit, die wir mit dem Code verbringen mussten war immens hoch, da wir Anfangs die Technologie-entscheidung für Java getroffen hatten. Diese hat uns im folgenden viel Kraft gekostet. Letztlich haben wir aber eine App auf den Markt gebracht, die den Kriterien der Anforderungen entspricht. Wir würden uns für das nächste Projekt dieser Art im Fachbereich wünschen, dass wir die Technologie vielleicht etwas enger vorgegeben bekommen, damit uns eine strategische Fehlentscheidung nicht mehr in dieser Art beschneidet.
 
 \newpage
 %\renewcommand{\listoffigures}{Bildverzeichnis}

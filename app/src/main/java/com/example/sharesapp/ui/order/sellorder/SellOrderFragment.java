@@ -25,6 +25,9 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * handles the listing of sell orders
+ */
 public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
@@ -32,6 +35,14 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     private View root;
     private StockRecyclerViewAdapter adapter = null;
 
+    /**
+     * observer for sellOrderList initialized
+     * setAdapter called
+     * @param inflater inflates the fragment
+     * @param container needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,13 +55,19 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
                 setAdapter(orderList);
             }
         };
-
         model.getData().getSellOrderList().observe(getViewLifecycleOwner(), observer);
 
         setAdapter(model.getData().getSellOrderList().getValue());
         return root;
     }
 
+    /**
+     * sets currentStock
+     * sends Quote and chart Requests
+     * opens stockDetailView
+     * @param view view of the row_stock_item
+     * @param position not needed
+     */
     @Override
     public void onItemClick(View view, int position) {
         // opens stock details
@@ -64,13 +81,20 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    /**
+     * initializes recyclerView
+     */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    //to bind the uebersicht und aktien from depotlist
+    /**
+     * fills the recyclerView with sellOrders
+     * calls showHideComponents
+     * @param orderList sellOrderList which has to be shown
+     */
     private void setAdapter(ArrayList<Order> orderList) {
         if (orderList != null) {
             initRecyclerView();
@@ -82,6 +106,10 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
         showHideComponents(orderList);
     }
 
+    /**
+     * shows / hides the filler depending of length / existence of orderList
+     * @param orderList sellOrderList which has to be shown
+     */
     private void showHideComponents(ArrayList<Order> orderList) {
         if (orderList == null || orderList.size() == 0) {
             root.findViewById(R.id.no_sellorder_text).setVisibility(View.VISIBLE);

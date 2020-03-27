@@ -1,5 +1,6 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
+import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
@@ -8,11 +9,13 @@ import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class RequestSymbol {
 
-    private ArrayList type = new ArrayList();
-    private Aktie  ak = new Aktie();
     private ArrayList<Aktie> akl = new ArrayList<>();
 
     public RequestSymbol(String st) throws Exception {
@@ -28,9 +31,11 @@ public class RequestSymbol {
             for (int i = 0; i < jsonay.length(); i++) {
                 jsonar.add(jsonay.get(i));
             }
+            ArrayList<String> typeList = new ArrayList<>();
+            List<String> existingTypeAbbr = Arrays.asList(Constants.TYPE_ABBREVIATIONS);
             for (Object t : jsonar) {
                 // hier wird die Zerlegung der Nachrichtenvorgenommen.
-                ak = new Aktie();
+                Aktie ak = new Aktie();
                 org.json.JSONObject json = null;
                 try {
                     json = (org.json.JSONObject) t;
@@ -120,14 +125,15 @@ public class RequestSymbol {
                     akl.add(ak);
                 }
                 try {
-                    if (((!type.contains(ak.getType())) && (!(ak.getSymbol().isEmpty())) && (!ak.getName().isEmpty()))) {
-                        type.add(ak.getType());
+                    if ((!typeList.contains(ak.getType()) && !(ak.getSymbol().isEmpty()) && !ak.getName().isEmpty() && existingTypeAbbr.contains(ak.getType()))) {
+                        typeList.add(ak.getType());
                     }
                 } catch (Exception e) {
 
                 }
             }
             Model model = new Model();
+            while (model.getWriteFlag()) ;
             while (model.getWriteFlag()) ;
             model.setWriteFlag(true);
             ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
@@ -146,12 +152,14 @@ public class RequestSymbol {
             ArrayList<Aktie> currentStockList = model.getData().getAktienList().getValue();
             if (currentStockList != null)
                 akl.removeAll(stocksToRemove);
+            akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
             model.getData().getAktienList().setValue(stockList);
             model.setWriteFlag(false);
 
-            Object[] data = type.toArray();
-            if (data.length != 0 && data[0] != "crypto") {
+            typeList.remove("crypto");
+            Object[] data = typeList.toArray();
+            if (data.length != 0) {
                 String[] sts = new String[data.length];
                 int i = 0;
                 for (Object t : data) {
@@ -161,12 +169,5 @@ public class RequestSymbol {
                 model.getData().getAvailType().setTypeAbbrList(sts);
             }
         }
-    }
-
-
-    public ArrayList<Aktie> getAk() {
-        Model m = new Model();
-        m.getData().addAktienList(akl);
-        return akl;
     }
 }

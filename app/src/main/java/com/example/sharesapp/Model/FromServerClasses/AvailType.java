@@ -20,8 +20,9 @@ public class AvailType {
     }
 
     public void setTypeAbbrList(String[] type_abbr_list1) {
+        availableTypeAbbreviations = type_abbr_list1.clone();
         ArrayList<String> l_type_list = new ArrayList<>();
-        for (String s : (type_abbr_list1)) {
+        for (String s : type_abbr_list1) {
             int i = 0;
             for (String t : Constants.TYPE_ABBREVIATIONS) {
                 if (s.equals(t)) {
@@ -31,7 +32,6 @@ public class AvailType {
                 i++;
             }
         }
-        availableTypeAbbreviations = type_abbr_list1.clone();
         availableTypes = new String[type_abbr_list1.length];
         int i = 0;
         for (Object j : l_type_list.toArray()) {

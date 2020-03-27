@@ -2,25 +2,11 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 public class DataPoint {
 
-
-    private String date;
-    private String open;
-    private String close;
     private double high;
     private double low;
-    private String volume;
-    private String uVolume;
-    private String uHigh;
+    private String date;
     private String change;
-    private String changePercent;
-    private String label;
-    private String changeOverTime;
-
-    private boolean cryptoFlag = false;
-
-    private String timestamp;
     private String rate;
-    private boolean isDerived;
     private String symbol;
 
     public String getDate() {
@@ -28,24 +14,7 @@ public class DataPoint {
     }
 
     public void setDate(String date) {
-
         this.date = date;
-    }
-
-    public String getOpen() {
-        return open;
-    }
-
-    public void setOpen(String open) {
-        this.open = open;
-    }
-
-    public String getClose() {
-        return close;
-    }
-
-    public void setClose(String close) {
-        this.close = close;
     }
 
     public double getHigh() {
@@ -53,7 +22,6 @@ public class DataPoint {
     }
 
     public void setHigh(double high) {
-
         this.high = high;
     }
 
@@ -65,14 +33,42 @@ public class DataPoint {
         this.low = low;
     }
 
-    public String getVolume() {
-        return volume;
+    public String getChange() {
+        return change;
     }
 
-    public void setVolume(String volume) {
-
-        this.volume = volume;
+    public void setChange(String change) {
+        this.change = change;
     }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    /*
+    private String volume;
+    private String timestamp;
+    private String open;
+    private String close;
+    private String uVolume;
+    private String uHigh;
+    private String changePercent;
+    private String label;
+    private String changeOverTime;
+    private boolean cryptoFlag = false;
+    private boolean isDerived;
 
     public String getUVolume() {
         return uVolume;
@@ -88,14 +84,6 @@ public class DataPoint {
 
     public void setuHigh(String uHigh) {
         this.uHigh = uHigh;
-    }
-
-    public String getChange() {
-        return change;
-    }
-
-    public void setChange(String change) {
-        this.change = change;
     }
 
     public String getChangePercent() {
@@ -122,20 +110,20 @@ public class DataPoint {
         this.changeOverTime = changeOverTime;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getOpen() {
+        return open;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setOpen(String open) {
+        this.open = open;
     }
 
-    public String getRate() {
-        return rate;
+    public String getClose() {
+        return close;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setClose(String close) {
+        this.close = close;
     }
 
     public boolean isDerived() {
@@ -154,11 +142,21 @@ public class DataPoint {
         this.cryptoFlag = cryptoFlag;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public String getVolume() {
+        return volume;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
+    public void setVolume(String volume) {
+
+        this.volume = volume;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+    */
 }

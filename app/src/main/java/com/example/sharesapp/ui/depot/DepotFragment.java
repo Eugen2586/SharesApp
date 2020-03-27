@@ -31,8 +31,9 @@ public class DepotFragment extends Fragment {
     /**
      * initialization of tabLayout and fragmentManager
      * fragmentManager loads OverviewFragment
-     * @param inflater nflates the depot fragment
-     * @param container needed for the inflation
+     *
+     * @param inflater           nflates the depot fragment
+     * @param container          needed for the inflation
      * @param savedInstanceState not needed
      * @return
      */
@@ -72,6 +73,7 @@ public class DepotFragment extends Fragment {
 
     /**
      * on tab change called, loads the different fragments for overview and statistics depending on position
+     *
      * @param position position of the tab that was selected
      */
     private void changeFragment(int position) {

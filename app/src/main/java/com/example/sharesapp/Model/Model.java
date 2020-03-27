@@ -21,14 +21,13 @@ import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 
-public class Model{
+public class Model {
     public Context context;
-    //Hierdrin werden alle Daten gestored.
     private static Data data;
     private static MutableLiveData<Boolean> writeFlag = new MutableLiveData<>();
 
-    public Data getData(){
-        if (data == null){
+    public Data getData() {
+        if (data == null) {
             //ToDo Hier die persistenz füllen!
             //Chris K.
             data = new Data();
@@ -48,7 +47,11 @@ public class Model{
         Model.writeFlag.postValue(writeFlag);
     }
 
-    //ToDo Levin
+    public Context getContext() {
+        return context;
+    }
+
+    /*
     public void doPersistanceFBackground(){
         context = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
@@ -63,7 +66,7 @@ public class Model{
         }
 
     }
-    //ToDo Levin
+
     public void getPersistanceFBackground(){
 
         context  = new DrawerActivity().getBaseContext();
@@ -625,8 +628,5 @@ public class Model{
         }
         return akl;
     }
-
-    public Context getContext() {
-        return context;
-    }
+     */
 }

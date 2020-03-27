@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Order;
-import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
 import org.jetbrains.annotations.NotNull;

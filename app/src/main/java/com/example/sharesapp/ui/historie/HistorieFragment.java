@@ -33,6 +33,7 @@ public class HistorieFragment extends Fragment {
     /**
      * currentMoney, stockValue and profit is set
      * observer for tradeList is initialized
+     *
      * @param inflater           inflates the history_fragment
      * @param container          needed for the inflation
      * @param savedInstanceState not needed

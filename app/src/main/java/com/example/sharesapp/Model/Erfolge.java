@@ -52,9 +52,9 @@ public class Erfolge {
      */
     public String[] getKaufenText() {
         String[] s = {"Kaufe erste Aktie",
-        "Kaufe erste 10 Aktien",
-        "Kaufe erste 100 Aktien",
-        "Kaufe erste 1000 Aktien"};
+                "Kaufe erste 10 Aktien",
+                "Kaufe erste 100 Aktien",
+                "Kaufe erste 1000 Aktien"};
         return s;
     }
 
@@ -139,13 +139,13 @@ public class Erfolge {
             }
         }
 
-        for (boolean b: verkaufen) {
+        for (boolean b : verkaufen) {
             if (!b) {
                 return false;
             }
         }
 
-        for (boolean b: reset) {
+        for (boolean b : reset) {
             if (!b) {
                 return false;
             }

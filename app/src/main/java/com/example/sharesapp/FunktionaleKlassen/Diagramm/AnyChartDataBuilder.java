@@ -1,8 +1,5 @@
 package com.example.sharesapp.FunktionaleKlassen.Diagramm;
 
-
-import android.renderscript.Sampler;
-
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HighLowDataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
@@ -22,6 +19,7 @@ public class AnyChartDataBuilder {
 
     /**
      * Baut aus gegeben DataPoint einer Aktie die Daten für einen Anychart Graphen.
+     *
      * @param chartData Die DataPoints der Aktie
      * @return Die Liste der Daten für den Graphen.
      */
@@ -38,6 +36,7 @@ public class AnyChartDataBuilder {
 
     /**
      * Baut aus gegeben Trades einer Aktie die Daten für einen Anychart Graphen.
+     *
      * @param tradeList Die Tradedaten für den Graphen.
      * @return Die Liste der Daten für den Graphen.
      */
@@ -48,7 +47,7 @@ public class AnyChartDataBuilder {
         float currentMoney = model.getData().getDepot().getStartMoney();
         long firstMillis = tradeList.get(0).getMillis();
         for (Trade trade : tradeList) {
-            if(trade.isKauf()) {
+            if (trade.isKauf()) {
                 currentMoney -= trade.getPreis();
             } else {
                 currentMoney += trade.getPreis();
@@ -62,10 +61,8 @@ public class AnyChartDataBuilder {
     public static ArrayList<DataEntry> getCryptoChartData(Aktie crypto) {
         ArrayList<DataEntry> dataEntries = new ArrayList<>();
         ArrayList<DataPoint> chart = crypto.getChart();
-        long firstMillis = timeStringToLong(chart.get(0).getTimestamp());
         for (DataPoint dataPoint : chart) {
-            long key = (timeStringToLong(dataPoint.getTimestamp()) - firstMillis) / 1000;
-            dataEntries.add(new ValueDataEntry(String.valueOf(key), Double.parseDouble(dataPoint.getRate())));
+            dataEntries.add(new ValueDataEntry(dataPoint.getDate(), Double.parseDouble(dataPoint.getRate())));
         }
         return dataEntries;
     }

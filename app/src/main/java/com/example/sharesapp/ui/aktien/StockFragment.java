@@ -16,16 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Crypto;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -226,7 +222,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 }
                 setAdapter(filteredStockList);
             }
-        } else if(position == 2) {
+        } else if (position == 2) {
             if (stockList != null) {
                 String type = "crypto";
                 ArrayList<Aktie> filteredStockList = new ArrayList<>();
@@ -371,6 +367,9 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();
         if (categoryScrollPositions != null && tabPosition < categoryScrollPositions.size()) {
             scrollState = categoryScrollPositions.get(tabPosition);
+        }
+        if (recyclerView == null) {
+            initRecyclerView();
         }
         recyclerView.scrollToPosition(scrollState);
     }

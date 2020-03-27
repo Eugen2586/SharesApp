@@ -12,12 +12,12 @@ import java.util.ArrayList;
 public class RequestQuotePrices {
 
 
-    public RequestQuotePrices(String s) throws ParseException {
+    public RequestQuotePrices(String s) {
         JSONParser parser = new JSONParser();
         JSONObject jsonar = null;
         try {
             jsonar = (JSONObject) parser.parse(s);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
 
@@ -35,7 +35,7 @@ public class RequestQuotePrices {
     private ArrayList<Aktie> actualizeArrayList(JSONObject jsonar, ArrayList<Aktie> list) {
         for (Aktie t : list) {
             if (jsonar.get("symbol").equals(t.getSymbol())) {
-                t.setPreis(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
+                t.setPrice(Float.parseFloat(String.valueOf((jsonar.get("latestPrice")))));
                 if (jsonar.get("change") != null) {
                     t.setChange(Float.parseFloat(String.valueOf((jsonar.get("change")))));
                 }

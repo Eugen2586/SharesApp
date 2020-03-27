@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 /**
- * configures the change between the listing of buy and sell orders
+ * Klasse, die Auflistungen der aufträge konfiguriert.
  */
 public class OrderFragment extends Fragment {
 
@@ -29,13 +29,13 @@ public class OrderFragment extends Fragment {
     private TabLayout tabLayout;
 
     /**
-     * initialization of tabLayout and fragmentManager
-     * fragmentManager loads buyOrderFragment
+     * Initalisierung des tabLayout und fragmentManager.
+     * fragmentManager lädt buyOrderFragment.
      *
-     * @param inflater           used to inflate the fragment
-     * @param container          used for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     *  @param inflater           Der Inflater des fragments.
+     *  @param container          Der Container.
+     *  @param savedInstanceState Nicht verwendet.
+     *  @return Root.
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,9 +71,9 @@ public class OrderFragment extends Fragment {
     }
 
     /**
-     * on tab change called, loads the different fragments for buy and sell order depending on position
+     * Lädt die verschiedenen Aufträgen mit passender Position.
      *
-     * @param position position of the tab that was selected
+     * @param position Position des Tabs.
      */
     private void changeFragment(int position) {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -87,7 +87,7 @@ public class OrderFragment extends Fragment {
     }
 
     /**
-     * saved tabPosition is selected
+     * Gespeicherter tabPosition wird ausgewählt.
      */
     @Override
     public void onResume() {
@@ -98,7 +98,7 @@ public class OrderFragment extends Fragment {
     }
 
     /**
-     * currently selected tabPosition is saved
+     * Ausgewählter tabPosition wird gespeichert.
      */
     @Override
     public void onPause() {

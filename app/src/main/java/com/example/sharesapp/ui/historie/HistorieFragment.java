@@ -23,7 +23,7 @@ import com.example.sharesapp.ui.utils.TradeRecyleViewAdapter;
 import java.util.ArrayList;
 
 /**
- * Enables the user to see the history of his sales and purchases
+ * Klasse, mit der die Historie der Käufe und Verkäufe dargestellt wird.
  */
 public class HistorieFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -31,13 +31,13 @@ public class HistorieFragment extends Fragment {
     private View root = null;
 
     /**
-     * currentMoney, stockValue and profit is set
-     * observer for tradeList is initialized
+     * currentMoney, stockValue and profit wird gesetzt.
+     * Observer für tradeList wird initalisiert.
      *
-     * @param inflater           inflates the history_fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           Inflator des history_fragments.
+     * @param container          Der Container.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,9 +67,9 @@ public class HistorieFragment extends Fragment {
     }
 
     /**
-     * recyclerView is filled with the tradesList
+     * recyclerView wird mit Lister der Handel gefüllt.
      *
-     * @param tradesList list of trades in the past
+     * @param tradesList Lister der Handel.
      */
     private void setAdapter(ArrayList<Trade> tradesList) {
         if (recyclerView == null) {
@@ -90,7 +90,7 @@ public class HistorieFragment extends Fragment {
     }
 
     /**
-     * initializes the recyclerView
+     * Initalisiert den recyclerView
      */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.receiptlist);

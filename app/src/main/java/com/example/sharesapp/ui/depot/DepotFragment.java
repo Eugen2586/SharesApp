@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 /**
- * Enables the user to switch between the depotOverview and the statistics
+ * Klasse, die für den Wechsel zwischen Depotübersicht und Statistik zuständig ist.
  */
 public class DepotFragment extends Fragment {
 
@@ -29,13 +29,13 @@ public class DepotFragment extends Fragment {
     private Model model = new Model();
 
     /**
-     * initialization of tabLayout and fragmentManager
-     * fragmentManager loads OverviewFragment
+     * Initalisiert tabLayout und fragmentManager.
+     * fragmentManager lädt OverviewFragment.
      *
-     * @param inflater           nflates the depot fragment
-     * @param container          needed for the inflation
-     * @param savedInstanceState not needed
-     * @return
+     * @param inflater           nflates das depot fragment.
+     * @param container          Gebraucht für die inflation.
+     * @param savedInstanceState Nicht verwendet.
+     * @return Root.
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,9 +72,8 @@ public class DepotFragment extends Fragment {
     }
 
     /**
-     * on tab change called, loads the different fragments for overview and statistics depending on position
-     *
-     * @param position position of the tab that was selected
+     * Bei Tabwechsel aufgerufen, lädt unterschiedliche Fragmente.
+     * @param position Position des ausgewählten Tabs.
      */
     private void changeFragment(int position) {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -88,7 +87,7 @@ public class DepotFragment extends Fragment {
     }
 
     /**
-     * saved tabPosition is selected
+     * Gespeicherte tabPosition wird ausgewählt.
      */
     @Override
     public void onResume() {
@@ -99,7 +98,7 @@ public class DepotFragment extends Fragment {
     }
 
     /**
-     * currently selected tabPosition is saved
+     * Ausgewählte tabPosition wird gespeichert.
      */
     @Override
     public void onPause() {

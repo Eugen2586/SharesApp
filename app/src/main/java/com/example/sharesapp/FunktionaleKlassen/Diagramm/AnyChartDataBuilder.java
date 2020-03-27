@@ -58,6 +58,12 @@ public class AnyChartDataBuilder {
         return dataList;
     }
 
+    /**
+     * Baut aus gegeben Kryptowährungen die Daten für einen Anychart Graphen.
+     * @param crypto Die Kryptowährung
+     * @return Die Liste der Daten für den Graphen.
+     */
+
     public static ArrayList<DataEntry> getCryptoChartData(Aktie crypto) {
         ArrayList<DataEntry> dataEntries = new ArrayList<>();
         ArrayList<DataPoint> chart = crypto.getChart();

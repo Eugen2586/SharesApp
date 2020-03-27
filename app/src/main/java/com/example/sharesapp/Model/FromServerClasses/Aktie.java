@@ -67,7 +67,11 @@ public class Aktie implements Comparator {
     }
 
     public void setLatestPrice(float latestPrice) {
-        this.latestPrice = latestPrice;
+        if (((int) latestPrice * 100) == 0) {
+            this.latestPrice = 0.01f;
+        } else {
+            this.latestPrice = latestPrice;
+        }
     }
 
     public String getLatestSource() {
@@ -173,8 +177,6 @@ public class Aktie implements Comparator {
         this.highTime = highTime;
         this.low = low;
         this.lowTime = lowTime;
-        this.preis = latestPrice;
-        this.latestPrice = latestPrice;
         this.latestSource = latestSource;
         this.latestUpdate = latestUpdate;
         this.latestVolume = latestVolume;
@@ -187,6 +189,13 @@ public class Aktie implements Comparator {
         this.week52Low = week52Low;
         this.lastTradeTime = lastTradeTime;
         this.isUSMarketOpen = isUSMarketOpen;
+        if (((int) latestPrice * 100) == 0) {
+            this.preis = 0.01f;
+            this.latestPrice = 0.01f;
+        } else {
+            this.preis = latestPrice;
+            this.latestPrice = latestPrice;
+        }
     }
 
 
@@ -205,7 +214,7 @@ public class Aktie implements Comparator {
     private String region;
     private String currency;
     private String enabled;
-    private float preis = 0.0f;
+    private float preis = 0;
     private int anzahl = 0;
     private float change;
     private ArrayList<DataPoint> chart;
@@ -304,7 +313,11 @@ public class Aktie implements Comparator {
     }
 
     public void setPreis(float preis) {
-        this.preis = preis;
+        if (((int) preis * 100) == 0) {
+            this.preis = 0.01f;
+        } else {
+            this.preis = preis;
+        }
     }
 
     public int getAnzahl() {
@@ -475,7 +488,15 @@ public class Aktie implements Comparator {
     private String askPrice = null;
     private String askSize = null;
     private boolean isEnabled = false;
-    private boolean cryptoFlag = false;
+
+    public void setCryptoData(String sector, String bidPrice, String bidSize, String askPrice, String askSize, boolean isEnabled) {
+        this.sector = sector;
+        this.bidPrice = bidPrice;
+        this.bidSize = bidSize;
+        this.askPrice = askPrice;
+        this.askSize = askSize;
+        this.isEnabled = isEnabled;
+    }
 
     public String getBidPrice() {
         return bidPrice;

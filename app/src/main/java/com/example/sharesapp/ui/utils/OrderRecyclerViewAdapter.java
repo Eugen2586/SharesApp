@@ -44,7 +44,7 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         Order order = mData.get(position);
         Aktie aktie = order.getStock();
         holder.mySymbolView.setText(aktie.getSymbol());
-        holder.myTextView.setText(aktie.getName());
+        holder.myTextView.setText(aktie.getCompanyName());
         holder.myTypeView.setText(aktie.getType());
 
         // set value for order number and limit

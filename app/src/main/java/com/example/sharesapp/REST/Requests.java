@@ -1,6 +1,7 @@
 package com.example.sharesapp.REST;
 
 import com.example.sharesapp.FunktionaleKlassen.Handler.AsyncTaskHandler;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,5 +100,41 @@ public class Requests {
             }
 
         });
+    }
+
+    public static void quoteAndPriceRequest(Aktie currentStock) {
+        Requests requests = new Requests();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void quoteRequest(Aktie currentStock) {
+        Requests requests = new Requests();
+        if (currentStock.isCrypto()) {
+            try {
+                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

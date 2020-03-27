@@ -29,6 +29,9 @@ import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Enables the user to see his stocks, currentMoney, stockValue and overallValue
+ */
 public class OverviewFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private View root;
@@ -40,6 +43,15 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     private TextView stockValueTextView;
     private TextView overallValueTextView;
 
+    /**
+     * initialization of swipeRefresh and depotObserver
+     * value-fields are filled
+     * difficultyDialog is opened if the difficulty is -1
+     * @param inflater nflates the depot fragment
+     * @param container needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +82,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         return root;
     }
 
+    /**
+     * initialized the functionality of the swipe refresh
+     */
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
@@ -83,6 +98,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         });
     }
 
+    /**
+     * initializes observer for depotList
+     */
     private void initializeDepotObserver() {
         final Observer<ArrayList<Aktie>> observer = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -94,6 +112,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), observer);
     }
 
+    /**
+     * fields for currentMoney, stockValue and overallValue is set
+     */
     private void setValueFields() {
         String cashValue = (new Anzeige()).makeItBeautiful(model.getData().getDepot().getGeldwert());
         TextView cashValueTextView = root.findViewById(R.id.cash_value_text);
@@ -106,21 +127,27 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         overallValueTextView.setText(overallValue);
     }
 
+    /**
+     * sends requests for all stocks in the depot
+     */
     private void sendRequestsForDepot() {
         Model model = new Model();
         ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
         Requests requests = new Requests();
         if (depotList != null) {
             for (Aktie stock: depotList) {
-                try {
-                    requests.asyncRun(RequestsBuilder.getQuote(stock.getSymbol()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Requests.quoteRequest(stock);
             }
         }
     }
 
+    /**
+     * from StockRecyclerViewAdapter implemented
+     * sends Quote and chart Requests
+     * opens StockDetailView and sets currentStock
+     * @param view view of one row_stock_item
+     * @param position not needed
+     */
     @Override
     public void onItemClick(View view, int position) {
         // opens stock details
@@ -128,24 +155,26 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         String symbol = (String) symbolView.getText();
         Aktie stock = new Aktie();
         stock.setSymbol(symbol);
+        stock.setType(model.getData().findTypeOfSymbol(symbol));
         model.getData().setCurrentStock(stock);
-        Requests requests = new Requests();
-        try {
-            requests.asyncRun(RequestsBuilder.getQuote(symbol));
-            requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(symbol, Range.oneMonth));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Requests.quoteAndPriceRequest(stock);
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    /**
+     * initializes the recyclerView
+     */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    //to bind the uebersicht und aktien from depotlist
+    /**
+     * fills the recyclerView with depotList
+     * calls showHideComponents
+     * @param depotList stockList of owned stocks
+     */
     private void setAdapter(ArrayList<Aktie> depotList) {
         initRecyclerView();
         if (depotList != null) {
@@ -157,6 +186,14 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
                 adapter.setAktien(depotList);
             }
         }
+        showHideComponents(depotList);
+    }
+
+    /**
+     * shows / hides the filler depending of length / existence of depotList
+     * @param depotList stockList of owned stocks
+     */
+    private void showHideComponents(ArrayList<Aktie> depotList) {
         if (depotList == null || depotList.size() == 0) {
             notEmptyTextView.setVisibility(View.GONE);
             emptyTextView.setVisibility(View.VISIBLE);
@@ -168,8 +205,10 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         }
     }
 
-
-
+    /**
+     * TODO
+     * @param inflater
+     */
     private void showDifficultyDialog(LayoutInflater inflater) {
 
         final Context context = OverviewFragment.this.getContext();

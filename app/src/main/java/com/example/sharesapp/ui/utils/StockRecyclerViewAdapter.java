@@ -42,23 +42,34 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
     public void onBindViewHolder(ViewHolder holder, int position) {
         Aktie aktie = mData.get(position);
         holder.mySymbolView.setText(aktie.getSymbol());
-        holder.myTextView.setText(aktie.getName());
+        if (aktie.isCrypto()) {
+            holder.myTextView.setText("");
+        } else if (aktie.getCompanyName() == null) {
+            holder.myTextView.setText("Firmenname ausstehend");
+        } else {
+            holder.myTextView.setText(aktie.getCompanyName());
+        }
         holder.myTypeView.setText(aktie.getType());
 
         // set value if stock in depot
+        String text = "";
         ArrayList<Aktie> depotList = (new Model()).getData().getDepot().getAktienImDepot().getValue();
         if (depotList != null) {
             boolean notFoundInDepot = true;
             for (Aktie depotStock : depotList) {
                 if (depotStock.getSymbol().equals(aktie.getSymbol())) {
-                    String text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautiful(depotStock.getPreis()) + "€";
+                    text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautifulEuro(depotStock.getPreis());
                     holder.myDepotValueView.setText(text);
                     notFoundInDepot = false;
                     break;
                 }
             }
             if (notFoundInDepot) {
-                holder.myDepotValueView.setText("");
+                if (aktie.getPreis() == 0) {
+                    holder.myDepotValueView.setText("Preis ausstehend");
+                } else {
+                    holder.myDepotValueView.setText(new Anzeige().makeItBeautifulEuro(aktie.getPreis()));
+                }
             }
         }
     }

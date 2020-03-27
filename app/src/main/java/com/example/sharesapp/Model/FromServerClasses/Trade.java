@@ -13,15 +13,15 @@ public class Trade {
     private boolean kauf;
     private float preis;
     private long millis;
-    private String companyName;
+    private String symbol;
 
-    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, long millis, String companyName) {
+    public Trade(Aktie aktie, int anzahl, boolean kauf, float preis, long millis, String symbol) {
         this.aktie = aktie;
         this.anzahl = anzahl;
         this.kauf = kauf;
         this.preis = preis;
         this.millis = millis;
-        this.companyName = companyName;
+        this.symbol = symbol;
     }
 
     public Aktie getAktie() {
@@ -44,8 +44,8 @@ public class Trade {
         return millis;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getSymbol() {
+        return symbol;
     }
 
 }

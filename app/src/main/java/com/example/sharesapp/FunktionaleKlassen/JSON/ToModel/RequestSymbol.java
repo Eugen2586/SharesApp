@@ -38,46 +38,49 @@ public class RequestSymbol {
                 } catch (Exception e) {
                 }
                 try {
-                    ak.setSymbol(json.getString("symbol").toString());
+                    ak.setSymbol(json.getString("symbol"));
                 } catch (Exception e) {
                 }
                 try {
-                    ak.setExchange(json.getString("exchange").toString());
-                } catch (Exception e) {
-
-                }
-                try {
-                    ak.setName(json.getString("name").toString());
+                    ak.setExchange(json.getString("exchange"));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setDate(json.getString("date").toString());
+                    ak.setName(json.getString("name"));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setType(json.getString("type").toString());
+                    ak.setDate(json.getString("date"));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setRegion(json.getString("region").toString());
+                    ak.setType(json.getString("type"));
+                    if (ak.getType().equals("temp")) {
+                        continue;
+                    }
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setCurrency(json.getString("RequestCurrency").toString());
+                    ak.setRegion(json.getString("region"));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setEnabled(json.getString("IsEnabled").toString());
+                    ak.setCurrency(json.getString("RequestCurrency"));
                 } catch (Exception e) {
 
                 }
                 try {
-                    ak.setChange(Float.parseFloat(json.getString("Change").toString()));
+                    ak.setEnabled(json.getString("IsEnabled"));
+                } catch (Exception e) {
+
+                }
+                try {
+                    ak.setChange(Float.parseFloat(json.getString("Change")));
                 } catch (Exception e) {
 
                 }
@@ -114,10 +117,6 @@ public class RequestSymbol {
                     ak.setCurrency(json.get("currency").toString());
                 } catch (JSONException e) {
                 }
-                try {
-                    ak.setEnabled(json.getBoolean("isEnabled"));
-                } catch (JSONException e) {
-                }
                 if (!akl.contains(ak)) {
                     akl.add(ak);
                 }
@@ -134,6 +133,16 @@ public class RequestSymbol {
             if (stockList == null) {
                 stockList = new ArrayList<>();
             }
+            ArrayList<Aktie> stocksToRemove = new ArrayList<>();
+            for (Aktie existingStock: stockList) {
+                for (Aktie newStock : akl) {
+                    if (newStock.getSymbol().equals(existingStock.getSymbol())) {
+                        stocksToRemove.add(newStock);
+                        break;
+                    }
+                }
+            }
+            akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
             model.getData().getAktienList().postValue(stockList);
 

@@ -83,7 +83,7 @@ public class StockDetailsFragment extends Fragment {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quoteRequest();
+                Requests.quoteRequest(model.getData().getCurrentStock());
                 openBuyDialog(inflater);
             }
         });
@@ -100,7 +100,7 @@ public class StockDetailsFragment extends Fragment {
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quoteRequest();
+                Requests.quoteRequest(model.getData().getCurrentStock());
                 openSellDialog(inflater);
             }
         });
@@ -134,7 +134,7 @@ public class StockDetailsFragment extends Fragment {
                 makeChart();
             }
         };
-        model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
+        model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
     }
 
     private void initializeSwipeRefresh() {
@@ -142,7 +142,7 @@ public class StockDetailsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                quoteAndPriceRequest();
+                Requests.quoteAndPriceRequest(model.getData().getCurrentStock());
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -568,7 +568,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().currentStock.getValue().getPreis();
+                                    limit = model.getData().getCurrentStock().getPreis();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * model.getData().getDepot().getProzent();
@@ -577,13 +577,14 @@ public class StockDetailsFragment extends Fragment {
 
                                 } else {
                                     if (!limit_b) {
-                                        Aktie a = model.getData().currentStock.getValue().getClone();
+                                        Aktie a = model.getData().getCurrentStock().getClone();
                                         // new Request if price == 0.0f
                                         if (a.getPreis() == 0.0f) {
-                                            quoteRequest();
+                                            Requests.quoteRequest(a);
                                             Toast.makeText(StockDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                         } else {
                                             a.setAnzahl(number);
+                                            a.setCompanyName(model.getData().findCompanyNameBySymbol(a.getSymbol()));
                                             model.getData().getDepot().kaufeAktie(a);
 
                                             // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
@@ -608,7 +609,8 @@ public class StockDetailsFragment extends Fragment {
                 }
             });
 
-            AlertDialog dialog = builder.create();
+            final AlertDialog dialog = builder.create();
+            dialog.show();
 
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
@@ -616,12 +618,12 @@ public class StockDetailsFragment extends Fragment {
                     if (aktie.getPreis() != 0) {
                         TextView price = buyDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                    } else {
+                        dialog.cancel();
                     }
                 }
             };
-
-            model.getData().currentStock.observe(getViewLifecycleOwner(), currentStockObserver);
-            dialog.show();
+            model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
         }
     }
 
@@ -725,7 +727,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().currentStock.getValue().getPreis();
+                                    limit = model.getData().getCurrentStock().getPreis();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * (2f - model.getData().getDepot().getProzent());
@@ -735,7 +737,7 @@ public class StockDetailsFragment extends Fragment {
 
                                 } else {
                                     if (!limit_b) {
-                                        Aktie a = model.getData().currentStock.getValue().getClone();
+                                        Aktie a = model.getData().getCurrentStock().getClone();
                                         a.setAnzahl(Integer.parseInt(kaufMenge.getText().toString()));
 
                                         // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html
@@ -766,18 +768,21 @@ public class StockDetailsFragment extends Fragment {
                 }
             });
 
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
                 public void onChanged(Aktie aktie) {
                     if (aktie.getPreis() != 0) {
                         TextView price = sellDialogView.findViewById(R.id.price_one);
                         price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                    } else {
+                        dialog.cancel();
                     }
                 }
             };
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
         }
     }
 
@@ -799,45 +804,6 @@ public class StockDetailsFragment extends Fragment {
             Toast.makeText(StockDetailsFragment.this.getContext(), "Verkaufauftrag wurde erstellt.", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(StockDetailsFragment.this.getContext(), "Angegebenes Limit befindet sich nicht über dem Einzelwert der Aktie.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void quoteRequest() {
-        Requests requests = new Requests();
-        Aktie currentStock = model.getData().getCurrentStock();
-        if (currentStock.isCrypto()) {
-            try {
-                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // same method as in StockFragment
-    private void quoteAndPriceRequest() {
-        Requests requests = new Requests();
-        Aktie currentStock = model.getData().getCurrentStock();
-        if (currentStock.isCrypto()) {
-            try {
-                requests.asyncRun(RequestsBuilder.getCryptoQuoteUrl(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                requests.asyncRun(RequestsBuilder.getQuote(currentStock.getSymbol()));
-                requests.asyncRun(RequestsBuilder.getHistoricalQuotePrices(currentStock.getSymbol(), Range.oneMonth));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

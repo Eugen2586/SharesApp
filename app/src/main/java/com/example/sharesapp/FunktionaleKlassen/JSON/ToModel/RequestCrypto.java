@@ -61,72 +61,58 @@ public class RequestCrypto {
                 try {
                     crypto.setSymbol(obj.get("symbol").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setSector(obj.get("sector").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setCalculationPrice(obj.get("calculationPrice").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setLatestPrice(obj.get("latestPrice").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setLatestSource(obj.get("latestSource").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setLatestUpdate(Long.parseLong(obj.get("latestUpdate").toString()));
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setLatestVolume(obj.get("latestVolume").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setBidPrice(obj.get("bidPrice").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setBidSize(obj.get("bidSize").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setAskPrice(obj.get("askPrice").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setAskSize(obj.get("askSize").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setHigh(obj.get("high").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setLow(obj.get("low").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 try {
                     crypto.setPreviousClose(obj.get("previousClose").toString());
                 } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 cryptoList.add(crypto);
             }

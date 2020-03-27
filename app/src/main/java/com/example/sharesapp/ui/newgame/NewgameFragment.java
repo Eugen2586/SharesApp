@@ -21,6 +21,10 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
 
+/**
+ * responsible for the NewGame Fragment
+ * Enables the user to reset the game and delete user specific data
+ */
 public class NewgameFragment extends Fragment {
 
     private Model model = new Model();
@@ -28,10 +32,10 @@ public class NewgameFragment extends Fragment {
     private TextView cash;
 
     /**
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * TODO
+     * @param inflater to inflate the newgame_fragment
+     * @param container used for the inflation
+     * @param savedInstanceState not needed
      * @return
      */
     public View onCreateView(@NonNull final LayoutInflater inflater,
@@ -49,38 +53,40 @@ public class NewgameFragment extends Fragment {
         reset_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = NewgameFragment.this.getContext();
-                if (context != null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setCancelable(true);
-                    builder.setTitle("Achtung!");
-                    builder.setMessage("Alle gekauften Aktien und Favoriten werden ebenfalls gelöscht");
-                    builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    // Bomb Sound http://soundbible.com/1234-Bomb.html
-                                    MediaPlayer.create(reset_button.getContext(), R.raw.bomb).start();
-
-                                    Toast.makeText(NewgameFragment.this.getContext(), "Betrag, alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
-                                    showDifficultyDialog(inflater);
-
-                                }
-                            });
-                    builder.setNegativeButton("Abbruch", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+                reserButtonClickHandler(inflater, reset_button);
             }
         });
         return root;
+    }
+
+    private void reserButtonClickHandler(final LayoutInflater inflater, final Button reset_button) {
+        Context context = NewgameFragment.this.getContext();
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Achtung!");
+            builder.setMessage("Alle gekauften Aktien und Favoriten werden ebenfalls gelöscht");
+            builder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Bomb Sound http://soundbible.com/1234-Bomb.html
+                            MediaPlayer.create(reset_button.getContext(), R.raw.bomb).start();
+
+                            Toast.makeText(NewgameFragment.this.getContext(), "Betrag, alle gekauften Aktien und Favoriten werden zurückgesetzt", Toast.LENGTH_LONG).show();
+                            showDifficultyDialog(inflater);
+                        }
+                    });
+            builder.setNegativeButton("Abbruch", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private void showDifficultyDialog(LayoutInflater inflater) {

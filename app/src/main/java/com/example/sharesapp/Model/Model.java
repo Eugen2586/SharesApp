@@ -466,7 +466,7 @@ public class Model{
             float ft = Float.parseFloat(json.get("preis").toString());
             long millis = Long.parseLong(json.get("date").toString());
             // (Aktie aktie, int anzahl, boolean kauf, float preis, Date date)
-            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , millis , ak.getCompanyName());
+            tr = new Trade(ak, anzahlImTrade, isKauf  , ft , millis , ak.getSymbol());
             new Model().getData().addTrade(tr);
             akl.add(tr);
         }

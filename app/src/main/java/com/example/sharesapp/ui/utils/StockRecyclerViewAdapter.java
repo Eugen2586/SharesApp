@@ -58,17 +58,17 @@ public class StockRecyclerViewAdapter extends RecyclerView.Adapter<StockRecycler
             boolean notFoundInDepot = true;
             for (Aktie depotStock : depotList) {
                 if (depotStock.getSymbol().equals(aktie.getSymbol())) {
-                    text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautifulEuro(depotStock.getPreis());
+                    text = depotStock.getAnzahl() + " x " + (new Anzeige()).makeItBeautifulEuro(depotStock.getPrice());
                     holder.myDepotValueView.setText(text);
                     notFoundInDepot = false;
                     break;
                 }
             }
             if (notFoundInDepot) {
-                if (aktie.getPreis() == 0) {
+                if (aktie.getPrice() == 0) {
                     holder.myDepotValueView.setText("Preis ausstehend");
                 } else {
-                    holder.myDepotValueView.setText(new Anzeige().makeItBeautifulEuro(aktie.getPreis()));
+                    holder.myDepotValueView.setText(new Anzeige().makeItBeautifulEuro(aktie.getPrice()));
                 }
             }
         }

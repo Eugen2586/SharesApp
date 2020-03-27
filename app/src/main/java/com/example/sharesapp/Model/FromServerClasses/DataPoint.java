@@ -4,20 +4,18 @@ public class DataPoint {
 
 
     private String date;
-    private String open;
-    private String close;
+//    private String open;
+//    private String close;
     private double high;
     private double low;
     private String volume;
-    private String uVolume;
-    private String uHigh;
+//    private String uVolume;
+//    private String uHigh;
     private String change;
-    private String changePercent;
-    private String label;
-    private String changeOverTime;
-
-    private boolean cryptoFlag = false;
-
+//    private String changePercent;
+//    private String label;
+//    private String changeOverTime;
+//    private boolean cryptoFlag = false;
     private String timestamp;
     private String rate;
     private boolean isDerived;
@@ -32,21 +30,21 @@ public class DataPoint {
         this.date = date;
     }
 
-    public String getOpen() {
-        return open;
-    }
+//    public String getOpen() {
+//        return open;
+//    }
 
-    public void setOpen(String open) {
-        this.open = open;
-    }
+//    public void setOpen(String open) {
+//        this.open = open;
+//    }
 
-    public String getClose() {
-        return close;
-    }
+//    public String getClose() {
+//        return close;
+//    }
 
-    public void setClose(String close) {
-        this.close = close;
-    }
+//    public void setClose(String close) {
+//        this.close = close;
+//    }
 
     public double getHigh() {
         return high;
@@ -74,21 +72,21 @@ public class DataPoint {
         this.volume = volume;
     }
 
-    public String getUVolume() {
-        return uVolume;
-    }
+//    public String getUVolume() {
+//        return uVolume;
+//    }
 
-    public void setUVolume(String uVolume) {
-        this.uVolume = uVolume;
-    }
+//    public void setUVolume(String uVolume) {
+//        this.uVolume = uVolume;
+//    }
 
-    public String getuHigh() {
-        return uHigh;
-    }
+//    public String getuHigh() {
+//        return uHigh;
+//    }
 
-    public void setuHigh(String uHigh) {
-        this.uHigh = uHigh;
-    }
+//    public void setuHigh(String uHigh) {
+//        this.uHigh = uHigh;
+//    }
 
     public String getChange() {
         return change;
@@ -98,29 +96,29 @@ public class DataPoint {
         this.change = change;
     }
 
-    public String getChangePercent() {
-        return changePercent;
-    }
+//    public String getChangePercent() {
+//        return changePercent;
+//    }
 
-    public void setChangePercent(String changePercent) {
-        this.changePercent = changePercent;
-    }
+//    public void setChangePercent(String changePercent) {
+//        this.changePercent = changePercent;
+//    }
 
-    public String getLabel() {
-        return label;
-    }
+//    public String getLabel() {
+//        return label;
+//    }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
+//    public void setLabel(String label) {
+//        this.label = label;
+//    }
 
-    public String getChangeOverTime() {
-        return changeOverTime;
-    }
+//    public String getChangeOverTime() {
+//        return changeOverTime;
+//    }
 
-    public void setChangeOverTime(String changeOverTime) {
-        this.changeOverTime = changeOverTime;
-    }
+//    public void setChangeOverTime(String changeOverTime) {
+//        this.changeOverTime = changeOverTime;
+//    }
 
     public String getTimestamp() {
         return timestamp;
@@ -138,21 +136,21 @@ public class DataPoint {
         this.rate = rate;
     }
 
-    public boolean isDerived() {
-        return isDerived;
-    }
+//    public boolean isDerived() {
+//        return isDerived;
+//    }
+//
+//    public void setDerived(boolean derived) {
+//        isDerived = derived;
+//    }
+//
+//    public boolean isCrypto() {
+//        return cryptoFlag;
+//    }
 
-    public void setDerived(boolean derived) {
-        isDerived = derived;
-    }
-
-    public boolean isCrypto() {
-        return cryptoFlag;
-    }
-
-    public void setCryptoFlag(boolean cryptoFlag) {
-        this.cryptoFlag = cryptoFlag;
-    }
+//    public void setCryptoFlag(boolean cryptoFlag) {
+//        this.cryptoFlag = cryptoFlag;
+//    }
 
     public String getSymbol() {
         return symbol;

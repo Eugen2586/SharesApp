@@ -33,7 +33,8 @@ public class RequestSearchURL {
             urls.add(url);
         }
     }
-    public ArrayList getURLS(){
+
+    public ArrayList getURLS() {
         return urls;
     }
 }

@@ -16,36 +16,34 @@ public class SearchedURLS {
     }
 
     public void setSecurityName(String securityName) {
-
         this.securityName = securityName;
     }
 
-    public String getSecurityName() {
-        return securityName;
-    }
+//    public String getSecurityName() {
+//        return securityName;
+//    }
 
     public void setSecurityType(String securityType) {
-
         this.securityType = securityType;
     }
 
-    public String getSecurityType() {
-        return securityType;
-    }
+//    public String getSecurityType() {
+//        return securityType;
+//    }
 
     public void setRegion(String region) {
         this.region = region;
     }
 
-    public String getRegion() {
-        return region;
-    }
+//    public String getRegion() {
+//        return region;
+//    }
 
     public void setExchange(String exchange) {
         this.exchange = exchange;
     }
 
-    public String getExchange() {
-        return exchange;
-    }
+//    public String getExchange() {
+//        return exchange;
+//    }
 }

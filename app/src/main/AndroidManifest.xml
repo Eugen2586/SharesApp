@@ -4,7 +4,6 @@
     package="com.example.sharesapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -28,16 +27,6 @@
 
         <service android:name=".FunktionaleKlassen.Services.RequestDataService" />
         <service android:name=".FunktionaleKlassen.Services.NotificationOnlyStickyService" />
-
-<!--        <service android:name=".FunktionaleKlassen.Services.StickyNotificationService" />-->
-<!--        <service android:name=".FunktionaleKlassen.Services.KotlinNotificationWorker" />-->
-<!--        on Reboot not possible https://stackoverflow.com/questions/17226410/android-boot-completed-not-received-when-application-is-closed/19856367#19856367-->
-<!--        <receiver android:name=".FunktionaleKlassen.Receiver.BootReceiver">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
-<!--                <action android:name="android.intent.action.QUICKBOOT_POWERON" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
     </application>
 
 </manifest>

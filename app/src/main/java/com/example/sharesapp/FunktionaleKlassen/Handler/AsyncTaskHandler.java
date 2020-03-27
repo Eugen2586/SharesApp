@@ -1,6 +1,5 @@
 package com.example.sharesapp.FunktionaleKlassen.Handler;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestForex;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalCryptoPrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestHistoricalQuotePrices;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestQuote;
@@ -67,13 +66,6 @@ public class AsyncTaskHandler {
             try {
                 new RequestSearch(s);
             } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else if (url.contains("crypto/symbols")) {
-            // TODO: "fx"
-            try {
-                new RequestForex(s);
-            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

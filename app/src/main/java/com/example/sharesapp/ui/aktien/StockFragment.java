@@ -16,16 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
-import com.example.sharesapp.Model.FromServerClasses.Crypto;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -49,6 +45,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     /**
      * observerInitialization is called
      * the tabLayout is initialized
+     *
      * @param inflater           inflates the history_fragment
      * @param container          needed for the inflation
      * @param savedInstanceState not needed
@@ -139,6 +136,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     /**
      * reinitialize tabs if needed
      * select saved tab and fill the recyclerView
+     *
      * @param tabLayout tabLayout for categories
      */
     private void addTabsAndStocksToCurrentlySelectedCategory(TabLayout tabLayout) {
@@ -153,7 +151,8 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     /**
      * refills tabLayout with tabs if the availableTypes have changed
      * first three tabs: portfolio, Kryptowährungen, Aktien
-     * @param tabLayout tabLayout for categories
+     *
+     * @param tabLayout      tabLayout for categories
      * @param availableTypes new availableTypes
      */
     private void addTabs(TabLayout tabLayout, String[] availableTypes) {
@@ -188,8 +187,9 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
     /**
      * adds a tab with text text to tabLayout
+     *
      * @param tabLayout tabLayout which is to be filled with tabs
-     * @param text text for the tab
+     * @param text      text for the tab
      */
     private void addTabWithString(TabLayout tabLayout, String text) {
         TabLayout.Tab tab = tabLayout.newTab();
@@ -203,6 +203,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
      * if Kryptowährungen (1) was selected : setAdapter with stockList without type != crypto
      * if Aktien (2) was selected : setAdapter with stockList without type == crypto
      * if specificCategory (>=3) was selected : setAdapter with stockList with specificCategory only
+     *
      * @param position the selected tabPosition
      */
     private void setCategory(int position) {
@@ -215,7 +216,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
             } else {
                 setAdapter(portfolioList);
             }
-        } else if( position == 1) {
+        } else if (position == 1) {
             if (stockList != null) {
                 String type = "crypto";
                 ArrayList<Aktie> filteredStockList = new ArrayList<>();
@@ -226,7 +227,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
                 }
                 setAdapter(filteredStockList);
             }
-        } else if(position == 2) {
+        } else if (position == 2) {
             if (stockList != null) {
                 String type = "crypto";
                 ArrayList<Aktie> filteredStockList = new ArrayList<>();
@@ -260,7 +261,8 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
      * from StockRecycleViewAdapter implemented
      * sends Quote and chart Requests
      * opens StockDetailView and sets currentStock
-     * @param view view of one row_stock_item
+     *
+     * @param view     view of one row_stock_item
      * @param position not needed
      */
     @Override
@@ -292,6 +294,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     /**
      * fills the recyclerView with the filtered stockList
      * if the SDK is high enough : sort the stockList
+     *
      * @param stockList stockList which is to be shown in the recyclerView
      */
     private void setAdapter(ArrayList<Aktie> stockList) {
@@ -337,6 +340,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
     /**
      * select on tabLayout the saved tabPosition
+     *
      * @param tabLayout tabLayout for categories
      */
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
@@ -345,6 +349,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
     /**
      * saves the scrollState for the currentTabPosition tabPosition
+     *
      * @param tabPosition position for which the current scrollState needs to be saved
      */
     private void saveCategoryScrollState(int tabPosition) {
@@ -364,6 +369,7 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
 
     /**
      * scroll on recyclerView to loaded scrollPosition of tabPosition
+     *
      * @param tabPosition currently selected tab
      */
     private void scrollToCategoryScrollState(int tabPosition) {

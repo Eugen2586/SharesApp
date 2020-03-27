@@ -3,7 +3,6 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
@@ -129,14 +128,14 @@ public class RequestSymbol {
                 }
             }
             Model model = new Model();
-            while(model.getWriteFlag());
+            while (model.getWriteFlag()) ;
             model.setWriteFlag(true);
             ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
             if (stockList == null) {
                 stockList = new ArrayList<>();
             }
             ArrayList<Aktie> stocksToRemove = new ArrayList<>();
-            for (Aktie existingStock: stockList) {
+            for (Aktie existingStock : stockList) {
                 for (Aktie newStock : akl) {
                     if (newStock.getSymbol().equals(existingStock.getSymbol())) {
                         stocksToRemove.add(newStock);
@@ -146,7 +145,7 @@ public class RequestSymbol {
             }
             ArrayList<Aktie> currentStockList = model.getData().getAktienList().getValue();
             if (currentStockList != null)
-            akl.removeAll(stocksToRemove);
+                akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
             model.getData().getAktienList().setValue(stockList);
             model.setWriteFlag(false);
@@ -159,7 +158,7 @@ public class RequestSymbol {
                     sts[i] = t.toString();
                     i++;
                 }
-                model.getData().getAvailType().setType_abbr_list(sts);
+                model.getData().getAvailType().setTypeAbbrList(sts);
             }
         }
     }

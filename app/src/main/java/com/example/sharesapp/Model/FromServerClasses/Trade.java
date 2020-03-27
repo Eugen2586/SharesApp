@@ -1,7 +1,5 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
-import java.util.Date;
-
 public class Trade {
     //ToDo Hier werden die Attribute eines Trades gepflegt
 

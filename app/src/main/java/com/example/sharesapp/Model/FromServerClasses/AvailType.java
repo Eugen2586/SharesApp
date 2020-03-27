@@ -19,23 +19,22 @@ public class AvailType {
         return availableTypes;
     }
 
-    public void setType_abbr_list(String[] type_abbr_list1) {
-        //ToDo Mapping here!
-        ArrayList<String> l_type_list = new ArrayList<String>();
-        for (String s: ( type_abbr_list1)) {
+    public void setTypeAbbrList(String[] type_abbr_list1) {
+        ArrayList<String> l_type_list = new ArrayList<>();
+        for (String s : (type_abbr_list1)) {
             int i = 0;
-            for (String t: Constants.TYPE_ABBREVIATIONS) {
-                if(s.equals(t)){
+            for (String t : Constants.TYPE_ABBREVIATIONS) {
+                if (s.equals(t)) {
                     l_type_list.add(Constants.TYPES[i]);
                     break;
                 }
                 i++;
             }
         }
-        availableTypeAbbreviations = (String[]) type_abbr_list1.clone();
+        availableTypeAbbreviations = type_abbr_list1.clone();
         availableTypes = new String[type_abbr_list1.length];
         int i = 0;
-        for (Object j: l_type_list.toArray()) {
+        for (Object j : l_type_list.toArray()) {
             availableTypes[i] = j.toString();
             i++;
         }

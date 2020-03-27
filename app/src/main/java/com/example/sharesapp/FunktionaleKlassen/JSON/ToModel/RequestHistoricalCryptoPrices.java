@@ -1,7 +1,5 @@
 package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 
-import android.widget.ArrayAdapter;
-
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.Model;
@@ -45,8 +43,6 @@ public class RequestHistoricalCryptoPrices {
                     db.setRate(Objects.requireNonNull(json.get("rate")).toString());
                 } catch (Exception ignored) {
                 }
-
-                db.setCryptoFlag(true);
                 dbs.add(db);
             }
         }

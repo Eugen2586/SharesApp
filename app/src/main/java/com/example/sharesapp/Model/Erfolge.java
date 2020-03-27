@@ -5,16 +5,16 @@ public class Erfolge {
     private static boolean[] kaufen = new boolean[4];
     private static boolean[] verkaufen = new boolean[4];
     private static boolean[] reset = new boolean[3];
-    private static boolean all;
+//    private static boolean all;
 
     private final int[] tradesA = {1, 10, 100, 1000};
     private final int[] resetA = {1, 5, 10};
 
-    public Erfolge(boolean[] k, boolean[] v, boolean[] r) {
-        kaufen = k;
-        verkaufen = v;
-        reset = r;
-    }
+//    public Erfolge(boolean[] k, boolean[] v, boolean[] r) {
+//        kaufen = k;
+//        verkaufen = v;
+//        reset = r;
+//    }
 
     public Erfolge() {
 
@@ -38,15 +38,15 @@ public class Erfolge {
 
     public String[] getKaufenText() {
         String[] s = {"Kaufe erste Aktie",
-        "Kaufe erste 10 Aktien",
-        "Kaufe erste 100 Aktien",
-        "Kaufe erste 1000 Aktien"};
+                "Kaufe erste 10 Aktien",
+                "Kaufe erste 100 Aktien",
+                "Kaufe erste 1000 Aktien"};
         return s;
     }
 
-    public void setKaufen(boolean[] k) {
-        kaufen = k;
-    }
+//    public void setKaufen(boolean[] k) {
+//        kaufen = k;
+//    }
 
     public boolean[] getVerkaufen() {
         this.checkVerkaufen();
@@ -64,9 +64,9 @@ public class Erfolge {
         }
     }
 
-    public void setVerkaufen(boolean[] v) {
-        verkaufen = v;
-    }
+//    public void setVerkaufen(boolean[] v) {
+//        verkaufen = v;
+//    }
 
     public String[] getVerkaufenText() {
         String[] s = {"Verkaufe erste Aktie",
@@ -98,9 +98,9 @@ public class Erfolge {
         }
     }
 
-    public void setReset(boolean[] r) {
-        reset = r;
-    }
+//    public void setReset(boolean[] r) {
+//        reset = r;
+//    }
 
     public String[] getResetText() {
         String[] s = {"Starte ein neues Spiel",
@@ -110,19 +110,19 @@ public class Erfolge {
     }
 
     public boolean getAll() {
-        for (boolean b: kaufen) {
+        for (boolean b : kaufen) {
             if (!b) {
                 return false;
             }
         }
 
-        for (boolean b: verkaufen) {
+        for (boolean b : verkaufen) {
             if (!b) {
                 return false;
             }
         }
 
-        for (boolean b: reset) {
+        for (boolean b : reset) {
             if (!b) {
                 return false;
             }

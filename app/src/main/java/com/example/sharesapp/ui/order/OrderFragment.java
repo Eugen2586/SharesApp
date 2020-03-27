@@ -31,8 +31,9 @@ public class OrderFragment extends Fragment {
     /**
      * initialization of tabLayout and fragmentManager
      * fragmentManager loads buyOrderFragment
-     * @param inflater used to inflate the fragment
-     * @param container used for the inflation
+     *
+     * @param inflater           used to inflate the fragment
+     * @param container          used for the inflation
      * @param savedInstanceState not needed
      * @return
      */
@@ -71,6 +72,7 @@ public class OrderFragment extends Fragment {
 
     /**
      * on tab change called, loads the different fragments for buy and sell order depending on position
+     *
      * @param position position of the tab that was selected
      */
     private void changeFragment(int position) {

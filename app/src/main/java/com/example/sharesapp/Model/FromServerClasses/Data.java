@@ -2,14 +2,12 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.Model;
-import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,14 +24,11 @@ public class Data {
     private MutableLiveData<Integer> resetCounter = new MutableLiveData<>();
     private ArrayList<Integer> categoryScrollPositions = null;
     private MutableLiveData<Aktie> currentStock = new MutableLiveData<>();
-    private MutableLiveData<Crypto> currentCrypto = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> buyOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
     private int previouslySelectedOrderTabIndex = 0;
     private int previouslySelectedDepotTabIndex = 0;
-    private MutableLiveData<ArrayList<Crypto>> mutableCryptoList = new MutableLiveData<>();
-
-    private MutableLiveData fortexList = new MutableLiveData();
+//    private MutableLiveData forexList = new MutableLiveData();
 
     public MutableLiveData<ArrayList<Aktie>> searches = new MutableLiveData<>();
 
@@ -45,9 +40,9 @@ public class Data {
         return searches;
     }
 
-    public void setSearches(ArrayList<Aktie> searches) {
-        this.searches.setValue(searches);
-    }
+//    public void setSearches(ArrayList<Aktie> searches) {
+//        this.searches.setValue(searches);
+//    }
 
 
     public AvailType getAvailType() {
@@ -57,9 +52,9 @@ public class Data {
         return availType;
     }
 
-    public void setAvailType(AvailType availType) {
-        this.availType = availType;
-    }
+//    public void setAvailType(AvailType availType) {
+//        this.availType = availType;
+//    }
 
 
     public Data() {
@@ -106,21 +101,21 @@ public class Data {
         return tradesMutable.getValue();
     }
 
-    public float getGewinn() {
-        float sum = Float.parseFloat("0.0");
-        if (tradelist != null) {
-            for (Object e : tradelist) {
-                Trade t = (Trade) e;
-                if (t.isKauf()) {
-                    sum -= t.getPreis();
-                } else {
-                    sum += t.getPreis();
-                }
-            }
-        }
-        sum += depot.getGeldwert();
-        return sum;
-    }
+//    public float getGewinn() {
+//        float sum = Float.parseFloat("0.0");
+//        if (tradelist != null) {
+//            for (Object e : tradelist) {
+//                Trade t = (Trade) e;
+//                if (t.isKauf()) {
+//                    sum -= t.getPreis();
+//                } else {
+//                    sum += t.getPreis();
+//                }
+//            }
+//        }
+//        sum += depot.getGeldwert();
+//        return sum;
+//    }
 
     public void addAktienList(ArrayList<Aktie> stockList) {
         // TODO: add Depot and Portfolio to stocklist on start of app and loading
@@ -194,15 +189,15 @@ public class Data {
         this.currentSearchString = currentSearchString;
     }
 
-    public Aktie findStockbySymbol(String symbol) {
-        Aktie stock = null;
-        for (Aktie s : getAktienList().getValue()) {
-            if (s.getSymbol().equals(symbol)) {
-                stock = s;
-            }
-        }
-        return stock;
-    }
+//    public Aktie findStockbySymbol(String symbol) {
+//        Aktie stock = null;
+//        for (Aktie s : getAktienList().getValue()) {
+//            if (s.getSymbol().equals(symbol)) {
+//                stock = s;
+//            }
+//        }
+//        return stock;
+//    }
 
     private void sortStockList(ArrayList<Aktie> stockList) {
         Collections.sort(stockList, new Comparator<Aktie>() {
@@ -239,7 +234,6 @@ public class Data {
         previouslySelectedOrderTabIndex = 0;
         depot.setSchwierigkeitsgrad(schwierigkeitsgrad);
         depot.applySchwierigkeitsgrad(true);
-        // TODO: aktualisiere Aktienübersicht, dass es normal angezeigt wird (tabs fehlen)
     }
 
     private void increaseResetValue() {
@@ -308,15 +302,15 @@ public class Data {
         }
     }
 
-    public ArrayList<Aktie> getBuyOrderStockList() {
-        ArrayList<Aktie> stockList = new ArrayList<>();
-        if (buyOrderList.getValue() != null) {
-            for (Order order: buyOrderList.getValue()) {
-                stockList.add(order.getStock());
-            }
-        }
-        return stockList;
-    }
+//    public ArrayList<Aktie> getBuyOrderStockList() {
+//        ArrayList<Aktie> stockList = new ArrayList<>();
+//        if (buyOrderList.getValue() != null) {
+//            for (Order order: buyOrderList.getValue()) {
+//                stockList.add(order.getStock());
+//            }
+//        }
+//        return stockList;
+//    }
 
     public MutableLiveData<ArrayList<Order>> getBuyOrderList() {
         return buyOrderList;
@@ -339,7 +333,7 @@ public class Data {
         }
     }
 
-    public void removeSellOrderList(ArrayList<Order> removeOrderList) {
+    private void removeSellOrderList(ArrayList<Order> removeOrderList) {
         ArrayList<Order> orderList = sellOrderList.getValue();
         if (orderList != null && removeOrderList != null) {
             for (Order order: removeOrderList) {
@@ -349,15 +343,15 @@ public class Data {
         }
     }
 
-    public ArrayList<Aktie> getSellOrderStockList() {
-        ArrayList<Aktie> stockList = new ArrayList<>();
-        if (sellOrderList.getValue() != null) {
-            for (Order order: sellOrderList.getValue()) {
-                stockList.add(order.getStock());
-            }
-        }
-        return stockList;
-    }
+//    public ArrayList<Aktie> getSellOrderStockList() {
+//        ArrayList<Aktie> stockList = new ArrayList<>();
+//        if (sellOrderList.getValue() != null) {
+//            for (Order order: sellOrderList.getValue()) {
+//                stockList.add(order.getStock());
+//            }
+//        }
+//        return stockList;
+//    }
 
     public MutableLiveData<ArrayList<Order>> getSellOrderList() {
         return sellOrderList;
@@ -410,39 +404,15 @@ public class Data {
     }
 
     private boolean buyOrderRequirement(Aktie stock, Order buyOrder) {
-        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPreis() < buyOrder.getLimit();
+        return stock.getSymbol().equals(buyOrder.getSymbol()) && stock.getPrice() < buyOrder.getLimit();
     }
 
     private boolean sellOrderRequirement(Aktie stock, Order sellOrder) {
-        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPreis() > sellOrder.getLimit();
+        return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPrice() > sellOrder.getLimit();
     }
-
-    public void setForex(ArrayList arl) {
-        fortexList.postValue(arl);
-    }
-    public MutableLiveData getFortexList() {
-        return fortexList;
-    }
-
 
     public void setResetCounter(int resetCounter) {
         this.resetCounter.setValue(resetCounter);
-    }
-
-    public MutableLiveData<ArrayList<Crypto>> getMutableCryptoList() {
-        return mutableCryptoList;
-    }
-
-    public void setMutableCryptoList(MutableLiveData<ArrayList<Crypto>> mutableCryptoList) {
-        this.mutableCryptoList = mutableCryptoList;
-    }
-
-    public MutableLiveData<Crypto> getCurrentCrypto() {
-        return currentCrypto;
-    }
-
-    public void setCurrentCrypto(Crypto currentCrypto) {
-        this.currentCrypto.postValue(currentCrypto);
     }
 
     public MutableLiveData<Aktie> getMutableCurrentStock() {

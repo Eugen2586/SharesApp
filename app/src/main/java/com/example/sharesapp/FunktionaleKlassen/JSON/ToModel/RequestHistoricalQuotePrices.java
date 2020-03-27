@@ -10,36 +10,34 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RequestHistoricalQuotePrices {
 
-    ArrayList dbs = null;
-    DataPoint db;
+    private ArrayList<DataPoint> dbs;
+    private DataPoint db;
 
     public RequestHistoricalQuotePrices(String s) throws ParseException {
 
-        dbs = new ArrayList();
+        dbs = new ArrayList<>();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);
-        //TODO pflege hier die Daten, die hier eingelesen werden.
         for (Object t : jsonar) {
-            //ToDo zweite Datenebene
             db = new DataPoint();
             JSONObject json = (JSONObject) t;
             System.out.println(json.toString());
-            //db.setDate(json.get("name").toString());
-            db.setDate(json.get("date").toString());
-            db.setOpen(json.get("open").toString());
-            db.setClose(json.get("close").toString());
+            db.setDate(Objects.requireNonNull(json.get("date")).toString());
             db.setHigh(Double.parseDouble(String.valueOf(json.get("high"))));
             db.setLow(Double.parseDouble(String.valueOf(json.get("low"))));
-            db.setVolume(json.get("volume").toString());
-            db.setUVolume(json.get("uVolume").toString());
-            db.setuHigh(json.get("uHigh").toString());
-            db.setChange(json.get("change").toString());
-            db.setChangePercent(json.get("changePercent").toString());
-            db.setLabel(json.get("label").toString());
-            db.setChangeOverTime(json.get("changeOverTime").toString());
+            db.setVolume(Objects.requireNonNull(json.get("volume")).toString());
+            db.setChange(Objects.requireNonNull(json.get("change")).toString());
+//            db.setOpen(Objects.requireNonNull(json.get("open")).toString());
+//            db.setClose(Objects.requireNonNull(json.get("close")).toString());
+//            db.setUVolume(Objects.requireNonNull(json.get("uVolume")).toString());
+//            db.setuHigh(Objects.requireNonNull(json.get("uHigh")).toString());
+//            db.setChangePercent(Objects.requireNonNull(json.get("changePercent")).toString());
+//            db.setLabel(Objects.requireNonNull(json.get("label")).toString());
+//            db.setChangeOverTime(Objects.requireNonNull(json.get("changeOverTime")).toString());
             dbs.add(db);
         }
         Model m = new Model();
@@ -50,11 +48,11 @@ public class RequestHistoricalQuotePrices {
         m.getData().getMutableCurrentStock().postValue(currentStock);
     }
 
-    public ArrayList getDbs() {
-        return dbs;
-    }
-
-    public void setURLS(ArrayList dbs) {
-        this.dbs = dbs;
-    }
+//    public ArrayList getDbs() {
+//        return dbs;
+//    }
+//
+//    public void setURLS(ArrayList dbs) {
+//        this.dbs = dbs;
+//    }
 }

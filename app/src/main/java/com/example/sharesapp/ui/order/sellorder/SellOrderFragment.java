@@ -35,8 +35,9 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     /**
      * observer for sellOrderList initialized
      * setAdapter called
-     * @param inflater inflates the fragment
-     * @param container needed for the inflation
+     *
+     * @param inflater           inflates the fragment
+     * @param container          needed for the inflation
      * @param savedInstanceState not needed
      * @return
      */
@@ -62,7 +63,8 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
      * from OrderRecyclerViewAdapter implemented
      * sends Quote and chart Requests
      * opens StockDetailView and sets currentStock
-     * @param view view of the row_stock_item
+     *
+     * @param view     view of the row_stock_item
      * @param position not needed
      */
     @Override
@@ -90,6 +92,7 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     /**
      * fills the recyclerView with sellOrders
      * calls showHideComponents
+     *
      * @param orderList sellOrderList which has to be shown
      */
     private void setAdapter(ArrayList<Order> orderList) {
@@ -105,6 +108,7 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
 
     /**
      * shows / hides the filler depending of length / existence of orderList
+     *
      * @param orderList sellOrderList which has to be shown
      */
     private void showHideComponents(ArrayList<Order> orderList) {

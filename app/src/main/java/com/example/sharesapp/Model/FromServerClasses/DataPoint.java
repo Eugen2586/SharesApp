@@ -9,12 +9,19 @@ public class DataPoint {
     private double high;
     private double low;
     private String volume;
-    private String UVolume;
+    private String uVolume;
     private String uHigh;
     private String change;
     private String changePercent;
     private String label;
     private String changeOverTime;
+
+    private boolean cryptoFlag = false;
+
+    private String timestamp;
+    private String rate;
+    private boolean isDerived;
+    private String symbol;
 
     public String getDate() {
         return date;
@@ -68,11 +75,11 @@ public class DataPoint {
     }
 
     public String getUVolume() {
-        return UVolume;
+        return uVolume;
     }
 
     public void setUVolume(String uVolume) {
-        this.UVolume = uVolume;
+        this.uVolume = uVolume;
     }
 
     public String getuHigh() {
@@ -113,5 +120,45 @@ public class DataPoint {
 
     public void setChangeOverTime(String changeOverTime) {
         this.changeOverTime = changeOverTime;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public boolean isDerived() {
+        return isDerived;
+    }
+
+    public void setDerived(boolean derived) {
+        isDerived = derived;
+    }
+
+    public boolean isCrypto() {
+        return cryptoFlag;
+    }
+
+    public void setCryptoFlag(boolean cryptoFlag) {
+        this.cryptoFlag = cryptoFlag;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

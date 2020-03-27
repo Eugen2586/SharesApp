@@ -25,9 +25,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.charts.Cartesian;
 import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.core.stock.series.Hilo;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
@@ -243,7 +247,7 @@ public class StockDetailsFragment extends Fragment {
         setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
         setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
         setTextFieldIdWithString(R.id.type_field, stock.getType());
-        setTextFieldIdWithTime(R.id.date_field, stock.getLatestUpdate());
+        setTextFieldIdWithLongTime(R.id.date_field, stock.getLatestUpdate());
         setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
         setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
         setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
@@ -251,9 +255,17 @@ public class StockDetailsFragment extends Fragment {
 
         setTextFieldIdWithPrice(R.id.previous_close_field, stock.getPreviousClose());
         setTextFieldIdWithString(R.id.high_field, stock.getHigh());
-        setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
+        if (stock.getHigh() != null) {
+            setTextFieldIdWithTime(R.id.high_time_field, stock.getHighTime());
+        } else {
+            ((TableRow) root.findViewById(R.id.high_time_field).getParent()).setVisibility(View.GONE);
+        }
         setTextFieldIdWithString(R.id.low_field, stock.getLow());
-        setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
+        if (stock.getLow() != null) {
+            setTextFieldIdWithTime(R.id.low_time_field, stock.getLowTime());
+        } else {
+            ((TableRow) root.findViewById(R.id.low_time_field).getParent()).setVisibility(View.GONE);
+        }
         setTextFieldIdWithPrice(R.id.week_high_field, stock.getWeek52High());
         setTextFieldIdWithPrice(R.id.week_low_field, stock.getWeek52Low());
 
@@ -396,6 +408,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    private void setTextFieldIdWithLongTime(int id, long time) {
+        setTextFieldIdWithTime(id, String.valueOf(time));
+    }
+
     private void setTextFieldIdWithTime(int id, String time) {
         TextView textView = root.findViewById(id);
         if (time != null) {
@@ -409,35 +425,64 @@ public class StockDetailsFragment extends Fragment {
         } else {
             ((TableRow) textView.getParent()).setVisibility(View.GONE);
         }
-
     }
 
     private void makeChart() {
         Aktie stock = model.getData().getCurrentStock();
         if (stock.getChart() != null) {
-            // Build the stockdatachart
-            Stock chartStock = AnyChart.stock();
-
-            Plot plot = chartStock.plot(0);
-
-            plot.yGrid(true)
-                    .yMinorGrid(true);
-
-            Table table = Table.instantiate("x");
-            table.addData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
-            TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
-
-            Hilo hilo = plot.hilo(mapping);
-            hilo.name("Stockinfo");
-
-            hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
-            chartStock.tooltip().useHtml(true);
-
-            // set the chart and make visible
-            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
-            anyChartView.setChart(chartStock);
-            anyChartView.setVisibility(View.VISIBLE);
+            if (stock.isCrypto()) {
+                makeCryptoChart(stock);
+            } else {
+                makeStockChart(stock);
+            }
+        } else {
+            root.findViewById(R.id.any_chart_view_details).setVisibility(View.GONE);
         }
+    }
+
+    private void makeCryptoChart(Aktie currentStock) {
+        Cartesian cartesian = AnyChart.line();
+        cartesian.animation(true);
+
+        // create data
+        ArrayList<DataEntry> dataList = AnyChartDataBuilder.getCryptoChartData(currentStock);
+
+        // create a line series and set the data
+        Set set = Set.instantiate();
+        set.data(dataList);
+        Mapping mapping = set.mapAs("{ x: 'x', value: 'value' }");
+        cartesian.line(mapping);
+
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
+        anyChartView.setChart(cartesian);
+
+        // change visibility of components
+        anyChartView.setVisibility(View.VISIBLE);
+    }
+
+    private void makeStockChart(Aktie currentStock) {
+        // Build the stockdatachart
+        Stock chartStock = AnyChart.stock();
+
+        Plot plot = chartStock.plot(0);
+
+        plot.yGrid(true)
+                .yMinorGrid(true);
+
+        Table table = Table.instantiate("x");
+        table.addData(AnyChartDataBuilder.getStockChartData(currentStock.getChart()));
+        TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
+
+        Hilo hilo = plot.hilo(mapping);
+        hilo.name("Stockinfo");
+
+        hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
+        chartStock.tooltip().useHtml(true);
+
+        // set the chart and make visible
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
+        anyChartView.setChart(chartStock);
+        anyChartView.setVisibility(View.VISIBLE);
     }
 
     private boolean getFoundInPortfolio() {

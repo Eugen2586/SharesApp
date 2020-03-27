@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7350 64-bit) (preloaded format=pdflatex 2020.3.24)  27 MAR 2020 20:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7350 64-bit) (preloaded format=pdflatex 2020.3.24)  27 MAR 2020 20:38
 entering extended mode
 **./Doku.tex
 (Doku.tex
@@ -927,7 +927,7 @@ lle funk-tion-ieren m�ssen.
 [4]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
 ine 85.
-<Bilder/BibliothekenLogos/Anychart.png, id=158, 301.125pt x 92.345pt>
+<Bilder/BibliothekenLogos/Anychart.png, id=160, 301.125pt x 92.345pt>
 File: Bilder/BibliothekenLogos/Anychart.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/Anychart.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/Anychart.png  used on input l
@@ -943,20 +943,20 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 104.
  [5 <./Bilder/BibliothekenLogos/Anychart.png>]
-<Bilder/BibliothekenLogos/OKHTTP.jpg, id=171, 475.7775pt x 200.75pt>
+<Bilder/BibliothekenLogos/OKHTTP.jpg, id=173, 475.7775pt x 200.75pt>
 File: Bilder/BibliothekenLogos/OKHTTP.jpg Graphic file (type jpg)
 <use Bilder/BibliothekenLogos/OKHTTP.jpg>
 Package pdftex.def Info: Bilder/BibliothekenLogos/OKHTTP.jpg  used on input lin
 e 114.
 (pdftex.def)             Requested size: 224.06775pt x 94.54242pt.
-<Bilder/BibliothekenLogos/JSONLogo.png, id=173, 386.94562pt x 112.92188pt>
+<Bilder/BibliothekenLogos/JSONLogo.png, id=175, 386.94562pt x 112.92188pt>
 File: Bilder/BibliothekenLogos/JSONLogo.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/JSONLogo.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/JSONLogo.png  used on input l
 ine 134.
 (pdftex.def)             Requested size: 224.06775pt x 65.38962pt.
  [6 <./Bilder/BibliothekenLogos/OKHTTP.jpg>]
-<Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png, id=181, 1525.7pt x 7
+<Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png, id=183, 1525.7pt x 7
 22.7pt>
 File: Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png Graphic file (ty
 pe png)
@@ -964,7 +964,7 @@ pe png)
 Package pdftex.def Info: Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.p
 ng  used on input line 145.
 (pdftex.def)             Requested size: 224.06775pt x 106.12865pt.
-<Bilder/BibliothekenLogos/AndroidLogo.png, id=183, 1204.5pt x 1413.28pt>
+<Bilder/BibliothekenLogos/AndroidLogo.png, id=185, 1204.5pt x 1413.28pt>
 File: Bilder/BibliothekenLogos/AndroidLogo.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/AndroidLogo.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/AndroidLogo.png  used on inpu
@@ -978,14 +978,14 @@ e er-set-zen die Support-
  []
 
 [8 <./Bilder/BibliothekenLogos/AndroidLogo.png>]
-<Bilder/Applikation/Navigation.jpg, id=202, 1084.05pt x 2288.55pt>
+<Bilder/Applikation/Navigation.jpg, id=204, 1084.05pt x 2288.55pt>
 File: Bilder/Applikation/Navigation.jpg Graphic file (type jpg)
 <use Bilder/Applikation/Navigation.jpg>
 Package pdftex.def Info: Bilder/Applikation/Navigation.jpg  used on input line 
 177.
 (pdftex.def)             Requested size: 224.06775pt x 473.03197pt.
  [9]
-<Bilder/Applikation/NavigationsSymbol.jpg, id=207, 1084.05pt x 2288.55pt>
+<Bilder/Applikation/NavigationsSymbol.jpg, id=209, 1084.05pt x 2288.55pt>
 File: Bilder/Applikation/NavigationsSymbol.jpg Graphic file (type jpg)
 <use Bilder/Applikation/NavigationsSymbol.jpg>
 Package pdftex.def Info: Bilder/Applikation/NavigationsSymbol.jpg  used on inpu
@@ -993,40 +993,40 @@ t line 183.
 (pdftex.def)             Requested size: 224.06775pt x 473.03197pt.
  [10 <./Bilder/Applikation/Navigation.jpg>] [11 <./Bilder/Applikation/Navigatio
 nsSymbol.jpg>]
-<Bilder/Prsi/depot.png, id=218, 92.14426pt x 163.812pt>
+<Bilder/Prsi/depot.png, id=220, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
 Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 202.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
-<Bilder/Prsi/verlauf.png, id=219, 1084.05pt x 2168.1pt>
+<Bilder/Prsi/verlauf.png, id=221, 1084.05pt x 2168.1pt>
 File: Bilder/Prsi/verlauf.png Graphic file (type png)
 <use Bilder/Prsi/verlauf.png>
 Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 207.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
  [12]
 [13 <./Bilder/Prsi/depot.png>] [14 <./Bilder/Prsi/verlauf.png>]
-<Bilder/Applikation/AktienDetails.png, id=236, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/AktienDetails.png, id=238, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/AktienDetails.png Graphic file (type png)
 <use Bilder/Applikation/AktienDetails.png>
 Package pdftex.def Info: Bilder/Applikation/AktienDetails.png  used on input li
 ne 228.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [15]
-<Bilder/Applikation/AktienDetailsAufträge.png, id=241, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/AktienDetailsAufträge.png, id=243, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/AktienDetailsAufträge.png Graphic file (type png)
 <use Bilder/Applikation/AktienDetailsAufträge.png>
 Package pdftex.def Info: Bilder/Applikation/AktienDetailsAufträge.png  used on
  input line 234.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [16 <./Bilder/Applikation/AktienDetails.png>]
-<Bilder/Applikation/AktieKaufen.png, id=248, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/AktieKaufen.png, id=250, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/AktieKaufen.png Graphic file (type png)
 <use Bilder/Applikation/AktieKaufen.png>
 Package pdftex.def Info: Bilder/Applikation/AktieKaufen.png  used on input line
  240.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [17 <./Bilder/Applikation/AktienDetailsAufträge.png>]
-<Bilder/Applikation/AktieVerkaufen.png, id=255, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/AktieVerkaufen.png, id=257, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/AktieVerkaufen.png Graphic file (type png)
 <use Bilder/Applikation/AktieVerkaufen.png>
 Package pdftex.def Info: Bilder/Applikation/AktieVerkaufen.png  used on input l
@@ -1034,7 +1034,7 @@ ine 246.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [18 <./Bilder/Applikation/AktieKaufen.png>] [19 <./Bilder/Applikation/AktieVer
 kaufen.png>]
-<Bilder/Applikation/Aktien.png, id=269, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/Aktien.png, id=271, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/Aktien.png Graphic file (type png)
 <use Bilder/Applikation/Aktien.png>
 Package pdftex.def Info: Bilder/Applikation/Aktien.png  used on input line 257.
@@ -1047,20 +1047,20 @@ Overfull \hbox (4.84941pt too wide) in paragraph at lines 265--266
  []
 
 [21 <./Bilder/Applikation/Aktien.png>]
-<Bilder/Applikation/krypto.png, id=280, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/krypto.png, id=282, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/krypto.png Graphic file (type png)
 <use Bilder/Applikation/krypto.png>
 Package pdftex.def Info: Bilder/Applikation/krypto.png  used on input line 271.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [22 <./Bilder/Applikation/krypto.png>]
-<Bilder/Applikation/Kaufauftrag.png, id=287, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/Kaufauftrag.png, id=289, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/Kaufauftrag.png Graphic file (type png)
 <use Bilder/Applikation/Kaufauftrag.png>
 Package pdftex.def Info: Bilder/Applikation/Kaufauftrag.png  used on input line
  283.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
-<Bilder/Applikation/Verkaufauftrag.png, id=288, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/Verkaufauftrag.png, id=290, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/Verkaufauftrag.png Graphic file (type png)
 <use Bilder/Applikation/Verkaufauftrag.png>
 Package pdftex.def Info: Bilder/Applikation/Verkaufauftrag.png  used on input l
@@ -1069,19 +1069,19 @@ ine 289.
 
 [23 <./Bilder/Applikation/Kaufauftrag.png>] [24 <./Bilder/Applikation/Verkaufau
 ftrag.png>]
-<Bilder/Applikation/Suche.png, id=301, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/Suche.png, id=303, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/Suche.png Graphic file (type png)
 <use Bilder/Applikation/Suche.png>
 Package pdftex.def Info: Bilder/Applikation/Suche.png  used on input line 302.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [25] [26 <./Bilder/Applikation/Suche.png>]
-<Bilder/Applikation/Historie.png, id=313, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/Historie.png, id=315, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/Historie.png Graphic file (type png)
 <use Bilder/Applikation/Historie.png>
 Package pdftex.def Info: Bilder/Applikation/Historie.png  used on input line 31
 4.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
-<Bilder/Applikation/erfolge.png, id=314, 1084.05pt x 2168.1pt>
+<Bilder/Applikation/erfolge.png, id=316, 1084.05pt x 2168.1pt>
 File: Bilder/Applikation/erfolge.png Graphic file (type png)
 <use Bilder/Applikation/erfolge.png>
 Package pdftex.def Info: Bilder/Applikation/erfolge.png  used on input line 322
@@ -1089,155 +1089,175 @@ Package pdftex.def Info: Bilder/Applikation/erfolge.png  used on input line 322
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
  [27 <./Bilder/Applikation/Historie.png>] [28 <./Bilder/Applikation/erfolge.png
 >]
-<Bilder/Applikation/erfolgeDetalien.png, id=328, 1084.05pt x 2168.1pt>
+<Bilder/Applikation/erfolgeDetalien.png, id=330, 1084.05pt x 2168.1pt>
 File: Bilder/Applikation/erfolgeDetalien.png Graphic file (type png)
 <use Bilder/Applikation/erfolgeDetalien.png>
 Package pdftex.def Info: Bilder/Applikation/erfolgeDetalien.png  used on input 
 line 341.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
  [29] [30 <./Bilder/Applikation/erfolgeDetalien.png>]
-<Bilder/Applikation/NewGame.png, id=343, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/NewGame.png, id=345, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/NewGame.png Graphic file (type png)
 <use Bilder/Applikation/NewGame.png>
 Package pdftex.def Info: Bilder/Applikation/NewGame.png  used on input line 356
 .
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [31]
-<Bilder/Applikation/NewGameBestaetigung.png, id=349, 1445.4pt x 2569.6pt>
+<Bilder/Applikation/NewGameBestaetigung.png, id=351, 1445.4pt x 2569.6pt>
 File: Bilder/Applikation/NewGameBestaetigung.png Graphic file (type png)
 <use Bilder/Applikation/NewGameBestaetigung.png>
 Package pdftex.def Info: Bilder/Applikation/NewGameBestaetigung.png  used on in
 put line 362.
 (pdftex.def)             Requested size: 224.06775pt x 398.3231pt.
  [32 <./Bilder/Applikation/NewGame.png>]
-<Bilder/Applikation/schwierigkeitsgrad.png, id=356, 1084.05pt x 2168.1pt>
+<Bilder/Applikation/schwierigkeitsgrad.png, id=358, 1084.05pt x 2168.1pt>
 File: Bilder/Applikation/schwierigkeitsgrad.png Graphic file (type png)
 <use Bilder/Applikation/schwierigkeitsgrad.png>
 Package pdftex.def Info: Bilder/Applikation/schwierigkeitsgrad.png  used on inp
 ut line 370.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
 
-[33 <./Bilder/Applikation/NewGameBestaetigung.png>] [34 <./Bilder/Applikation/s
-chwierigkeitsgrad.png>] [35]
-<Bilder/Prsi/StartenDerApp.png, id=391, 241.90375pt x 428.60126pt>
+[33 <./Bilder/Applikation/NewGameBestaetigung.png>]
+<Bilder/Diagramme/Klassendiagramm.jpg, id=365, 1661.20625pt x 1149.29375pt>
+File: Bilder/Diagramme/Klassendiagramm.jpg Graphic file (type jpg)
+<use Bilder/Diagramme/Klassendiagramm.jpg>
+Package pdftex.def Info: Bilder/Diagramme/Klassendiagramm.jpg  used on input li
+ne 380.
+(pdftex.def)             Requested size: 373.44246pt x 258.35196pt.
+ [34 <./Bilder/Applikation/schwierigkeitsgrad.png>] [35 <./Bilder/Diagramme/Kla
+ssendiagramm.jpg>]
+<Bilder/Prsi/StartenDerApp.png, id=381, 241.90375pt x 428.60126pt>
 File: Bilder/Prsi/StartenDerApp.png Graphic file (type png)
 <use Bilder/Prsi/StartenDerApp.png>
-Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 423.
+Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 428.
 
 (pdftex.def)             Requested size: 224.06775pt x 397.01892pt.
- [36 <./Bilder/Prsi/StartenDerApp.png>]
-<Bilder/Prsi/einstieg.png, id=399, 230.66174pt x 410.13225pt>
+ [36]
+[37 <./Bilder/Prsi/StartenDerApp.png>]
+<Bilder/Prsi/einstieg.png, id=407, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 434.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 439.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [37]
-[38 <./Bilder/Prsi/einstieg.png>]
+ [38 <./Bilder/Prsi/einstieg.png>]
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 446.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 451.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [39]
-<Bilder/Prsi/Portfolio.png, id=415, 230.66174pt x 410.13225pt>
+
+[39]
+<Bilder/Prsi/Portfolio.png, id=418, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/Portfolio.png Graphic file (type png)
 <use Bilder/Prsi/Portfolio.png>
-Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 458.
+Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 463.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [40 <./Bilder/Prsi/Portfolio.png>]
+ [40]
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 471.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 476.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
-
-[41] [42]
+ [41 <./Bilder/Prsi/Portfolio.png>] [42]
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 485.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 490.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
 File: Bilder/Prsi/verlauf.png Graphic file (type png)
 <use Bilder/Prsi/verlauf.png>
-Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 491.
+Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 496.
 (pdftex.def)             Requested size: 224.06775pt x 448.13554pt.
  [43] [44]
-<Bilder/Prsi/detailansicht.png, id=441, 92.14426pt x 163.812pt>
+<Bilder/Prsi/detailansicht.png, id=444, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 508.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 513.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [45]
-<Bilder/Prsi/Kaufdialog.png, id=446, 92.14426pt x 163.812pt>
+<Bilder/Prsi/Kaufdialog.png, id=449, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/Kaufdialog.png Graphic file (type png)
 <use Bilder/Prsi/Kaufdialog.png>
-Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 514.
+Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 519.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [46 <./Bilder/Prsi/detailansicht.png>]
-<Bilder/Prsi/kassenzettel.png, id=452, 92.14426pt x 163.812pt>
+<Bilder/Prsi/kassenzettel.png, id=455, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/kassenzettel.png Graphic file (type png)
 <use Bilder/Prsi/kassenzettel.png>
-Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 526.
+Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 531.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [47 <./Bilder/Prsi/Kaufdialog.png>] [48 <./Bilder/Prsi/kassenzettel.png>]
-<Bilder/Prsi/newGame.png, id=463, 92.14426pt x 163.812pt>
+<Bilder/Prsi/newGame.png, id=466, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/newGame.png Graphic file (type png)
 <use Bilder/Prsi/newGame.png>
-Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 539.
+Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 544.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [49]
-<Bilder/Prsi/diff.png, id=469, 92.14426pt x 163.812pt>
+<Bilder/Prsi/diff.png, id=472, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/diff.png Graphic file (type png)
 <use Bilder/Prsi/diff.png>
-Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 551.
+Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 556.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [50 <./Bilder/Prsi/newGame.png>]
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 560.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 565.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
  [51 <./Bilder/Prsi/diff.png>] [52]
-Underfull \hbox (badness 10000) in paragraph at lines 565--567
+Underfull \hbox (badness 10000) in paragraph at lines 570--572
 
  []
 
-[53] (Doku.lof
-Overfull \hbox (12.39091pt too wide) in paragraph at lines 27--27
+[53]
+Overfull \hbox (12.79808pt too wide) in paragraph at lines 587--588
+\T1/lmr/m/it/10 "Roy-alty Free Mu-sic from Ben-sound" \T1/lmr/m/n/10 ([]$\T1/lm
+tt/m/n/10 www . bensound . com / royalty-[]free-[]music/$[]\T1/lmr/m/n/10 ). 
+ []
+
+
+Overfull \hbox (13.05692pt too wide) in paragraph at lines 590--591
+[]\T1/lmr/m/n/10 Zu Port-fo-lio hinzuf�-gen - Sta-pling Pa-per Sound, von Web-s
+eite []$\T1/lmtt/m/n/10 http : / / soundbible .
+ []
+
+[54] (Doku.lof
+Overfull \hbox (12.39091pt too wide) in paragraph at lines 28--28
  [][] [][]\T1/lmr/m/n/10 Das Ein-stiegs-bild nach dem W�hlen des Schwierigkeits
 -grades mit gekauften 
  []
 
-[54])
+[55])
 \tf@lof=\write6
 \openout6 = `Doku.lof'.
 
- [55]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 583.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 583.
+ [56]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 600.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 600.
  (Doku.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 583.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 583.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 600.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 600.
 Package rerunfilecheck Info: File `Doku.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 583.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 600.
  ) 
 Here is how much of TeX's memory you used:
- 21782 strings out of 480932
- 420366 string characters out of 2909676
- 773963 words of memory out of 3000000
+ 21791 strings out of 480932
+ 420501 string characters out of 2909676
+ 772963 words of memory out of 3000000
  36989 multiletter control sequences out of 15000+200000
- 584916 words of font info for 67 fonts, out of 3000000 for 9000
+ 585235 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,9n,90p,10122b,1042s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\gvo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/public/eurosym/dpi600
-\feymr10.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Progr
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc} <C:\Users\gvo\AppD
+ata\Local\MiKTeX\2.9\fonts/pk/ljfour/public/eurosym/dpi600\feymr10.pk><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
 ic/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/lm/lmtt8.pfb>
-Output written on Doku.pdf (55 pages, 3057347 bytes).
+/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/lm/lmtt8.pfb>
+Output written on Doku.pdf (56 pages, 3473610 bytes).
 PDF statistics:
- 748 PDF objects out of 1000 (max. 8388607)
- 176 named destinations out of 1000 (max. 500000)
- 642 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 780 PDF objects out of 1000 (max. 8388607)
+ 182 named destinations out of 1000 (max. 500000)
+ 655 words of extra memory for PDF output out of 10000 (max. 10000000)
 

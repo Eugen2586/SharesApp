@@ -83,9 +83,9 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * if Server (0) was selected setAdapter with serverSearchList
-     * if Kryptowährungen (1) was selected setAdapter with symbol filtered list of cryptoStocks
-     * if Aktien (2) was selected setAdapter with symbol filtered list of nonCryptoStocks
+     * if Server (0) was selected : setAdapter with serverSearchList
+     * if Kryptowährungen (1) was selected : setAdapter with symbol filtered list of cryptoStocks
+     * if Aktien (2) was selected : setAdapter with symbol filtered list of nonCryptoStocks
      * @param position the position the spinner changed to
      */
     private void changedSpinnerPosition(int position) {
@@ -209,7 +209,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     }
 
     /**
-     * from TradeRecycleViewAdapter implemented
+     * from StockRecycleViewAdapter implemented
      * sends Quote and chart Requests
      * opens StockDetailView and sets currentStock
      * @param view view of one row_stock_item

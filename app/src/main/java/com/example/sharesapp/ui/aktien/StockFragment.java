@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * Enables the user to switch between his portfolio, Kryptowährungen, Aktien
+ * Aktien is also divided into smaller categories
+ * lists of stocks for the respective category are shown
+ */
 public class StockFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
 
     private Model model = new Model();
@@ -41,45 +46,21 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
     private int selectedTabsCounter = 0;
     private int numberOfTabs = 3;
 
+    /**
+     * observerInitialization is called
+     * the tabLayout is initialized
+     * @param inflater           inflates the history_fragment
+     * @param container          needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_aktien, container, false);
         tabLayout = root.findViewById(R.id.category_tab_layout);
         emptyPortfolioTextView = root.findViewById(R.id.empty_portfolio_text);
 
-        final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
-            @Override
-            public void onChanged(ArrayList<Aktie> aktienList) {
-                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
-            }
-        };
-        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
-
-        final Observer<Integer> resetObserver = new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
-            }
-        };
-        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
-
-        final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
-            @Override
-            public void onChanged(ArrayList<Aktie> depotList) {
-                setCategory(tabLayout.getSelectedTabPosition());
-            }
-        };
-        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
-
-        final Observer<ArrayList<Crypto>> cryptoObserver = new Observer<ArrayList<Crypto>>() {
-            @Override
-            public void onChanged(ArrayList<Crypto> cryptoList) {
-                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
-            }
-        };
-        model.getData().getMutableCryptoList().observe(getViewLifecycleOwner(), cryptoObserver);
-
-
+        initializeAllObservers();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -104,6 +85,39 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         return root;
     }
 
+    /**
+     * initializes observers for stockList, resetCounter and depotStocks
+     */
+    private void initializeAllObservers() {
+        final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> aktienList) {
+                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
+            }
+        };
+        model.getData().getAktienList().observe(getViewLifecycleOwner(), listObserver);
+
+        final Observer<Integer> resetObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                addTabsAndStocksToCurrentlySelectedCategory(tabLayout);
+            }
+        };
+        model.getData().getResetCounter().observe(getViewLifecycleOwner(), resetObserver);
+
+        final Observer<ArrayList<Aktie>> depotObserver = new Observer<ArrayList<Aktie>>() {
+            @Override
+            public void onChanged(ArrayList<Aktie> depotList) {
+                setCategory(tabLayout.getSelectedTabPosition());
+            }
+        };
+        model.getData().getDepot().getAktienImDepot().observe(getViewLifecycleOwner(), depotObserver);
+    }
+
+    /**
+     * reinitialize tabs if needed
+     * scroll to saved tab and position
+     */
     @Override
     public void onResume() {
         previousAvailableTypes = null;
@@ -113,12 +127,20 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         scrollToSelectedTabAfterLayout();
     }
 
+    /**
+     * save current tab and scrollPosition
+     */
     @Override
     public void onPause() {
         super.onPause();
         saveCategoryScrollState(tabLayout.getSelectedTabPosition());
     }
 
+    /**
+     * reinitialize tabs if needed
+     * select saved tab and fill the recyclerView
+     * @param tabLayout tabLayout for categories
+     */
     private void addTabsAndStocksToCurrentlySelectedCategory(TabLayout tabLayout) {
         String[] availableTypes = model.getData().getAvailType().getAvailableTypes();
         if (availableTypes != null) {
@@ -128,14 +150,17 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         }
     }
 
+    /**
+     * refills tabLayout with tabs if the availableTypes have changed
+     * first three tabs: portfolio, Kryptowährungen, Aktien
+     * @param tabLayout tabLayout for categories
+     * @param availableTypes new availableTypes
+     */
     private void addTabs(TabLayout tabLayout, String[] availableTypes) {
         boolean differentCategories = false;
         if (previousAvailableTypes != null) {
             for (String str : availableTypes) {
                 if (!previousAvailableTypes.contains(str)) {
-                    for (int i = 0; i < previousAvailableTypes.size(); i++) {
-                        System.out.println(previousAvailableTypes.get(i));
-                    }
                     differentCategories = true;
                 }
             }
@@ -161,12 +186,25 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         }
     }
 
+    /**
+     * adds a tab with text text to tabLayout
+     * @param tabLayout tabLayout which is to be filled with tabs
+     * @param text text for the tab
+     */
     private void addTabWithString(TabLayout tabLayout, String text) {
         TabLayout.Tab tab = tabLayout.newTab();
         tab.setText(text);
         tabLayout.addTab(tab);
     }
 
+    /**
+     * calls setAdapter with different stockLists depending on the selected tabPosition position
+     * if portfolio (0) was selected : setAdapter with portfolioList
+     * if Kryptowährungen (1) was selected : setAdapter with stockList without type != crypto
+     * if Aktien (2) was selected : setAdapter with stockList without type == crypto
+     * if specificCategory (>=3) was selected : setAdapter with stockList with specificCategory only
+     * @param position the selected tabPosition
+     */
     private void setCategory(int position) {
         ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
         if (position == 0) {
@@ -218,6 +256,13 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         }
     }
 
+    /**
+     * from StockRecycleViewAdapter implemented
+     * sends Quote and chart Requests
+     * opens StockDetailView and sets currentStock
+     * @param view view of one row_stock_item
+     * @param position not needed
+     */
     @Override
     public void onItemClick(View view, int position) {
         // opens stock details
@@ -235,12 +280,20 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         Navigation.findNavController(view).navigate(R.id.aktienDetailsFragment);
     }
 
+    /**
+     * initialize the recyclerView
+     */
     private void initRecyclerView() {
         recyclerView = root.findViewById(R.id.aktien_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
+    /**
+     * fills the recyclerView with the filtered stockList
+     * if the SDK is high enough : sort the stockList
+     * @param stockList stockList which is to be shown in the recyclerView
+     */
     private void setAdapter(ArrayList<Aktie> stockList) {
         emptyPortfolioTextView.setVisibility(View.GONE);
         if (stockList == null) {
@@ -261,12 +314,16 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * scrolls to the selectedTab after the layout is finished, so that the animation can be seen
+     * the user is also scrolled on the tabLayout
+     */
     private void scrollToSelectedTabAfterLayout() {
         if (getView() != null) {
             final ViewTreeObserver observer = tabLayout.getViewTreeObserver();
 
             if (observer.isAlive()) {
-                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                observer.dispatchOnGlobalLayout();
                 observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
@@ -278,10 +335,18 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         }
     }
 
+    /**
+     * select on tabLayout the saved tabPosition
+     * @param tabLayout tabLayout for categories
+     */
     private void selectPreviouslySelectedTab(TabLayout tabLayout) {
         tabLayout.selectTab(tabLayout.getTabAt(model.getData().getPreviouslySelectedTabIndex()));
     }
 
+    /**
+     * saves the scrollState for the currentTabPosition tabPosition
+     * @param tabPosition position for which the current scrollState needs to be saved
+     */
     private void saveCategoryScrollState(int tabPosition) {
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         int scrollState = 0;
@@ -297,6 +362,10 @@ public class StockFragment extends Fragment implements StockRecyclerViewAdapter.
         }
     }
 
+    /**
+     * scroll on recyclerView to loaded scrollPosition of tabPosition
+     * @param tabPosition currently selected tab
+     */
     private void scrollToCategoryScrollState(int tabPosition) {
         int scrollState = 0;
         ArrayList<Integer> categoryScrollPositions = model.getData().getCategoryScrollPositions();

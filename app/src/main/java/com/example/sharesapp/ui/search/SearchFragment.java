@@ -210,7 +210,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     /**
      * from TradeRecycleViewAdapter implemented
-     * opens StockDetailview and sets currentStock
+     * sends Quote and chart Requests
+     * opens StockDetailView and sets currentStock
      * @param view view of one row_stock_item
      * @param position not needed
      */

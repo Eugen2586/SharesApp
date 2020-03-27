@@ -59,9 +59,9 @@ public class SellOrderFragment extends Fragment implements OrderRecyclerViewAdap
     }
 
     /**
-     * sets currentStock
+     * from OrderRecyclerViewAdapter implemented
      * sends Quote and chart Requests
-     * opens stockDetailView
+     * opens StockDetailView and sets currentStock
      * @param view view of the row_stock_item
      * @param position not needed
      */

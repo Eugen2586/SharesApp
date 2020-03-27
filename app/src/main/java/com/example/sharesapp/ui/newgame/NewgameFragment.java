@@ -32,7 +32,7 @@ public class NewgameFragment extends Fragment {
     private TextView cash;
 
     /**
-     *
+     * TODO
      * @param inflater to inflate the newgame_fragment
      * @param container used for the inflation
      * @param savedInstanceState not needed

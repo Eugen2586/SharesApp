@@ -18,6 +18,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
+/**
+ * Enables the user to switch between the depotOverview and the statistics
+ */
 public class DepotFragment extends Fragment {
 
     private FragmentTransaction fragmentTransaction;
@@ -25,6 +28,14 @@ public class DepotFragment extends Fragment {
     private TabLayout tabLayout = null;
     private Model model = new Model();
 
+    /**
+     * initialization of tabLayout and fragmentManager
+     * fragmentManager loads OverviewFragment
+     * @param inflater nflates the depot fragment
+     * @param container needed for the inflation
+     * @param savedInstanceState not needed
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_depot, container, false);
@@ -59,6 +70,10 @@ public class DepotFragment extends Fragment {
         return root;
     }
 
+    /**
+     * on tab change called, loads the different fragments for overview and statistics depending on position
+     * @param position position of the tab that was selected
+     */
     private void changeFragment(int position) {
         fragmentTransaction = fragmentManager.beginTransaction();
         if (position == 0) {
@@ -70,6 +85,9 @@ public class DepotFragment extends Fragment {
         fragmentTransaction.commitNow();
     }
 
+    /**
+     * saved tabPosition is selected
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -78,6 +96,9 @@ public class DepotFragment extends Fragment {
         }
     }
 
+    /**
+     * currently selected tabPosition is saved
+     */
     @Override
     public void onPause() {
         super.onPause();

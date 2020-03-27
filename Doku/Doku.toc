@@ -23,9 +23,8 @@
 \contentsline {subsubsection}{\numberline {2.3.9}NewGame}{31}{subsubsection.2.3.9}%
 \contentsline {subsection}{\numberline {2.4}Liste aller Klassen und deren Methoden mit Funktion}{34}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Klassendiagramme}{35}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Anbindung an das Datenmodell der API}{35}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Darstellung des Datenmodells als UML}{35}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Darstellung aller Views und deren Controller als UML}{35}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.1}Darstellung des Datenmodells als UML}{35}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Darstellung aller Views und deren Controller als UML}{35}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Vorstellung der Applikation}{35}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Vorstellung der Grundfunktionen}{36}{subsection.4.1}%
 \contentsline {subsubsection}{\numberline {4.1.1}Depotübersicht}{37}{subsubsection.4.1.1}%

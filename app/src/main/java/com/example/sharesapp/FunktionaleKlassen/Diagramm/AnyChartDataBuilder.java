@@ -61,10 +61,8 @@ public class AnyChartDataBuilder {
     public static ArrayList<DataEntry> getCryptoChartData(Aktie crypto) {
         ArrayList<DataEntry> dataEntries = new ArrayList<>();
         ArrayList<DataPoint> chart = crypto.getChart();
-        long firstMillis = timeStringToLong(chart.get(0).getTimestamp());
         for (DataPoint dataPoint : chart) {
-            long key = (timeStringToLong(dataPoint.getTimestamp()) - firstMillis) / 1000;
-            dataEntries.add(new ValueDataEntry(String.valueOf(key), Double.parseDouble(dataPoint.getRate())));
+            dataEntries.add(new ValueDataEntry(dataPoint.getDate(), Double.parseDouble(dataPoint.getRate())));
         }
         return dataEntries;
     }

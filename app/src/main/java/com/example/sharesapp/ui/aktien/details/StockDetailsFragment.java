@@ -239,7 +239,7 @@ public class StockDetailsFragment extends Fragment {
         float latestPrice = stock.getPrice();
         // fill information fields
         TextView titleView = root.findViewById(R.id.name_big);
-        titleView.setText(stock.getCompanyName());
+        titleView.setText(stock.getSymbol());
 
         setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
         setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());

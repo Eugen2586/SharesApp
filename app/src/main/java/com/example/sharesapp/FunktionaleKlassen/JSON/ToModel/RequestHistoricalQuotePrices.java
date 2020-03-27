@@ -14,23 +14,20 @@ import java.util.Objects;
 
 public class RequestHistoricalQuotePrices {
 
-    private ArrayList<DataPoint> dbs;
-    private DataPoint db;
-
     public RequestHistoricalQuotePrices(String s) throws ParseException {
 
-        dbs = new ArrayList<>();
+        ArrayList<DataPoint> dbs = new ArrayList<>();
         JSONParser parser = new JSONParser();
         JSONArray jsonar = (JSONArray) parser.parse(s);
         for (Object t : jsonar) {
-            db = new DataPoint();
+            DataPoint db = new DataPoint();
             JSONObject json = (JSONObject) t;
             System.out.println(json.toString());
             db.setDate(Objects.requireNonNull(json.get("date")).toString());
             db.setHigh(Double.parseDouble(String.valueOf(json.get("high"))));
             db.setLow(Double.parseDouble(String.valueOf(json.get("low"))));
-            db.setVolume(Objects.requireNonNull(json.get("volume")).toString());
             db.setChange(Objects.requireNonNull(json.get("change")).toString());
+//            db.setVolume(Objects.requireNonNull(json.get("volume")).toString());
 //            db.setOpen(Objects.requireNonNull(json.get("open")).toString());
 //            db.setClose(Objects.requireNonNull(json.get("close")).toString());
 //            db.setUVolume(Objects.requireNonNull(json.get("uVolume")).toString());
@@ -47,12 +44,4 @@ public class RequestHistoricalQuotePrices {
 
         m.getData().getMutableCurrentStock().postValue(currentStock);
     }
-
-//    public ArrayList getDbs() {
-//        return dbs;
-//    }
-//
-//    public void setURLS(ArrayList dbs) {
-//        this.dbs = dbs;
-//    }
 }

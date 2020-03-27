@@ -15,7 +15,6 @@ import java.util.Objects;
 public class RequestHistoricalCryptoPrices {
 
     private ArrayList<DataPoint> dbs;
-    private DataPoint db;
 
     public RequestHistoricalCryptoPrices(String s) throws ParseException {
 
@@ -26,7 +25,7 @@ public class RequestHistoricalCryptoPrices {
         for (Object t : o) {
             JSONObject json = (JSONObject) t;
             if (json != null) {
-                db = new DataPoint();
+                DataPoint db = new DataPoint();
                 try {
                     db.setDate(Objects.requireNonNull(json.get("date")).toString());
                 } catch (Exception ignored) {
@@ -36,13 +35,13 @@ public class RequestHistoricalCryptoPrices {
                 } catch (Exception ignored) {
                 }
                 try {
-                    db.setTimestamp(Objects.requireNonNull(json.get("timestamp")).toString());
-                } catch (Exception ignored) {
-                }
-                try {
                     db.setRate(Objects.requireNonNull(json.get("rate")).toString());
                 } catch (Exception ignored) {
                 }
+//                try {
+//                    db.setTimestamp(Objects.requireNonNull(json.get("timestamp")).toString());
+//                } catch (Exception ignored) {
+//                }
                 dbs.add(db);
             }
         }
@@ -53,13 +52,5 @@ public class RequestHistoricalCryptoPrices {
         currentStock.setChart(dbs);
 
         model.getData().getMutableCurrentStock().postValue(currentStock);
-    }
-
-    public ArrayList getDbs() {
-        return dbs;
-    }
-
-    public void setURLS(ArrayList dbs) {
-        this.dbs = dbs;
     }
 }

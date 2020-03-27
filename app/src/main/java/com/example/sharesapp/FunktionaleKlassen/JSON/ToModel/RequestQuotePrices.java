@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RequestQuotePrices {
 
 
-    public RequestQuotePrices(String s) throws ParseException {
+    public RequestQuotePrices(String s) {
         JSONParser parser = new JSONParser();
         JSONObject jsonar = null;
         try {

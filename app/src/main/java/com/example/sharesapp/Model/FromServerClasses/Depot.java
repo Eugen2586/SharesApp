@@ -18,16 +18,9 @@ public class Depot {
     private int kaufCounter;
     private int verkaufCounter;
 
-    public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
-        this.aktienImDepot.postValue(aktienImDepot);
-        this.geldwert = geldwert;
-        this.in = in;
-    }
-
     Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
     }
-
 
     public void kaufeAktie(Aktie a) {
         if (geldwert - a.getPrice() * a.getAnzahl() >= 0) {
@@ -125,18 +118,6 @@ public class Depot {
 
     public MutableLiveData<ArrayList<Aktie>> getAktien() {
         return aktienImDepot;
-    }
-
-    public Aktie findStockbySymbol(String symbol) {
-        Aktie stock = null;
-        if (getAktienImDepot().getValue() != null) {
-            for (Aktie s : getAktienImDepot().getValue()) {
-                if (s.getSymbol().equals(symbol)) {
-                    stock = s;
-                }
-            }
-        }
-        return stock;
     }
 
     public float calculateStockValue() {
@@ -287,4 +268,24 @@ public class Depot {
     public float getStartMoney() {
         return startMoney;
     }
+
+    /*
+    public Depot(ArrayList<Aktie> aktienImDepot, float geldwert, boolean in) {
+        this.aktienImDepot.postValue(aktienImDepot);
+        this.geldwert = geldwert;
+        this.in = in;
+    }
+
+    public Aktie findStockbySymbol(String symbol) {
+        Aktie stock = null;
+        if (getAktienImDepot().getValue() != null) {
+            for (Aktie s : getAktienImDepot().getValue()) {
+                if (s.getSymbol().equals(symbol)) {
+                    stock = s;
+                }
+            }
+        }
+        return stock;
+    }
+    */
 }

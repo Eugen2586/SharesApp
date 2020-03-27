@@ -8,110 +8,90 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RequestQuote {
     public RequestQuote(String s) {
-        boolean b = false;
-        String closet = null;
-        String symbol;
         String company = null;
-        String primaryEx = null;
-        String calcPrice = null;
         String open = null;
-        String opent = null;
         String close = null;
         String high = null;
         String highT = null;
         String low = null;
         String lowT = null;
-        String latestS = null;
         float latestPrice = 0.0f;
-        String latestU = null;
         long latestUpdate = 0;
-        float price = 0.0f;
-        int latestVol = 0;
+        int latestVol;
         float prevCl = 0;
-        float chpercent = 0;
-        int prevVol = 0;
         float change = 0;
+        float week52Low;
+        float week52High;
+/*
+        float price = 0.0f;
+        String latestU = null;
+        float chpercent = 0;
+        String latestS = null;
+        String opent = null;
+        String primaryEx = null;
+        String calcPrice = null;
+        boolean b = false;
+        String closet = null;
+        String symbol;
+        int prevVol = 0;
         int lastTradeT = 0;
-        float week52Low = 0;
         int avgVol = 0;
-        float week52High = 0;
-
         String sector = null;
         String bidPrice = null;
         String bidSize = null;
         String askPrice = null;
         String askSize = null;
         boolean isEnabled = false;
+        */
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = null;
         try {
             jsonObject = (JSONObject) parse.parse(s);
-        } catch (ParseException e) {
-        }
-        try {
-            symbol = (String) jsonObject.get("symbol");
-        } catch (Exception e) {
+        } catch (ParseException ignored) {
         }
         try {
             company = (String) jsonObject.get("companyName");
-        } catch (Exception e) {
-        }
-        try {
-            primaryEx = (String) jsonObject.get("primaryExchange");
-        } catch (Exception e) {
-        }
-        try {
-            calcPrice = (String) jsonObject.get("calculationPrice");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             open = (String) jsonObject.get("open");
-        } catch (Exception e) {
-        }
-        try {
-            opent = (String) jsonObject.get("openTime");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             close = (String) jsonObject.get("close");
-        } catch (Exception e) {
-        }
-        try {
-            closet = (String) jsonObject.get("closeTime");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             high = (String) jsonObject.get("high");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             Object h = jsonObject.get("highTime");
+            assert h != null;
             highT = h.toString();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             low = (String) jsonObject.get("low");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             lowT = (String) jsonObject.get("lowTime");
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
             Object h = jsonObject.get("latestPrice");
+            assert h != null;
             latestPrice = Float.parseFloat(h.toString());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         try {
-            latestS = (String) jsonObject.get("latestSource");
-        } catch (Exception e) {
-        }
-        try {
-            latestUpdate = Long.parseLong(jsonObject.get("latestUpdate").toString());
-        } catch (Exception e) {
+            latestUpdate = Long.parseLong(Objects.requireNonNull(jsonObject.get("latestUpdate")).toString());
+        } catch (Exception ignored) {
         }
         try {
             Object h = jsonObject.get("latestVolume");
@@ -121,7 +101,38 @@ public class RequestQuote {
         }
         try {
             Object h = jsonObject.get("previousClose");
+            assert h != null;
             prevCl = Float.parseFloat(h.toString());
+        } catch (Exception ignored) {
+        }
+        try {
+            Object h = jsonObject.get("change");
+            assert h != null;
+            change = Float.parseFloat(h.toString());
+        } catch (Exception ignored) {
+        }
+        try {
+            Object h = jsonObject.get("week52High");
+            assert h != null;
+            week52High = Float.parseFloat(h.toString());
+        } catch (Exception e) {
+            week52High = -1;
+        }
+        try {
+            Object h = jsonObject.get("week52Low");
+            assert h != null;
+            week52Low = Float.parseFloat(h.toString());
+        } catch (Exception e) {
+            week52Low = -1;
+        }
+        /*
+        try {
+            latestS = (String) jsonObject.get("latestSource");
+        } catch (Exception e) {
+        }
+        try {
+            Object h = jsonObject.get("changePercent");
+            chpercent = Float.parseFloat(h.toString());
         } catch (Exception e) {
         }
         try {
@@ -131,32 +142,10 @@ public class RequestQuote {
             prevVol = -1;
         }
         try {
-            Object h = jsonObject.get("change");
-            change = Float.parseFloat(h.toString());
-        } catch (Exception e) {
-        }
-        try {
-            Object h = jsonObject.get("changePercent");
-            chpercent = Float.parseFloat(h.toString());
-        } catch (Exception e) {
-        }
-        try {
             Object h = jsonObject.get("avgTotalVolume");
             avgVol = Integer.parseInt(h.toString());
         } catch (Exception e) {
             avgVol = -1;
-        }
-        try {
-            Object h = jsonObject.get("week52High");
-            week52High = Float.parseFloat(h.toString());
-        } catch (Exception e) {
-            week52High = -1;
-        }
-        try {
-            Object h = jsonObject.get("week52Low");
-            week52Low = Float.parseFloat(h.toString());
-        } catch (Exception e) {
-            week52Low = -1;
         }
         try {
             Object h = jsonObject.get("lastTradeTime");
@@ -172,6 +161,10 @@ public class RequestQuote {
         try {
             Object h = jsonObject.get("price");
             price = Float.parseFloat(h.toString());
+        } catch (Exception e) {
+        }
+        try {
+            symbol = (String) jsonObject.get("symbol");
         } catch (Exception e) {
         }
         try {
@@ -197,18 +190,37 @@ public class RequestQuote {
         try {
             isEnabled = Boolean.parseBoolean(jsonObject.get("IsEnabled").toString());
         } catch (Exception e) {
-
         }
+        try {
+            primaryEx = (String) jsonObject.get("primaryExchange");
+        } catch (Exception e) {
+        }
+        try {
+            calcPrice = (String) jsonObject.get("calculationPrice");
+        } catch (Exception e) {
+        }
+        try {
+            opent = (String) jsonObject.get("openTime");
+        } catch (Exception e) {
+        }
+        try {
+            latestS = (String) jsonObject.get("latestSource");
+        } catch (Exception e) {
+        }
+        */
 
         //order to data sheet
-        ArrayList<Aktie> arrl = new Model().getData().getAktienList().getValue();
-        int i = 0;
-        for (Aktie c : arrl) {
-            if (c.getSymbol().equals(jsonObject.get("symbol"))) {
-                c.setAdditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestUpdate, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
-//                c.setCryptoData(sector, bidPrice, bidSize, askPrice, askSize, isEnabled);
-                new Model().getData().getAktienList().postValue(arrl);
-                break;
+        ArrayList<Aktie> stockList = new Model().getData().getAktienList().getValue();
+        if (stockList != null) {
+            for (Aktie c : stockList) {
+                if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                    c.setAdditionalData(company, open, close, high, highT,
+                            low, lowT, latestPrice, latestUpdate, latestVol, prevCl, change,
+                            week52High, week52Low);
+
+                    new Model().getData().getAktienList().postValue(stockList);
+                    break;
+                }
             }
         }
     }

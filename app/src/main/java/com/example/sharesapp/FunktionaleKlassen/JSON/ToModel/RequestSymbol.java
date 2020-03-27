@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class RequestSymbol {
 
-    ArrayList type = new ArrayList();
-    Aktie ak = new Aktie();
-    ArrayList<Aktie> akl = new ArrayList<>();
+    private ArrayList type = new ArrayList();
+    private Aktie  ak = new Aktie();
+    private ArrayList<Aktie> akl = new ArrayList<>();
 
     public RequestSymbol(String st) throws Exception {
         JSONParser parser = new JSONParser();

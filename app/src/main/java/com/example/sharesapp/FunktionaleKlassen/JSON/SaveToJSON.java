@@ -17,7 +17,7 @@ public class SaveToJSON {
     private Model model = new Model();
 
     public SaveToJSON(SharedPreferences.Editor editor) {
-        String s = null;
+        String s;
         //Here it should all Data from the Model get putted!
 
         //Trades
@@ -40,7 +40,7 @@ public class SaveToJSON {
 
         }
         s = null;
-        Float f = 5000.0f;
+        float f = 5000.0f;
         try {
             f = new Model().getData().getDepot().getGeldwert();
             editor.putFloat("Geldwert", f);
@@ -63,7 +63,7 @@ public class SaveToJSON {
         try {
             editor.putString("AktienSymbole", s);
             editor.commit();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         s = null;
@@ -72,7 +72,7 @@ public class SaveToJSON {
         try {
             editor.putInt("Schwierigkeitsgrad", model.getData().getDepot().getSchwierigkeitsgrad());
             editor.commit();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         s = null;
@@ -80,14 +80,14 @@ public class SaveToJSON {
         try {
             editor.putInt("KaufCounter", model.getData().getDepot().getKaufCounter());
             editor.commit();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         s = null;
         try {
             editor.putInt("VerkaufCounter", model.getData().getDepot().getVerkaufCounter());
             editor.commit();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         s = null;

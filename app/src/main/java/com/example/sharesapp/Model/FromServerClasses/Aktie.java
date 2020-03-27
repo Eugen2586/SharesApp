@@ -5,7 +5,9 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
+/**
+ * Klasse zum Abbilden einer Aktie.
+ */
 public class Aktie implements Comparator {
     private int menge;
     private String companyName;
@@ -58,6 +60,9 @@ public class Aktie implements Comparator {
         this.price = preis;
     }
 
+    /**
+     * Setzen von erweiterten Attributen innerhalb der Klasse.
+     */
     public void setAdditionalData(
             String companyName,
             String open,
@@ -246,6 +251,9 @@ public class Aktie implements Comparator {
         return week52Low;
     }
 
+    /**
+     * Führt einen Stringvergleich der Symbole der beiden Objekte o1 und o2 aus
+     */
     @Override
     public int compare(Object o1, Object o2) {
         Aktie t1, t2;
@@ -261,6 +269,9 @@ public class Aktie implements Comparator {
         return new Aktie(this.menge, this.exchange, this.symbol, this.name, this.date, this.type, this.region, this.currency, this.enabled, this.price);
     }
 
+    /**
+     * Methode um aus einer Aktie ein JSON Object zu casten.
+     */
     public JSONObject getJsonFromAktie() {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
         obj.put("menge", menge);

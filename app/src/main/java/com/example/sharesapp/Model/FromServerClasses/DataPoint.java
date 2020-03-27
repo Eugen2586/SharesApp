@@ -1,5 +1,8 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+/**
+ * Diese Klasse beschreibt für die Diagramme relevante Datenpunkte
+ */
 public class DataPoint {
 
     private double high;

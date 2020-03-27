@@ -11,6 +11,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Hauptklasse zum Stagen der Daten für die App
+ */
 public class Data {
     private MutableLiveData<ArrayList<Order>> sellOrderList = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Trade>> tradesMutable = new MutableLiveData<>();
@@ -177,10 +180,10 @@ public class Data {
         return previouslySelectedTabIndex;
     }
 
+    /**
+     * Funktion zum erhöhen des Reset Value
+     */
     private void increaseResetValue() {
-        /**
-         * Erhöht ResetCounter um 1
-         */
         if (resetCounter.getValue() == null) {
             resetCounter.setValue(1);
         } else {
@@ -189,7 +192,7 @@ public class Data {
     }
 
     /**
-     * @return resetCounter
+     * Gibt die Anzahl der Resets des Spiels zurück
      */
     public MutableLiveData<Integer> getResetCounter() {
         return resetCounter;
@@ -284,6 +287,9 @@ public class Data {
         return sellOrderList;
     }
 
+    /**
+     * Methode zum Neustarten des Spiels und zurücksetzen der Spielerwerte
+     */
     public void resetData() {
         tradelist = new ArrayList<>();
         tradesMutable = new MutableLiveData<>();
@@ -313,6 +319,10 @@ public class Data {
         });
     }
 
+    /**
+     * Prüft die Kauf und Verkaufauftragsliste ob Käufe oder Verkäufe möglich sind
+     * @param stockList aktuelle Liste aller Aktien
+     */
     public void checkOrderListsForBuyingSelling(ArrayList<Aktie> stockList) {
         Model model = new Model();
         System.out.println("...............................................................................Handle Stocklist Change");
@@ -367,6 +377,11 @@ public class Data {
         return stock.getSymbol().equals(sellOrder.getSymbol()) && stock.getPrice() > sellOrder.getLimit();
     }
 
+    /**
+     * Suchen des Typs zum Symbol
+     * @param symbol der zu suchenden Aktie
+     * @return Typ der zu suchenden Aktie
+     */
     public String findTypeOfSymbol(String symbol) {
         String type = "";
         ArrayList<Aktie> stockList = aktien.getValue();
@@ -380,6 +395,11 @@ public class Data {
         return type;
     }
 
+    /**
+     * Suchen einer Company nach Ihrem Symbol.
+     * @param symbol Zu suchendes Symbol
+     * @return Gibt den Company Namen zurück
+     */
     public String findCompanyNameBySymbol(String symbol) {
         String company = "";
         ArrayList<Aktie> stockList = aktien.getValue();

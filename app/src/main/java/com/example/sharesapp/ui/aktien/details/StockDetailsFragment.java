@@ -25,9 +25,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.charts.Cartesian;
 import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.core.stock.series.Hilo;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
 import com.example.sharesapp.FunktionaleKlassen.Diagramm.AnyChartDataBuilder;
@@ -426,29 +430,59 @@ public class StockDetailsFragment extends Fragment {
     private void makeChart() {
         Aktie stock = model.getData().getCurrentStock();
         if (stock.getChart() != null) {
-            // Build the stockdatachart
-            Stock chartStock = AnyChart.stock();
-
-            Plot plot = chartStock.plot(0);
-
-            plot.yGrid(true)
-                    .yMinorGrid(true);
-
-            Table table = Table.instantiate("x");
-            table.addData(AnyChartDataBuilder.getStockChartData(stock.getChart()));
-            TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
-
-            Hilo hilo = plot.hilo(mapping);
-            hilo.name("Stockinfo");
-
-            hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
-            chartStock.tooltip().useHtml(true);
-
-            // set the chart and make visible
-            AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
-            anyChartView.setChart(chartStock);
-            anyChartView.setVisibility(View.VISIBLE);
+            if (stock.isCrypto()) {
+                makeCryptoChart(stock);
+            } else {
+                makeStockChart(stock);
+            }
+        } else {
+            root.findViewById(R.id.any_chart_view_details).setVisibility(View.GONE);
         }
+    }
+
+    private void makeCryptoChart(Aktie currentStock) {
+        Cartesian cartesian = AnyChart.line();
+        cartesian.animation(true);
+
+        // create data
+        ArrayList<DataEntry> dataList = AnyChartDataBuilder.getCryptoChartData(currentStock);
+
+        // create a line series and set the data
+        Set set = Set.instantiate();
+        set.data(dataList);
+        Mapping mapping = set.mapAs("{ x: 'x', value: 'value' }");
+        cartesian.line(mapping);
+
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
+        anyChartView.setChart(cartesian);
+
+        // change visibility of components
+        anyChartView.setVisibility(View.VISIBLE);
+    }
+
+    private void makeStockChart(Aktie currentStock) {
+        // Build the stockdatachart
+        Stock chartStock = AnyChart.stock();
+
+        Plot plot = chartStock.plot(0);
+
+        plot.yGrid(true)
+                .yMinorGrid(true);
+
+        Table table = Table.instantiate("x");
+        table.addData(AnyChartDataBuilder.getStockChartData(currentStock.getChart()));
+        TableMapping mapping = table.mapAs("{'high': 'high', 'low': 'low'}");
+
+        Hilo hilo = plot.hilo(mapping);
+        hilo.name("Stockinfo");
+
+        hilo.tooltip().format("Max: {%High}&deg;<br/>Min: {%Low}&deg;");
+        chartStock.tooltip().useHtml(true);
+
+        // set the chart and make visible
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view_details);
+        anyChartView.setChart(chartStock);
+        anyChartView.setVisibility(View.VISIBLE);
     }
 
     private boolean getFoundInPortfolio() {

@@ -26,15 +26,29 @@ public class RequestHistoricalCryptoPrices {
         JSONArray jsonar = (JSONArray) parser.parse(s);
         JSONArray o = (JSONArray) jsonar.get(0);
         for (Object t : o) {
-            db = new DataPoint();
             JSONObject json = (JSONObject) t;
-            System.out.println(json.toString());
-            db.setDate(Objects.requireNonNull(json.get("date")).toString());
-            db.setSymbol(Objects.requireNonNull(json.get("symbol")).toString());
-            db.setTimestamp(Objects.requireNonNull(json.get("timestamp")).toString());
-            db.setRate(Objects.requireNonNull(json.get("rate")).toString());
-            db.setCryptoFlag(true);
-            dbs.add(db);
+            if (json != null) {
+                db = new DataPoint();
+                try {
+                    db.setDate(Objects.requireNonNull(json.get("date")).toString());
+                } catch (Exception ignored) {
+                }
+                try {
+                    db.setSymbol(Objects.requireNonNull(json.get("symbol")).toString());
+                } catch (Exception ignored) {
+                }
+                try {
+                    db.setTimestamp(Objects.requireNonNull(json.get("timestamp")).toString());
+                } catch (Exception ignored) {
+                }
+                try {
+                    db.setRate(Objects.requireNonNull(json.get("rate")).toString());
+                } catch (Exception ignored) {
+                }
+
+                db.setCryptoFlag(true);
+                dbs.add(db);
+            }
         }
         Model model = new Model();
 

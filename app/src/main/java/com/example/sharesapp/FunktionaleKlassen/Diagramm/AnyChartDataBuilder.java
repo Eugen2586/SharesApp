@@ -1,9 +1,12 @@
 package com.example.sharesapp.FunktionaleKlassen.Diagramm;
 
 
+import android.renderscript.Sampler;
+
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HighLowDataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.DataPoint;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
 import com.example.sharesapp.Model.Model;
@@ -54,5 +57,23 @@ public class AnyChartDataBuilder {
         }
 
         return dataList;
+    }
+
+    public static ArrayList<DataEntry> getCryptoChartData(Aktie crypto) {
+        ArrayList<DataEntry> dataEntries = new ArrayList<>();
+        ArrayList<DataPoint> chart = crypto.getChart();
+        long firstMillis = timeStringToLong(chart.get(0).getTimestamp());
+        for (DataPoint dataPoint : chart) {
+            long key = (timeStringToLong(dataPoint.getTimestamp()) - firstMillis) / 1000;
+            dataEntries.add(new ValueDataEntry(String.valueOf(key), Double.parseDouble(dataPoint.getRate())));
+        }
+        return dataEntries;
+    }
+
+    private static long timeStringToLong(String time) {
+        if (time != null) {
+            return Long.parseLong(time);
+        }
+        return 0;
     }
 }

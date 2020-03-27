@@ -584,6 +584,7 @@ public class StockDetailsFragment extends Fragment {
                                             Toast.makeText(StockDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                         } else {
                                             a.setAnzahl(number);
+                                            a.setCompanyName(model.getData().findCompanyNameBySymbol(a.getSymbol()));
                                             model.getData().getDepot().kaufeAktie(a);
 
                                             // Poker-Chip Sound http://soundbible.com/2204-Poker-Chips.html

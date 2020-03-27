@@ -387,6 +387,7 @@ public class Data {
                             // buy stock to currentPrice
                             Aktie stockClone = buyOrder.getStock().getClone();
                             stockClone.setAnzahl(buyOrder.getNumber());
+                            stockClone.setCompanyName(buyOrder.getStock().getCompanyName());
                             model.getData().getDepot().kaufeAktie(stockClone);
                             buyOrderListToRemove.add(buyOrder);
                             System.out.println("...............................................................................Kaufe Aktie " + stockClone.getSymbol());
@@ -469,5 +470,18 @@ public class Data {
             }
         }
         return type;
+    }
+
+    public String findCompanyNameBySymbol(String symbol) {
+        String company = "";
+        ArrayList<Aktie> stockList = aktien.getValue();
+        if (stockList != null) {
+            for (Aktie stock : stockList) {
+                if (stock.getSymbol().equals(symbol)) {
+                    company = stock.getCompanyName();
+                }
+            }
+        }
+        return company;
     }
 }

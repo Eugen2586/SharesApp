@@ -21,14 +21,9 @@ import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SearchFragment extends Fragment implements StockRecyclerViewAdapter.ItemClickListener {
@@ -124,58 +119,71 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void setAdapter(ArrayList<Aktie> stockList) {
-        ArrayList<Aktie> exList = model.getData().getAktienList().getValue();
-        if (stockList != null) {
-            ArrayList<Aktie> filteredStockList;
-            if (searchIndex == 0) {
-                // do not filter
-                filteredStockList = stockList;
-            } else {
-                // filter for searched type
-                String searchType = model.getData().getAvailType().getAvailableTypeAbbreviations()[searchIndex - 1];
-                filteredStockList = new ArrayList<>();
-                for (Aktie stock : stockList) {
-                    if (stock.getType().equals(searchType)) {
-                        filteredStockList.add(stock);
-                    }
-                }
-            }
+    private void setAdapter(ArrayList<Aktie> searchList) {
+        if (searchList != null) {
+            addSearchesToStockList(searchList);
 
-            boolean stocksFound = filteredStockList.size() != 0;
-
-            initRecyclerView();
-            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), filteredStockList);
-            adapter.setClickListener(SearchFragment.this);
-            adapter.setAktien(filteredStockList);
-            recyclerView.setAdapter(adapter);
-
-            // add stocks to existingStockList if not yet included
             ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
-            ArrayList<Aktie> stocksToAdd = new ArrayList<>();
+            ArrayList<Aktie> referencedStockList = new ArrayList<>();
             if (existingStockList != null) {
-                for (Aktie stock : stockList) {
-                    String symbol = stock.getSymbol();
-                    boolean found = false;
+                for (Aktie stock : searchList) {
                     for (Aktie existingStock : existingStockList) {
-                        if (symbol.equals(existingStock.getSymbol())) {
-                            found = true;
+                        if (stock.getSymbol().equals(existingStock.getSymbol())) {
+                            referencedStockList.add(existingStock);
                             break;
                         }
                     }
-                    if (!found) {
-                        stocksToAdd.add(stock);
-                    }
                 }
-                model.getData().addAktienList(stocksToAdd);
-            } else {
-                model.getData().addAktienList(stockList);
             }
+//            ArrayList<Aktie> filteredStockList;
+//            if (searchIndex == 0) {
+//                // do not filter
+//                filteredStockList = stockList;
+//            } else {
+//                // filter for searched type
+//                String searchType = model.getData().getAvailType().getAvailableTypeAbbreviations()[searchIndex - 1];
+//                filteredStockList = new ArrayList<>();
+//                for (Aktie stock : stockList) {
+//                    if (stock.getType().equals(searchType)) {
+//                        filteredStockList.add(stock);
+//                    }
+//                }
+//            }
+
+            initRecyclerView();
+            StockRecyclerViewAdapter adapter = new StockRecyclerViewAdapter(SearchFragment.this.getContext(), referencedStockList);
+            adapter.setClickListener(SearchFragment.this);
+            adapter.setAktien(referencedStockList);
+            recyclerView.setAdapter(adapter);
 
             recyclerView.scrollToPosition(model.getData().getSearchScrollPosition());
         }
 
-        showHideComponents(stockList);
+        showHideComponents(searchList);
+    }
+
+    private void addSearchesToStockList(ArrayList<Aktie> searchList) {
+        // add stocks to existingStockList if not yet included
+        ArrayList<Aktie> existingStockList = model.getData().getAktienList().getValue();
+        ArrayList<Aktie> stocksToAdd = new ArrayList<>();
+        if (existingStockList != null) {
+            for (Aktie stock : searchList) {
+                String symbol = stock.getSymbol();
+                boolean found = false;
+                for (Aktie existingStock : existingStockList) {
+                    if (symbol.equals(existingStock.getSymbol())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    stocksToAdd.add(stock);
+                }
+            }
+            model.getData().addAktienList(stocksToAdd);
+        } else {
+            model.getData().addAktienList(searchList);
+        }
     }
 
     @Override

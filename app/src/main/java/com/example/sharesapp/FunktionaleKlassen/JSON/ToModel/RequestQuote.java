@@ -28,6 +28,7 @@ public class RequestQuote {
         String latestS = null;
         float latestPrice = 0.0f;
         String latestU = null;
+        long latestUpdate = 0;
         float price = 0.0f;
         int latestVol = 0;
         float prevCl = 0;
@@ -110,7 +111,7 @@ public class RequestQuote {
         } catch (Exception e) {
         }
         try {
-            latestU = (String) jsonObject.get("latestUpdate");
+            latestUpdate = Long.parseLong(jsonObject.get("latestUpdate").toString());
         } catch (Exception e) {
         }
         try {
@@ -205,7 +206,7 @@ public class RequestQuote {
         int i = 0;
         for (Aktie c : arrl) {
             if (c.getSymbol().equals(jsonObject.get("symbol"))) {
-                c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestUpdate, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
                 c.setCryptoData(sector, bidPrice, bidSize, askPrice, askSize, isEnabled);
 //                if (new Model().getData().getCurrentStock() != null) {
 //                    new Model().getData().getCurrentStock().setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);

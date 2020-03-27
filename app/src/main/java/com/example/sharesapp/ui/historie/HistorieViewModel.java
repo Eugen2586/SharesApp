@@ -14,7 +14,6 @@ public class HistorieViewModel extends ViewModel {
 
     public HistorieViewModel() {
         mTrades.postValue(new Model().getData().getTrades());
-
     }
 
     public ArrayList<Trade> getTrades() {

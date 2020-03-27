@@ -41,8 +41,13 @@ In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getä
 \subsection{Worum geht es in der App Broken Broke Broker?}
 In der App "Broken Broke Broker" geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
 
+In diesem Abschnitt werden die Gedanken, welche bei der Entstehung der App getätigt wurden, erläutert. Man findet hier die Erläuterungen um die einzelnen Gedankengänge beim Entstehen der App nachzuvollziehen und das Gesamprodukt richtig einordnen zu können.
+
+\subsection{Worum geht es in der App Broken Broke Broker}
+In der App "Broken Broke Broker" geht es um die Simulation einer Börsenumgebung in der, der Nutzer einzelne Wertpapiere, Währungen \todo{haben wir währungen?} oder Kryptowährungen kaufen kann. Auf dem Smartphone wird ein Spiel begonnen indem es um den Handel mit Wertpapieren geht. Die Kursdaten werden dabei aus dem Web gezogen. Die App soll in Java geschrieben werden und die einzelnen Anwendungen sollen möglichst intuitiv von dem Benutzer zu bedienen sein. Die Menüführung soll klar strukturiert und in einem Stil sein, der es möglich macht sich voll auf den Handel mit Devisen und Wertpapieren zu konzentrieren.
+
 \subsubsection{Anforderungen}
-Folgende Features sollen mir der oben gewählten Technologie umgesetzt werden:
+Folgende Features sollen wir der oben gewählten Technologie umgesetzt werden:
 
 Bei der oben gewählten Technologie sollen die im Folgenden vorgestellten Hauptfunktionen zur Verfügung gestellt werden.
 
@@ -73,7 +78,7 @@ Zu den Hauptfunktionen wurde die Forderung gestellt, dass alle funktionieren mü
 
 \subsection{Motivation}
 %In diesem Abschnitt bitte nur beschreiben, wie die Zielvorstellung aussieht.
-Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt Broken Broke Borker um die Tatsache zu verdeutlichen, dass es um 
+Die Motivation für uns bei diesem Code Camp die App in Java zu schreiben liegt vor allem darin sich als Team einer unbekannten Herausforderung zu stellen. Eine Herausforderung an deren Ende ein Programm steht, welches Spaß beim Spielen macht und einen Einblick in die Welt des Finanzmarktes gibt. Die App heißt Broken Broke Borker um die Tatsache zu verdeutlichen, dass es um \todo{nicht vollständig}
 
 \subsection{Herangehensweise}
 %Wir die einzelnen Ziele erreicht werden sollten werden wir in diesem Abschnitt hinterlegen!
@@ -171,7 +176,7 @@ AndroidX ist eine wesentliche Verbesserung gegenüber der ursprünglichen Androi
 \end{enumerate}
 
 
-\subsection{Navigationsschema zwischen den Bildschirmen}
+\subsection{Navigation und Funktionen}
 
 Navigation
 Alle Hauptseiten sind durch die Navigation verbunden. Bei jeder Hauptseite befindet sich am Oberen Ende des Bildschirms eine Leiste, in der sich der Name der aktuellen Seite, sowie rechts ein Suchsymbol und  links ein Menüzeichen, mit der sich die Navigation öffnen lässt, befindet. Durch Öffnen der Navigation verlässt man nicht seine aktuelle Seite, sondern sie legt sich von der linken Seite des Geräts über zwei Drittel des Bildschirms und verdunkelt das restliche Drittel leicht. 
@@ -194,8 +199,19 @@ Bild des Menüzeichens, mit dem sich die Navigation öffnen lässt. Die roten St
 Hauptseite: Depot
 Das Depot ist die erste Hauptseite und auch die Startseite. Nach dem Öffnen der Applikation gelangt man immer zu erst in der Depot, da sich das Spiel auch größtenteils um dessen Inhalt dreht. Dort werden nämlich die Hauptressourcen, die eigenen Aktion, verwaltet.
 Das Depot ist eingeteilt in Übersicht und Statistik. Beide Punkte befinden sich nebeneinander direkt unterhalb der Leiste, die zur Navigation gehört. Der ausgewählte Punkt ist rot unterstrichen und beeinflusst den darunterliegenden Teil der Seite. Beim Start gelangt man immer zu Erst in die Übersicht aber wenn man sich beim letzten Verlassen der Seite in der Statistik befand, dann gelangt man beim nächsten Besuch auch zu erst in die Statistik. .
-Die Übersicht beinhaltet als erstes den aktuellen Kontostand, sowie den gesamten Wert der Wertpapiere und die daraus resultierende Summe. Darunter sind dann die Wertpapiere, mit Menge und einzelnem Wert, aufgelistet. Geht die Liste nach unten hin über den Rand des Bildschirm hinaus, kann man die unteren Teile durch scrollen erreichen. Die oberen Listeneinträge werden dann durch die unteren ersetzt aber alles oberhalb der Liste bleibt unverändert.
-\todo{Aktiendeteilansicht, beschreibung hier oder nur erwähnung?}
+Die Übersicht beinhaltet als erstes den aktuellen Kontostand, sowie den gesamten Wert der Wertpapiere und die daraus resultierende Summe. Darunter sind dann die im Besitz befindenden Aktien aufgelistet. Geht die Liste nach unten hin über den Rand des Bildschirm hinaus, kann man die unteren Teile durch scrollen erreichen. Die oberen Listeneinträge werden dann durch die unteren ersetzt aber alles oberhalb der Liste bleibt unverändert.
+Jede anklickbare Aktie in allen Menüs hat immer die gleiche rechteckige Form. Auch die Anordnung der Daten ist immer gleich. Links oben steht das Symbol(Abkürzung) der Aktie. Darunter ist dann der Name der Firma, wenn man die Aktie vorher einmal geladen hat. Rechts unten steht die Abkürzung des Types, wie zum Beispiel "cs" für "Common Stock" Darüber steht, falls man solche Aktien besitzt, die Anzahl und der aktuelle Preis.
+Kryptowährungen haben die gleiche Form wie Aktien in der Anzeige. Sie unterscheiden sich nur in der Detailansicht, wenn man darauf klickt.
+
+
+Aktiendetailansicht:
+Die Aktiendetailansicht lässt sich von überall erreichen, wo sich Aktien in einer Liste befinden. Diese kann man anklicken und wird zu ihrer Detailansicht weitergeleitet. In dieser Detailansicht werden genauere Informationen über die Aktie dargestellt. Man kommt zurück zur letzten Stelle, indem man oben links auf den Pfeil klickt.
+Ganz oben in der Ansicht steht der Firmennahme der Aktie. Direkt darunter wird ein Graph geladen, der die Range des Preises für jeden Tag des letzten Monats anzeigt. Über dem Graphen steht das aktuelle Datum (Amerikanisch) und der Titel des Graphen mit den höchsten und niedrigsten dargestellten Werten dahinter. 
+Unter dem Graphen befinden sich zwei Blöcke mit Informationen. Als erstes die Daten zu dem Symbol, dem Firmennamen, der Kategorie und der aktuelle Preis der Aktie. Danach noch der letzte Schließpreis, das Datum des letzten Höchstpreises und das 52-Wochen hoch bzw. tief.
+Dann folgen zwei Knöpfe mit den Optionen Kaufen und die Aktie zum Portfolio hinzufügen.
+Durch Druck auf den unteren Knopf fügt man die Aktie zum Portfolio hinzu und der Knopf ändert seine Schrift zu "Aus dem Portfolio entfernen". Der Knopf bekommt dann auch die gleiche Funktion.
+Drückt man auf den vorderen Knopf, öffnet sich ein "Aktie kaufen" Popover, in dem zu erst das eigene Vermögen und der Stückpreis der Aktie stehen. Es folgen zwei Nummernfelder für die Kaufmenge und das Limit, dann der Gesamtwert der Stückzahl, gefolgt von einem "Verwerfen" und einem "Kaufen" Knopf. Mit "Verwerfen" schließt sich das Popover und es wird keine weitere Aktien ausgeführt. Durch "Kaufen" kauft man die Aktien, vorausgesetzt, man hat die Stückzahl angegeben und genug Geld. Bei Limit kann man den Preis angeben, den man bereit wäre für diese Aktie zu bezahlen. Tut man dies, und bestätigt man, indem man auf "Kaufen" klickt, so wird ein Kaufauftrag erstellt und die Applikation kauft für den Nutzer automatisch die gewünschte Anzahl der Aktie, wenn das Limit unterschritten wird. Der Kaufauftrag wird danach in der dazugehörigen Hauptseite aufgelistet. Hat man einen Kaufauftrag erstellt, wird dieser unter dem Portfolio Knopf aufgelistet und ein weiterer Knopf erscheint, mit dem man alle Aufträge löschen kann.
+Besitzt man Teile der ausgewählten Aktie, taucht der Knopf "Verkaufen" zwischen den beiden ursprünglichen auf. Drückt man darauf, öffnet sich ein Popover, genau wie bei "Kaufen". Der Inhalt ist auch gleich, nur jedes "Kaufen" ist durch "Verkaufen" ersetzt. In dem Fenster kann man seine Aktien verkaufen oder einen Verkaufsauftrag erstellen, der vom Prinzip wie der Kaufauftrag funktioniert. Wird das Limit in dem Fall überschritten, verkauft die Applikation automatisch die gewünscht Stückzahl der ausgewählten Aktie und listet den Auftrag in der Detailansicht und auf der Hauptseite Aufträge auf.
 	
 \todo{Bilder von Depot(Übersicht) einfügen}
 	
@@ -203,12 +219,18 @@ Die Übersicht beinhaltet als erstes den aktuellen Kontostand, sowie den gesamte
 \todo{Statistik, wenn fertig}
 
 Hauptseite: Aktien
-Wenn man das erste mal zu dieser Seite navigiert wird, gelangt man zu seinem Portfolio. Darin sind alle Aktien zu sehen, die man vorher zu dem Portfolio hinzugefügt hat. Es dient als eine Übersicht für die besonders interessanten Aktien, die man im Auge behalten möchte. Ähnlich wie bei Übersicht und Statistik im Depot befindet sich direkt unter der Navigationsleiste Wahlmöglichkeiten, die die Seite darunter verändern. Neben dem Portfolio gibt es dort die Möglichkeit auf "ALLES" zu klicken um eine Übersicht über alle verfügbaren Aktion zu bekommen. Die Leiste mit diesen Wahlmöglichkeiten lässt sich nach rechts scrollen, indem man die Leiste nach links zieht. Die weiteren Sektionen enthalten Teile von allen verfügbaren Aktien, die kategorisch zusammengefasst sind. Die Leiste enthält jedoch nicht alle möglichen Kategorien sondern nur diese, die auch Aktien enthalten. Die Liste wird regelmäßig geupdated, also ist es möglich, dass einige Kategorien aus der Leiste verschwinden oder hinzugefügt werden.
+Wenn man das erste mal zu dieser Seite navigiert wird, gelangt man zu seinem Portfolio. Darin sind alle Aktien zu sehen, die man vorher zu dem Portfolio hinzugefügt hat. Es dient als eine Übersicht für die besonders interessanten Aktien, die man im Auge behalten möchte. Ähnlich wie bei Übersicht und Statistik im Depot befindet sich direkt unter der Navigationsleiste Wahlmöglichkeiten, die die Seite darunter verändern. Neben dem Portfolio gibt es dort die Möglichkeit auf "Kryptowährungen" zu klicken, doch werden alle Kryptowährungen angezeigt. Direkt daneben steht "Aktien" die eine Übersicht über alle verfügbaren Aktion liefert. Die Leiste mit diesen Wahlmöglichkeiten lässt sich nach rechts scrollen, indem man die Leiste nach links zieht. Die weiteren Sektionen enthalten Teile von allen verfügbaren Aktien, die kategorisch zusammengefasst sind. Die Leiste enthält jedoch nicht alle möglichen Kategorien sondern nur diese, die auch Aktien enthalten. Die Liste wird regelmäßig geupdated, also ist es möglich, dass einige Kategorien aus der Leiste verschwinden oder hinzugefügt werden.
 Durch klick auf eine bestimmte Aktie gelangt man zu der dazugehörigen Aktiendetailansicht. Der Knopf, der zur Navigation führt wird dann durch einen Pfeil ersetzt, der zurück zu der vorherigen Stelle in der Liste der Aktien führt.
 
-Hauptseite: Aufträge
+Kryptowährungendetailansicht:
 
-\todo{Aufträge, wenn fertig}
+
+
+Hauptseite: Aufträge
+Aufträge sind auch wieder in zwei Sektionen aufgeteilt. In Kaufaufträge und Verkaufsaufträge. Unter jeder Sektion befindet sich eine Liste mit den Aktien, für die die Aufträge bestehen. Dort wo sonst der aktuelle Preis der Aktie steht, befindet sich nun die Anzahl des Auftrags und dahinter der Preis, für den die Aktien gekauft werden sollen. Bei den Verkaufsaufträgen sieht es ähnlich aus, nur das hier die Preis, für den die Aktien verkauft werden sollen, steht.
+Klickt man auf die Aktie in der Liste gelangt man in ihre Detailansicht.
+
+\todo{Aufträge Screenshots}
 
 Hauptseite: Suche
 Die Suche ist von Überall erreichbar, nicht nur, wenn man in der Navigation darauf klickt. Auf jeder Seite bindet sich am oberen Ende des Bildschirms eine Leiste, die zur Navigation gehört. Der rechte Teil enthält ein Suchsymbol, dass ein Textfeld in seine Leiste und eine Tastatur öffnet, wenn man darauf klickt. Mit der Tastatur kann man in das Textfeld schreiben und mit Enter seine Suche bestätigen. Durch diesen Prozess gelangt man zu der Hauptseite der Suche und die Aktien, die mit der Eingabe in Verbindung stehen, werden aufgelistet. Jeder Teil der aufgelisteten Aktien führt wieder zu der dazugehörigen Aktiendetailansicht. Über der Liste der Suchergebnisse steht unter anderem "Suchkategorie:". Rechts davon steht vom Anfang "ALLES" und noch weiter rechts davon ein kleines Dreieck mit der Spitze nach unten. Durch drücken auf den Teil zwischen dem Anfang von "ALLES" und dem Dreieck, fährt ein Menü aus, dass alle Kategorien der Suchergebnisse beinhaltet und die man durch Klick wählen kann. Die Liste wird daraufhin auf die Ergebnisse mit der gewählten Kategorie reduziert. Der Text "ALLES" wird durch den Namen der gewählten Kategorie ersetzt. 

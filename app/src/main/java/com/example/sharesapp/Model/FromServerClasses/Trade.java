@@ -1,10 +1,9 @@
 package com.example.sharesapp.Model.FromServerClasses;
 
+/**
+ * Stellt die Klasse dar in der Handelsbewegungen abgebildet werden.
+ */
 public class Trade {
-    /**
-     * Stellt die Klasse dar in der Handelsbewegungen abgebildet werden.
-     */
-
     /* Hier sollen die entsprechenden Trades gestored werden */
     //Chris K.
 
@@ -37,7 +36,6 @@ public class Trade {
      * Getter des Attributes Aktie.
      * @return Aktie des Trades.
      */
-
     public Aktie getAktie() {
         return aktie;
     }
@@ -46,7 +44,6 @@ public class Trade {
      * Anzahl der gehandelten Ware im Trade
      * @return Anzahl der gehandelten Waren.
      */
-
     public int getAnzahl() {
         return anzahl;
     }
@@ -55,7 +52,6 @@ public class Trade {
      * Gibt zurück ob es sich um einen Kauf oder Verkauf handelt.
      * @return Bei True ist es ein Kauf bei false ein Verkauf.
      */
-
     public boolean isKauf() {
         return kauf;
     }
@@ -64,7 +60,6 @@ public class Trade {
      * Gibt den zum Zeitpunkt des verkaufens/kaufens anliegenden Preis wieder.
      * @return Preis zum Zeitpunkt des Handels
      */
-
     public float getPreis() {
         return preis;
     }
@@ -73,7 +68,6 @@ public class Trade {
      * Zeitpunkt zu dem die Aktie gehandelt wurde.
      * @return Zeitpunt zu dem die Aktie gehandelt wurde.
      */
-
     public long getMillis() {
         return millis;
     }

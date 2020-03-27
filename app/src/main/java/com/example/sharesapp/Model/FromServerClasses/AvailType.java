@@ -4,6 +4,9 @@ import com.example.sharesapp.Model.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * This Class is for Reorganize the Tabs from Stock-Trading!
+ */
 public class AvailType {
     /*
     This Class is for Reorganize the Tabs from Stock-Trading!
@@ -19,6 +22,10 @@ public class AvailType {
         return availableTypes;
     }
 
+    /**
+     * Setzen der aktuellen Kategienlist für die Tabs in der Aktienübersicht
+     * @param type_abbr_list1 Array der vorhandenen Typenabkürzungen
+     */
     public void setTypeAbbrList(String[] type_abbr_list1) {
         availableTypeAbbreviations = type_abbr_list1.clone();
         ArrayList<String> l_type_list = new ArrayList<>();

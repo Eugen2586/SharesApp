@@ -223,5 +223,21 @@ public class RequestQuote {
                 break;
             }
         }
+        ArrayList<Aktie> searchList = new Model().getData().getSearches();
+        for (Aktie c : searchList) {
+            if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                new Model().getData().getMutableSearches().postValue(searchList);
+                break;
+            }
+        }
+        ArrayList<Aktie> portfolioList = new Model().getData().getPortfolioList().getValue();
+        for (Aktie c : portfolioList) {
+            if (c.getSymbol().equals(jsonObject.get("symbol"))) {
+                c.setadditionalData(price, latestPrice, company, primaryEx, calcPrice, open, opent, close, closet, high, highT, low, lowT, latestPrice, latestS, latestU, latestVol, prevCl, prevVol, change, chpercent, avgVol, week52High, week52Low, lastTradeT, b);
+                new Model().getData().getPortfolioList().postValue(portfolioList);
+                break;
+            }
+        }
     }
 }

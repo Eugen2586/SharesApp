@@ -21,12 +21,9 @@ import com.example.sharesapp.FunktionaleKlassen.Waehrungen.Anzeige;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 import com.example.sharesapp.ui.utils.StockRecyclerViewAdapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -47,8 +44,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
      * initialization of swipeRefresh and depotObserver
      * value-fields are filled
      * difficultyDialog is opened if the difficulty is -1
-     * @param inflater nflates the depot fragment
-     * @param container needed for the inflation
+     *
+     * @param inflater           nflates the depot fragment
+     * @param container          needed for the inflation
      * @param savedInstanceState not needed
      * @return
      */
@@ -87,11 +85,9 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
      */
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh()
-            {
+            public void onRefresh() {
                 sendRequestsForDepot();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -135,7 +131,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
         ArrayList<Aktie> depotList = model.getData().getDepot().getAktienImDepot().getValue();
         Requests requests = new Requests();
         if (depotList != null) {
-            for (Aktie stock: depotList) {
+            for (Aktie stock : depotList) {
                 Requests.quoteRequest(stock);
             }
         }
@@ -145,7 +141,8 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
      * from StockRecyclerViewAdapter implemented
      * sends Quote and chart Requests
      * opens StockDetailView and sets currentStock
-     * @param view view of one row_stock_item
+     *
+     * @param view     view of one row_stock_item
      * @param position not needed
      */
     @Override
@@ -173,6 +170,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
     /**
      * fills the recyclerView with depotList
      * calls showHideComponents
+     *
      * @param depotList stockList of owned stocks
      */
     private void setAdapter(ArrayList<Aktie> depotList) {
@@ -191,6 +189,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
 
     /**
      * shows / hides the filler depending of length / existence of depotList
+     *
      * @param depotList stockList of owned stocks
      */
     private void showHideComponents(ArrayList<Aktie> depotList) {
@@ -207,6 +206,7 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
 
     /**
      * TODO
+     *
      * @param inflater
      */
     private void showDifficultyDialog(LayoutInflater inflater) {
@@ -229,7 +229,10 @@ public class OverviewFragment extends Fragment implements StockRecyclerViewAdapt
                             overallValueTextView.setText(overallValue);
                             View view = getView();
                             if (view != null) {
-                                Navigation.findNavController(view).navigateUp(); } }});
+                                Navigation.findNavController(view).navigateUp();
+                            }
+                        }
+                    });
             builder.setCancelable(false);
             builder.setView(diffLevelDialog);
             final AlertDialog dialog = builder.create();

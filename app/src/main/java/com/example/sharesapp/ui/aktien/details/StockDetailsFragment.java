@@ -41,11 +41,8 @@ import com.example.sharesapp.Model.FromServerClasses.Data;
 import com.example.sharesapp.Model.FromServerClasses.Order;
 import com.example.sharesapp.Model.Model;
 import com.example.sharesapp.R;
-import com.example.sharesapp.REST.Range;
 import com.example.sharesapp.REST.Requests;
-import com.example.sharesapp.REST.RequestsBuilder;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -204,10 +201,10 @@ public class StockDetailsFragment extends Fragment {
             }
 
         } else {
-            limit = model.getData().getCurrentStock().getPreis();
+            limit = model.getData().getCurrentStock().getPrice();
             // TODO: setting Text not working
             try {
-                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPrice()));
             } catch (Exception ignore) {
 
             }
@@ -239,16 +236,16 @@ public class StockDetailsFragment extends Fragment {
     private void setStockDetails() {
         // new request if latestPrice == 0
         Aktie stock = model.getData().getCurrentStock();
-        float latestPrice = stock.getPreis();
+        float latestPrice = stock.getPrice();
         // fill information fields
         TextView titleView = root.findViewById(R.id.name_big);
-        titleView.setText(stock.getCompanyName());
+        titleView.setText(stock.getSymbol());
 
         setTextFieldIdWithString(R.id.symbol_field, stock.getSymbol());
         setTextFieldIdWithString(R.id.name_field, stock.getCompanyName());
         setTextFieldIdWithString(R.id.type_field, stock.getType());
         setTextFieldIdWithLongTime(R.id.date_field, stock.getLatestUpdate());
-        setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPreis());
+        setTextFieldIdWithPrice(R.id.latest_price_field, stock.getPrice());
         setTextFieldIdWithInt(R.id.volume_field, stock.getLatestVolume());
         setTextFieldIdWithString(R.id.open_time_field, stock.getOpen());
         setTextFieldIdWithString(R.id.close_time_field, stock.getClose());
@@ -562,9 +559,9 @@ public class StockDetailsFragment extends Fragment {
             String wert = (new Anzeige()).makeItBeautiful(data.getDepot().getGeldwert());
             TextView cash = buyDialogView.findViewById(R.id.geldwert);
             cash.setText((wert + "€"));
-            if (model.getData().getCurrentStock().getPreis() != 0) {
+            if (model.getData().getCurrentStock().getPrice() != 0) {
                 price = buyDialogView.findViewById(R.id.price_one);
-                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPrice()));
             }
 
             totalPrice = buyDialogView.findViewById(R.id.total_price);
@@ -613,7 +610,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().getCurrentStock().getPreis();
+                                    limit = model.getData().getCurrentStock().getPrice();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * model.getData().getDepot().getProzent();
@@ -624,7 +621,7 @@ public class StockDetailsFragment extends Fragment {
                                     if (!limit_b) {
                                         Aktie a = model.getData().getCurrentStock().getClone();
                                         // new Request if price == 0.0f
-                                        if (a.getPreis() == 0.0f) {
+                                        if (a.getPrice() == 0.0f) {
                                             Requests.quoteRequest(a);
                                             Toast.makeText(StockDetailsFragment.this.getContext(), "Kauf nicht erfolgreich:\nDer Wert der Aktie wurde aktualisiert.", Toast.LENGTH_LONG).show();
                                         } else {
@@ -660,9 +657,9 @@ public class StockDetailsFragment extends Fragment {
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
                 public void onChanged(Aktie aktie) {
-                    if (aktie.getPreis() != 0) {
+                    if (aktie.getPrice() != 0) {
                         TextView price = buyDialogView.findViewById(R.id.price_one);
-                        price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                        price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPrice()));
                     } else {
                         dialog.cancel();
                     }
@@ -678,7 +675,7 @@ public class StockDetailsFragment extends Fragment {
         int number = Integer.parseInt(numberText.getText().toString());
         float limit = Float.parseFloat(limitText.getText().toString());
 
-        if (limit < model.getData().getCurrentStock().getPreis()) {
+        if (limit < model.getData().getCurrentStock().getPrice()) {
             // remove existing buyOrder before creating new one
             Order buyOrder = getOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
             if (buyOrder != null) {
@@ -717,9 +714,9 @@ public class StockDetailsFragment extends Fragment {
             TextView meine_anzahl = sellDialogView.findViewById(R.id.anzahl_aktien);
             meine_anzahl.setText(String.valueOf(getFoundInDepot()));
             price = sellDialogView.findViewById(R.id.price_one);
-            if (model.getData().getCurrentStock().getPreis() != 0) {
+            if (model.getData().getCurrentStock().getPrice() != 0) {
                 TextView price = sellDialogView.findViewById(R.id.price_one);
-                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPreis()));
+                price.setText((new Anzeige()).makeItBeautifulEuro(model.getData().getCurrentStock().getPrice()));
             }
             totalPrice = sellDialogView.findViewById(R.id.total_price);
 
@@ -772,7 +769,7 @@ public class StockDetailsFragment extends Fragment {
                                     limit = Float.valueOf(limitText.getText().toString());
                                     limit_b = true;
                                 } else {
-                                    limit = model.getData().getCurrentStock().getPreis();
+                                    limit = model.getData().getCurrentStock().getPrice();
                                 }
                                 int number = Integer.parseInt(kaufMenge.getText().toString());
                                 float price = limit * number * (2f - model.getData().getDepot().getProzent());
@@ -819,9 +816,9 @@ public class StockDetailsFragment extends Fragment {
             final Observer<Aktie> currentStockObserver = new Observer<Aktie>() {
                 @Override
                 public void onChanged(Aktie aktie) {
-                    if (aktie.getPreis() != 0) {
+                    if (aktie.getPrice() != 0) {
                         TextView price = sellDialogView.findViewById(R.id.price_one);
-                        price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPreis()));
+                        price.setText((new Anzeige()).makeItBeautifulEuro(aktie.getPrice()));
                     } else {
                         dialog.cancel();
                     }
@@ -837,7 +834,7 @@ public class StockDetailsFragment extends Fragment {
         int number = Integer.parseInt(numberText.getText().toString());
         float limit = Float.parseFloat(limitText.getText().toString());
 
-        if (limit > model.getData().getCurrentStock().getPreis()) {
+        if (limit > model.getData().getCurrentStock().getPrice()) {
             // remove existing sellOrder before creating new one
             Order sellOrder = getOrderForCurrentStock(model.getData().getSellOrderList().getValue());
             if (sellOrder != null) {

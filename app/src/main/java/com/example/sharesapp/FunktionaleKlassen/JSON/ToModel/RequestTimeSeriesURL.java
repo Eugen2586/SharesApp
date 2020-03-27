@@ -3,7 +3,7 @@ package com.example.sharesapp.FunktionaleKlassen.JSON.ToModel;
 public class RequestTimeSeriesURL {
 
     //TODO Pass hier die einzelnen Einträge die im Datenmodell benötigt werden an.
-    public RequestTimeSeriesURL(String s){
+    public RequestTimeSeriesURL(String s) {
         /*
         [{"AccountsPayableCurrent":863051202,
         "formFiscalYear":2073,"version":"agp-usa",
@@ -117,15 +117,11 @@ public class RequestTimeSeriesURL {
          */
 
 
-
-
     }
 
     /*getTimeSeriesURL(){
 
     }*/
-
-
 
 
 }

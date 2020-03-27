@@ -6,6 +6,4 @@ public class Constants {
     public static final String[] TYPE_ABBREVIATIONS = {"alles", "ad", "re", "ce", "si", "lp", "cs", "et", "wt", "rt", "ut", "temp", " ", "oef", "ps", "cef", "struct"};
 
     public static final int MONEY = 50000;
-    public static float PROZENT = 1.01f;
-    public static float V_PROZENT = 0.99f;
 }

@@ -33,8 +33,9 @@ public class StatisticFragment extends Fragment {
     /**
      * tradeObserver is initialized
      * lineChart is shown
-     * @param inflater nflates the depot fragment
-     * @param container needed for the inflation
+     *
+     * @param inflater           nflates the depot fragment
+     * @param container          needed for the inflation
      * @param savedInstanceState not needed
      * @return
      */
@@ -67,11 +68,12 @@ public class StatisticFragment extends Fragment {
      * cartesian line is configured
      * the data for the line is calculated through the tradeList
      * visibility of filler is regulated depending on the length / existence of the tradeList
+     *
      * @param tradeList list of trades which describe the history of the liquidity of the user
      */
     private void showLineChart(ArrayList<Trade> tradeList) {
         // set visibility of components and set chart if trades available
-        if (tradeList != null && tradeList.size() != 0) {
+        if (tradeList != null && tradeList.size() > 1) {
             // Build the stockdatachart
             Cartesian cartesian = AnyChart.line();
             cartesian.title("Eigenes Vermögen");

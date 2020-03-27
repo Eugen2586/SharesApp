@@ -17,18 +17,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.work.Constraints;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.NetworkType;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
 import com.example.sharesapp.FunktionaleKlassen.JSON.ToModel.RequestSymbol;
 import com.example.sharesapp.FunktionaleKlassen.Services.NotificationOnlyStickyService;
 import com.example.sharesapp.FunktionaleKlassen.Services.RequestDataService;
-import com.example.sharesapp.FunktionaleKlassen.Services.StickyNotificationService;
-import com.example.sharesapp.FunktionaleKlassen.Worker.NotificationWorker;
 import com.example.sharesapp.Model.Constants;
 import com.example.sharesapp.Model.FromServerClasses.Aktie;
 import com.example.sharesapp.Model.FromServerClasses.Trade;
@@ -45,7 +38,6 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 
 public class DrawerActivity extends AppCompatActivity {
@@ -303,7 +295,7 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setPreis(Float.parseFloat((String) json.get("preis")));
+                ak.setPrice(Float.parseFloat((String) json.get("preis")));
             } catch (Exception e) {
 
             }
@@ -328,7 +320,7 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setPreis(Float.parseFloat((String) json.get("preisi")));
+                ak.setPrice(Float.parseFloat((String) json.get("preisi")));
             } catch (Exception e) {
 
             }
@@ -412,7 +404,7 @@ public class DrawerActivity extends AppCompatActivity {
 
         }
         try {
-            ak.setPreis(Float.parseFloat((json.get("preis").toString())));
+            ak.setPrice(Float.parseFloat((json.get("preis").toString())));
         } catch (Exception e) {
 
         }
@@ -482,7 +474,7 @@ public class DrawerActivity extends AppCompatActivity {
 
             }
             try {
-                ak.setPreis(Float.parseFloat((json.get("preis").toString())));
+                ak.setPrice(Float.parseFloat((json.get("preis").toString())));
             } catch (Exception e) {
 
             }
@@ -566,16 +558,5 @@ public class DrawerActivity extends AppCompatActivity {
             }
         };
         model.getData().getAktienList().observe(this, stockObserver);
-    }
-
-    private void createWorker() {
-        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-        PeriodicWorkRequest build = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES)
-                .addTag("uniqueWorkName")
-                .setConstraints(constraints)
-                .build();
-
-        WorkManager instance = WorkManager.getInstance(context);
-        instance.enqueueUniquePeriodicWork("uniqueWorkName", ExistingPeriodicWorkPolicy.REPLACE, build);
     }
 }

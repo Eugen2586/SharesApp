@@ -44,8 +44,9 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
      * initializes Spinner with categoryChanged functionality
      * sets observer for searchesFromServer
      * sets adapter for the Recyclerview
-     * @param inflater for the inflation of the layout
-     * @param container as container for the inflation
+     *
+     * @param inflater           for the inflation of the layout
+     * @param container          as container for the inflation
      * @param savedInstanceState not used
      * @return
      */
@@ -86,6 +87,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
      * if Server (0) was selected : setAdapter with serverSearchList
      * if Kryptowährungen (1) was selected : setAdapter with symbol filtered list of cryptoStocks
      * if Aktien (2) was selected : setAdapter with symbol filtered list of nonCryptoStocks
+     *
      * @param position the position the spinner changed to
      */
     private void changedSpinnerPosition(int position) {
@@ -136,6 +138,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     /**
      * Server, Kryptowährungen and Aktien are chosen as the components of the Spinner
+     *
      * @param spinner spinner to initialize
      */
     private void initCategorySpinner(Spinner spinner) {
@@ -164,6 +167,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     /**
      * recyclerview is filled with filteredList
      * calls the showHideComponents function
+     *
      * @param filteredList the list of stocks which should fill the Recyclerview
      */
     private void setAdapter(ArrayList<Aktie> filteredList) {
@@ -180,6 +184,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     /**
      * searchlist is integrated into stocklist if not yet included
+     *
      * @param searchList from server
      */
     private void addSearchesToStockList(ArrayList<Aktie> searchList) {
@@ -212,7 +217,8 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
      * from StockRecycleViewAdapter implemented
      * sends Quote and chart Requests
      * opens StockDetailView and sets currentStock
-     * @param view view of one row_stock_item
+     *
+     * @param view     view of one row_stock_item
      * @param position not needed
      */
     @Override
@@ -231,6 +237,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
     /**
      * shows or hides the components to tell the user if there are search results or not
      * depends on the length / existence of stockList
+     *
      * @param stockList stockList which is shown in RecyclerView
      */
     private void showHideComponents(ArrayList<Aktie> stockList) {
@@ -256,6 +263,7 @@ public class SearchFragment extends Fragment implements StockRecyclerViewAdapter
 
     /**
      * removes stocks which do not have the searchString in its symbol
+     *
      * @param stockList the stockList to be filtered
      * @return the filtered stockList
      */

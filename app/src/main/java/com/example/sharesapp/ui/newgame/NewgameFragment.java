@@ -33,8 +33,9 @@ public class NewgameFragment extends Fragment {
 
     /**
      * TODO
-     * @param inflater to inflate the newgame_fragment
-     * @param container used for the inflation
+     *
+     * @param inflater           to inflate the newgame_fragment
+     * @param container          used for the inflation
      * @param savedInstanceState not needed
      * @return
      */

@@ -28,6 +28,9 @@ public class Aktie implements Comparator {
     private String enabled;
     private float price = 0;
     private int anzahl = 0;
+    private float change;
+    private float week52High;
+    private float week52Low;
     private ArrayList<DataPoint> chart;
 
     public Aktie() {
@@ -54,10 +57,6 @@ public class Aktie implements Comparator {
         this.enabled = enabled;
         this.price = preis;
     }
-
-    private float change;
-    private float week52High;
-    private float week52Low;
 
     public void setAdditionalData(
             String companyName,
@@ -179,7 +178,7 @@ public class Aktie implements Comparator {
         this.menge = anzahl;
     }
 
-    public Object getChange() {
+    public float getChange() {
         return change;
     }
 

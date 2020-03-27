@@ -176,6 +176,12 @@ public class Depot {
     }
 
     public String[] getSchwierigkeitsgrad(int i) {
+        /*
+        Diese Methode gibt textuelle Beschreibung für Schwierigkeitsgraden
+        @param int i
+        @return wenn i == 0 gibt die Methode die Beschreibung für aktuelles Schwierigkeitsgrad zurück,
+        wenn i != 0 gibt die Methode die Beschreibung für ein ausgewähltes Schwierigkeitsgrad zurück
+         */
         if (i == 0) {
             i = this.schwierigkeitsgrad;
         }
@@ -203,6 +209,9 @@ public class Depot {
     }
 
     public int getSchwierigkeitsgrad() {
+        /*
+        @return Schwierigkeitsgrad oder unbestimmtes Schwierigkeitsgrad
+         */
         if (this.schwierigkeitsgrad != 1 && this.schwierigkeitsgrad != 2 && this.schwierigkeitsgrad != 3 && this.schwierigkeitsgrad != 4 && this.schwierigkeitsgrad != -1) {
             return 0;
         }
@@ -210,6 +219,11 @@ public class Depot {
     }
 
     public boolean applySchwierigkeitsgrad(boolean neu) {
+        /*
+        Diese Methode wendet das Schwierigkeitsgrad an. Wenn das Spiel neu gestartet wird (neu == true)
+        wird Geldwert auch angepasst
+        @params boolean neu
+         */
         // wenn das Spiel geladen wird, muss das Geldwert nicht neu gesetzt werden, sonst wird es
         //überschrieben sein. Deswegen wird das Geldwert nur dann neu gesetzt, wenn das Spiel
         //neu gestartet wird.

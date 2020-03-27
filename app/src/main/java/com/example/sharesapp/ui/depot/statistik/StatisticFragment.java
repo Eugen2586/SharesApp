@@ -73,7 +73,7 @@ public class StatisticFragment extends Fragment {
      */
     private void showLineChart(ArrayList<Trade> tradeList) {
         // set visibility of components and set chart if trades available
-        if (tradeList != null && tradeList.size() != 0) {
+        if (tradeList != null && tradeList.size() > 1) {
             // Build the stockdatachart
             Cartesian cartesian = AnyChart.line();
             cartesian.title("Eigenes Vermögen");

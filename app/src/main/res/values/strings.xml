@@ -95,7 +95,7 @@
     <string name="schlie_zeit">Schließzeit</string>
     <string name="letzter_er_ffnungspreis">Letzter Eröffnungspreis</string>
     <string name="letzter_schlie_preis">Letzter Schließpreis</string>
-    <string name="du_hast_noch_keine_aktien_gekauft_oder_verkauft">Du hast noch keine Aktien gekauft oder verkauft.</string>
+    <string name="du_hast_noch_keine_aktien_gekauft_oder_verkauft">Du hast weniger als eine Aktie gekauft oder verkauft.</string>
     <string name="crypto">crypto</string>
 
 </resources>

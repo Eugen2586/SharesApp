@@ -21,11 +21,20 @@ import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 
+/**
+ * Diese Klasse ist als Singleton für das Datenmodell gedacht. Weiter finden sich hier einige
+ * funktionale Methoden. Darunter fallen beispielsweise die Persistens die hier untergerabcht ist
+ * zu großen Anteilen.
+ */
 public class Model {
     public Context context;
     private static Data data;
     private static MutableLiveData<Boolean> writeFlag = new MutableLiveData<>();
 
+    /**
+     * Die Methode gibt das Datenmodell zurück.
+     * @return Datenmodell der App
+     */
     public Data getData() {
         if (data == null) {
             //ToDo Hier die persistenz füllen!
@@ -35,6 +44,11 @@ public class Model {
         return data;
     }
 
+    /**
+     * Gibt einen Speicherflag in das Datenmodell auf dem wiederum ein Observer
+     * zur Aktualisierung gerichtet ist.
+     * @return Speicherflag
+     */
     public boolean getWriteFlag() {
         if (writeFlag.getValue() == null) {
             return false;
@@ -43,6 +57,11 @@ public class Model {
         }
     }
 
+    /**
+     * Schreibt einen Speicherflag in das Datenmodell auf dem wiederum ein Observer
+     * zur Aktualisierung gerichtet ist.
+     * @return Speicherflag
+     */
     public void setWriteFlag(boolean writeFlag) {
         Model.writeFlag.postValue(writeFlag);
     }

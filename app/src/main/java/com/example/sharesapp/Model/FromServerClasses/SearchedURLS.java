@@ -2,12 +2,15 @@ package com.example.sharesapp.Model.FromServerClasses;
 
 
 /**
- * Doppelimplementation von SearchRequest.
- * Bitte alle Parameter aus entsprechend der erwähnten Klasse benutzen.
+ * Verarbeitet die Symbole einer Sucheingabe in dem Suchmenü in das Model.
  */
 public class SearchedURLS {
     private String symbol;
 
+    /**
+     * befüllt die Klasse mit dem benötigten symbolParameter
+     * @param symbol symbol der Aktie
+     */
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }

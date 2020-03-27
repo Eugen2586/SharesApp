@@ -7,6 +7,9 @@ import com.example.sharesapp.Model.Model;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/**
+ * Klasse zum Abbilden eines Depots in der Application
+ */
 public class Depot {
     private MutableLiveData<ArrayList<Aktie>> aktienImDepot = new MutableLiveData<>();
 
@@ -18,10 +21,17 @@ public class Depot {
     private int kaufCounter;
     private int verkaufCounter;
 
+    /**
+     * Schnellinitialisierung des Depots.
+     */
     Depot() {
         this.aktienImDepot.postValue(new ArrayList<Aktie>());
     }
 
+    /**
+     * Methode zum kaufen einer Aktie.
+     * @param a Aktie die gekauft werden soll.
+     */
     public void kaufeAktie(Aktie a) {
         if (geldwert - a.getPrice() * a.getAnzahl() >= 0) {
             in = false;
@@ -52,6 +62,10 @@ public class Depot {
         }
     }
 
+    /**
+     * Verkaufen einer Aktie im Depot.
+     * @param a Zu verkaufende Aktie.
+     */
     public void verkaufeAktie(Aktie a) {
         in = false;
         ArrayList<Aktie> stocks = aktienImDepot.getValue();
@@ -85,10 +99,18 @@ public class Depot {
         }
     }
 
+    /**
+     * Gibt den Geldwert der liquiden Mittel im Depot wieder.
+     * @return Liquider Wert
+     */
     public float getGeldwert() {
         return geldwert;
     }
 
+    /**
+     * Setzen des Geldwertes der liquiden Mittel
+     * @param geldwert Liquider Wert
+     */
     public void setGeldwert(float geldwert) {
         this.startMoney = geldwert;
         this.geldwert = geldwert;
@@ -112,6 +134,10 @@ public class Depot {
         return aktienImDepot;
     }
 
+    /**
+     * Setzt die Aktien im Depot auf den Eingabewert AktienImDepot.
+     * @param aktienImDepot Wert für der die Aktien neu setzt.
+     */
     public void setAktienImDepot(ArrayList<Aktie> aktienImDepot) {
         this.aktienImDepot.postValue(aktienImDepot);
     }
@@ -120,6 +146,10 @@ public class Depot {
         return aktienImDepot;
     }
 
+    /**
+     * Brechnet die Werte für den Wert des Depot.
+     * @return Wert des Depos
+     */
     public float calculateStockValue() {
         if (aktienImDepot == null || aktienImDepot.getValue() == null) {
             return 0.0f;

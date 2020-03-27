@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.7.7)  27 MAR 2020 16:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.7.7)  27 MAR 2020 16:59
 entering extended mode
 **./Doku.tex
 (Doku.tex
@@ -764,27 +764,32 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \openout4 = `Doku.toc'.
 
  [2]
-Overfull \hbox (3.97389pt too wide) in paragraph at lines 72--73
+Overfull \hbox (34.28429pt too wide) in paragraph at lines 44--45
+\T1/lmr/m/n/10 getätigt wur-den, er-läutert. Man findet hier die Er-läuterun-ge
+n um die einzel-nen Gedankengänge
+ []
+
+[3]
+Overfull \hbox (3.97389pt too wide) in paragraph at lines 77--78
 []\T1/lmr/m/n/10 Zu den Haupt-funk-tio-nen wurde die Forderung gestellt, dass a
 lle funk-tion-ieren müssen.
  []
 
-[3]
 <Bilder/BibliothekenLogos/Anychart.png, id=44, 301.125pt x 92.345pt>
 File: Bilder/BibliothekenLogos/Anychart.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/Anychart.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/Anychart.png  used on input l
-ine 97.
+ine 102.
 (pdftex.def)             Requested size: 224.06775pt x 68.71748pt.
-<Bilder/BibliothekenLogos/OKHTTP.jpg, id=45, 475.7775pt x 200.75pt>
+[4 <./Bilder/BibliothekenLogos/Anychart.png>]
+<Bilder/BibliothekenLogos/OKHTTP.jpg, id=49, 475.7775pt x 200.75pt>
 File: Bilder/BibliothekenLogos/OKHTTP.jpg Graphic file (type jpg)
 <use Bilder/BibliothekenLogos/OKHTTP.jpg>
 Package pdftex.def Info: Bilder/BibliothekenLogos/OKHTTP.jpg  used on input lin
-e 112.
+e 117.
 (pdftex.def)             Requested size: 224.06775pt x 94.54242pt.
- [4 <./Bilder/BibliothekenLogos/Anychart.png> <./Bilder/BibliothekenLogos/OKHTT
-P.jpg>]
-Overfull \hbox (2.04845pt too wide) in paragraph at lines 121--126
+
+Overfull \hbox (2.04845pt too wide) in paragraph at lines 126--131
 \T1/lmr/m/n/10 wird das Net-zw-erk für wieder-holte An-forderun-gen voll-ständi
 g ver-mieden. OkHttp
  []
@@ -793,151 +798,137 @@ g ver-mieden. OkHttp
 File: Bilder/BibliothekenLogos/JSONLogo.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/JSONLogo.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/JSONLogo.png  used on input l
-ine 135.
+ine 140.
 (pdftex.def)             Requested size: 224.06775pt x 65.38962pt.
-<Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png, id=51, 1525.7pt x 72
+[5 <./Bilder/BibliothekenLogos/OKHTTP.jpg> <./Bilder/BibliothekenLogos/JSONLogo
+.png>]
+<Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png, id=55, 1525.7pt x 72
 2.7pt>
 File: Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png Graphic file (ty
 pe png)
 <use Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.p
-ng  used on input line 147.
+ng  used on input line 152.
 (pdftex.def)             Requested size: 224.06775pt x 106.12865pt.
-[5 <./Bilder/BibliothekenLogos/JSONLogo.png> <./Bilder/BibliothekenLogos/Androi
-dMaterialComponenLogo.png>]
-<Bilder/BibliothekenLogos/AndroidLogo.png, id=57, 1204.5pt x 1413.28pt>
+<Bilder/BibliothekenLogos/AndroidLogo.png, id=56, 1204.5pt x 1413.28pt>
 File: Bilder/BibliothekenLogos/AndroidLogo.png Graphic file (type png)
 <use Bilder/BibliothekenLogos/AndroidLogo.png>
 Package pdftex.def Info: Bilder/BibliothekenLogos/AndroidLogo.png  used on inpu
-t line 162.
+t line 167.
 (pdftex.def)             Requested size: 224.06775pt x 262.89755pt.
-
-Overfull \hbox (8.16716pt too wide) in paragraph at lines 169--170
+ [6 <./Bilder/BibliothekenLogos/AndroidMaterialComponenLogo.png>]
+Overfull \hbox (8.16716pt too wide) in paragraph at lines 174--175
 []\T1/lmr/m/n/10 AndroidX ist eine wesentliche Verbesserung gegenüber der ur-sp
 rünglichen Android-
  []
 
-[6 <./Bilder/BibliothekenLogos/AndroidLogo.png>]
-<Bilder/Applikation/Navigation.jpg, id=62, 1084.05pt x 2288.55pt>
+[7 <./Bilder/BibliothekenLogos/AndroidLogo.png>]
+<Bilder/Applikation/Navigation.jpg, id=66, 1084.05pt x 2288.55pt>
 File: Bilder/Applikation/Navigation.jpg Graphic file (type jpg)
 <use Bilder/Applikation/Navigation.jpg>
 Package pdftex.def Info: Bilder/Applikation/Navigation.jpg  used on input line 
-182.
+187.
 (pdftex.def)             Requested size: 224.06775pt x 473.03197pt.
- [7]
 <Bilder/Applikation/NavigationsSymbol.jpg, id=67, 1084.05pt x 2288.55pt>
 File: Bilder/Applikation/NavigationsSymbol.jpg Graphic file (type jpg)
 <use Bilder/Applikation/NavigationsSymbol.jpg>
 Package pdftex.def Info: Bilder/Applikation/NavigationsSymbol.jpg  used on inpu
-t line 189.
+t line 194.
 (pdftex.def)             Requested size: 224.06775pt x 473.03197pt.
- [8 <./Bilder/Applikation/Navigation.jpg>]
-Overfull \hbox (19.92302pt too wide) in paragraph at lines 198--198
-[][]\T1/lmr/m/n/10 Aktiendeteilansicht, 
- []
+ [8 <./Bilder/Applikation/Navigation.jpg>] [9 <./Bilder/Applikation/Navigations
+Symbol.jpg>] [10]
 
+LaTeX Warning: Marginpar on page 11 moved.
 
-Overfull \hbox (19.92302pt too wide) in paragraph at lines 198--198
-[][]\T1/lmr/m/n/10 Aktiendeteilansicht, 
- []
-
-[9 <./Bilder/Applikation/NavigationsSymbol.jpg>]
-
-LaTeX Warning: Marginpar on page 10 moved.
-
-
-LaTeX Warning: Marginpar on page 10 moved.
-
-[10] [11]
-<Bilder/Prsi/StartenDerApp.png, id=80, 142.131pt x 286.06876pt>
+[11] [12]
+<Bilder/Prsi/StartenDerApp.png, id=83, 142.131pt x 286.06876pt>
 File: Bilder/Prsi/StartenDerApp.png Graphic file (type png)
 <use Bilder/Prsi/StartenDerApp.png>
-Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 278.
+Package pdftex.def Info: Bilder/Prsi/StartenDerApp.png  used on input line 300.
 
 (pdftex.def)             Requested size: 224.06775pt x 451.00154pt.
- [12] [13 <./Bilder/Prsi/StartenDerApp.png>]
-<Bilder/Prsi/einstieg.png, id=89, 230.66174pt x 410.13225pt>
+ [13] [14] [15 <./Bilder/Prsi/StartenDerApp.png>]
+<Bilder/Prsi/einstieg.png, id=95, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 289.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 311.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [14 <./Bilder/Prsi/einstieg.png>]
+ [16 <./Bilder/Prsi/einstieg.png>]
 File: Bilder/Prsi/einstieg.png Graphic file (type png)
 <use Bilder/Prsi/einstieg.png>
-Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 301.
+Package pdftex.def Info: Bilder/Prsi/einstieg.png  used on input line 323.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [15] [16]
-<Bilder/Prsi/Portfolio.png, id=99, 230.66174pt x 410.13225pt>
+ [17] [18]
+<Bilder/Prsi/Portfolio.png, id=105, 230.66174pt x 410.13225pt>
 File: Bilder/Prsi/Portfolio.png Graphic file (type png)
 <use Bilder/Prsi/Portfolio.png>
-Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 313.
+Package pdftex.def Info: Bilder/Prsi/Portfolio.png  used on input line 335.
 (pdftex.def)             Requested size: 224.06775pt x 398.41606pt.
- [17 <./Bilder/Prsi/Portfolio.png>]
-<Bilder/Prsi/depot.png, id=103, 92.14426pt x 163.812pt>
+ [19 <./Bilder/Prsi/Portfolio.png>]
+<Bilder/Prsi/depot.png, id=110, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 326.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 348.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [18 <./Bilder/Prsi/depot.png>]
+ [20 <./Bilder/Prsi/depot.png>]
 File: Bilder/Prsi/depot.png Graphic file (type png)
 <use Bilder/Prsi/depot.png>
-Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 340.
+Package pdftex.def Info: Bilder/Prsi/depot.png  used on input line 362.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [19]
-<Bilder/Prsi/verlauf.png, id=111, 401.5pt x 803.0pt>
+ [21]
+<Bilder/Prsi/verlauf.png, id=117, 401.5pt x 803.0pt>
 File: Bilder/Prsi/verlauf.png Graphic file (type png)
 <use Bilder/Prsi/verlauf.png>
-Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 346.
+Package pdftex.def Info: Bilder/Prsi/verlauf.png  used on input line 368.
 (pdftex.def)             Requested size: 224.06775pt x 448.14534pt.
- [20] [21 <./Bilder/Prsi/verlauf.png>]
-<Bilder/Prsi/detailansicht.png, id=118, 92.14426pt x 163.812pt>
+ [22] [23 <./Bilder/Prsi/verlauf.png>]
+<Bilder/Prsi/detailansicht.png, id=124, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 363.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 385.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [22]
-<Bilder/Prsi/Kaufdialog.png, id=122, 92.14426pt x 163.812pt>
+ [24]
+<Bilder/Prsi/Kaufdialog.png, id=128, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/Kaufdialog.png Graphic file (type png)
 <use Bilder/Prsi/Kaufdialog.png>
-Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 369.
+Package pdftex.def Info: Bilder/Prsi/Kaufdialog.png  used on input line 391.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [23 <./Bilder/Prsi/detailansicht.png>]
-<Bilder/Prsi/kassenzettel.png, id=126, 92.14426pt x 163.812pt>
+ [25 <./Bilder/Prsi/detailansicht.png>]
+<Bilder/Prsi/kassenzettel.png, id=133, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/kassenzettel.png Graphic file (type png)
 <use Bilder/Prsi/kassenzettel.png>
-Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 381.
+Package pdftex.def Info: Bilder/Prsi/kassenzettel.png  used on input line 403.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [24 <./Bilder/Prsi/Kaufdialog.png>] [25 <./Bilder/Prsi/kassenzettel.png>]
-<Bilder/Prsi/newGame.png, id=134, 92.14426pt x 163.812pt>
+ [26 <./Bilder/Prsi/Kaufdialog.png>] [27 <./Bilder/Prsi/kassenzettel.png>]
+<Bilder/Prsi/newGame.png, id=140, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/newGame.png Graphic file (type png)
 <use Bilder/Prsi/newGame.png>
-Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 394.
+Package pdftex.def Info: Bilder/Prsi/newGame.png  used on input line 416.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [26]
-<Bilder/Prsi/diff.png, id=138, 92.14426pt x 163.812pt>
+ [28]
+<Bilder/Prsi/diff.png, id=144, 92.14426pt x 163.812pt>
 File: Bilder/Prsi/diff.png Graphic file (type png)
 <use Bilder/Prsi/diff.png>
-Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 406.
+Package pdftex.def Info: Bilder/Prsi/diff.png  used on input line 428.
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [27 <./Bilder/Prsi/newGame.png>]
+ [29 <./Bilder/Prsi/newGame.png>]
 File: Bilder/Prsi/detailansicht.png Graphic file (type png)
 <use Bilder/Prsi/detailansicht.png>
-Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 415.
+Package pdftex.def Info: Bilder/Prsi/detailansicht.png  used on input line 437.
 
 (pdftex.def)             Requested size: 224.06775pt x 398.3559pt.
- [28 <./Bilder/Prsi/diff.png>]
-[29]
-Underfull \hbox (badness 10000) in paragraph at lines 420--422
+ [30 <./Bilder/Prsi/diff.png>] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 442--444
 
  []
 
-[30] (Doku.aux) ) 
+[32] (Doku.aux) ) 
 Here is how much of TeX's memory you used:
- 16588 strings out of 492895
- 329600 string characters out of 3133468
- 489914 words of memory out of 3000000
- 20133 multiletter control sequences out of 15000+200000
+ 16596 strings out of 492895
+ 329785 string characters out of 3133468
+ 490427 words of memory out of 3000000
+ 20141 multiletter control sequences out of 15000+200000
  40623 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,9n,85p,9106b,1039s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -946,9 +937,9 @@ Program Files/MiKTeX 2.9/fonts/type1/public/eurosym/feymr10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmssbx10.pfb>
-Output written on Doku.pdf (30 pages, 873918 bytes).
+Output written on Doku.pdf (32 pages, 879344 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
+ 174 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  199 words of extra memory for PDF output out of 10000 (max. 10000000)
 

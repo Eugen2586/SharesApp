@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.sharesapp.DrawerActivity;
 import com.example.sharesapp.FunktionaleKlassen.JSON.SaveToJSON;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 public class Model{
     public Context context;
     //Hierdrin werden alle Daten gestored.
-    static Data data;
+    private static Data data;
+    private static MutableLiveData<Boolean> writeFlag = new MutableLiveData<>();
 
     public Data getData(){
         if (data == null){
@@ -32,6 +34,18 @@ public class Model{
             data = new Data();
         }
         return data;
+    }
+
+    public boolean getWriteFlag() {
+        if (writeFlag.getValue() == null) {
+            return false;
+        } else {
+            return writeFlag.getValue();
+        }
+    }
+
+    public void setWriteFlag(boolean writeFlag) {
+        Model.writeFlag.postValue(writeFlag);
     }
 
     //ToDo Levin

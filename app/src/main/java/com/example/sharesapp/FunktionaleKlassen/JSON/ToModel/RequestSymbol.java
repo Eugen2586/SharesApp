@@ -129,6 +129,8 @@ public class RequestSymbol {
                 }
             }
             Model model = new Model();
+            while(model.getWriteFlag());
+            model.setWriteFlag(true);
             ArrayList<Aktie> stockList = model.getData().getAktienList().getValue();
             if (stockList == null) {
                 stockList = new ArrayList<>();
@@ -142,9 +144,12 @@ public class RequestSymbol {
                     }
                 }
             }
+            ArrayList<Aktie> currentStockList = model.getData().getAktienList().getValue();
+            if (currentStockList != null)
             akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
-            model.getData().getAktienList().postValue(stockList);
+            model.getData().getAktienList().setValue(stockList);
+            model.setWriteFlag(false);
 
             Object[] data = type.toArray();
             if (data.length != 0 && data[0] != "crypto") {

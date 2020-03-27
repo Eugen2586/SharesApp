@@ -20,7 +20,7 @@ import com.example.sharesapp.Model.Erfolge;
 import com.example.sharesapp.R;
 
 public class ErfolgeFragment extends Fragment {
-    /*
+    /**
     Das ist ein ErfolgeFragment um Erfolge Seite anzuzeigen
      */
 
@@ -29,7 +29,7 @@ public class ErfolgeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        /*
+        /**
         Diese Methode ruft die Funktionen, um GUI mit Logik zu verbinden
          */
         View root = inflater.inflate(R.layout.fragment_erfolge, container, false);
@@ -65,7 +65,7 @@ public class ErfolgeFragment extends Fragment {
     }
 
     private void setButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel){
-        /*
+        /**
         Diese Funktion bindet jede Taste mit individuulem Dialog, wo es angezeigt wird,
         was muss man machen um entsprechendes Erfolg zu bekommen
          */
@@ -134,7 +134,7 @@ public class ErfolgeFragment extends Fragment {
 
     private void colorButtons(Button[] kaufen, Button[] verkaufen, Button[] spiel) {
 
-        /*
+        /**
         Diese Funktion färbt die Tasten grün für schon erreichte Erfolge und rot für noch gesperrte
         Erfolge.
          */

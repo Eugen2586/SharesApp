@@ -20,13 +20,24 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-
+/**
+ * Diese Klasse ist als Singleton für das Datenmodell gedacht. Weiter finden sich hier einige
+ * funktionale Methoden. Darunter fallen beispielsweise die Persistens die hier untergerabcht ist
+ * zu großen Anteilen.
+ *
+ *
+ */
 public class Model{
+
     public Context context;
     //Hierdrin werden alle Daten gestored.
     private static Data data;
     private static MutableLiveData<Boolean> writeFlag = new MutableLiveData<>();
 
+    /**
+     * Die Methode gibt das Datenmodell zurück.
+     * @return Datenmodell der App
+     */
     public Data getData(){
         if (data == null){
             //ToDo Hier die persistenz füllen!
@@ -36,6 +47,11 @@ public class Model{
         return data;
     }
 
+    /**
+     * Gibt einen Speicherflag in das Datenmodell auf dem wiederum ein Observer
+     * zur Aktualisierung gerichtet ist.
+     * @return Speicherflag
+     */
     public boolean getWriteFlag() {
         if (writeFlag.getValue() == null) {
             return false;
@@ -43,12 +59,19 @@ public class Model{
             return writeFlag.getValue();
         }
     }
-
+    /**
+     * Schreibt einen Speicherflag in das Datenmodell auf dem wiederum ein Observer
+     * zur Aktualisierung gerichtet ist.
+     * @return Speicherflag
+     */
     public void setWriteFlag(boolean writeFlag) {
         Model.writeFlag.postValue(writeFlag);
     }
 
-    //ToDo Levin
+    /**
+     * Die Methodeschreibt die Persistenz in das Gerät und speichert damit alle Daten.
+     * Der Aufruf ist für den Backgroundworker gedacht.
+     */
     public void doPersistanceFBackground(){
         context = new DrawerActivity().getBaseContext();
         SharedPreferences prefs;
@@ -63,7 +86,10 @@ public class Model{
         }
 
     }
-    //ToDo Levin
+
+    /**
+     * Lädt die Persistenz für den Backgroundworker und füllt das Datenmodell.
+     */
     public void getPersistanceFBackground(){
 
         context  = new DrawerActivity().getBaseContext();
@@ -137,7 +163,11 @@ public class Model{
         }
     }
 
-
+    /**
+     * Generische Methodezum persistent speichern der Kauf- und Verkauflisten
+     * für den Backgroundworker.
+     * @param editor Shared Objekt zugriff zum speichern.
+     */
     private void doPersistanceforSellLists(SharedPreferences.Editor editor) {
         editor.commit();
         org.json.JSONArray jsonArray1 = new org.json.JSONArray();

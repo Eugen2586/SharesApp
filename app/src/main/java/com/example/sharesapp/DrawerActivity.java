@@ -69,6 +69,10 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        // stop RequestDataService
+        Intent requestIntent = new Intent(this, RequestDataService.class);
+        stopService(requestIntent);
+
         // start NotificationOnlyStickyService
         Intent notificationOnlyIntent = new Intent(this, NotificationOnlyStickyService.class);
         startService(notificationOnlyIntent);

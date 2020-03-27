@@ -154,7 +154,7 @@ public class RequestSymbol {
                 akl.removeAll(stocksToRemove);
             akl.removeAll(stocksToRemove);
             stockList.addAll(akl);
-            model.getData().getAktienList().setValue(stockList);
+            model.getData().getAktienList().postValue(stockList);
             model.setWriteFlag(false);
 
             typeList.remove("crypto");

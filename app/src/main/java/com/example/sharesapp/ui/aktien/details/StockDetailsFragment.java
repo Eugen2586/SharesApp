@@ -48,6 +48,9 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+/**
+ * Diese Klasse beschäftigt sich mit der Detailansicht der Aktien
+ */
 public class StockDetailsFragment extends Fragment {
 
     private Model model = new Model();
@@ -59,8 +62,15 @@ public class StockDetailsFragment extends Fragment {
     private EditText limitText;
     private TextView totalPrice;
     private TextView price;
-    private Requests requests = new Requests();
 
+    /**
+     * initialisiert alle Observer, den SwipeRefresh
+     * setzt die StockDetails und bestimmt die Button-Click Funktionen für Kaufen, Verkaufen und Portfolio
+     * @param inflater wird benötigt um das AktienDetailFragment zu inflaten
+     * @param container wird für die inflation benötigt
+     * @param savedInstanceState nicht benötigt
+     * @return nicht benötigt
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +119,9 @@ public class StockDetailsFragment extends Fragment {
         return root;
     }
 
+    /**
+     * AnychartView soll wieder sichtbar gemacht werden
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -117,6 +130,9 @@ public class StockDetailsFragment extends Fragment {
 
     }
 
+    /**
+     * Observer für Aktienliste und currentStock werden initialisiert
+     */
     private void initializeAllObservers() {
         final Observer<ArrayList<Aktie>> listObserver = new Observer<ArrayList<Aktie>>() {
             @Override
@@ -138,6 +154,10 @@ public class StockDetailsFragment extends Fragment {
         model.getData().getMutableCurrentStock().observe(getViewLifecycleOwner(), currentStockObserver);
     }
 
+    /**
+     * SwipeRefresh wird initialisiert
+     * Requests werden gesendet, wenn der Benutzer nach oben wischt
+     */
     private void initializeSwipeRefresh() {
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -149,6 +169,11 @@ public class StockDetailsFragment extends Fragment {
         });
     }
 
+    /**
+     * gibt den zu dem currentStock betroffenen Kaufauftrag zurück
+     * @param buySellOrderList Liste von Kaufaufträgen
+     * @return der vom current Stock betroffene Auftrag
+     */
     private Order getOrderForCurrentStock(ArrayList<Order> buySellOrderList) {
         Aktie currentStock = model.getData().getCurrentStock();
         if (buySellOrderList != null) {
@@ -161,6 +186,10 @@ public class StockDetailsFragment extends Fragment {
         return null;
     }
 
+    /**
+     * Die zu verkaufende Menge wird überprüft und die Felder rot markiert, wenn die anzahl zu groß ist
+     * @param anzahl Menge an zu verkaufenden Aktien
+     */
     private void checkVerkaufMenge(int anzahl) {
         if (kaufMenge.getText().toString().isEmpty()) {
             return;
@@ -174,6 +203,9 @@ public class StockDetailsFragment extends Fragment {
 
     }
 
+    /**
+     * der currentStock wird aus der AktienListe des Datenmodells gesetzt
+     */
     private void setCurrentStock() {
         Aktie currentStock = model.getData().getCurrentStock();
         String symbol = currentStock.getSymbol();
@@ -189,6 +221,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Hier wird der Gesamtpreis für die ausgewählte Aktie mit der Anzahl und Limit berechnet und in das entsprechende Feld eingetragen
+     * @param kaufen booleanWert ob es sich um das Kaufen oder Verkaufen Dialogfenster handelt
+     */
     private void setTotalPrice(boolean kaufen) {
         float limit;
         if (!limitText.getText().toString().isEmpty()) {
@@ -233,6 +269,11 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * alle Details des jeweiligen currentStocks werden gesetzt
+     * kaufen und verkaufen Button werden erst sichtbar, wenn sich der Preis über 0€ befindet
+     * Felder, für die es keine Informationen gibt werden auf gone gesetzt und sind nicht sichtbar
+     */
     private void setStockDetails() {
         // new request if latestPrice == 0
         Aktie stock = model.getData().getCurrentStock();
@@ -289,6 +330,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * An dieser Stelle werden Observer für die Kauf- und Verkaufauftragsliste gesetzt.
+     * Es wird die Funktion des Auftrags-Buttons gesetzt um alle Aufträge zu löschen
+     */
     private void initializeOrderButton() {
         Button orderButton = root.findViewById(R.id.order_button);
         orderButton.setOnClickListener(new View.OnClickListener() {
@@ -316,6 +361,9 @@ public class StockDetailsFragment extends Fragment {
         model.getData().getSellOrderList().observe(getViewLifecycleOwner(), sellOrderObserver);
     }
 
+    /**
+     * Ein Confirmationfenster wird geöffnet in dem der Benutzer gefragt wird ob er wirklich alle Aufträge dieser Aktie löschen möchte.
+     */
     private void createDeleteOrderConfirmation() {
         Context context = StockDetailsFragment.this.getContext();
         if (context != null) {
@@ -347,6 +395,9 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Die Anzeigen für bestehende Kaufs- und Verkaufsausfträge werden konfiguriert
+     */
     private void showHideEditOrderViews() {
         Order buyOrder = getOrderForCurrentStock(model.getData().getBuyOrderList().getValue());
         Order sellOrder = getOrderForCurrentStock(model.getData().getSellOrderList().getValue());
@@ -375,6 +426,12 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Setzt den Text des Felds mit der Id id auf den übergebenen String.
+     * Die Sichtbarkeit des Feldes ist dabei von der Länge des Strings abhängig.
+     * @param id id des Felds
+     * @param str Text der angezeigt werden soll
+     */
     private void setTextFieldIdWithString(int id, String str) {
         TextView textView = root.findViewById(id);
         if (str == null) {
@@ -385,6 +442,12 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Setzt den Text des Felds mit der Id id auf den übergebenen Preis.
+     * Die Sichtbarkeit des Feldes ist dabei von dem Wert des Preises abhängig.
+     * @param id id des Felds
+     * @param price Preis der angezeigt werden soll
+     */
     private void setTextFieldIdWithPrice(int id, float price) {
         TextView textView = root.findViewById(id);
         if (price <= 0.0f) {
@@ -395,6 +458,12 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Setzt den Text des Felds mit der Id id auf die übergebene Zahl.
+     * Die Sichtbarkeit des Feldes ist dabei von der Größe der Zahl abhängig.
+     * @param id id des Felds
+     * @param number Nummer die angezeigt werden soll
+     */
     private void setTextFieldIdWithInt(int id, int number) {
         TextView textView = root.findViewById(id);
         if (number < 0) {
@@ -405,10 +474,22 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Setzt den Text des Felds mit der Id id auf die übergebene Zeit.
+     * Die Sichtbarkeit des Feldes ist dabei von dem StringWert der Zeit abhängig.
+     * @param id id des Felds
+     * @param time Zeit im Format long die angezeigt werden soll
+     */
     private void setTextFieldIdWithLongTime(int id, long time) {
         setTextFieldIdWithTime(id, String.valueOf(time));
     }
 
+    /**
+     * Setzt den Text des Felds mit der Id id auf die übergebene Zeit.
+     * Die Sichtbarkeit des Feldes ist dabei von dem StringWert der Zeit abhängig.
+     * @param id id des Felds
+     * @param time Zeit die angezeigt werden soll
+     */
     private void setTextFieldIdWithTime(int id, String time) {
         TextView textView = root.findViewById(id);
         if (time != null) {
@@ -424,6 +505,9 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Unterscheidet die Graphendarstellung des currentStocks in Crypto- und Aktien-Chart
+     */
     private void makeChart() {
         Aktie stock = model.getData().getCurrentStock();
         if (stock.getChart() != null) {
@@ -437,6 +521,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Erstellt einen Kartesischen Graphen für Aktien vom Typ crypto
+     * @param currentStock derzeitig angezeigte Aktie
+     */
     private void makeCryptoChart(Aktie currentStock) {
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
@@ -457,6 +545,10 @@ public class StockDetailsFragment extends Fragment {
         anyChartView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Erstellt einen Stockchart für Aktien vom Typ ungleich crypto
+     * @param currentStock derzeitig angezeigte Aktie
+     */
     private void makeStockChart(Aktie currentStock) {
         // Build the stockdatachart
         Stock chartStock = AnyChart.stock();
@@ -482,6 +574,10 @@ public class StockDetailsFragment extends Fragment {
         anyChartView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * gibt zurück ob sich der currentStock bereits im Depot befindet
+     * @return Wahrheitswert ob der currentStock im Portfolio gefunden wurde
+     */
     private boolean getFoundInPortfolio() {
         boolean foundInPortfolio = false;
 
@@ -499,6 +595,11 @@ public class StockDetailsFragment extends Fragment {
         return foundInPortfolio;
     }
 
+    /**
+     * Setzt den entsprechenden Text für den PortfolioButton abhängig davon, ob sich der currentStock bereits im Portfolio befindet oder nicht.
+     * @param portfolioButton Button dessen Text geändert werden soll
+     * @param foundInPortfolio Wahrheitswert ob sich der currentStock im Portfolio befindet
+     */
     private void setTextForPortfolioButton(Button portfolioButton, boolean foundInPortfolio) {
         if (foundInPortfolio) {
             portfolioButton.setText(R.string.remove_from_portfolio);
@@ -507,6 +608,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * gibt die Anzahl an im depot gefunden Aktien desselben Symbols zurück
+     * @return bestehende Anzahl dieses currentStock im Depot
+     */
     private int getFoundInDepot() {
         int foundInDepot = 0;
 
@@ -524,6 +629,10 @@ public class StockDetailsFragment extends Fragment {
         return foundInDepot;
     }
 
+    /**
+     * Setzt einen InputFilter für das übergebene Feld, sodass nur bestimmte Eingaben erlaubt werden.
+     * @param limit zu editierendes Feld
+     */
     private void setInputFilter(EditText limit) {
         InputFilter filter = new InputFilter() {
             final int maxDigitsBeforeDecimalPoint = 6;
@@ -550,6 +659,10 @@ public class StockDetailsFragment extends Fragment {
         limit.setFilters(new InputFilter[]{filter});
     }
 
+    /**
+     * Konfiguration des Kaufendialogs mit allen ButtonFunktionen.
+     * @param inflater Layoutinflater des fragments
+     */
     private void openBuyDialog(LayoutInflater inflater) {
         Context context = StockDetailsFragment.this.getContext();
         if (context != null) {
@@ -669,6 +782,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Behandelt den Buttonclick des KaufButtons im Kaufendialog.
+     * @param buyDialogView View des Kaufdialogs
+     */
     private void handleBuyOrder(View buyDialogView) {
         EditText numberText = buyDialogView.findViewById(R.id.kaufMenge);
         EditText limitText = buyDialogView.findViewById(R.id.limit);
@@ -690,6 +807,9 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Fügt den currentStock zum Portfolio hinzu bzw. entfernt ihn davon.
+     */
     private void portfolioButtonClickEvent() {
         boolean foundInPortfolio = getFoundInPortfolio();
         setTextForPortfolioButton(portfolioButton, !foundInPortfolio);
@@ -706,6 +826,10 @@ public class StockDetailsFragment extends Fragment {
         MediaPlayer.create(buyButton.getContext(), R.raw.stapling_paper).start();
     }
 
+    /**
+     * Konfiguration des Verkaufendialogs mit allen ButtonFunktionen.
+     * @param inflater Layoutinflater des fragments
+     */
     private void openSellDialog(LayoutInflater inflater) {
         Context context = StockDetailsFragment.this.getContext();
         if (context != null) {
@@ -828,6 +952,10 @@ public class StockDetailsFragment extends Fragment {
         }
     }
 
+    /**
+     * Behandelt den Buttonclick des VerkaufButtons im Kaufendialog.
+     * @param sellDialogView View des Verkaufdialogs
+     */
     private void handleSellOrder(View sellDialogView) {
         EditText numberText = sellDialogView.findViewById(R.id.verkaufMenge);
         EditText limitText = sellDialogView.findViewById(R.id.limit);
